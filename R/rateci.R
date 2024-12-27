@@ -31,6 +31,40 @@ exactci <- function( # function to calculate exact 'exact' confidence interval f
   return(cbind(Lower = lower, Upper = upper) / ifelse(distrib == "poi", n, 1))
 }
 
+# Internal function for Wilson score interval,
+# with optional continuity correction
+# and corresponding score interval for Poisson rate from
+# Schwertman, N.C. and Martinez, R.A. (1994). Approximate Poisson confidence
+# limits, Communication in Statistics — Theory and Methods, 23(5), 1507-1529.
+wilsonci <- function(x,
+                     n,
+                     level = 0.95,
+                     cc = FALSE,
+                     distrib = "bin") {
+  if (as.character(cc) == "TRUE") cc <- 0.5
+  corr <- cc / n
+  z <- qnorm(1 - (1 - level) / 2)
+  if (distrib == "bin") {
+    lower <- (2 * (x - cc) + z^2 -
+      z * sqrt(z^2 - 2 * (2 * cc + cc / n) +
+        4 * ((x / n) * (n * (1 - x / n) + 2 * cc)))
+    ) / (2 * (n + z^2))
+    lower[x == 0] <- 0 # See Newcombe 1998
+    upper <- (2 * (x + cc) + z^2 +
+      z * sqrt(z^2 + 2 * (2 * cc - cc / n) +
+        4 * ((x / n) * (n * (1 - x / n) - 2 * cc)))
+    ) / (2 * (n + z^2))
+    upper[x == n] <- 1
+  } else if (distrib == "poi") {
+    # From REVSTAT – Statistical Journal
+    # Volume 10, Number 2, June 2012, 211–227
+    lower <- ((x - cc) + z^2 / 2 - z * sqrt(x - cc + z^2 / 4)) / n
+    lower[x == 0] <- 0
+    upper <- ((x + cc) + z^2 / 2 + z * sqrt(x + cc + z^2 / 4)) / n
+  }
+  cbind(lower, upper)
+}
+
 
 #' Skewness-corrected asymptotic score ("SCAS") confidence intervals for
 #' single binomial or Poisson rate using closed-form calculations.
