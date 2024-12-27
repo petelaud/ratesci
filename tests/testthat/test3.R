@@ -415,4 +415,31 @@ test_that("legacy & new methods match published examples", {
     unname(round(pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method_OR = "wilson")$estimates, 3)),
     c(0.023, 0.890)
   )
+
+  # Poisson MOVER from Li, Tang, Wong 2013
+  # - Needs further checking
+  # I wonder if they've pre-rounded the input intervals?
+  if (FALSE) {
+    expect_equal(
+      unname(round(moverci(x1 = 15, x2 = 41, n1 = 19017, n2 = 28010,
+                           distrib = 'poi', contrast = "RR", type = "wilson")[, c(1, 3)], 4)),
+      c(0.3007, 0.9714)
+    )
+    expect_equal(
+      unname(round(moverci(x1 = 15, x2 = 41, n1 = 19017, n2 = 28010,
+                           distrib = 'poi', contrast = "RR", type = "jeff")[, c(1, 3)], 4)),
+      c(0.2928, 0.9573)
+    )
+    expect_equal(
+      unname(round(moverci(x1 = 60, x2 = 30, n1 = 51477.5, n2 = 54308.8, level = 0.9,
+                           distrib = 'poi', contrast = "RR", type = "wilson")[, c(1, 3)], 4)),
+      c(1.4611, 3.0424)
+    )
+    expect_equal(
+      unname(round(moverci(x1 = 60, x2 = 30, n1 = 51477.5, n2 = 54308.8, level = 0.9,
+                           distrib = 'poi', contrast = "RR", type = "jeff")[, c(1, 3)], 4)),
+      c(1.4667, 3.0608)
+    )
+  }
+
 })
