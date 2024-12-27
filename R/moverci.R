@@ -18,8 +18,7 @@
 #'   Poisson rates require only a1, a2.
 #' @param cc Number or logical specifying (amount of) continuity correction
 #'   (default FALSE). Numeric value is taken as the gamma parameter in Laud 2017,
-#'   Appendix S2 (default 0.5 if cc=TRUE). Forced equal to 0.5 if type="exact".
-#'   NB: cc currently not implemented for type="wilson".
+#'   Appendix S2 (default 0.5 if cc = TRUE). Forced equal to 0.5 if type = "exact".
 #' @param contrast Character string indicating the contrast of interest: "RD" =
 #'   rate difference (default), "RR" = rate ratio, "OR" = odds ratio.
 #'   contrast="p" gives an interval for the single proportion x1/n1.
@@ -28,14 +27,15 @@
 #'   "jeff" = Jeffreys equal-tailed intervals (default);
 #'   "exact" = Clopper-Pearson/Garwood exact intervals (note this does NOT
 #'   result in a strictly conservative interval for the contrast, except for
-#'   contrast='p'. The scoreci function with cc=TRUE is recommended as a
+#'   contrast = "p". The scoreci function with cc = TRUE is recommended as a
 #'   superior approximation of 'exact' methods);
-#'   "midp" = mid-p intervals (to be added);
-#'   "SCAS" = SCAS non-iterative intervals (to be added);
+#'   "midp" = mid-p intervals;
+#'   "SCAS" = SCAS non-iterative intervals;
 #'   "wilson" = Wilson score intervals (as per Newcombe 1998).
+#'              (Rao score is used for distrib = "poi")
 #'   NB: "wilson" option is included only for legacy validation against previous
-#'   published method by Newcombe. It is not recommended, as type="jeff"
-#'   achieves much better coverage properties.
+#'   published method by Newcombe. It is not recommended, as type = "jeff"
+#'   or other equal-tailed options achieve much better coverage properties.
 #' @param adj Logical (default FALSE) indicating whether to apply the boundary
 #'   adjustment for Jeffreys intervals recommended on p108 of Brown et al.
 #'   (type = "jeff" only: set to FALSE if using informative priors)
@@ -87,8 +87,9 @@ moverci <- function(x1,
                     type = "jeff",
                     adj = FALSE,
                     ...) {
-  if (!(tolower(substr(type, 1, 4)) %in% c("jeff", "wils", "exac"))) {
-    print("Type must be one of 'jeffreys', 'wilson' or 'exact'")
+  if (!(tolower(substr(type, 1, 4)) %in%
+        c("jeff", "wils", "exac", "scas", "midp"))) {
+    print("Type must be one of 'jeffreys', 'wilson', 'SCAS', 'midp' or 'exact'")
     stop()
   }
   if (!(tolower(substr(distrib, 1, 3)) %in% c("bin", "poi"))) {
@@ -170,16 +171,37 @@ moverci <- function(x1,
     p2hat <- j2[, 3]
   } else if (type == "wilson") {
     # or use Wilson intervals as per Newcombe 1998
-    # (NB could add cc here for completeness)
-    j1 <- quadroot(
-      a = 1 + z^2 / n1, b = -(2 * p1hat + z^2 / n1),
-      c_ = p1hat^2
-    )
+    j1 <- wilsonci(x = x1, n = n1, cc = cc, level = level,
+                     distrib = distrib
+                     )
     if (contrast != "p") {
-      j2 <- quadroot(
-        a = 1 + z^2 / n2, b = -(2 * p2hat + z^2 / n2),
-        c_ = p2hat^2
-      )
+      j2 <- wilsonci(x = x2, n = n2, cc = cc, level = level,
+                     distrib = distrib
+                     )
+    } else {
+      j2 <- NULL
+    }
+  } else if (type == "SCAS") {
+    # or use SCAS intervals
+    j1 <- rateci(x = x1, n = n1, cc = cc, level = level,
+                   distrib = distrib
+    )[[1]]
+    if (contrast != "p") {
+      j2 <- rateci(x = x2, n = n2, cc = cc, level = level,
+                     distrib = distrib
+      )[[1]]
+    } else {
+      j2 <- NULL
+    }
+  } else if (type == "midp") {
+    # or use mid-p intervals
+    j1 <- rateci(x = x1, n = n1, cc = cc, level = level,
+                 distrib = distrib
+    )[[3]]
+    if (contrast != "p") {
+      j2 <- rateci(x = x2, n = n2, cc = cc, level = level,
+                   distrib = distrib
+      )[[3]]
     } else {
       j2 <- NULL
     }
