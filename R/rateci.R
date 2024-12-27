@@ -33,9 +33,17 @@ exactci <- function( # function to calculate exact 'exact' confidence interval f
 
 # Internal function for Wilson score interval,
 # with optional continuity correction
-# and corresponding score interval for Poisson rate from
+# and corresponding "Rao score" interval for Poisson rate from
+# Altman DG, Machin D, Bryant TN et al (2000) Statistics with confidence,
+# 2nd edn. BMJ Books, Bristol
+# See also Li et al 2014. Comput Stat (2014) 29:869–889
+# Labelled as "Second Normal" in REVSTAT – Statistical Journal
+# Volume 10, Number 2, June 2012, 211–227
+# which provides the continuity correction formula, and cites
 # Schwertman, N.C. and Martinez, R.A. (1994). Approximate Poisson confidence
 # limits, Communication in Statistics — Theory and Methods, 23(5), 1507-1529.
+#
+#
 wilsonci <- function(x,
                      n,
                      level = 0.95,
@@ -56,8 +64,6 @@ wilsonci <- function(x,
     ) / (2 * (n + z^2))
     upper[x == n] <- 1
   } else if (distrib == "poi") {
-    # From REVSTAT – Statistical Journal
-    # Volume 10, Number 2, June 2012, 211–227
     lower <- ((x - cc) + z^2 / 2 - z * sqrt(x - cc + z^2 / 4)) / n
     lower[x == 0] <- 0
     upper <- ((x + cc) + z^2 / 2 + z * sqrt(x + cc + z^2 / 4)) / n
