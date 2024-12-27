@@ -223,6 +223,16 @@ test_that("legacy & new methods match published examples", {
     matrix(c(0.0578, 0.1617, 0, 0.1684, 0.0009, 0.1776), byrow = T, nrow = 3)
   )
 
+  expect_equal(
+    unname(round(wilsonci(x = c(15, 0, 1), n = c(148, 20, 29), distrib = "bin", cc = FALSE), 4)),
+    matrix(c(0.0624, 0.1605, 0, 0.1611, 0.0061, 0.1718), byrow = T, nrow = 3)
+  )
+
+  expect_equal(
+    unname(round(wilsonci(x = c(15, 0, 1), n = c(148, 20, 29), distrib = "bin", cc = 0.5), 4)),
+    matrix(c(0.0598, 0.1644, 0, 0.2005, 0.0018, 0.1963), byrow = T, nrow = 3)
+  )
+
   # Hartung & Knapp stratified RD example - Laud 2017 Table BII
   # SCAS
   expect_equal(
