@@ -88,7 +88,7 @@ moverci <- function(x1,
                     adj = FALSE,
                     ...) {
   if (!(tolower(substr(type, 1, 4)) %in%
-        c("jeff", "wils", "exac", "scas", "midp"))) {
+    c("jeff", "wils", "exac", "scas", "midp"))) {
     print("Type must be one of 'jeffreys', 'wilson', 'SCAS', 'midp' or 'exact'")
     stop()
   }
@@ -171,36 +171,42 @@ moverci <- function(x1,
     p2hat <- j2[, 3]
   } else if (type == "wilson") {
     # or use Wilson intervals as per Newcombe 1998
-    j1 <- wilsonci(x = x1, n = n1, cc = cc, level = level,
-                     distrib = distrib
-                     )
+    j1 <- wilsonci(
+      x = x1, n = n1, cc = cc, level = level,
+      distrib = distrib
+    )
     if (contrast != "p") {
-      j2 <- wilsonci(x = x2, n = n2, cc = cc, level = level,
-                     distrib = distrib
-                     )
+      j2 <- wilsonci(
+        x = x2, n = n2, cc = cc, level = level,
+        distrib = distrib
+      )
     } else {
       j2 <- NULL
     }
   } else if (type == "SCAS") {
     # or use SCAS intervals
-    j1 <- rateci(x = x1, n = n1, cc = cc, level = level,
-                   distrib = distrib
+    j1 <- rateci(
+      x = x1, n = n1, cc = cc, level = level,
+      distrib = distrib
     )[[1]]
     if (contrast != "p") {
-      j2 <- rateci(x = x2, n = n2, cc = cc, level = level,
-                     distrib = distrib
+      j2 <- rateci(
+        x = x2, n = n2, cc = cc, level = level,
+        distrib = distrib
       )[[1]]
     } else {
       j2 <- NULL
     }
   } else if (type == "midp") {
     # or use mid-p intervals
-    j1 <- rateci(x = x1, n = n1, cc = cc, level = level,
-                 distrib = distrib
+    j1 <- rateci(
+      x = x1, n = n1, cc = cc, level = level,
+      distrib = distrib
     )[[3]]
     if (contrast != "p") {
-      j2 <- rateci(x = x2, n = n2, cc = cc, level = level,
-                   distrib = distrib
+      j2 <- rateci(
+        x = x2, n = n2, cc = cc, level = level,
+        distrib = distrib
       )[[3]]
     } else {
       j2 <- NULL

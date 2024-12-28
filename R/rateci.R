@@ -1,7 +1,6 @@
-
 # Internal function for Clopper-Pearson/Garwood and mid-p, binomial or Poisson
-exactci <- function( # function to calculate exact 'exact' confidence interval for a single
-                    # binomial or Poisson rate x/n
+exactci <- function( # function to calculate exact 'exact' confidence interval
+                    # for a single binomial or Poisson rate x/n
                     x,
                     n,
                     level = 0.95,
@@ -95,14 +94,14 @@ scaspci <- function(x,
                     level = 0.95,
                     cc = FALSE,
                     ...) {
-#  x <- Rmpfr::mpfr(x, 120)
-#  n <- Rmpfr::mpfr(n, 120)
-#  level <- Rmpfr::mpfr(level, 120)
+  #  x <- Rmpfr::mpfr(x, 120)
+  #  n <- Rmpfr::mpfr(n, 120)
+  #  level <- Rmpfr::mpfr(level, 120)
   if (as.character(cc) == "TRUE") cc <- 0.5
   z <- qnorm(1 - (1 - level) / 2)
   if (distrib == "poi") {
     Du <- (x + cc) / n - (z^2 - 1) / (6 * n)
-#    Dl <- Rmpfr::pmax(0, (x - cc) / n - (z^2 - 1) / (6 * n))
+    #    Dl <- Rmpfr::pmax(0, (x - cc) / n - (z^2 - 1) / (6 * n))
     Dl <- pmax(0, (x - cc) / n - (z^2 - 1) / (6 * n))
     A <- 1
     Bu <- -2 * Du - z^2 / n
@@ -117,8 +116,8 @@ scaspci <- function(x,
     E <- (z^2 - 1) / (3 * n) - 1
     # Alteration to published formula,
     # to deal with non-nested intervals when level > 0.99
-#    Du <- Rmpfr::pmax(0, (n - x - cc) / n - (z^2 - 1) / (6 * n))
-#    Dl <- Rmpfr::pmax(0, (x - cc) / n - (z^2 - 1) / (6 * n))
+    #    Du <- Rmpfr::pmax(0, (n - x - cc) / n - (z^2 - 1) / (6 * n))
+    #    Dl <- Rmpfr::pmax(0, (x - cc) / n - (z^2 - 1) / (6 * n))
     Du <- pmax(0, (n - x - cc) / n - (z^2 - 1) / (6 * n))
     Dl <- pmax(0, (x - cc) / n - (z^2 - 1) / (6 * n))
     A <- z^2 / n + E^2
@@ -134,15 +133,15 @@ scaspci <- function(x,
   }
 
   CI <- (cbind(
-#    Lower = Rmpfr::asNumeric((-Bl - sqrt(Rmpfr::pmax(0, Bl^2 - 4 * A * Cl))) / (2 * A)),
-#    MLE = Rmpfr::asNumeric((-B0 - sqrt(Rmpfr::pmax(0, (B0^2 - 4 * A0 * C0)))) / (2 * A0)),
+    #    Lower = Rmpfr::asNumeric((-Bl - sqrt(Rmpfr::pmax(0, Bl^2 - 4 * A * Cl))) / (2 * A)),
+    #    MLE = Rmpfr::asNumeric((-B0 - sqrt(Rmpfr::pmax(0, (B0^2 - 4 * A0 * C0)))) / (2 * A0)),
     Lower = ((-Bl - sqrt(pmax(0, Bl^2 - 4 * A * Cl))) / (2 * A)),
     MLE = ((-B0 - sqrt(pmax(0, (B0^2 - 4 * A0 * C0)))) / (2 * A0)),
     Upper = if (distrib == "bin") {
-#      Rmpfr::asNumeric(1 - (-Bu - sqrt(Rmpfr::pmax(0, Bu^2 - 4 * A * Cu))) / (2 * A))
+      #      Rmpfr::asNumeric(1 - (-Bu - sqrt(Rmpfr::pmax(0, Bu^2 - 4 * A * Cu))) / (2 * A))
       (1 - (-Bu - sqrt(pmax(0, Bu^2 - 4 * A * Cu))) / (2 * A))
     } else {
-#      Rmpfr::asNumeric((-Bu + sqrt(Rmpfr::pmax(0, Bu^2 - 4 * A * Cu))) / (2 * A))
+      #      Rmpfr::asNumeric((-Bu + sqrt(Rmpfr::pmax(0, Bu^2 - 4 * A * Cu))) / (2 * A))
       ((-Bu + sqrt(pmax(0, Bu^2 - 4 * A * Cu))) / (2 * A))
     }
   ))

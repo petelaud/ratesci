@@ -317,15 +317,15 @@ scoreci <- function(x1,
   }
   if (stratified == TRUE && is.null(weighting)) {
     weighting <- switch(contrast,
-                        "RD" = "MH",
-                        "RR" = "MH",
-                        "OR" = "INV",
-                        "p" = "IVS"
+      "RD" = "MH",
+      "RR" = "MH",
+      "OR" = "INV",
+      "p" = "IVS"
     )
   }
   if (is.null(sda)) {
     if (stratified == TRUE && weighting %in% c("IVS", "INV") &&
-        contrast %in% c("RD")) {
+      contrast %in% c("RD")) {
       sda <- 0.5
     } else {
       sda <- 0
@@ -333,7 +333,7 @@ scoreci <- function(x1,
   }
   if (is.null(fda)) {
     if (stratified == TRUE && weighting %in% c("IVS", "INV") &&
-        contrast %in% c("RD", "RR")) {
+      contrast %in% c("RD", "RR")) {
       fda <- 0.5
     } else {
       fda <- 0
@@ -366,7 +366,7 @@ scoreci <- function(x1,
     print(paste(
       "Warning: RRtang argument has no effect for contrast =", contrast
     ))
-    RRtang = FALSE
+    RRtang <- FALSE
   } else if (contrast == "RR") {
     if (stratified == TRUE && !(weighting %in% c("IVS", "INV"))) {
       if (!is.null(RRtang)) {
@@ -500,8 +500,8 @@ scoreci <- function(x1,
 
   p1hat <- x1 / n1
   p2hat <- x2 / n2
-#  p1hat <- ifelse(n1 == 0, 0, x1 / n1)
-#  p2hat <- ifelse(n2 == 0, 0, x2 / n2)
+  #  p1hat <- ifelse(n1 == 0, 0, x1 / n1)
+  #  p2hat <- ifelse(n2 == 0, 0, x2 / n2)
 
   # wrapper function for scoretheta
   myfun <- function(theta,
@@ -623,7 +623,7 @@ scoreci <- function(x1,
     Q_FE <- at_FE$Q
     # Exclude "double zero" cells from heterogeneity test for RR and OR
     doublezero <- (x1 == 0 & x2 == 0) & contrast %in% c("RR", "OR") |
-                  (x1 == n1 & x2 == n2) & contrast == "OR"
+      (x1 == n1 & x2 == n2) & contrast == "OR"
     Q_df <- length(x1[!doublezero]) - 1 # Need to suppress Qtest output if Q_df == 0
     I2 <- max(0, 100 * (Q_FE - Q_df) / Q_FE)
     pval_het <- 1 - pchisq(Q_FE, Q_df)
@@ -705,8 +705,10 @@ scoreci <- function(x1,
     )
     point_FE_unstrat <- bisect(
       ftn = function(theta) {
-        myfun(theta, randswitch = FALSE, ccswitch = 0,
-              stratswitch = FALSE, lev = 0) - 0
+        myfun(theta,
+          randswitch = FALSE, ccswitch = 0,
+          stratswitch = FALSE, lev = 0
+        ) - 0
       }, contrast = contrast, distrib = distrib,
       precis = precis + 1, uplow = "low"
     )
@@ -815,7 +817,7 @@ scoreci <- function(x1,
   }
   if (simpleskew == TRUE && skew == TRUE) {
     pval <- NULL # simple version of skewness-corrected score is
-                 # not valid for producing a p-value
+    # not valid for producing a p-value
     if (warn == TRUE) {
       warning(paste0("p-values not calculable with simpleskew == TRUE"),
         call. = FALSE
@@ -864,24 +866,28 @@ scoreci <- function(x1,
         badrange <- range(fullseq[dt < 0], na.rm = TRUE)
         anydtflag <- TRUE
         if (warn == TRUE) {
-          warning(paste0(
-            "Negative discriminant (min: ", round(min(dt, na.rm = T), 4),
-            ") in quadratic skewness corrected score between (",
-            paste(round(badrange, 5), collapse = ","),
-            "). Simplified skewness correction used in this range."
-          ),
-          call. = FALSE
+          warning(
+            paste0(
+              "Negative discriminant (min: ", round(min(dt, na.rm = T), 4),
+              ") in quadratic skewness corrected score between (",
+              paste(round(badrange, 5), collapse = ","),
+              "). Simplified skewness correction used in this range."
+            ),
+            call. = FALSE
           )
         }
         if (scoreth0$dsct < 0 && warn == TRUE) {
-          warning(paste0("1-sided p-value not calculable for theta0 = ",
-                         theta0),
-                  call. = FALSE
+          warning(
+            paste0(
+              "1-sided p-value not calculable for theta0 = ",
+              theta0
+            ),
+            call. = FALSE
           )
         }
         if (scorezero$dsct < 0 && warn == TRUE) {
           warning(paste0("2-sided p-value not calculable"),
-                  call. = FALSE
+            call. = FALSE
           )
         }
       }
@@ -920,17 +926,21 @@ scoreci <- function(x1,
   if (stratified == TRUE) {
     dim1 <- 1
     myseq <- array(seq(xlim[, 1], xlim[, 2], length.out = rangen),
-                   dim = c(rangen, dim1))
+      dim = c(rangen, dim1)
+    )
   } else {
     dim1 <- nstrat
-    myseq <- array(sapply(1:nstrat, function(i)
-      seq(xlim[i, 1], xlim[i, 2], length.out = rangen)),
-      dim = c(rangen, dim1))
+    myseq <- array(
+      sapply(1:nstrat, function(i) {
+        seq(xlim[i, 1], xlim[i, 2], length.out = rangen)
+      }),
+      dim = c(rangen, dim1)
+    )
   }
   # Create flag to identify where negative discriminants occur within the
   # plotting range, i.e. in the vicinity of the confidence interval
   dtseg <- array(sapply(1:rangen, function(i) mydsct(myseq[i, ])),
-                 dim = c(dim1, rangen)
+    dim = c(dim1, rangen)
   )
   dtflag <- FALSE
   if (min(dtseg, na.rm = TRUE) < 0 && skew == TRUE && !simpleskew) {
@@ -965,12 +975,15 @@ scoreci <- function(x1,
     }
     # score for plotting
     sc <- array(sapply(1:rangen, function(i) myfun(myseq[i, ])),
-                  dim = c(dim1, rangen)
+      dim = c(dim1, rangen)
     )
     # simpleskew version for displaying in event of negative discriminant
-    ssc <- array(sapply(1:rangen,
-                        function(i) myfun(myseq[i, ], ssswitch = TRUE)),
-                dim = c(dim1, rangen)
+    ssc <- array(
+      sapply(
+        1:rangen,
+        function(i) myfun(myseq[i, ], ssswitch = TRUE)
+      ),
+      dim = c(dim1, rangen)
     )
 
     if (stratified == FALSE && nstrat > 0) {
@@ -991,7 +1004,7 @@ scoreci <- function(x1,
           # log = ifelse(contrast == "RD", "", "x")
         )
         if (dtflag == TRUE) {
-          lines(myseq[,i], ssc[i, ], col = "grey", lty = 2)
+          lines(myseq[, i], ssc[i, ], col = "grey", lty = 2)
           # lines(myseq, uc[i, ], col = "green", lty = 3)
         }
         text(
@@ -1236,12 +1249,14 @@ tdasci <- function(x1,
                    prediction = FALSE,
                    warn = TRUE,
                    ...) {
-  if (contrast == "RR" && (all(x1 == x2) || all(x1 == 0) || all(x2 == 0) )) {
+  if (contrast == "RR" && (all(x1 == x2) || all(x1 == 0) || all(x2 == 0))) {
     # If no discordant cells, random effects method gives CI as (1,1)
     # If no cases at all on one treatment, random effects method gives CI as (0,0) or (Inf,Inf)
     # So suggest use fixed effects stratified SCAS instead of random effects
     random <- FALSE
-  } else random <- TRUE
+  } else {
+    random <- TRUE
+  }
   scoreci(
     x1 = x1,
     n1 = n1,
@@ -1365,8 +1380,8 @@ scoretheta <- function(theta,
   )
   p1hat <- x1 / n1
   p2hat <- x2 / n2
-#  p1hat <- ifelse(n1 == 0, 0, x1 / n1)
-#  p2hat <- ifelse(n2 == 0, 0, x2 / n2)
+  #  p1hat <- ifelse(n1 == 0, 0, x1 / n1)
+  #  p2hat <- ifelse(n2 == 0, 0, x2 / n2)
   x <- x1 + x2
   N <- n1 + n2
 
@@ -1644,7 +1659,7 @@ scoretheta <- function(theta,
         # The below gives essentially the same correction as Gart 1985
         # Slightly different from cc*Vdot, but p-value matches Mantel-Haenszel
         corr <- cc * sum(((wt / sum(wt))^2) * (1 / (n1 * p1d * (1 - p1d)) +
-                                           1 / (n2 * p2d * (1 - p2d))))
+          1 / (n2 * p2d * (1 - p2d))))
       } else if (contrast == "RR") {
         # cc for stratified RR (suggested in Laud 2017, Appendix S2)
         # Confirmed to give p-value matching corrected Mantel-Haenszel test
