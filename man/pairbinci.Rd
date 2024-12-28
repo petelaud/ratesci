@@ -8,20 +8,23 @@ pairbinci(
   x,
   contrast = "RD",
   level = 0.95,
-  method_RD = "Score",
-  method_RR = "Score",
+  cc = FALSE,
+  cctype = "constant",
+  method_RD = "Score_closed",
+  method_RR = "Score_closed",
   method_OR = "SCAS",
+  moverbase = "SCAS",
   theta0 = NULL,
   precis = 6
 )
 }
 \arguments{
-\item{x}{A numeric vector object specified as c(a,b,c,d)
+\item{x}{A numeric vector object specified as c(a, b, c, d)
 where:
 a is the number of pairs with the event (e.g. success) under both
   conditions (e.g. treated/untreated, or case/control)
-b is the count of the number with the event on condition 1 only (=n12)
-c is the count of the number with the event on condition 2 only (=n21)
+b is the count of the number with the event on condition 1 only (= n12)
+c is the count of the number with the event on condition 2 only (= n21)
 d is the number of pairs with no event under both conditions
 (Note the order of a and d is only important for contrast="RR".)}
 
@@ -31,43 +34,80 @@ d is the number of pairs with no event under both conditions
 \item{level}{Number specifying confidence level (between 0 and 1, default
 0.95).}
 
+\item{cc}{Number or logical (default FALSE) specifying (amount of) continuity
+correction. When a score-based method is used, cc = 0.5 corresponds to the
+continuity-corrected McNemar test.}
+
+\item{cctype}{Character string indicating the type of continuity correction
+to be applied. "constant" or "delrocco".}
+
 \item{method_RD}{Character string indicating the confidence interval method
-to be used for contrast="RD". "Score" = Tango asymptotic score (default),
+to be used for contrast = "RD". "Score" = iterative Tango asymptotic score,
+"Score_closed" = closed form solution for Tango interval (default),
+"MOVER" = hybrid MOVER method for paired RD (as per "method 8" in
+          Newcombe, but with a choice of input methods - see moverbase),
+"MOVER_newc" = hybrid MOVER method with "correction" to correlation
+               estimate (Newcombe's "method 10"),
 "TDAS" = t-distribution asymptotic score (experimental method, seems to
 struggle with low numbers).}
 
 \item{method_RR}{Character string indicating the confidence interval method
-to be used for contrast="RR". "Score" = Tang asymptotic score (default),
-"TDAS" t-distribution asymptotic score (experimental method, seems to
+to be used for contrast = "RR". "Score" = iterative Tang asymptotic score,
+"Score_closed" = closed form solution for Tang interval (default),
+"MOVER" = hybrid MOVER method for paired RR,
+"MOVER_newc" = hybrid MOVER method with "correction" to correlation
+               estimate from Newcombe's RD method,
+"TDAS" = t-distribution asymptotic score (experimental method, seems to
 struggle with low numbers).}
 
 \item{method_OR}{Character string indicating the confidence interval method
-to be used for contrast="OR", all of which are based on transformation of
+to be used for contrast = "OR", all of which are based on transformation of
 an interval for a single proportion b/(b+c):
 "SCAS" = transformed skewness-corrected score (default),
-"Jeffreys" = transformed Jeffreys (to be added),
+"jeff" = transformed Jeffreys,
 "midp" = transformed mid-p,
-("Wilson" = transformed Wilson score - not yet included, would be for
-reference only, not recommended).}
+"wilson" = transformed Wilson score - included for reference only, not
+recommended.}
+
+\item{moverbase}{Character string indicating the base method used as input
+for the MOVER methods (when method_RR or method_RD = "MOVER"):
+"wilson" = Wilson score (not recommended, known to be skewed),
+"jeff" = Jeffreys equal-tailed interval,
+"midp" = mid-p,
+"SCAS" = skewness-corrected score (default)}
 
 \item{theta0}{Number to be used in a one-sided significance test (e.g.
-non-inferiority margin). 1-sided p-value will be <0.025 iff 2-sided 95\% CI
+non-inferiority margin). 1-sided p-value will be < 0.025 iff 2-sided 95\% CI
 excludes theta0. NB: can also be used for a superiority test by setting
-theta0=0.}
+theta0 = 0.}
 
 \item{precis}{Number (default 6) specifying precision (i.e. number of decimal
 places) to be used in optimisation subroutine for the confidence interval.}
 }
+\value{
+A list containing the following components: \describe{
+  \item{data}{the input data in 2x2 matrix form}
+  \item{estimates}{the requested contrast, with its confidence interval and
+  the specified confidence level}
+  \item{pval}{the corresponding 2-sided significance test
+  against the null hypothesis that p_1 = p_2 (McNemar's test), and one-sided
+  significance tests against the null hypothesis that theta >= or <= theta0
+  as specified}}
+}
 \description{
-Score-based confidence intervals for the rate (or risk) difference ('RD'),
+Confidence intervals for the rate (or risk) difference ('RD'),
 rate ratio ('RR') or odds ratio ('OR'), for paired binomial data.
-(For paired Poisson rates, use the tdasci function with distrib='poi',
-and weighting='MH', with pairs as strata.)
-This function applies the Tango and Tang methods for RD and RR respectively,
-as well as an experimental method using the stratified TDAS method with
-pairs as strata.
+(For paired Poisson rates, suggest use the tdasci function with distrib = "poi",
+and weighting = "MH", with pairs as strata.)
+This function applies the score-based Tango and Tang methods for RD and
+RR respectively, with iterative and closed-form versions, as well as an
+experimental method using the stratified TDAS method with pairs as strata.
+Also includes MOVER options using the Method of Variance Estimates Recovery
+for paired RD and RR.
 For OR, intervals are produced based on transforming various intervals for
 the single proportion, including SCAS, mid-p and Jeffreys.
+All methods have options for continuity correction, and the magnitude of
+correction can be customised.
 }
 \examples{
 # Data example from Agresti-Min 2005
@@ -76,31 +116,63 @@ pairbinci(x = c(53, 16, 8, 9), contrast = "RD", method_RD = "TDAS")
 pairbinci(x = c(53, 16, 8, 9), contrast = "RR", method_RR = "Score")
 pairbinci(x = c(53, 16, 8, 9), contrast = "RR", method_RR = "TDAS")
 pairbinci(x = c(53, 16, 8, 9), contrast = "OR", method_OR = "SCAS")
+# Example from Fagerland et al 2014
+pairbinci(x = c(1, 1, 7, 12), contrast = "RD", method_RD = "Score_closed")
+pairbinci(x = c(1, 1, 7, 12), contrast = "RD", method_RD = "MOVER_newc", moverbase = "wilson")
+pairbinci(x = c(1, 1, 7, 12), contrast = "RD", method_RD = "MOVER_newc", moverbase = "SCAS")
+pairbinci(x = c(1, 1, 7, 12), contrast = "RR", method_RR = "Score_closed")
+pairbinci(x = c(1, 1, 7, 12), contrast = "RR", method_RR = "MOVER", moverbase = "wilson")
+pairbinci(x = c(1, 1, 7, 12), contrast = "RR", method_RR = "MOVER", moverbase = "SCAS")
+pairbinci(x = c(1, 1, 7, 12), contrast = "RR", method_RR = "MOVER_newc", moverbase = "SCAS")
+pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method_OR = "wilson")
+pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method_OR = "midp")
+pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method_OR = "SCAS")
+
 }
 \references{
-Laud PJ. Equal-tailed confidence intervals for comparison of
-  rates. Pharmaceutical Statistics 2017; 16:334-348.
+Laud PJ. Equal-tailed confidence intervals for comparison of rates.
+  Pharmaceutical Statistics 2017; 16:334-348.
 
   Tango T. Equivalence test and confidence interval for the difference
-  in proportions for the paired-sample design. Statistics in Medicine
-  1998; 17:891-908
+  in proportions for the paired-sample design.
+  Statistics in Medicine 1998; 17:891-908
 
   Tango T. Improved confidence intervals for the difference between binomial
   proportions based on paired data by Robert G. Newcombe, Statistics in
-  Medicine, 17, 2635-2650 (1998). Statistics in Medicine 1999;
-  18(24):3511-3513
+  Medicine, 17, 2635-2650 (1998).
+  Statistics in Medicine 1999; 18(24):3511-3513
 
   Tang N-S, Tang M-L, Chan ISF. On tests of equivalence via non-unity
-  relative risk for matched-pair design. Statistics in Medicine 2003;
-  22:1217-1233
+  relative risk for matched-pair design.
+  Statistics in Medicine 2003; 22:1217-1233
 
   Fagerland MW, Lydersen S, Laake P. Recommended tests and
-  confidence intervals for paired binomial proportions. Statistics in
-  Medicine 2014; 33(16):2850-2875
+  confidence intervals for paired binomial proportions.
+  Statistics in Medicine 2014; 33(16):2850-2875
 
   Agresti A, Min Y. Simple improved confidence intervals for
-  comparing matched proportions. Statistics in Medicine 2005;
-  24:729-740
+  comparing matched proportions.
+  Statistics in Medicine 2005; 24:729-740
+
+  Yang Z, Sun X and Hardin JW. A non-iterative implementation of Tango's
+  score confidence interval for a paired difference of proportions.
+  Statistics in Medicine 2013; 32:1336-1342
+
+  Chang P et al. Continuity corrected score confidence interval for the
+  difference in proportions in paired data.
+  Journal of Applied Statistics 2024; 51-1:139-152
+
+  Newcombe RG. Improved confidence intervals for the difference between
+  binomial proportions based on paired data.
+  Statistics in Medicine 1998; 17:2635-2650
+
+  Tang M-L, Li H-Q, Tang N-S. Confidence interval construction for proportion
+  ratio in paired studies based on hybrid method.
+  Statistical Methods in Medical Research 2010; 21(4):361-378
+
+  Tang N-S et al. Asymptotic confidence interval construction for proportion
+  difference in medical studies with bilateral data.
+  Statistical Methods in Medical Research. 2011; 20(3):233-259
 }
 \author{
 Pete Laud, \email{p.j.laud@sheffield.ac.uk}
