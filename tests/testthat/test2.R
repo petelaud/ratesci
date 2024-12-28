@@ -91,10 +91,12 @@ for (a in 0:n) {
 
 test_that("p-values consistent with paired confidence interval", {
   expect_equal(
-    (sapply(1:dim(combos)[1], function(i) pairbinci(
-      x = combos[i, ], contrast = "RD")$estimates[1] > 0)),
-    (sapply(1:dim(combos)[1], function(i) pairbinci(
-      x = combos[i, ], contrast = "RD")$pval[, "pval_right"] < 0.025))
+    (sapply(1:dim(combos)[1],
+            function(i) pairbinci(x = combos[i, ], contrast = "RD", method_RD = "Score")$estimates[1] > 0
+            )),
+    (sapply(1:dim(combos)[1],
+            function(i) pairbinci(x = combos[i, ], contrast = "RD", method_RD = "Score")$pval[, "pval_right"] < 0.025
+            ))
   )
 })
 for (contrast in c("RR", "OR")) {
