@@ -1,12 +1,36 @@
 # ratesci 0.4-0.9000 (yyyy-mm-dd)
 
 ## New features
+### In `pairbinci()`:
+* Confirmed that the 2-sided significance test is equivalent to the McNemar test (with or without continuity correction).
+* Added new default method_RD = "Score_closed for non-iterative calculation of the Tango score interval for contrast='RD'.
+* Added new default method_RR = "Score_closed" for non-iterative calculation of the Tang score interval for contrast='RR'.
+* Added options for method_RD = "MOVER" and method_RR = "MOVER".
+* Also options "MOVER_newc" including Newcombe's correlation correction.
+* Added moverbase argument, for specifying different versions of the MOVER methods.
+* Added option for continuity correction for all methods for all contrasts.
+* Improved documentation.
+### In `scoreci()`:
+* Confirmed continuity corrections for all stratified (fixed-effects) binomial contrasts are consistent with the Mantel-Haenszel correction.
+* Updated heterogeneity test to consistently omit non-informative strata, and output the degrees of freedom.
+### In `moverci()`:
+* Added continuity correction for type = "wilson".
+* Added options for SCAS and midp intervals
 
 ## Bug fixes
-* In `scoreci()`, improved handling of special cases for MN weighting (#25, thanks to Vincent Jaquet for reporting the issue and proposed solution. Also #27 for RR, thanks to Shangchen Song.)
+### In `scoreci()`:
+* Improved handling of special cases for MN weighting (#25, thanks to Vincent Jaquet for reporting the issue and proposed solution. Also #27 for RR, thanks to Shangchen Song.) As a result, double-zero strata need not be excluded when weighting = "MN".
+### In `moverci()`:
+* Corrected calculation of score intervals for single Poisson rate.
+* Same correction affects MOVER method for comparison of Poisson rates
+ [i.e. moverci() with distrib = "poi" and type = "wilson"]
+
+
 
 ## Other
-
+* Improved documentation of hypothesis tests and continuity corrections, clarifying links to Chi-squared tests and CMH test with selected weights.
+* Correction to documentation of default weights for OR.
+* Added tests confirming equivalence of iterative and closed-form methods in pairbinci.
 
 # ratesci 0.4-0 (2021-12-04)
 
