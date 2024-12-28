@@ -4,9 +4,10 @@
 \name{ratesci-package}
 \alias{ratesci}
 \alias{ratesci-package}
-\title{ratesci: A package for computing confidence intervals for various
-comparisons of independent binomial and Poisson rates.}
+\title{ratesci: Confidence Intervals for Comparisons of Binomial or Poisson Rates}
 \description{
+Computes confidence intervals for the rate (or risk) difference ('RD') or rate ratio (or relative risk, 'RR') for binomial proportions or Poisson rates, or for odds ratio ('OR', binomial only). Also confidence intervals for a single binomial or Poisson rate, and intervals for matched pairs. Includes skewness-corrected asymptotic score ('SCAS') methods, which have been developed in Laud (2017) \doi{10.1002/pst.1813} from Miettinen & Nurminen (1985) \doi{10.1002/sim.4780040211} and Gart & Nam (1988) \doi{10.2307/2531848}. The same score produces hypothesis tests analogous to the test for binomial RD and RR by Farrington & Manning (1990) \doi{10.1002/sim.4780091208}. The package also includes MOVER methods (Method Of Variance Estimates Recovery) for all contrasts, derived from the Newcombe method but with options to use equal-tailed intervals in place of the Wilson score method, and generalised for Bayesian applications incorporating prior information. So-called 'exact' methods for strictly conservative coverage are approximated using continuity corrections. Also includes methods for stratified calculations (e.g. meta-analysis), either assuming fixed effects (matching the CMH test) or incorporating stratum heterogeneity.
+
 Computes confidence intervals for the rate difference (RD), rate ratio (RR),
 or odds ratio (OR), or for the single rate (p), for independent binomial or
 Poisson rates. Includes score-based methods with (or without) skewness
@@ -85,6 +86,18 @@ Donner A, Zou G. Closed-form confidence intervals for functions of the
 normal mean and standard deviation. Statistical Methods in Medical Research
 2012; 21(4):347-359.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/petelaud/ratesci}
+  \item Report bugs at \url{https://github.com/petelaud/ratesci/issues}
+}
+
+}
 \author{
+\strong{Maintainer}: Pete Laud \email{p.j.laud@sheffield.ac.uk} (\href{https://orcid.org/0000-0002-3766-7090}{ORCID})
+
+
 Pete Laud, \email{p.j.laud@sheffield.ac.uk}
 }
+\keyword{internal}

@@ -4,7 +4,8 @@ Title: Confidence Intervals for Comparisons of Binomial or Poisson Rates
 Version: 0.4-0.9000
 Date: 2021-12-04
 Authors@R: person("Pete", "Laud", email = "p.j.laud@sheffield.ac.uk",
-                  role = c("aut", "cre"))
+                  role = c("aut", "cre"),
+                  comment = c(ORCID = "0000-0002-3766-7090"))
 Author: Pete Laud [aut, cre]
 Maintainer: Pete Laud <p.j.laud@sheffield.ac.uk>
 Description: Computes confidence intervals for the rate (or risk)
@@ -20,7 +21,8 @@ Description: Computes confidence intervals for the rate (or risk)
     Farrington & Manning (1990) <doi:10.1002/sim.4780091208>. 
     The package also includes MOVER methods
     (Method Of Variance Estimates Recovery) for all contrasts, derived 
-    from the Newcombe method but using equal-tailed Jeffreys intervals,
+    from the Newcombe method but with options to use equal-tailed 
+    intervals in place of the Wilson score method,
     and generalised for Bayesian applications incorporating prior 
     information. So-called 'exact' methods for strictly conservative 
     coverage are approximated using continuity corrections.
@@ -31,6 +33,8 @@ Depends: R (>= 3.6.0)
 License: GPL-3
 Encoding: UTF-8
 RoxygenNote: 7.3.2
-Imports: 
+Imports: polynom
 Suggests: testthat
 LazyData: true
+URL: https://github.com/petelaud/ratesci
+BugReports: https://github.com/petelaud/ratesci/issues
