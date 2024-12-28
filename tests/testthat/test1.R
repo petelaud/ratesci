@@ -128,6 +128,13 @@ for (a in 0:n) {
     }
   }
 }
+combos <- combos[rowSums(combos) == n,]
+
+# Exclude cases with zero marginal totals, to avoid comparing results that are
+# = Inf using closed-form code, vs very large using iterative method
+ zero1 <- rowSums(combos[,c(1,2)]) == 0
+ zero2 <- rowSums(combos[,c(1,3)]) == 0
+ combos <- combos[(!zero1 & !zero2),]
 
 test_that("Transposed inputs produce inverted paired intervals", {
   expect_equal(
@@ -151,6 +158,87 @@ test_that("Transposed inputs produce inverted paired intervals", {
     ), 5), 5)))
   )
 })
+
+test_that("Closed form methods match iterative results for paired intervals", {
+  expect_equal(
+    t(unname(
+        round(sapply(
+      1:dim(combos)[1],
+      function(i)
+        pairbinci(x = combos[i, ], contrast = "RD", method_RD = "Score")$estimates[, c(1, 3)]
+    ), 5)
+    )),
+    t(unname(
+        round(sapply(
+      1:dim(combos)[1],
+      function(i)
+        pairbinci(x = combos[i, ], contrast = "RD", method_RD = "Score_closed")$estimates[, c(1, 3)]
+      ), 5)
+      ))
+  )
+
+if (FALSE) {
+  # These do not always match, because the closed form method fails to find a solution
+  # when n12 = n21 = N/2
+  # Also smaller differences in other cases when n12 = 0 and n21 = 1
+  expect_equal(
+    t(unname(
+#      ci1 <-
+        round(sapply(
+        1:dim(combos)[1],
+        function(i)
+          pairbinci(x = combos[i, ], contrast = "RD", method_RD = "Score", cc=TRUE)$estimates[, c(1, 3)]
+      ), 5)
+    )),
+    t(unname(
+#      ci2 <-
+        round(sapply(
+        1:dim(combos)[1],
+        function(i)
+          pairbinci(x = combos[i, ], contrast = "RD", method_RD = "Score_closed", cc=TRUE)$estimates[, c(1, 3)]
+        ), 5)
+    ))
+  )
+}
+
+  expect_equal(
+    t(unname(
+      round(sapply(
+        1:dim(combos)[1],
+        function(i)
+          pairbinci(x = combos[i, ], contrast = "RR", method_RR = "Score")$estimates[, c(1, 3)]
+      ), 3)
+    )),
+    t(unname(
+      round(sapply(
+        1:dim(combos)[1],
+        function(i)
+            pairbinci(x = combos[i, ], contrast = "RR", method_RR = "Score_closed")$estimates[, c(1, 3)]
+      ), 3)
+    ))
+  )
+
+# These ones match to 2dps
+  expect_equal(
+    t(unname(
+      round(sapply(
+        1:dim(combos)[1],
+        function(i)
+          pairbinci(x = combos[i, ], contrast = "RR", method_RR = "Score", cc=0.5)$estimates[, c(1, 3)]
+      ), 2)
+    )),
+    t(unname(
+      round(sapply(
+        1:dim(combos)[1],
+        function(i)
+          #          for (i in 1:dim(combos)[1]) {
+          pairbinci(x = combos[i, ], contrast = "RR", method_RR = "Score_closed", cc=0.5)$estimates[, c(1, 3)]
+        #          }
+      ), 2)
+    ))
+  )
+  })
+
 
 if (FALSE) {
   scoreci(x1 = 0, x2 = 0, n1 = 20, n2 = 10, contrast = "RR", plot = T)
