@@ -36,8 +36,7 @@ Poisson rates require only a1, a2.}
 
 \item{cc}{Number or logical specifying (amount of) continuity correction
 (default FALSE). Numeric value is taken as the gamma parameter in Laud 2017,
-Appendix S2 (default 0.5 if cc=TRUE). Forced equal to 0.5 if type="exact".
-NB: cc currently not implemented for type="wilson".}
+Appendix S2 (default 0.5 if cc = TRUE). Forced equal to 0.5 if type = "exact".}
 
 \item{level}{Number specifying confidence level (between 0 and 1, default
 0.95).}
@@ -54,14 +53,15 @@ the individual group rates.
 "jeff" = Jeffreys equal-tailed intervals (default);
 "exact" = Clopper-Pearson/Garwood exact intervals (note this does NOT
 result in a strictly conservative interval for the contrast, except for
-contrast='p'. The scoreci function with cc=TRUE is recommended as a
+contrast = "p". The scoreci function with cc = TRUE is recommended as a
 superior approximation of 'exact' methods);
-"midp" = mid-p intervals (to be added);
-"SCAS" = SCAS non-iterative intervals (to be added);
+"midp" = mid-p intervals;
+"SCAS" = SCAS non-iterative intervals;
 "wilson" = Wilson score intervals (as per Newcombe 1998).
+           (Rao score is used for distrib = "poi")
 NB: "wilson" option is included only for legacy validation against previous
-published method by Newcombe. It is not recommended, as type="jeff"
-achieves much better coverage properties.}
+published method by Newcombe. It is not recommended, as type = "jeff"
+or other equal-tailed options achieve much better coverage properties.}
 
 \item{adj}{Logical (default FALSE) indicating whether to apply the boundary
 adjustment for Jeffreys intervals recommended on p108 of Brown et al.

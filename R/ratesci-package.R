@@ -1,3 +1,5 @@
+#' @keywords internal
+"_PACKAGE"
 #' ratesci: A package for computing confidence intervals for various
 #' comparisons of independent binomial and Poisson rates.
 #'
@@ -29,7 +31,6 @@
 #'   for a single rate
 #' }
 #'
-#' @docType package
 #' @name ratesci-package
 #' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
 #' @references
