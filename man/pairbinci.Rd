@@ -97,7 +97,7 @@ A list containing the following components: \describe{
 \description{
 Confidence intervals for the rate (or risk) difference ('RD'),
 rate ratio ('RR') or odds ratio ('OR'), for paired binomial data.
-(For paired Poisson rates, suggest use the tdasci function with distrib = "poi",
+(For paired Poisson rates, use the tdasci function with distrib = "poi",
 and weighting = "MH", with pairs as strata.)
 This function applies the score-based Tango and Tang methods for RD and
 RR respectively, with iterative and closed-form versions, as well as an

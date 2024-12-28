@@ -161,21 +161,23 @@ test_that("Transposed inputs produce inverted paired intervals", {
 
 test_that("Closed form methods match iterative results for paired intervals", {
   expect_equal(
-    t(unname(
-        round(sapply(
+  t(unname(
+    round(sapply(
       1:dim(combos)[1],
-      function(i)
+      function(i) {
         pairbinci(x = combos[i, ], contrast = "RD", method_RD = "Score")$estimates[, c(1, 3)]
+      }
     ), 5)
-    )),
-    t(unname(
-        round(sapply(
+  )),
+  t(unname(
+    round(sapply(
       1:dim(combos)[1],
-      function(i)
+      function(i) {
         pairbinci(x = combos[i, ], contrast = "RD", method_RD = "Score_closed")$estimates[, c(1, 3)]
-      ), 5)
-      ))
-  )
+      }
+    ), 5)
+  ))
+)
 
 if (FALSE) {
   # These do not always match, because the closed form method fails to find a solution
