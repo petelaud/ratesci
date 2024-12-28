@@ -400,6 +400,8 @@ scoreci <- function(x1,
       empty_strat <- (n1 == 0)
     } else {
       empty_strat <- (n1 == 0 | n2 == 0) |
+        # 17Jul2023: Would prefer to keep if only one arm is empty, for consistency with CMH test,
+        # and to maintain ITT principle. (Such strata make no contribution to the CMH statistic.)
         # Also drop uninformative strata for RR & OR
         # Note for RR & OR with IVS/INV weighting such strata have zero weight
         # and for RR with fixed weights and RRtang = FALSE they dont contribute
@@ -498,6 +500,8 @@ scoreci <- function(x1,
 
   p1hat <- x1 / n1
   p2hat <- x2 / n2
+#  p1hat <- ifelse(n1 == 0, 0, x1 / n1)
+#  p2hat <- ifelse(n2 == 0, 0, x2 / n2)
 
   # wrapper function for scoretheta
   myfun <- function(theta,
@@ -620,7 +624,7 @@ scoreci <- function(x1,
     # Exclude "double zero" cells from heterogeneity test for RR and OR
     doublezero <- (x1 == 0 & x2 == 0) & contrast %in% c("RR", "OR") |
                   (x1 == n1 & x2 == n2) & contrast == "OR"
-    Q_df <- length(x1[!doublezero]) - 1
+    Q_df <- length(x1[!doublezero]) - 1 # Need to suppress Qtest output if Q_df == 0
     I2 <- max(0, 100 * (Q_FE - Q_df) / Q_FE)
     pval_het <- 1 - pchisq(Q_FE, Q_df)
     # Qualitative interaction test is calculated further down
@@ -1232,6 +1236,12 @@ tdasci <- function(x1,
                    prediction = FALSE,
                    warn = TRUE,
                    ...) {
+  if (contrast == "RR" && (all(x1 == x2) || all(x1 == 0) || all(x2 == 0) )) {
+    # If no discordant cells, random effects method gives CI as (1,1)
+    # If no cases at all on one treatment, random effects method gives CI as (0,0) or (Inf,Inf)
+    # So suggest use fixed effects stratified SCAS instead of random effects
+    random <- FALSE
+  } else random <- TRUE
   scoreci(
     x1 = x1,
     n1 = n1,
@@ -1254,10 +1264,11 @@ tdasci <- function(x1,
     weighting = weighting,
     MNtol = MNtol,
     wt = wt,
-    random = TRUE,
+    random = random,
     prediction = prediction,
     skew = skew,
     simpleskew = FALSE,
+    warn = warn,
     ...
   )
 }
@@ -1354,6 +1365,8 @@ scoretheta <- function(theta,
   )
   p1hat <- x1 / n1
   p2hat <- x2 / n2
+#  p1hat <- ifelse(n1 == 0, 0, x1 / n1)
+#  p2hat <- ifelse(n2 == 0, 0, x2 / n2)
   x <- x1 + x2
   N <- n1 + n2
 
