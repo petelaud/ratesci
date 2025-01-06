@@ -67,11 +67,11 @@ for (i in 1:3) {
         OR = fround(scoreci(x1 = x1, x2 = x2, n1 = n1, n2 = n2, stratified = F, theta0 = 0.5, skew = F, ORbias = F, contrast = "OR")$estimates[, c(1, 3)], 3)
       ), MOVERJ =
       cbind(
-        RDbin = fround(moverci(x1 = x1, x2 = x2, n1 = n1, n2 = n2, distrib = "bin", contrast = "RD", adj = F)[, c(1, 3)], 3),
-        RDpoi = fround(moverci(x1 = x1, x2 = x2, n1 = n1, n2 = n2, distrib = "poi", contrast = "RD", adj = F)[, c(1, 3)], 3),
-        RRbin = fround(moverci(x1 = x1, x2 = x2, n1 = n1, n2 = n2, distrib = "bin", contrast = "RR", adj = F)[, c(1, 3)], 3),
-        RRpoi = fround(moverci(x1 = x1, x2 = x2, n1 = n1, n2 = n2, distrib = "poi", contrast = "RR", adj = F)[, c(1, 3)], 3),
-        OR = fround(moverci(x1 = x1, x2 = x2, n1 = n1, n2 = n2, distrib = "bin", contrast = "OR", adj = F)[, c(1, 3)], 3)
+        RDbin = fround(moverci(x1 = x1, x2 = x2, n1 = n1, n2 = n2, distrib = "bin", contrast = "RD", adj = F, type="jeff")[, c(1, 3)], 3),
+        RDpoi = fround(moverci(x1 = x1, x2 = x2, n1 = n1, n2 = n2, distrib = "poi", contrast = "RD", adj = F, type="jeff")[, c(1, 3)], 3),
+        RRbin = fround(moverci(x1 = x1, x2 = x2, n1 = n1, n2 = n2, distrib = "bin", contrast = "RR", adj = F, type="jeff")[, c(1, 3)], 3),
+        RRpoi = fround(moverci(x1 = x1, x2 = x2, n1 = n1, n2 = n2, distrib = "poi", contrast = "RR", adj = F, type="jeff")[, c(1, 3)], 3),
+        OR = fround(moverci(x1 = x1, x2 = x2, n1 = n1, n2 = n2, distrib = "bin", contrast = "OR", adj = F, type="jeff")[, c(1, 3)], 3)
       )
     #                , AN=
     #                  c(
