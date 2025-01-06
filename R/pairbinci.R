@@ -718,9 +718,9 @@ moverpair <- function(x,
     u2 <- unname(rateci(x = xp1, n = N, distrib = "bin", level = level, cc = cc)[[1]][2])
   } else if (method == "wilson") {
     l1 <- wilsonci(x = x1p, n = N, distrib = "bin", level = level, cc = cc)[1]
-    u1 <- wilsonci(x = x1p, n = N, distrib = "bin", level = level, cc = cc)[2]
+    u1 <- wilsonci(x = x1p, n = N, distrib = "bin", level = level, cc = cc)[3]
     l2 <- wilsonci(x = xp1, n = N, distrib = "bin", level = level, cc = cc)[1]
-    u2 <- wilsonci(x = xp1, n = N, distrib = "bin", level = level, cc = cc)[2]
+    u2 <- wilsonci(x = xp1, n = N, distrib = "bin", level = level, cc = cc)[3]
   } else if (method == "jeff") {
     l1 <- unname(rateci(x = x1p, n = N, distrib = "bin", level = level, cc = cc)[[2]][1])
     u1 <- unname(rateci(x = x1p, n = N, distrib = "bin", level = level, cc = cc)[[2]][2])
@@ -728,9 +728,9 @@ moverpair <- function(x,
     u2 <- unname(rateci(x = xp1, n = N, distrib = "bin", level = level, cc = cc)[[2]][2])
   } else if (method == "midp") {
     l1 <- unname(rateci(x = x1p, n = N, distrib = "bin", level = level, cc = cc)[[3]][1])
-    u1 <- unname(rateci(x = x1p, n = N, distrib = "bin", level = level, cc = cc)[[3]][2])
+    u1 <- unname(rateci(x = x1p, n = N, distrib = "bin", level = level, cc = cc)[[3]][3])
     l2 <- unname(rateci(x = xp1, n = N, distrib = "bin", level = level, cc = cc)[[3]][1])
-    u2 <- unname(rateci(x = xp1, n = N, distrib = "bin", level = level, cc = cc)[[3]][2])
+    u2 <- unname(rateci(x = xp1, n = N, distrib = "bin", level = level, cc = cc)[[3]][3])
   }
 
   p1plus_hat <- x1p / N
