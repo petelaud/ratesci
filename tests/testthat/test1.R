@@ -179,13 +179,8 @@ test_that("Closed form methods match iterative results for paired intervals", {
   ))
 )
 
-if (FALSE) {
-  # These do not always match, because the closed form method fails to find a solution
-  # when n12 = n21 = N/2
-  # Also smaller differences in other cases when n12 = 0 and n21 = 1
   expect_equal(
     t(unname(
-#      ci1 <-
         round(sapply(
         1:dim(combos)[1],
         function(i)
@@ -193,7 +188,6 @@ if (FALSE) {
       ), 5)
     )),
     t(unname(
-#      ci2 <-
         round(sapply(
         1:dim(combos)[1],
         function(i)
@@ -201,7 +195,6 @@ if (FALSE) {
         ), 5)
     ))
   )
-}
 
   expect_equal(
     t(unname(

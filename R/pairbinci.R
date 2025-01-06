@@ -2,7 +2,7 @@
 #'
 #' Confidence intervals for the rate (or risk) difference ('RD'),
 #' rate ratio ('RR') or odds ratio ('OR'), for paired binomial data.
-#' (For paired Poisson rates, use the tdasci function with distrib = "poi",
+#' (For paired Poisson rates, suggest use the tdasci function with distrib = "poi",
 #' and weighting = "MH", with pairs as strata.)
 #' This function applies the score-based Tango and Tang methods for RD and
 #' RR respectively, with iterative and closed-form versions, as well as an
@@ -151,7 +151,6 @@ pairbinci <- function(x,
                       cctype = "constant",
                       method_RD = "Score_closed",
                       method_RR = "Score_closed",
-                      #                      boundarymod = FALSE,
                       method_OR = "SCAS",
                       moverbase = "SCAS",
                       theta0 = NULL,
@@ -429,14 +428,14 @@ scorepair <- function( # function to evaluate the score at a given value of
 #'
 #' R code to calculate Tango's score-based CI using a non-iterative method.
 #' For contrast = "RD" only.
-#' Code originates from Appendix B of Yang 2013:
-#' Statist. Med. 2013, 32 1336-1342
-#' with continuity correction from Chang 2024.
+#' Code originates from Appendix B of Yang 2013,
+#' with updates to include continuity correction from Chang 2024.
 #'
 #' References
 #'   Yang Z, Sun X and Hardin JW. A non-iterative implementation of Tango's
 #'   score confidence interval for a paired difference of proportions.
 #'   Statistics in Medicine 2013; 32:1336-1342
+#'
 #'   Chang P et al. Continuity corrected score confidence interval for the
 #'   difference in proportions in paired data.
 #'   Journal of Applied Statistics 2024; 51-1:139-152
@@ -463,14 +462,12 @@ tangoci <- function(x,
   alpha <- 1 - level
   g <- qnorm(1 - alpha / 2)^2
 
-  # From Chang 2024 including continuity correction
+  # Updated to include continuity correction from Chang 2024
   keep1 <- keep2 <- NULL
   for (uplow in c(-1, 1)) {
     corr <- 2 * cc * uplow
-    #  if (b==c) corr <- 3*corr
     G <- N^2 + g * N
     H <- 0.5 * g * (2 * N - b + c) - 2 * N * (b - c + corr) - g * N
-    # Note if b=c then H=2*N*(corr)
     I <- (b - c + corr)^2 - 0.5 * g * (b + c)
     m0 <- G^2
     m1 <- 2 * G * H
@@ -501,8 +498,7 @@ tangoci <- function(x,
         y1A <- x1 - nu1 / 3
       }
 
-      #    if (CritQ == 0) { ## keep two real roots;
-      if (abs(CritQ) < 1e-10) { ## keep two real roots;
+      if (CritQ == 0) { ## keep two real roots;
         BigA <- -d2 / 2 + Re(sqrt(as.complex(CritQ)))
         BigB <- -d2 / 2 - Re(sqrt(as.complex(CritQ)))
         Omega <- complex(real = -1 / 2, imaginary = sqrt(3) / 2)
@@ -530,15 +526,9 @@ tangoci <- function(x,
       y1 <- Re(y1A) # keep the real part;
       ny <- length(y1)
 
-      # When b=c and cc>0, we get H=2*N*(corr), which seems to lead to
-      # y1 =  u2 - u1^2/4 and
-      # y1 = 2 * u3/u1
-      # Rendering h2 NaN
-
       for (i in 1:ny) {
         h1[i] <- Re(sqrt(as.complex(u1^2 / 4 - u2 + y1[i])))
         h2[i] <- (u1 * y1[i] / 2 - u3) / (2 * h1[i])
-        if (abs(u1 * y1[i] / 2 - u3) < 1e-10) h2[i] <- 0 # Attempted fix
         h3[i] <- (u1 / 2 + h1[i])^2 - 4 * (y1[i] / 2 + h2[i])
         h4[i] <- (h1[i] - u1 / 2)^2 - 4 * (y1[i] / 2 - h2[i])
         if (h3[i] >= 0) {
@@ -550,6 +540,7 @@ tangoci <- function(x,
           root4[i] <- ((h1[i] - u1 / 2) - sqrt(h4[i])) / 2
         }
       }
+
       lower <- max(-1, min(root1, root2, root3, root4, na.rm = TRUE))
       upper <- min(max(root1, root2, root3, root4, na.rm = TRUE), 1)
 
@@ -561,7 +552,7 @@ tangoci <- function(x,
         root <- c(lower, upper)
       }
     }
-    if (b == c & cc == 0) { # Possibly only works without cc
+    if (b == c & cc == 0) { # Only works without cc
       root1 <- -sqrt(-u2)
       root2 <- sqrt(-u2)
       root <- c(root1, root2)
@@ -569,6 +560,13 @@ tangoci <- function(x,
     if (uplow == -1) {
       keep1 <- root[1]
     } else if (uplow == 1) keep2 <- root[2]
+  }
+  if (b == c & b == N/2) {
+    # Rare special case fails to find solution to the quartic
+    # and we have to resort to iterative method
+    fixint <- pairbinci(x = x, contrast = "RD", method_RD = "Score", level = level, cc = cc, bcf = bcf)$estimates[c(1,3)]
+    keep1 <- fixint[1]
+    keep2 <- fixint[2]
   }
 
   estimates <- cbind(
@@ -578,8 +576,6 @@ tangoci <- function(x,
 
   return(estimates)
 }
-
-
 
 # Internal function
 # Adapted from code kindly provided by Guogen Shan for the closed-form
