@@ -89,7 +89,7 @@ moverci <- function(x1,
                     ...) {
   if (!(tolower(substr(type, 1, 4)) %in%
     c("jeff", "wils", "exac", "scas", "midp"))) {
-    print("Type must be one of 'jeffreys', 'wilson', 'SCAS', 'midp' or 'exact'")
+    print("Type must be one of 'jeff', 'wilson', 'SCAS', 'midp' or 'exact'")
     stop()
   }
   if (!(tolower(substr(distrib, 1, 3)) %in% c("bin", "poi"))) {
@@ -167,8 +167,8 @@ moverci <- function(x1,
     } else {
       j2 <- NULL
     }
-    p1hat <- j1[, 3]
-    p2hat <- j2[, 3]
+    p1hat <- j1[, 2]
+    p2hat <- j2[, 2]
   } else if (type == "wilson") {
     # or use Wilson intervals as per Newcombe 1998
     j1 <- wilsonci(
@@ -197,6 +197,8 @@ moverci <- function(x1,
     } else {
       j2 <- NULL
     }
+    p1hat <- j1[, 2]
+    p2hat <- j2[, 2]
   } else if (type == "midp") {
     # or use mid-p intervals
     j1 <- rateci(
@@ -211,11 +213,13 @@ moverci <- function(x1,
     } else {
       j2 <- NULL
     }
+    p1hat <- j1[, 2]
+    p2hat <- j2[, 2]
   }
   l1 <- j1[, 1]
-  u1 <- j1[, 2]
+  u1 <- j1[, 3]
   l2 <- j2[, 1]
-  u2 <- j2[, 2]
+  u2 <- j2[, 3]
 
   if (contrast == "p") {
     lower <- l1
@@ -270,6 +274,7 @@ moverci <- function(x1,
     }
   }
   CI <- cbind(Lower = lower, Estimate = est, Upper = upper)
+  row.names(CI) <- NULL
   CI
 }
 
@@ -358,7 +363,7 @@ jeffreysci <- function(x,
     }
     CI_upper <- qgamma(1 - alpha / 2, (x + (ai + cc)), scale = 1 / n)
   }
-  CI <- cbind(Lower = CI_lower, Upper = CI_upper, est = est)
+  CI <- cbind(Lower = CI_lower, est = est, Upper = CI_upper)
   CI
 }
 

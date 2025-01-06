@@ -8,6 +8,7 @@ exactci <- function( # function to calculate exact 'exact' confidence interval
                     distrib = "bin",
                     precis = 8) {
   alpha <- 1 - level
+  est <- ifelse(distrib == "poi", x, x / n)
   if (as.character(midp) == "TRUE") midp <- 0.5
   if (distrib == "bin") {
     lowroot <- function(p) {
@@ -27,7 +28,7 @@ exactci <- function( # function to calculate exact 'exact' confidence interval
     ftn = uproot, precis = precis, uplow = "up", contrast = "p",
     distrib = distrib
   )
-  return(cbind(Lower = lower, Upper = upper) / ifelse(distrib == "poi", n, 1))
+  return(cbind(Lower = lower, MLE = est, Upper = upper) / ifelse(distrib == "poi", n, 1))
 }
 
 # Internal function for Wilson score interval,
@@ -51,6 +52,7 @@ wilsonci <- function(x,
   if (as.character(cc) == "TRUE") cc <- 0.5
   corr <- cc / n
   z <- qnorm(1 - (1 - level) / 2)
+  est <- x / n
   if (distrib == "bin") {
     lower <- (2 * (x - cc) + z^2 -
       z * sqrt(z^2 - 2 * (2 * cc + cc / n) +
@@ -67,7 +69,7 @@ wilsonci <- function(x,
     lower[x == 0] <- 0
     upper <- ((x + cc) + z^2 / 2 + z * sqrt(x + cc + z^2 / 4)) / n
   }
-  cbind(lower, upper)
+  cbind(Lower = lower, MLE = est, Upper = upper)
 }
 
 
@@ -135,11 +137,11 @@ scaspci <- function(x,
   CI <- (cbind(
     #    Lower = Rmpfr::asNumeric((-Bl - sqrt(Rmpfr::pmax(0, Bl^2 - 4 * A * Cl))) / (2 * A)),
     #    MLE = Rmpfr::asNumeric((-B0 - sqrt(Rmpfr::pmax(0, (B0^2 - 4 * A0 * C0)))) / (2 * A0)),
-    Lower = ((-Bl - sqrt(pmax(0, Bl^2 - 4 * A * Cl))) / (2 * A)),
+    Lower = ifelse(x == 0, 0, ((-Bl - sqrt(pmax(0, Bl^2 - 4 * A * Cl))) / (2 * A))),
     MLE = ((-B0 - sqrt(pmax(0, (B0^2 - 4 * A0 * C0)))) / (2 * A0)),
     Upper = if (distrib == "bin") {
       #      Rmpfr::asNumeric(1 - (-Bu - sqrt(Rmpfr::pmax(0, Bu^2 - 4 * A * Cu))) / (2 * A))
-      (1 - (-Bu - sqrt(pmax(0, Bu^2 - 4 * A * Cu))) / (2 * A))
+      ifelse(x == n, 1, (1 - (-Bu - sqrt(pmax(0, Bu^2 - 4 * A * Cu))) / (2 * A)))
     } else {
       #      Rmpfr::asNumeric((-Bu + sqrt(Rmpfr::pmax(0, Bu^2 - 4 * A * Cu))) / (2 * A))
       ((-Bu + sqrt(pmax(0, Bu^2 - 4 * A * Cu))) / (2 * A))
@@ -190,7 +192,7 @@ rateci <- function(x,
     distrib = distrib,
     level = level,
     cc = cc
-  )[, c(1, 3)]
+  )[, c(1:3), drop = FALSE]
   ci_jeff <- jeffreysci(
     x = x,
     n = n,
@@ -200,7 +202,7 @@ rateci <- function(x,
     level = level,
     distrib = distrib,
     adj = TRUE
-  )[, c(1, 2)]
+  )[, c(1:3), drop = FALSE]
   ci_exact <- exactci(
     x = x,
     n = n,

@@ -214,22 +214,22 @@ test_that("legacy & new methods match published examples", {
 
   # Single proportion, Newcombe examples
   expect_equal(
-    unname(round(exactci(x = c(15, 0, 1), n = c(148, 20, 29), distrib = "bin", midp = TRUE), 4)),
+    unname(round(exactci(x = c(15, 0, 1), n = c(148, 20, 29), distrib = "bin", midp = TRUE)[, c(1, 3)], 4)),
     matrix(c(0.0601, 0.1581, 0, 0.1391, 0.0017, 0.1585), byrow = T, nrow = 3)
   )
 
   expect_equal(
-    unname(round(exactci(x = c(15, 0, 1), n = c(148, 20, 29), distrib = "bin", midp = FALSE), 4)),
+    unname(round(exactci(x = c(15, 0, 1), n = c(148, 20, 29), distrib = "bin", midp = FALSE)[, c(1, 3)], 4)),
     matrix(c(0.0578, 0.1617, 0, 0.1684, 0.0009, 0.1776), byrow = T, nrow = 3)
   )
 
   expect_equal(
-    unname(round(wilsonci(x = c(15, 0, 1), n = c(148, 20, 29), distrib = "bin", cc = FALSE), 4)),
+    unname(round(wilsonci(x = c(15, 0, 1), n = c(148, 20, 29), distrib = "bin", cc = FALSE)[, c(1, 3)], 4)),
     matrix(c(0.0624, 0.1605, 0, 0.1611, 0.0061, 0.1718), byrow = T, nrow = 3)
   )
 
   expect_equal(
-    unname(round(wilsonci(x = c(15, 0, 1), n = c(148, 20, 29), distrib = "bin", cc = 0.5), 4)),
+    unname(round(wilsonci(x = c(15, 0, 1), n = c(148, 20, 29), distrib = "bin", cc = 0.5)[, c(1, 3)], 4)),
     matrix(c(0.0598, 0.1644, 0, 0.2005, 0.0018, 0.1963), byrow = T, nrow = 3)
   )
 
@@ -402,17 +402,17 @@ test_that("legacy & new methods match published examples", {
   # paired OR from Fagerland
   # midp
   expect_equal(
-    unname(round(pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method_OR = "midp")$estimates, 3)),
+    unname(round(pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method_OR = "midp")$estimates, 3)[, c(1, 3)]),
     c(0.006, 0.924)
   )
   # C-P exact
   expect_equal(
-    unname(round(pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method_OR = "midp", cc=0.5)$estimates, 3)),
+    unname(round(pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method_OR = "midp", cc=0.5)$estimates, 3)[, c(1, 3)]),
     c(0.003, 1.112)
   )
   # Wilson
   expect_equal(
-    unname(round(pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method_OR = "wilson")$estimates, 3)),
+    unname(round(pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method_OR = "wilson")$estimates, 3)[, c(1, 3)]),
     c(0.023, 0.890)
   )
 
