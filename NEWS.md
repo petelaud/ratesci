@@ -8,6 +8,7 @@
 * Added options for method_RD = "MOVER" and method_RR = "MOVER".
 * Also options "MOVER_newc" including Newcombe's correlation correction.
 * Added moverbase argument, for specifying different versions of the MOVER methods.
+* Added options "jeff" and "wilson" for method_OR in pairbinci().
 * Added option for continuity correction for all methods for all contrasts.
 * Improved documentation.
 ### In `scoreci()`:
