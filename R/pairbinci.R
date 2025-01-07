@@ -205,8 +205,12 @@ pairbinci <- function(x,
     c <- x[3]
     if (method_OR == "SCAS") {
       trans_th0 <- NULL
+<<<<<<< HEAD
       if (is.null(theta0)) theta0 <- 1
       trans_th0 <- theta0 / (1 + theta0)
+=======
+      if (!is.null(theta0)) trans_th0 <- theta0 / (1 + theta0)
+>>>>>>> f6aba9bff4995a35727e8701d204ec5ff18ec360
       OR_ci <- scaspci(
         x = b, n = b + c, distrib = "bin",
         level = level, cc = cc
