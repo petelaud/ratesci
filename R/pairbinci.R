@@ -206,29 +206,42 @@ pairbinci <- function(x,
     if (method_OR == "SCAS") {
       trans_th0 <- NULL
       if (!is.null(theta0)) trans_th0 <- theta0 / (1 + theta0)
-      OR_ci <- scasci(
-        x1 = b, n1 = b + c, contrast = "p", distrib = "bin",
-        level = level, cc = cc, theta0 = trans_th0
+      OR_ci <- scaspci(
+        x = b, n = b + c, distrib = "bin",
+        level = level, cc = cc
       )
-      estimates <- rbind(
-        c(
-          OR_ci$estimates[, c(1:3)] / (1 - OR_ci$estimates[, c(1:3)]),
-          OR_ci$estimates[, 4]
-        )
+      estimates <- OR_ci / (1 - OR_ci)
+      scorezero <- scoretheta(
+        theta = 0.5, x1 = b, n1 = b + c,
+        contrast = "p", distrib = "bin",
+        skew = TRUE, cc = cc, level = level
       )
-      pval <- OR_ci$pval
+      chisq_zero <- scorezero$score^2
+      pval2sided <- pchisq(chisq_zero, 1, lower.tail = FALSE)
+      scoreth0 <- scoretheta(
+        theta = trans_th0, x1 = b, n1 = b + c,
+        contrast = "p", distrib = "bin",
+        skew = TRUE, cc = cc, level = level
+      )
+      pval_left <- scoreth0$pval
+      pval_right <- 1 - pval_left
+      scorenull <- scoreth0$score
+      pval <- cbind(
+        chisq = chisq_zero, pval2sided, theta0 = theta0,
+        scorenull, pval_left, pval_right
+      )
       outlist <- list(xi, estimates = estimates, pval = pval)
     } else if (method_OR == "midp") {
       trans_ci <- exactci(x = b, n = b + c, midp = 0.5 - cc, level = level)
-      estimates <- c(trans_ci / (1 - trans_ci))
+      estimates <- (trans_ci / (1 - trans_ci))
       outlist <- list(xi, estimates = estimates)
     } else if (method_OR == "wilson") {
       trans_ci <- wilsonci(x = b, n = b + c, cc = cc, level = level)
-      estimates <- c(trans_ci / (1 - trans_ci))
+      estimates <- (trans_ci / (1 - trans_ci))
       outlist <- list(xi, estimates = estimates)
     } else if (method_OR == "jeff") {
-      trans_ci <- unname(ratesci::rateci(x = b, n = b + c, cc = cc)[[2]])
-      estimates <- c(trans_ci / (1 - trans_ci))
+      trans_ci <- jeffreysci(x = b, n = b + c, cc = cc, level = level)
+      estimates <- (trans_ci / (1 - trans_ci))
       outlist <- list(xi, estimates = estimates)
     }
   } else if (contrast != "OR") {
