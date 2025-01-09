@@ -30,7 +30,7 @@
 #'   correction. When a score-based method is used, cc = 0.5 corresponds to the
 #'   continuity-corrected McNemar test.
 #' @param cctype Character string indicating the type of continuity correction
-#'   to be applied. "constant" or "delrocco".
+#'   to be applied. "constant" or "delrocco". Only used for contrast = "RR".
 #' @param theta0 Number to be used in a one-sided significance test (e.g.
 #'   non-inferiority margin). 1-sided p-value will be < 0.025 iff 2-sided 95\% CI
 #'   excludes theta0. NB: can also be used for a superiority test by setting
@@ -90,8 +90,7 @@
 #' pairbinci(x = c(1, 1, 7, 12), contrast = "RD", method_RD = "MOVER_newc", moverbase = "wilson")
 #' pairbinci(x = c(1, 1, 7, 12), contrast = "RD", method_RD = "MOVER_newc", moverbase = "SCAS")
 #' pairbinci(x = c(1, 1, 7, 12), contrast = "RR", method_RR = "Score_closed")
-#' pairbinci(x = c(1, 1, 7, 12), contrast = "RR", method_RR = "MOVER", moverbase = "wilson")
-#' pairbinci(x = c(1, 1, 7, 12), contrast = "RR", method_RR = "MOVER", moverbase = "SCAS")
+#' pairbinci(x = c(1, 1, 7, 12), contrast = "RR", method_RR = "MOVER_newc", moverbase = "wilson")
 #' pairbinci(x = c(1, 1, 7, 12), contrast = "RR", method_RR = "MOVER_newc", moverbase = "SCAS")
 #' pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method_OR = "wilson")
 #' pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method_OR = "midp")
@@ -575,10 +574,10 @@ tangoci <- function(x,
       keep1 <- root[1]
     } else if (uplow == 1) keep2 <- root[2]
   }
-  if (b == c & b == N/2) {
+  if (b == c & b == N / 2) {
     # Rare special case fails to find solution to the quartic
     # and we have to resort to iterative method
-    fixint <- pairbinci(x = x, contrast = "RD", method_RD = "Score", level = level, cc = cc)$estimates[c(1,3)]
+    fixint <- pairbinci(x = x, contrast = "RD", method_RD = "Score", level = level, cc = cc)$estimates[c(1, 3)]
     keep1 <- fixint[1]
     keep2 <- fixint[2]
   }
@@ -702,8 +701,6 @@ tangci <- function(x,
   result <- cbind(Lower = lower, Estimate = estimate, Upper = upper)
   return(result)
 }
-
-
 
 # Internal function
 # MOVER interval for paired RR or RD (binomial only)

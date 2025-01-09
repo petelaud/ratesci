@@ -1,38 +1,25 @@
 #' @keywords internal
 "_PACKAGE"
 #' ratesci: A package for computing confidence intervals for various
-#' comparisons of independent binomial and Poisson rates.
-#'
-#' Computes confidence intervals for the rate difference (RD), rate ratio (RR),
-#' or odds ratio (OR), or for the single rate (p), for independent binomial or
-#' Poisson rates. Includes score-based methods with (or without) skewness
-#' correction, developed from the Miettinen-Nurminen and Gart-Nam methods,
-#' and the "Method of Variance Estimates Recovery", originating from Newcombe.
-#' For the single-stratum case, the skewness-corrected asymptotic score (SCAS)
-#' method is recommended (Laud 2017), on the basis of superior equal-tailed
-#' coverage. Hypothesis tests (a corrected version of the Farrington-Manning
-#' test) follow naturally from the score-based methods, and are equivalent to
-#' the Cochran-Mantel-Haenszel (CMH) test if the skewness correction is
-#' omitted.
+#' comparisons of binomial and Poisson rates.
 #'
 #' @section ratesci functions:
 #' \itemize{
 #'   \item scoreci: for score-based confidence intervals
 #'   \item scasci: wrapper function to compute SCAS interval
-#'   \item tdasci: wrapper function to compute TDAS stratified
-#'   interval
+#'   \item tdasci: wrapper function to compute TDAS random effects stratified
+#'    interval
 #'   \item moverci: for the MOVER method
 #'   \item moverbci: wrapper function to compute MOVER-B interval
 #'   \item jeffreysci: wrapper function to compute Jeffreys interval for a
 #'   single rate
-#'   \item pairbinci: for paired binomial data
 #'   \item scaspci: non-iterative SCAS method for a single rate
 #'   \item rateci: wrapper function for SCAS, Jeffreys or 'exact' methods
 #'   for a single rate
+#'   \item pairbinci: for paired binomial data (includes asymptotic score and
+#'   MOVER options)
 #' }
-#'
 #' @name ratesci-package
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
 #' @references
 #' Laud PJ. Equal-tailed confidence intervals for comparison of
 #' rates. Pharmaceutical Statistics 2017; 16:334-348.
@@ -81,5 +68,7 @@
 #' normal mean and standard deviation. Statistical Methods in Medical Research
 #' 2012; 21(4):347-359.
 #'
+
+## usethis namespace: start
+## usethis namespace: end
 NULL
-#"_PACKAGE"

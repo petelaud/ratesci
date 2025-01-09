@@ -26,15 +26,16 @@ places) to be used in optimisation subroutine for the SCAS and exact methods.}
 }
 \value{
 A list containing, for each method, a matrix containing lower and upper
-  confidence limits for each value of x and n. Methods shown depend on the cc
-  parameter, which specifies whether the continuity correction is applied to
-  the SCAS and Jeffreys methods. The corresponding 'exact' method is
-  Clopper-Pearson/Garwood if cc == TRUE and mid-p if cc == FALSE.
+confidence limits for each value of x and n. Methods shown depend on the cc
+parameter, which specifies whether the continuity correction is applied to
+the SCAS and Jeffreys methods. The corresponding 'exact' method is
+Clopper-Pearson/Garwood if cc == TRUE and mid-p if cc == FALSE.
 }
 \description{
 Confidence intervals for the single binomial or Poisson rate. Including
 SCAS or Jeffreys intervals, with or without continuity correction, and
 'exact' Clopper-Pearson/Garwood or mid-p intervals.
+This function is vectorised in x, n.
 }
 \author{
 Pete Laud, \email{p.j.laud@sheffield.ac.uk}

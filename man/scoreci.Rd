@@ -74,7 +74,7 @@ Only applies if contrast is "OR".}
 \item{RRtang}{Logical indicating whether to use Tang's score for RR:
 Stheta = (p1hat - p2hat * theta) / p2d (see Tang 2020).
 Default TRUE for stratified = TRUE, with weighting = "IVS" or "INV".
-Forced to FALSE for stratified = TRUE, with fixed weighting.
+Forced to FALSE for stratified = TRUE, with other weightings.
 Experimental for distrib = "poi".}
 
 \item{bcf}{Logical (default TRUE) indicating whether to apply bias correction
@@ -87,31 +87,35 @@ Ignored for contrast = "p".}
 correction. Numeric value is taken as the gamma parameter in Laud 2017,
 Appendix S2 (default 0.5 for 'conventional' correction if cc = TRUE).
 IMPORTANT NOTES:
-1) This is a 'continuity correction' aimed at approximating strictly
+\enumerate{
+\item This is a 'continuity correction' aimed at approximating strictly
 conservative coverage, NOT for dealing with zero cell counts. Such
 'sparse data adjustments' are not needed in the score method,
-except to deal with double-zero cells for RD (& double-100% cells for
+except to deal with double-zero cells for RD (& double-100\% cells for
 binomial RD & RR) with IVS/INV weights.
-2) The continuity corrections provided here have not been fully tested for
+\item The continuity corrections provided here have not been fully tested for
 stratified methods, but are found to match the Mantel-Haenszel corrected test,
 when cc = 0.5 for any of the binomial contrasts. Flexibility is included for
 a less conservative correction, such as cc = 0.25 suggested in Laud 2017
-(see Appendix S3.4), or cc = 3/16 = 0.1875 in Mehrotra & Railkar (2000)}
+(see Appendix S3.4), or cc = 3/16 = 0.1875 in Mehrotra & Railkar (2000)
+}}
 
 \item{theta0}{Number to be used in a one-sided significance test (e.g.
-non-inferiority margin). 1-sided p-value will be <0.025 iff 2-sided 95\% CI
+non-inferiority margin). 1-sided p-value will be <0.025 iff 2-sided 95\\% CI
 excludes theta0. (If bcf = FALSE and skew = FALSE this gives a
 Farrington-Manning test.)
 By default, a two-sided test against theta0 = 0 (for RD) or 1 (for RR/OR)
 is also output:
-- If bcf = FALSE and skew = FALSE this is the same as K. Pearson's Chi-squared
-  test in the single stratum case.
-- bcf = TRUE gives E. Pearson's 'N-1' Chi-squared test for a single stratum,
-  (Recommended by Campbell 2007: https://doi.org/10.1002/sim.2832)
-  and (with default weighting and random = FALSE) the CMH test for stratified
-   tables.
-- Default bcf = TRUE and skew = TRUE produces a skewness-corrected version
-  of the 'N-1' Chi-squared test or CMH.}
+\itemize{
+\item If bcf = FALSE and skew = FALSE this is the same as K. Pearson's Chi-squared
+test in the single stratum case.
+\item bcf = TRUE gives E. Pearson's 'N-1' Chi-squared test for a single stratum,
+(Recommended by Campbell 2007: https://doi.org/10.1002/sim.2832)
+and (with default weighting and random = FALSE) the CMH test for stratified
+tables.
+\item Default bcf = TRUE and skew = TRUE produces a skewness-corrected version
+of the 'N-1' Chi-squared test or CMH.
+}}
 
 \item{precis}{Number (default 6) specifying precision (i.e. number of decimal
 places) to be used in optimisation subroutine for the confidence interval.}
@@ -141,8 +145,8 @@ stratified = "TRUE":
 "INV" = Inverse Variance (bcf omitted, default for contrast = "OR"),
 "MH" = Mantel-Haenszel (default for contrast = "RD" or "RR"),
 "MN" = Miettinen-Nurminen weights.
-       (similar to MH for contrast = "RD" or "RR",
-       similar to INV for contrast = "OR")
+(similar to MH for contrast = "RD" or "RR",
+similar to INV for contrast = "OR")
 For CI consistent with a CMH test, select skew = FALSE, random = FALSE,
 and use default MH weighting for RD/RR and INV for OR.
 Weighting = 'MN' also matches the CMH test.}
@@ -164,7 +168,8 @@ Default 0.5 for RD & RR with IVS/INV weights.
 Not required for OR, default is to remove affected strata.}
 
 \item{dropzeros}{Logical (default FALSE) indicating whether to drop
-uninformative strata for RR/OR, even when the choice of weights would allow
+uninformative strata for RR/OR (i.e. strata with x1 = 0 and x2 = 0),
+even when the choice of weights would allow
 them to be retained for a fixed effects analysis.
 Has no effect on estimates, just the heterogeneity test.}
 
@@ -185,16 +190,16 @@ a prediction interval (work in progress).}
 }
 \value{
 A list containing the following components: \describe{
-  \item{estimates}{a matrix containing estimates of the rates in each group
-  and of the requested contrast, with its confidence interval} \item{pval}{a
-  matrix containing details of the corresponding 2-sided significance test
-  against the null hypothesis that p_1 = p_2, and one-sided significance
-  tests against the null hypothesis that theta >= or <= theta0}
-  \item{call}{details of the function call} } If stratified = TRUE, the
-  following outputs are added: \describe{ \item{Qtest}{a vector of values
-  describing and testing heterogeneity} \item{weighting}{a string indicating
-  the selected weighting method} \item{stratdata}{a matrix containing stratum
-  estimates and weights}}
+\item{estimates}{a matrix containing estimates of the rates in each group
+and of the requested contrast, with its confidence interval} \item{pval}{a
+matrix containing details of the corresponding 2-sided significance test
+against the null hypothesis that p_1 = p_2, and one-sided significance
+tests against the null hypothesis that theta >= or <= theta0}
+\item{call}{details of the function call} } If stratified = TRUE, the
+following outputs are added: \describe{ \item{Qtest}{a vector of values
+describing and testing heterogeneity} \item{weighting}{a string indicating
+the selected weighting method} \item{stratdata}{a matrix containing stratum
+estimates and weights}}
 }
 \description{
 Score-based confidence intervals for the rate (or risk) difference ("RD") or
@@ -279,38 +284,38 @@ scoreci(
 }
 \references{
 Laud PJ. Equal-tailed confidence intervals for comparison of
-  rates. Pharmaceutical Statistics 2017; 16:334-348.
+rates. Pharmaceutical Statistics 2017; 16:334-348.
 
-  Laud PJ. Corrigendum: Equal-tailed confidence intervals for comparison of
-  rates. Pharmaceutical Statistics 2018; 17:290-293.
+Laud PJ. Corrigendum: Equal-tailed confidence intervals for comparison of
+rates. Pharmaceutical Statistics 2018; 17:290-293.
 
-  Laud PJ, Dane A. Confidence intervals for the difference between
-  independent binomial proportions: comparison using a graphical approach and
-  moving averages. Pharmaceutical Statistics 2014; 13(5):294-308.
+Laud PJ, Dane A. Confidence intervals for the difference between
+independent binomial proportions: comparison using a graphical approach and
+moving averages. Pharmaceutical Statistics 2014; 13(5):294-308.
 
-  Miettinen OS, Nurminen M. Comparative analysis of two rates. Statistics in
-  Medicine 1985; 4:213-226.
+Miettinen OS, Nurminen M. Comparative analysis of two rates. Statistics in
+Medicine 1985; 4:213-226.
 
-  Farrington CP, Manning G. Test statistics and sample size formulae for
-  comparative binomial trials with null hypothesis of non-zero risk
-  difference or non-unity relative risk. Statistics in Medicine 1990;
-  9(12):1447-1454.
+Farrington CP, Manning G. Test statistics and sample size formulae for
+comparative binomial trials with null hypothesis of non-zero risk
+difference or non-unity relative risk. Statistics in Medicine 1990;
+9(12):1447-1454.
 
-  Gart JJ. Analysis of the common odds ratio: corrections for bias and
-  skewness. Bulletin of the International Statistical Institute 1985,
-  45th session, book 1, 175-176.
+Gart JJ. Analysis of the common odds ratio: corrections for bias and
+skewness. Bulletin of the International Statistical Institute 1985,
+45th session, book 1, 175-176.
 
-  Gart JJ, Nam Jm. Approximate interval estimation of the ratio of binomial
-  parameters: a review and corrections for skewness. Biometrics 1988;
-  44(2):323-338.
+Gart JJ, Nam Jm. Approximate interval estimation of the ratio of binomial
+parameters: a review and corrections for skewness. Biometrics 1988;
+44(2):323-338.
 
-  Gart JJ, Nam Jm. Approximate interval estimation of the difference in
-  binomial parameters: correction for skewness and extension to multiple
-  tables. Biometrics 1990; 46(3):637-643.
+Gart JJ, Nam Jm. Approximate interval estimation of the difference in
+binomial parameters: correction for skewness and extension to multiple
+tables. Biometrics 1990; 46(3):637-643.
 
-  Tang Y. Score confidence intervals and sample sizes for stratified
-  comparisons of binomial proportions. Statistics in Medicine 2020;
-  39:3427-3457.
+Tang Y. Score confidence intervals and sample sizes for stratified
+comparisons of binomial proportions. Statistics in Medicine 2020;
+39:3427-3457.
 }
 \author{
 Pete Laud, \email{p.j.laud@sheffield.ac.uk}

@@ -8,6 +8,7 @@
 #' event rates.  Also allows more general Beta and Gamma priors for an
 #' approximate Bayesian confidence interval incorporating prior beliefs about
 #' the group event rates.
+#' This function is vectorised in x1, x2, n1, and n2.
 #'
 #' @param x1,x2 Numeric vectors of numbers of events in group 1 & group 2
 #'   respectively.

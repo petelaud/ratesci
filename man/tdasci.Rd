@@ -51,19 +51,21 @@ contrast="p" gives an interval for the single proportion or rate x1/n1.}
 correction. Numeric value is taken as the gamma parameter in Laud 2017,
 Appendix S2 (default 0.5 for 'conventional' correction if cc = TRUE).
 IMPORTANT NOTES:
-1) This is a 'continuity correction' aimed at approximating strictly
+\enumerate{
+\item This is a 'continuity correction' aimed at approximating strictly
 conservative coverage, NOT for dealing with zero cell counts. Such
 'sparse data adjustments' are not needed in the score method,
-except to deal with double-zero cells for RD (& double-100% cells for
+except to deal with double-zero cells for RD (& double-100\% cells for
 binomial RD & RR) with IVS/INV weights.
-2) The continuity corrections provided here have not been fully tested for
+\item The continuity corrections provided here have not been fully tested for
 stratified methods, but are found to match the Mantel-Haenszel corrected test,
 when cc = 0.5 for any of the binomial contrasts. Flexibility is included for
 a less conservative correction, such as cc = 0.25 suggested in Laud 2017
-(see Appendix S3.4), or cc = 3/16 = 0.1875 in Mehrotra & Railkar (2000)}
+(see Appendix S3.4), or cc = 3/16 = 0.1875 in Mehrotra & Railkar (2000)
+}}
 
 \item{theta0}{Number to be used in a one-sided significance test (e.g.
-non-inferiority margin). 1-sided p-value will be <0.025 iff 2-sided 95\% CI
+non-inferiority margin). 1-sided p-value will be <0.025 iff 2-sided 95\\% CI
 excludes theta0. By default, a two-sided test against theta0 = 0 (for RD)
 or 1 (for RR/OR) is also output.}
 
@@ -89,8 +91,8 @@ stratified = "TRUE":
 "INV" = Inverse Variance (bcf omitted, default for contrast = "OR"),
 "MH" = Mantel-Haenszel (default for contrast = "RD" or "RR"),
 "MN" = Miettinen-Nurminen weights.
-       (similar to MH for contrast = "RD" or "RR",
-       similar to INV for contrast = "OR")
+(similar to MH for contrast = "RD" or "RR",
+similar to INV for contrast = "OR")
 For CI consistent with a CMH test, select skew = FALSE, random = FALSE,
 and use default MH weighting for RD/RR and INV for OR.
 Weighting = 'MN' also matches the CMH test.}
@@ -114,16 +116,16 @@ a prediction interval (work in progress).}
 }
 \value{
 A list containing the following components: \describe{
-  \item{estimates}{a matrix containing estimates of the rates in each group
-  and of the requested contrast, with its confidence interval} \item{pval}{a
-  matrix containing details of the corresponding 2-sided significance test
-  against the null hypothesis that p_1 = p_2, and one-sided significance
-  tests against the null hypothesis that theta >= or <= theta0}
-  \item{Qtest}{a vector of values
-  describing and testing heterogeneity} \item{weighting}{a string indicating
-  the selected weighting method} \item{stratdata}{a matrix containing stratum
-  estimates and weights}
-  \item{call}{details of the function call}}
+\item{estimates}{a matrix containing estimates of the rates in each group
+and of the requested contrast, with its confidence interval} \item{pval}{a
+matrix containing details of the corresponding 2-sided significance test
+against the null hypothesis that p_1 = p_2, and one-sided significance
+tests against the null hypothesis that theta >= or <= theta0}
+\item{Qtest}{a vector of values
+describing and testing heterogeneity} \item{weighting}{a string indicating
+the selected weighting method} \item{stratdata}{a matrix containing stratum
+estimates and weights}
+\item{call}{details of the function call}}
 }
 \description{
 Wrapper function for the TDAS method. Score-based stratified confidence

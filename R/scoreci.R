@@ -113,13 +113,14 @@
 #'           Default 0.5 for RD & RR with IVS/INV weights.
 #'           Not required for OR, default is to remove affected strata.
 #' @param dropzeros Logical (default FALSE) indicating whether to drop
-#'   uninformative strata for RR/OR, even when the choice of weights would allow
+#'   uninformative strata for RR/OR (i.e. strata with x1 = 0 and x2 = 0),
+#'   even when the choice of weights would allow
 #'   them to be retained for a fixed effects analysis.
 #'   Has no effect on estimates, just the heterogeneity test.
 #' @param RRtang Logical indicating whether to use Tang's score for RR:
 #'   Stheta = (p1hat - p2hat * theta) / p2d (see Tang 2020).
 #'   Default TRUE for stratified = TRUE, with weighting = "IVS" or "INV".
-#'   Forced to FALSE for stratified = TRUE, with fixed weighting.
+#'   Forced to FALSE for stratified = TRUE, with other weightings.
 #'   Experimental for distrib = "poi".
 #' @param hetplot Logical (default FALSE) indicating whether to output plots for
 #'   evaluating heterogeneity of stratified datasets.
@@ -400,17 +401,20 @@ scoreci <- function(x1,
       empty_strat <- (n1 == 0)
     } else {
       empty_strat <- (n1 == 0 | n2 == 0) |
-        # 17Jul2023: Would prefer to keep if only one arm is empty, for consistency with CMH test,
-        # and to maintain ITT principle. (Such strata make no contribution to the CMH statistic.)
-        # Also drop uninformative strata for RR & OR
+        # 17Jul2023: Note strata where only one arm is empty are not counted as
+        # 'empty', for consistency with CMH test, and to maintain ITT principle.
+        # (Such strata make no contribution to the CMH statistic.)
+        # The next part below also drops uninformative strata for RR & OR.
         # Note for RR & OR with IVS/INV weighting such strata have zero weight
-        # and for RR with fixed weights and RRtang = FALSE they dont contribute
+        # and for RR with fixed weights and RRtang = FALSE they don't contribute
         # for a fixed effects analysis,
-        # so could remain to avoid ITT concerns - but note this has
-        # implications for heterogeneity test and random effects method.
+        # so they could be retained in the analysis to avoid ITT concerns
+        # - but note this has implications for heterogeneity test and
+        # random effects method.
         ((x1 == 0 & x2 == 0) & !(sda > 0) & contrast == "RR" &
           weighting %in% c("INV", "IVS") & RRtang == FALSE) |
         #       below not needed because RRtang is forced to FALSE anyway
+        #       (i.e. RRtang option only applies for INV/IVS weighting)
         #        ((x1 == 0 & x2 == 0) & !(sda > 0) & contrast == "RR" &
         #          !(weighting %in% c("INV", "IVS")) & RRtang == TRUE) |
         ((x1 == 0 & x2 == 0) & !(sda > 0) & contrast == "OR" &

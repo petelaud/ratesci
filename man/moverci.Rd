@@ -58,7 +58,7 @@ superior approximation of 'exact' methods);
 "midp" = mid-p intervals;
 "SCAS" = SCAS non-iterative intervals;
 "wilson" = Wilson score intervals (as per Newcombe 1998).
-           (Rao score is used for distrib = "poi")
+(Rao score is used for distrib = "poi")
 NB: "wilson" option is included only for legacy validation against previous
 published method by Newcombe. It is not recommended, as type = "jeff"
 or other equal-tailed options achieve much better coverage properties.}
@@ -80,6 +80,7 @@ equal-tailed Jeffreys intervals instead of the Wilson score method for the
 event rates.  Also allows more general Beta and Gamma priors for an
 approximate Bayesian confidence interval incorporating prior beliefs about
 the group event rates.
+This function is vectorised in x1, x2, n1, and n2.
 }
 \examples{
 # Binomial RD, MOVER-J method:
@@ -90,21 +91,21 @@ moverci(x1 = 5, n1 = 56, x2 = 0, n2 = 29, type = "wilson")
 }
 \references{
 Laud PJ. Equal-tailed confidence intervals for comparison of
-  rates. Pharmaceutical Statistics 2017; 16:334-348.
+rates. Pharmaceutical Statistics 2017; 16:334-348.
 
-  Newcombe RG. Interval estimation for the difference between independent
-  proportions: comparison of eleven methods. Statistics in Medicine 1998;
+Newcombe RG. Interval estimation for the difference between independent
+proportions: comparison of eleven methods. Statistics in Medicine 1998;
 
-  Donner A, Zou G. Closed-form confidence intervals for functions of the
-  normal mean and standard deviation. Statistical Methods in Medical Research
+Donner A, Zou G. Closed-form confidence intervals for functions of the
+normal mean and standard deviation. Statistical Methods in Medical Research
 
-  Fagerland MW, Newcombe RG. Confidence intervals for odds ratio and relative
-  risk based on the inverse hyperbolic sine transformation. Statistics in
-  Medicine 2013; 32(16):2823-2836.
+Fagerland MW, Newcombe RG. Confidence intervals for odds ratio and relative
+risk based on the inverse hyperbolic sine transformation. Statistics in
+Medicine 2013; 32(16):2823-2836.
 
-  Li HQ, Tang ML, Wong WK. Confidence intervals for ratio of two Poisson
-  rates using the method of variance estimates recovery. Computational
-  Statistics 2014; 29(3-4):869-889.
+Li HQ, Tang ML, Wong WK. Confidence intervals for ratio of two Poisson
+rates using the method of variance estimates recovery. Computational
+Statistics 2014; 29(3-4):869-889.
 }
 \author{
 Pete Laud, \email{p.j.laud@sheffield.ac.uk}

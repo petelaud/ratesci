@@ -155,6 +155,7 @@ scaspci <- function(x,
 #' Confidence intervals for the single binomial or Poisson rate. Including
 #' SCAS or Jeffreys intervals, with or without continuity correction, and
 #' 'exact' Clopper-Pearson/Garwood or mid-p intervals.
+#' This function is vectorised in x, n.
 #'
 #' @param x Numeric vector of number of events.
 #' @param n Numeric vector of sample size (for binomial rate) or exposure
