@@ -1,14 +1,11 @@
-## Test environments
-* local OS X (Big Sur) install, R 4.1.2
-* GitHub Actions - (maxOS): release
-* GitHub Actions - (ubuntu-20.04): oldrel, release, devel
-* GitHub Actions (windows): release
-
 ## R CMD check results
-There were no ERRORs or WARNINGs.
 
-Win-builder generated 1 NOTE:
-* possibly misspelled words in DESCRIPTION, but the spelling is correct
+0 errors | 0 warnings | 0 notes
 
-## Downstream dependencies
-papci passed R CMD check.
+## revdepcheck results
+
+We checked 2 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
+
+ * We saw 0 new problems
+ * We failed to check 0 packages
+

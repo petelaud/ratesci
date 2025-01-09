@@ -2,29 +2,41 @@
 
 ## New features
 ### In `pairbinci()`:
-* Confirmed that the 2-sided significance test is equivalent to the McNemar test (with or without continuity correction).
-* Added new default method_RD = "Score_closed for non-iterative calculation of the Tango score interval for contrast='RD'.
-* Added new default method_RR = "Score_closed" for non-iterative calculation of the Tang score interval for contrast='RR'.
-* Added options for method_RD = "MOVER" and method_RR = "MOVER".
-* Also options "MOVER_newc" including Newcombe's correlation correction.
-* Added moverbase argument, for specifying different versions of the MOVER methods.
-* Added options "jeff" and "wilson" for method_OR in pairbinci().
-* Added option for continuity correction for all methods for all contrasts.
-* Improved documentation.
+* `cc` continuity correction is now available for all methods for all contrasts. 
+* `cctype` controls the type of correction to apply for `contrast` = "RR".
+* New default `method_RD` = "Score_closed" for non-iterative calculation of 
+  the Tango score interval for `contrast` = "RD".
+* New default `method_RR` = "Score_closed" for non-iterative calculation of 
+  the Tang score interval for `contrast` = "RR".
+* Added paired MOVER methods with `method_RD` = "MOVER" and `method_RR` = "MOVER".
+  Also "MOVER_newc" incorporates Newcombe's correlation correction.
+* Added `moverbase`, for specifying different versions of the MOVER methods 
+  (Wilson, Jeffreys, midp or SCAS).
+* Added "jeff" and "wilson" `method_OR` options for transformed binomial 
+  methods for OR.
+* Confirmed and documented that the 2-sided significance test is equivalent 
+  to the McNemar test (with or without continuity correction).
 ### In `scoreci()`:
-* Confirmed continuity corrections for all stratified (fixed-effects) binomial contrasts are consistent with the Mantel-Haenszel correction.
-* Updated heterogeneity test to consistently omit non-informative strata, and output the degrees of freedom.
+* Confirmed that continuity corrections for all stratified (fixed-effects) 
+  binomial contrasts are consistent with the Mantel-Haenszel correction.
+* Updated heterogeneity test to consistently omit non-informative 
+  (but non-empty) strata, and output the degrees of freedom.
 ### In `moverci()`:
-* Added continuity correction for type = "wilson".
-* Added options for SCAS and midp intervals
+* Added continuity correction for `type` = "wilson".
+* Added options for `type` = "SCAS" and "midp" intervals.
+* Standardised output to include lower CL, midpoint, upper CL, in that order.
 
 ## Bug fixes
 ### In `scoreci()`:
-* Improved handling of special cases for MN weighting (#25, thanks to Vincent Jaquet for reporting the issue and proposed solution. Also #27 for RR, thanks to Shangchen Song.) As a result, double-zero strata need not be excluded when weighting = "MN".
+* Improved handling of special cases for MN weighting (#25, thanks to 
+  Vincent Jaquet for reporting the issue and proposed solution. 
+  Also #27 for RR, thanks to @lovestat.) 
+  As a result, double-zero strata need not be excluded when weighting = "MN".
 ### In `moverci()`:
-* Corrected calculation of score intervals for single Poisson rate.
+* Corrected calculation of score intervals for single Poisson rate, using 
+  Rao score interval.
 * Same correction affects MOVER method for comparison of Poisson rates
- [i.e. moverci() with distrib = "poi" and type = "wilson"]
+ [i.e. `moverci()` with `distrib` = "poi" and `type` = "wilson"]
 
 
 

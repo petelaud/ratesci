@@ -10,3 +10,5 @@
 ^to-do.md
 ^CRAN-RELEASE$
 ^R/pairbinci-dev.R$
+^revdep$
+^README\.Rmd$
