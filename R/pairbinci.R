@@ -720,80 +720,66 @@ moverpair <- function(x,
   xp1 <- x[1] + x[3]
   N <- sum(x)
   z <- qnorm(1 - (1 - level) / 2)
-  estimate <- x1p / xp1
-  ## First calculate l1, u1, l2, u2 based on an interval for p1plus and pplus1
+  ## First calculate l1, u1, l2, u2 based on an interval for p1p and pp1
   if (method == "SCAS") {
-    l1 <- unname(rateci(x = x1p, n = N, distrib = "bin", level = level, cc = cc)[[1]][1])
-    u1 <- unname(rateci(x = x1p, n = N, distrib = "bin", level = level, cc = cc)[[1]][2])
-    l2 <- unname(rateci(x = xp1, n = N, distrib = "bin", level = level, cc = cc)[[1]][1])
-    u2 <- unname(rateci(x = xp1, n = N, distrib = "bin", level = level, cc = cc)[[1]][2])
+    j1 <- rateci(x = x1p, n = N, distrib = "bin", level = level, cc = cc)$scas
+    j2 <- rateci(x = xp1, n = N, distrib = "bin", level = level, cc = cc)$scas
   } else if (method == "wilson") {
-    l1 <- wilsonci(x = x1p, n = N, distrib = "bin", level = level, cc = cc)[1]
-    u1 <- wilsonci(x = x1p, n = N, distrib = "bin", level = level, cc = cc)[3]
-    l2 <- wilsonci(x = xp1, n = N, distrib = "bin", level = level, cc = cc)[1]
-    u2 <- wilsonci(x = xp1, n = N, distrib = "bin", level = level, cc = cc)[3]
+    j1 <- wilsonci(x = x1p, n = N, distrib = "bin", level = level, cc = cc)
+    j2 <- wilsonci(x = xp1, n = N, distrib = "bin", level = level, cc = cc)
   } else if (method == "jeff") {
-    l1 <- unname(rateci(x = x1p, n = N, distrib = "bin", level = level, cc = cc)[[2]][1])
-    u1 <- unname(rateci(x = x1p, n = N, distrib = "bin", level = level, cc = cc)[[2]][2])
-    l2 <- unname(rateci(x = xp1, n = N, distrib = "bin", level = level, cc = cc)[[2]][1])
-    u2 <- unname(rateci(x = xp1, n = N, distrib = "bin", level = level, cc = cc)[[2]][2])
+    j1 <- rateci(x = x1p, n = N, distrib = "bin", level = level, cc = cc)$jeff
+    j2 <- rateci(x = xp1, n = N, distrib = "bin", level = level, cc = cc)$jeff
   } else if (method == "midp") {
-    l1 <- unname(rateci(x = x1p, n = N, distrib = "bin", level = level, cc = cc)[[3]][1])
-    u1 <- unname(rateci(x = x1p, n = N, distrib = "bin", level = level, cc = cc)[[3]][3])
-    l2 <- unname(rateci(x = xp1, n = N, distrib = "bin", level = level, cc = cc)[[3]][1])
-    u2 <- unname(rateci(x = xp1, n = N, distrib = "bin", level = level, cc = cc)[[3]][3])
+    j1 <- rateci(x = x1p, n = N, distrib = "bin", level = level, cc = cc)$midp
+    j2 <- rateci(x = xp1, n = N, distrib = "bin", level = level, cc = cc)$midp
   }
+  l1 <- j1[, 1]
+  u1 <- j1[, 3]
+  l2 <- j2[, 1]
+  u2 <- j2[, 3]
+  p1phat <- j1[, 2]
+  pp1hat <- j2[, 2]
 
-  p1plus_hat <- x1p / N
-  pplus1_hat <- xp1 / N
   n2p <- x[3] + x[4]
   np2 <- x[2] + x[4]
   cor_hat <- (x[1] * x[4] - x[2] * x[3]) / sqrt(x1p * n2p * xp1 * np2)
   if (corc == TRUE) {
-    if (contrast == "RR") {
       if (x[1] * x[4] - x[2] * x[3] > 0) {
         cor_hat <- (max(x[1] * x[4] - x[2] * x[3] - N / 2, 0) /
           sqrt(x1p * n2p * xp1 * np2))
       }
-    } else if (contrast == "RD") {
-      if (x[1] * x[4] - x[2] * x[3] > N / 2) {
-        cor_hat <- ((x[1] * x[4] - x[2] * x[3] - N / 2) /
-          sqrt(x1p * n2p * xp1 * np2))
-      } else if (x[1] * x[4] - x[2] * x[3] > 0) {
-        cor_hat <- 0
-      }
-    }
   }
   if (is.na(cor_hat) | is.infinite(cor_hat)) {
     cor_hat <- 0
   }
 
   if (contrast == "RR") {
-    A <- (p1plus_hat - l1) * (u2 - pplus1_hat) * cor_hat
-    B <- (u1 - p1plus_hat) * (pplus1_hat - l2) * cor_hat
-    if (x[1] == x[4] & x[2] == 0 & x[3] == 0) {
-      lower <- upper <- 1
-    } else {
-      lower <- (A - p1plus_hat * pplus1_hat +
-        sqrt((A - p1plus_hat * pplus1_hat)^2 - l1 * (2 * p1plus_hat - l1) * u2 * (2 * pplus1_hat - u2))) /
-        (u2 * (u2 - 2 * pplus1_hat))
-      upper <- (B - p1plus_hat * pplus1_hat -
-        sqrt((B - p1plus_hat * pplus1_hat)^2 - u1 * (2 * p1plus_hat - u1) * l2 * (2 * pplus1_hat - l2))) /
-        (l2 * (l2 - 2 * pplus1_hat))
+    estimate <- p1phat / pp1hat
+    A <- (p1phat - l1) * (u2 - pp1hat) * cor_hat
+    B <- (u1 - p1phat) * (pp1hat - l2) * cor_hat
+      lower <- (A - p1phat * pp1hat +
+                  sqrt(pmax(0, (A - p1phat * pp1hat)^2 -
+               l1 * (2 * p1phat - l1) * u2 * (2 * pp1hat - u2)))) /
+        (u2 * (u2 - 2 * pp1hat))
+      upper <- (B - p1phat * pp1hat -
+                  sqrt(pmax(0, (B - p1phat * pp1hat)^2 -
+               u1 * (2 * p1phat - u1) * l2 * (2 * pp1hat - l2)))) /
+        (l2 * (l2 - 2 * pp1hat))
       if (is.na(upper) | upper < 0) {
         upper <- Inf
       }
-    }
   } else if (contrast == "RD") {
-    estimate <- p1plus_hat - pplus1_hat
-    lower <- p1plus_hat - pplus1_hat -
-      sqrt((p1plus_hat - l1)^2 + (u2 - pplus1_hat)^2 -
-        2 * (p1plus_hat - l1) * (u2 - pplus1_hat) * cor_hat)
-    upper <- p1plus_hat - pplus1_hat +
-      sqrt((u1 - p1plus_hat)^2 + (pplus1_hat - l2)^2 -
-        2 * (u1 - p1plus_hat) * (pplus1_hat - l2) * cor_hat)
+    estimate <- p1phat - pp1hat
+    lower <- p1phat - pp1hat -
+      sqrt((p1phat - l1)^2 + (u2 - pp1hat)^2 -
+        2 * (p1phat - l1) * (u2 - pp1hat) * cor_hat)
+    upper <- p1phat - pp1hat +
+      sqrt((u1 - p1phat)^2 + (pp1hat - l2)^2 -
+        2 * (u1 - p1phat) * (pp1hat - l2) * cor_hat)
   }
 
   estimates <- cbind(Lower = lower, Estimate = estimate, Upper = upper)
+  row.names(estimates) <- NULL
   return(estimates)
 }
