@@ -363,11 +363,13 @@ scoreci <- function(x1,
   }
   # Tang RR score intended only for IVS/INV weighting -
   # Tang p3431 does not use it for MH weights.
-  if (contrast != "RR" && !is.null(RRtang) && warn == TRUE) {
-    print(paste(
-      "Warning: RRtang argument has no effect for contrast =", contrast
-    ))
+  if (contrast != "RR" && !is.null(RRtang)) {
     RRtang <- FALSE
+    if (warn == TRUE) {
+      print(paste(
+        "Warning: RRtang argument has no effect for contrast =", contrast
+      ))
+    }
   } else if (contrast == "RR") {
     if (stratified == TRUE && !(weighting %in% c("IVS", "INV"))) {
       if (!is.null(RRtang)) {
@@ -774,11 +776,9 @@ scoreci <- function(x1,
   estimates <- cbind(
     round(cbind(Lower = lower, MLE = point, Upper = upper), precis),
     level = level, inputs,
-    p1hat = p1hat_w, p2hat = p2hat_w, p1mle = p1d_w, p2mle = p2d_w
+    round(cbind(p1hat = p1hat_w, p2hat = p2hat_w, p1mle = p1d_w, p2mle = p2d_w),
+          precis)
   )
-  if (stratified == FALSE) {
-    estimates <- cbind(estimates, V = at_MLE$V)
-  }
 
   # optionally add p-value for a test of null hypothesis: theta <= theta0
   # default value of theta0 depends on contrast
@@ -814,7 +814,7 @@ scoreci <- function(x1,
   chisq_zero <- scorezero$score^2
   chisq_zero[scorezero$dsct < 0] <- NA
   pval2sided <- pchisq(chisq_zero, 1, lower.tail = FALSE)
-  if (random == TRUE) {
+  if (stratified == TRUE && random == TRUE) {
     pval2sided <- pf(chisq_zero, 1, nstrat - 1,
       lower.tail = FALSE
     )
@@ -932,7 +932,7 @@ scoreci <- function(x1,
     myseq <- array(seq(xlim[, 1], xlim[, 2], length.out = rangen),
       dim = c(rangen, dim1)
     )
-  } else {
+  } else if (stratified == FALSE) {
     dim1 <- nstrat
     myseq <- array(
       sapply(1:nstrat, function(i) {
@@ -1101,10 +1101,13 @@ scoreci <- function(x1,
       )
     )
   }
+  if (simpleskew == FALSE) simpleskew <- NULL
+  if (contrast != "RR") RRtang <- NULL
+  if (stratified == FALSE) random <- NULL
   outlist <- append(outlist, list(call = c(
-    distrib = distrib, contrast = contrast, level = level, skew = skew,
+    distrib = distrib, contrast = contrast, level = level, bcf = bcf, skew = skew,
     simpleskew = simpleskew, ORbias = ORbias, RRtang = RRtang,
-    bcf = bcf, cc = cc, random = random
+    cc = cc, random = random
   )))
   return(outlist)
 }
