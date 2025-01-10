@@ -420,7 +420,7 @@ moverbci <- function(x1,
   )
 }
 
-# Internal function
+# Internal function - superseded by new wilsonci function
 quadroot <- function(a, b, c_) {
   # GET ROOTS OF A QUADRATIC EQUATION
   r1x <- (-b + sqrt(b^2 - 4 * a * c_)) / (2 * a)

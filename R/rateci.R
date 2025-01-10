@@ -1,78 +1,3 @@
-# Internal function for Clopper-Pearson/Garwood and mid-p, binomial or Poisson
-exactci <- function( # function to calculate exact 'exact' confidence interval
-                    # for a single binomial or Poisson rate x/n
-                    x,
-                    n,
-                    level = 0.95,
-                    midp = TRUE,
-                    distrib = "bin",
-                    precis = 8) {
-  alpha <- 1 - level
-  est <- ifelse(distrib == "poi", x, x / n)
-  if (as.character(midp) == "TRUE") midp <- 0.5
-  if (distrib == "bin") {
-    lowroot <- function(p) {
-      pbinom(x - 1, n, p) + midp * dbinom(x, n, p) -
-        (1 - alpha / 2)
-    }
-    uproot <- function(p) pbinom(x, n, p) - midp * dbinom(x, n, p) - alpha / 2
-  } else if (distrib == "poi") {
-    lowroot <- function(p) ppois(x, p) + midp * dpois(x, p) - (1 - alpha / 2)
-    uproot <- function(p) ppois(x, p) - midp * dpois(x, p) - alpha / 2
-  }
-  lower <- bisect(
-    ftn = lowroot, precis = precis, uplow = "low",
-    contrast = "p", distrib = distrib
-  )
-  upper <- bisect(
-    ftn = uproot, precis = precis, uplow = "up", contrast = "p",
-    distrib = distrib
-  )
-  return(cbind(Lower = lower, MLE = est, Upper = upper) / ifelse(distrib == "poi", n, 1))
-}
-
-# Internal function for Wilson score interval,
-# with optional continuity correction
-# and corresponding "Rao score" interval for Poisson rate from
-# Altman DG, Machin D, Bryant TN et al (2000) Statistics with confidence,
-# 2nd edn. BMJ Books, Bristol
-# See also Li et al 2014. Comput Stat (2014) 29:869–889
-# Labelled as "Second Normal" in REVSTAT – Statistical Journal
-# Volume 10, Number 2, June 2012, 211–227
-# which provides the continuity correction formula, and cites
-# Schwertman, N.C. and Martinez, R.A. (1994). Approximate Poisson confidence
-# limits, Communication in Statistics — Theory and Methods, 23(5), 1507-1529.
-#
-#
-wilsonci <- function(x,
-                     n,
-                     level = 0.95,
-                     cc = FALSE,
-                     distrib = "bin") {
-  if (as.character(cc) == "TRUE") cc <- 0.5
-  corr <- cc / n
-  z <- qnorm(1 - (1 - level) / 2)
-  est <- x / n
-  if (distrib == "bin") {
-    lower <- (2 * (x - cc) + z^2 -
-      z * sqrt(z^2 - 2 * (2 * cc + cc / n) +
-        4 * ((x / n) * (n * (1 - x / n) + 2 * cc)))
-    ) / (2 * (n + z^2))
-    lower[x == 0] <- 0 # See Newcombe 1998
-    upper <- (2 * (x + cc) + z^2 +
-      z * sqrt(z^2 + 2 * (2 * cc - cc / n) +
-        4 * ((x / n) * (n * (1 - x / n) - 2 * cc)))
-    ) / (2 * (n + z^2))
-    upper[x == n] <- 1
-  } else if (distrib == "poi") {
-    lower <- ((x - cc) + z^2 / 2 - z * sqrt(x - cc + z^2 / 4)) / n
-    lower[x == 0] <- 0
-    upper <- ((x + cc) + z^2 / 2 + z * sqrt(x + cc + z^2 / 4)) / n
-  }
-  cbind(Lower = lower, MLE = est, Upper = upper)
-}
-
-
 #' Skewness-corrected asymptotic score ("SCAS") confidence intervals for
 #' single binomial or Poisson rate using closed-form calculations.
 #' This function is vectorised in x, n.
@@ -225,3 +150,79 @@ rateci <- function(x,
     # exact method not applicable if using a compromise value of cc
   }
 }
+
+# Internal function for Clopper-Pearson/Garwood and mid-p, binomial or Poisson
+exactci <- function( # function to calculate exact 'exact' confidence interval
+  # for a single binomial or Poisson rate x/n
+  x,
+  n,
+  level = 0.95,
+  midp = TRUE,
+  distrib = "bin",
+  precis = 8) {
+  alpha <- 1 - level
+  est <- ifelse(distrib == "poi", x, x / n)
+  if (as.character(midp) == "TRUE") midp <- 0.5
+  if (distrib == "bin") {
+    lowroot <- function(p) {
+      pbinom(x - 1, n, p) + midp * dbinom(x, n, p) -
+        (1 - alpha / 2)
+    }
+    uproot <- function(p) pbinom(x, n, p) - midp * dbinom(x, n, p) - alpha / 2
+  } else if (distrib == "poi") {
+    lowroot <- function(p) ppois(x, p) + midp * dpois(x, p) - (1 - alpha / 2)
+    uproot <- function(p) ppois(x, p) - midp * dpois(x, p) - alpha / 2
+  }
+  lower <- bisect(
+    ftn = lowroot, precis = precis, uplow = "low",
+    contrast = "p", distrib = distrib
+  )
+  upper <- bisect(
+    ftn = uproot, precis = precis, uplow = "up", contrast = "p",
+    distrib = distrib
+  )
+  return(cbind(Lower = lower, MLE = est, Upper = upper) / ifelse(distrib == "poi", n, 1))
+}
+
+# Internal function for Wilson score interval,
+# with optional continuity correction
+# and corresponding "Rao score" interval for Poisson rate from
+# Altman DG, Machin D, Bryant TN et al (2000) Statistics with confidence,
+# 2nd edn. BMJ Books, Bristol
+# See also Li et al 2014. Comput Stat (2014) 29:869–889
+# Labelled as "Second Normal" in REVSTAT – Statistical Journal
+# Volume 10, Number 2, June 2012, 211–227
+# which provides the continuity correction formula, and cites
+# Schwertman, N.C. and Martinez, R.A. (1994). Approximate Poisson confidence
+# limits, Communication in Statistics — Theory and Methods, 23(5), 1507-1529.
+#
+#
+wilsonci <- function(x,
+                     n,
+                     level = 0.95,
+                     cc = FALSE,
+                     distrib = "bin") {
+  if (as.character(cc) == "TRUE") cc <- 0.5
+  corr <- cc / n
+  z <- qnorm(1 - (1 - level) / 2)
+  est <- x / n
+  if (distrib == "bin") {
+    lower <- (2 * (x - cc) + z^2 -
+                z * sqrt(z^2 - 2 * (2 * cc + cc / n) +
+                           4 * ((x / n) * (n * (1 - x / n) + 2 * cc)))
+    ) / (2 * (n + z^2))
+    lower[x == 0] <- 0 # See Newcombe 1998
+    upper <- (2 * (x + cc) + z^2 +
+                z * sqrt(z^2 + 2 * (2 * cc - cc / n) +
+                           4 * ((x / n) * (n * (1 - x / n) - 2 * cc)))
+    ) / (2 * (n + z^2))
+    upper[x == n] <- 1
+  } else if (distrib == "poi") {
+    lower <- ((x - cc) + z^2 / 2 - z * sqrt(x - cc + z^2 / 4)) / n
+    lower[x == 0] <- 0
+    upper <- ((x + cc) + z^2 / 2 + z * sqrt(x + cc + z^2 / 4)) / n
+  }
+  cbind(Lower = lower, MLE = est, Upper = upper)
+}
+
+
