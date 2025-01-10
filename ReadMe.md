@@ -82,27 +82,30 @@ This builds the package from source based on the current version on
 
 ## Example
 
-This is a basic example which shows you how to request a confidence
-interval for the difference between proportions 5/56 - 0/29:
+Below is a basic example which shows you how to request a confidence
+interval for the difference between proportions 5/56 - 0/29. The `$call`
+output element shows that the default settings give an interval for the
+risk difference (`contrast` = “RD”), for binomial proportions (`distrib`
+= “bin”), at a 95% confidence level. Variance bias correction (`bcf`)
+and skewness correction (`skew`) are applied, continuity correction
+(`cc`) is not. This is the skewness-corrected asymptotic score (“SCAS”)
+confidence interval. (For Miettinen-Nurminen, use `skew` = FALSE, for
+Gart-Nam, use `bcf` = FALSE.)
 
 ``` r
 library(ratesci)
-scoreci(x1 = 5, n1 = 56, x2 = 0, n2 = 29)
+scoreci(x1 = 5, n1 = 56, x2 = 0, n2 = 29, precis = 4)
 #> $estimates
-#>          Lower      MLE    Upper level x1 n1 x2 n2      p1hat p2hat      p1mle
-#> [1,] -0.018618 0.091688 0.186718  0.95  5 56  0 29 0.08928571     0 0.09168753
-#>      p2mle           V
-#> [1,]     0 0.001504864
+#>        Lower    MLE  Upper level x1 n1 x2 n2  p1hat p2hat  p1mle p2mle
+#> [1,] -0.0186 0.0917 0.1867  0.95  5 56  0 29 0.0893     0 0.0917     0
 #> 
 #> $pval
 #>         chisq pval2sided theta0 scorenull pval_left pval_right
 #> [1,] 3.024862 0.08199729      0  1.739213 0.9590014 0.04099865
 #> 
 #> $call
-#>    distrib   contrast      level       skew simpleskew     RRtang        bcf 
-#>      "bin"       "RD"     "0.95"     "TRUE"    "FALSE"    "FALSE"     "TRUE" 
-#>         cc     random 
-#>    "FALSE"    "FALSE"
+#>  distrib contrast    level      bcf     skew       cc 
+#>    "bin"     "RD"   "0.95"   "TRUE"   "TRUE"  "FALSE"
 ```
 
 #### Overview
