@@ -110,6 +110,10 @@
 #'   Medicine, 17, 2635-2650 (1998).
 #'   Statistics in Medicine 1999; 18(24):3511-3513
 #'
+#'   Nam J-M, Blackwelder WC. Analysis of the ratio of marginal
+#'   probabilities in a matched-pair setting.
+#'   Stat Med 2002; 21(5):689–699
+#'
 #'   Tang N-S, Tang M-L, Chan ISF. On tests of equivalence via non-unity
 #'   relative risk for matched-pair design.
 #'   Statistics in Medicine 2003; 22:1217-1233
@@ -126,10 +130,6 @@
 #'   score confidence interval for a paired difference of proportions.
 #'   Statistics in Medicine 2013; 32:1336-1342
 #'
-#'   Chang P et al. Continuity corrected score confidence interval for the
-#'   difference in proportions in paired data.
-#'   Journal of Applied Statistics 2024; 51-1:139-152
-#'
 #'   Newcombe RG. Improved confidence intervals for the difference between
 #'   binomial proportions based on paired data.
 #'   Statistics in Medicine 1998; 17:2635-2650
@@ -141,6 +141,14 @@
 #'   Tang N-S et al. Asymptotic confidence interval construction for proportion
 #'   difference in medical studies with bilateral data.
 #'   Statistical Methods in Medical Research. 2011; 20(3):233-259
+#'
+#'   Chang P et al. Continuity corrected score confidence interval for the
+#'   difference in proportions in paired data.
+#'   Journal of Applied Statistics 2024; 51-1:139-152
+#'
+#'   DelRocco N et al. New Confidence Intervals for Relative Risk of Two
+#'   Correlated Proportions.
+#'   Statistics in Biosciences 2023; 15:1–30
 #'
 #' @export
 pairbinci <- function(x,
