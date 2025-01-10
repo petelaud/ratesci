@@ -1,4 +1,4 @@
-# ratesci 0.4-0.9000 (yyyy-mm-dd)
+# ratesci 0.5.0 (2025-01-10)
 
 ## New features
 ### In `pairbinci()`:
@@ -37,8 +37,6 @@
   Rao score interval.
 * Same correction affects MOVER method for comparison of Poisson rates
  [i.e. `moverci()` with `distrib` = "poi" and `type` = "wilson"]
-
-
 
 ## Other
 * Improved documentation of hypothesis tests and continuity corrections, clarifying links to Chi-squared tests and CMH test with selected weights.
