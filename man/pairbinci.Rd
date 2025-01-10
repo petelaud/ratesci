@@ -39,7 +39,9 @@ correction. When a score-based method is used, cc = 0.5 corresponds to the
 continuity-corrected McNemar test.}
 
 \item{cctype}{Character string indicating the type of continuity correction
-to be applied. "constant" or "delrocco". Only used for contrast = "RR".}
+("constant" or "delrocco") to be applied for contrast = "RR".
+(Note: both options produce non-equivariant intervals, an improved
+correction is currently under evaluation - watch this space.)}
 
 \item{method_RD}{Character string indicating the confidence interval method
 to be used for contrast = "RD". "Score" = iterative Tango asymptotic score,
@@ -141,6 +143,10 @@ proportions based on paired data by Robert G. Newcombe, Statistics in
 Medicine, 17, 2635-2650 (1998).
 Statistics in Medicine 1999; 18(24):3511-3513
 
+Nam J-M, Blackwelder WC. Analysis of the ratio of marginal
+probabilities in a matched-pair setting.
+Stat Med 2002; 21(5):689–699
+
 Tang N-S, Tang M-L, Chan ISF. On tests of equivalence via non-unity
 relative risk for matched-pair design.
 Statistics in Medicine 2003; 22:1217-1233
@@ -157,10 +163,6 @@ Yang Z, Sun X and Hardin JW. A non-iterative implementation of Tango's
 score confidence interval for a paired difference of proportions.
 Statistics in Medicine 2013; 32:1336-1342
 
-Chang P et al. Continuity corrected score confidence interval for the
-difference in proportions in paired data.
-Journal of Applied Statistics 2024; 51-1:139-152
-
 Newcombe RG. Improved confidence intervals for the difference between
 binomial proportions based on paired data.
 Statistics in Medicine 1998; 17:2635-2650
@@ -172,6 +174,14 @@ Statistical Methods in Medical Research 2010; 21(4):361-378
 Tang N-S et al. Asymptotic confidence interval construction for proportion
 difference in medical studies with bilateral data.
 Statistical Methods in Medical Research. 2011; 20(3):233-259
+
+Chang P et al. Continuity corrected score confidence interval for the
+difference in proportions in paired data.
+Journal of Applied Statistics 2024; 51-1:139-152
+
+DelRocco N et al. New Confidence Intervals for Relative Risk of Two
+Correlated Proportions.
+Statistics in Biosciences 2023; 15:1–30
 }
 \author{
 Pete Laud, \email{p.j.laud@sheffield.ac.uk}

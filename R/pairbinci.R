@@ -30,7 +30,9 @@
 #'   correction. When a score-based method is used, cc = 0.5 corresponds to the
 #'   continuity-corrected McNemar test.
 #' @param cctype Character string indicating the type of continuity correction
-#'   to be applied. "constant" or "delrocco". Only used for contrast = "RR".
+#'   ("constant" or "delrocco") to be applied for contrast = "RR".
+#'   (Note: both options produce non-equivariant intervals, an improved
+#'   correction is currently under evaluation - watch this space.)
 #' @param theta0 Number to be used in a one-sided significance test (e.g.
 #'   non-inferiority margin). 1-sided p-value will be < 0.025 iff 2-sided 95\% CI
 #'   excludes theta0. NB: can also be used for a superiority test by setting
