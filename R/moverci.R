@@ -387,6 +387,7 @@ jeffreysci <- function(x,
 #'   each group (default ai = bi = 0.5 for Jeffreys uninformative priors). Gamma
 #'   priors for Poisson rates require only a1, a2.
 #' @inheritParams moverci
+#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
 #' @export
 moverbci <- function(x1,
                      n1,
@@ -420,7 +421,11 @@ moverbci <- function(x1,
   )
 }
 
-# Internal function - superseded by new wilsonci function
+#' Internal function - superseded by new wilsonci function
+#'
+#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#'
+#' @noRd
 quadroot <- function(a, b, c_) {
   # GET ROOTS OF A QUADRATIC EQUATION
   r1x <- (-b + sqrt(b^2 - 4 * a * c_)) / (2 * a)

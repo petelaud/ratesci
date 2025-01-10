@@ -100,12 +100,13 @@
 #'
 #' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
 #' @references
-#'   Laud PJ. Equal-tailed confidence intervals for comparison of rates.
-#'   Pharmaceutical Statistics 2017; 16:334-348.
-#'
 #'   Tango T. Equivalence test and confidence interval for the difference
 #'   in proportions for the paired-sample design.
 #'   Statistics in Medicine 1998; 17:891-908
+#'
+#'   Newcombe RG. Improved confidence intervals for the difference between
+#'   binomial proportions based on paired data.
+#'   Statistics in Medicine 1998; 17:2635-2650
 #'
 #'   Tango T. Improved confidence intervals for the difference between binomial
 #'   proportions based on paired data by Robert G. Newcombe, Statistics in
@@ -120,21 +121,9 @@
 #'   relative risk for matched-pair design.
 #'   Statistics in Medicine 2003; 22:1217-1233
 #'
-#'   Fagerland MW, Lydersen S, Laake P. Recommended tests and
-#'   confidence intervals for paired binomial proportions.
-#'   Statistics in Medicine 2014; 33(16):2850-2875
-#'
 #'   Agresti A, Min Y. Simple improved confidence intervals for
 #'   comparing matched proportions.
 #'   Statistics in Medicine 2005; 24:729-740
-#'
-#'   Yang Z, Sun X and Hardin JW. A non-iterative implementation of Tango's
-#'   score confidence interval for a paired difference of proportions.
-#'   Statistics in Medicine 2013; 32:1336-1342
-#'
-#'   Newcombe RG. Improved confidence intervals for the difference between
-#'   binomial proportions based on paired data.
-#'   Statistics in Medicine 1998; 17:2635-2650
 #'
 #'   Tang M-L, Li H-Q, Tang N-S. Confidence interval construction for proportion
 #'   ratio in paired studies based on hybrid method.
@@ -144,13 +133,24 @@
 #'   difference in medical studies with bilateral data.
 #'   Statistical Methods in Medical Research. 2011; 20(3):233-259
 #'
-#'   Chang P et al. Continuity corrected score confidence interval for the
-#'   difference in proportions in paired data.
-#'   Journal of Applied Statistics 2024; 51-1:139-152
+#'   Yang Z, Sun X and Hardin JW. A non-iterative implementation of Tango's
+#'   score confidence interval for a paired difference of proportions.
+#'   Statistics in Medicine 2013; 32:1336-1342
+#'
+#'   Fagerland MW, Lydersen S, Laake P. Recommended tests and
+#'   confidence intervals for paired binomial proportions.
+#'   Statistics in Medicine 2014; 33(16):2850-2875
+#'
+#'   Laud PJ. Equal-tailed confidence intervals for comparison of rates.
+#'   Pharmaceutical Statistics 2017; 16:334-348.
 #'
 #'   DelRocco N et al. New Confidence Intervals for Relative Risk of Two
 #'   Correlated Proportions.
 #'   Statistics in Biosciences 2023; 15:1–30
+#'
+#'   Chang P et al. Continuity corrected score confidence interval for the
+#'   difference in proportions in paired data.
+#'   Journal of Applied Statistics 2024; 51-1:139-152
 #'
 #' @export
 pairbinci <- function(x,
@@ -397,14 +397,32 @@ pairbinci <- function(x,
 }
 
 
-# Internal function
-scorepair <- function( # function to evaluate the score at a given value of
-                      # theta, given the observed
-                      # data for paired binomial RD and RR
-                      # uses the MLE solution (and notation) given in Fagerland
-                      # from Tango (1998/1999) & Tang (2003)
-                      # This function is not vectorised
-                      theta,
+#' Internal function to evaluate the score at a given value of theta
+#'
+#' For iterative calculations:
+#' function to evaluate the score at a given value of theta, given the observed
+#' data for paired binomial RD and RR. uses the MLE solution (and notation)
+#' given in Fagerland from Tango (1998/1999) & Tang (2003)
+#' This function is not vectorised
+#'
+#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @references
+#'   Tango T. Equivalence test and confidence interval for the difference
+#'   in proportions for the paired-sample design.
+#'   Statistics in Medicine 1998; 17:891-908
+#'
+#'   Nam J-M, Blackwelder WC. Analysis of the ratio of marginal
+#'   probabilities in a matched-pair setting.
+#'   Stat Med 2002; 21(5):689–699
+#'
+#'   Tang N-S, Tang M-L, Chan ISF. On tests of equivalence via non-unity
+#'   relative risk for matched-pair design.
+#'   Statistics in Medicine 2003; 22:1217-1233
+#'
+#' @inheritParams pairbinci
+#'
+#' @noRd
+scorepair <- function(theta,
                       x,
                       contrast = "RD",
                       cc = FALSE,
@@ -443,18 +461,16 @@ scorepair <- function( # function to evaluate the score at a given value of
   return(outlist)
 }
 
-
-#' Tango confidence interval
-#'
-#' Closed form Tango confidence intervals for a paired difference of
-#' proportions.
+#' Closed form Tango asymptotic score confidence intervals for a paired
+#' difference of proportions (RD).
 #'
 #' R code to calculate Tango's score-based CI using a non-iterative method.
 #' For contrast = "RD" only.
 #' Code originates from Appendix B of Yang 2013,
 #' with updates to include continuity correction from Chang 2024.
 #'
-#' References
+#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @references
 #'   Yang Z, Sun X and Hardin JW. A non-iterative implementation of Tango's
 #'   score confidence interval for a paired difference of proportions.
 #'   Statistics in Medicine 2013; 32:1336-1342
@@ -600,18 +616,28 @@ tangoci <- function(x,
   return(estimates)
 }
 
-# Internal function
-# Adapted from code kindly provided by Guogen Shan for the closed-form
-# ASCC method proposed in DelRocco et al.
-# Statistics in Biosciences (2023) 15:1-30
-# https://doi.org/10.1007/s12561-022-09345-7
-# with modified form of continuity correction
-# for consistency with McNemar test, and unified code with/without cc.
-# cctype = "constant" uses correction of cc * (2) with e.g. cc=0.5
-# instead of xp1 / (m * N) with m=2 as used by DelRocco
-#   - Note the latter produces a relatively much smaller correction
-
-####### Tang asymptotic score #######
+#' Closed form Tang asymptotic score confidence intervals for a paired
+#' ratio of proportions (RR).
+#'
+#' R code to calculate Tang's score-based CI using a non-iterative method.
+#' For contrast = "RR" only.
+#' # Adapted from code kindly provided by Guogen Shan for the closed-form
+#' ASCC method proposed in DelRocco et al. 2023.
+#' with modified form of continuity correction
+#' for consistency with McNemar test, and unified code with/without cc.
+#' cctype = "constant" uses correction of cc * (2) with e.g. cc=0.5
+#' instead of xp1 / (m * N) with m=2 as used by DelRocco
+#'   - Note the latter produces a relatively much smaller correction
+#'
+#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}, Guogen Shan
+#' @references
+#'   DelRocco N et al. New Confidence Intervals for Relative Risk of Two
+#'   Correlated Proportions.
+#'   Statistics in Biosciences 2023; 15:1–30
+#'
+#' @inheritParams pairbinci
+#'
+#' @noRd
 tangci <- function(x,
                    cc = FALSE,
                    cctype = "constant",
@@ -712,9 +738,30 @@ tangci <- function(x,
   return(result)
 }
 
-# Internal function
-# MOVER interval for paired RR or RD (binomial only)
-#
+#' MOVER interval for paired RR or RD (binomial only)
+#'
+#' Method of Variance Estimates Recovery, applied to paired RD and RR.
+#' With various options for the marginal rates, and with optional continuity
+#' correction, and Newcombe's correction to the Pearson correlation estimate,
+#' applied to both contrasts.
+#'
+#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @references
+#'   Newcombe RG. Improved confidence intervals for the difference between
+#'   binomial proportions based on paired data.
+#'   Statistics in Medicine 1998; 17:2635-2650
+#'
+#'   Tang M-L, Li H-Q, Tang N-S. Confidence interval construction for proportion
+#'   ratio in paired studies based on hybrid method.
+#'   Statistical Methods in Medical Research 2010; 21(4):361-378
+#'
+#'   Tang N-S et al. Asymptotic confidence interval construction for proportion
+#'   difference in medical studies with bilateral data.
+#'   Statistical Methods in Medical Research. 2011; 20(3):233-259
+#'
+#' @inheritParams pairbinci
+#'
+#' @noRd
 moverpair <- function(x,
                       level = 0.95,
                       contrast = "RR",

@@ -131,12 +131,13 @@ pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method_OR = "SCAS")
 
 }
 \references{
-Laud PJ. Equal-tailed confidence intervals for comparison of rates.
-Pharmaceutical Statistics 2017; 16:334-348.
-
 Tango T. Equivalence test and confidence interval for the difference
 in proportions for the paired-sample design.
 Statistics in Medicine 1998; 17:891-908
+
+Newcombe RG. Improved confidence intervals for the difference between
+binomial proportions based on paired data.
+Statistics in Medicine 1998; 17:2635-2650
 
 Tango T. Improved confidence intervals for the difference between binomial
 proportions based on paired data by Robert G. Newcombe, Statistics in
@@ -151,21 +152,9 @@ Tang N-S, Tang M-L, Chan ISF. On tests of equivalence via non-unity
 relative risk for matched-pair design.
 Statistics in Medicine 2003; 22:1217-1233
 
-Fagerland MW, Lydersen S, Laake P. Recommended tests and
-confidence intervals for paired binomial proportions.
-Statistics in Medicine 2014; 33(16):2850-2875
-
 Agresti A, Min Y. Simple improved confidence intervals for
 comparing matched proportions.
 Statistics in Medicine 2005; 24:729-740
-
-Yang Z, Sun X and Hardin JW. A non-iterative implementation of Tango's
-score confidence interval for a paired difference of proportions.
-Statistics in Medicine 2013; 32:1336-1342
-
-Newcombe RG. Improved confidence intervals for the difference between
-binomial proportions based on paired data.
-Statistics in Medicine 1998; 17:2635-2650
 
 Tang M-L, Li H-Q, Tang N-S. Confidence interval construction for proportion
 ratio in paired studies based on hybrid method.
@@ -175,13 +164,24 @@ Tang N-S et al. Asymptotic confidence interval construction for proportion
 difference in medical studies with bilateral data.
 Statistical Methods in Medical Research. 2011; 20(3):233-259
 
-Chang P et al. Continuity corrected score confidence interval for the
-difference in proportions in paired data.
-Journal of Applied Statistics 2024; 51-1:139-152
+Yang Z, Sun X and Hardin JW. A non-iterative implementation of Tango's
+score confidence interval for a paired difference of proportions.
+Statistics in Medicine 2013; 32:1336-1342
+
+Fagerland MW, Lydersen S, Laake P. Recommended tests and
+confidence intervals for paired binomial proportions.
+Statistics in Medicine 2014; 33(16):2850-2875
+
+Laud PJ. Equal-tailed confidence intervals for comparison of rates.
+Pharmaceutical Statistics 2017; 16:334-348.
 
 DelRocco N et al. New Confidence Intervals for Relative Risk of Two
 Correlated Proportions.
 Statistics in Biosciences 2023; 15:1–30
+
+Chang P et al. Continuity corrected score confidence interval for the
+difference in proportions in paired data.
+Journal of Applied Statistics 2024; 51-1:139-152
 }
 \author{
 Pete Laud, \email{p.j.laud@sheffield.ac.uk}

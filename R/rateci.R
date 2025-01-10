@@ -151,7 +151,12 @@ rateci <- function(x,
   }
 }
 
-# Internal function for Clopper-Pearson/Garwood and mid-p, binomial or Poisson
+#' Clopper-Pearson/Garwood and mid-p intervals for single binomial or
+#' Poisson rate
+#'
+#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#'
+#' @noRd
 exactci <- function( # function to calculate exact 'exact' confidence interval
   # for a single binomial or Poisson rate x/n
   x,
@@ -184,19 +189,25 @@ exactci <- function( # function to calculate exact 'exact' confidence interval
   return(cbind(Lower = lower, MLE = est, Upper = upper) / ifelse(distrib == "poi", n, 1))
 }
 
-# Internal function for Wilson score interval,
-# with optional continuity correction
-# and corresponding "Rao score" interval for Poisson rate from
-# Altman DG, Machin D, Bryant TN et al (2000) Statistics with confidence,
-# 2nd edn. BMJ Books, Bristol
-# See also Li et al 2014. Comput Stat (2014) 29:869–889
-# Labelled as "Second Normal" in REVSTAT – Statistical Journal
-# Volume 10, Number 2, June 2012, 211–227
-# which provides the continuity correction formula, and cites
-# Schwertman, N.C. and Martinez, R.A. (1994). Approximate Poisson confidence
-# limits, Communication in Statistics — Theory and Methods, 23(5), 1507-1529.
-#
-#
+#' Wilson score interval, and equivalent Rao score for Poisson data
+#'
+#' with optional continuity correction
+#'
+#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @references
+#' Altman DG, Machin D, Bryant TN et al (2000) Statistics with confidence,
+#' 2nd edn. BMJ Books, Bristol
+#'
+#' Li et al 2014. Comput Stat (2014) 29:869–889
+#'
+#' Labelled as "Second Normal" in REVSTAT – Statistical Journal
+#' Volume 10, Number 2, June 2012, 211–227
+#' (which provides the continuity correction formula)
+#'
+#' Schwertman, N.C. and Martinez, R.A. (1994). Approximate Poisson confidence
+#' limits, Communication in Statistics — Theory and Methods, 23(5), 1507-1529.
+#'
+#' @noRd
 wilsonci <- function(x,
                      n,
                      level = 0.95,

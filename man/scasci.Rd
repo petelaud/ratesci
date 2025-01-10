@@ -136,3 +136,13 @@ meta-analysis). This method assumes the contrast is constant across strata
 (fixed effects).  For a 'random-effects' method use tdasci (or scoreci with
 random = TRUE).
 }
+\references{
+Laud PJ. Equal-tailed confidence intervals for comparison of
+rates. Pharmaceutical Statistics 2017; 16:334-348.
+
+Laud PJ. Corrigendum: Equal-tailed confidence intervals for comparison of
+rates. Pharmaceutical Statistics 2018; 17:290-293.
+}
+\author{
+Pete Laud, \email{p.j.laud@sheffield.ac.uk}
+}

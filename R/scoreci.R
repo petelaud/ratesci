@@ -207,7 +207,8 @@
 #' )
 #'
 #' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
-#' @references Laud PJ. Equal-tailed confidence intervals for comparison of
+#' @references
+#'   Laud PJ. Equal-tailed confidence intervals for comparison of
 #'   rates. Pharmaceutical Statistics 2017; 16:334-348.
 #'
 #'   Laud PJ. Corrigendum: Equal-tailed confidence intervals for comparison of
@@ -1146,6 +1147,15 @@ scoreci <- function(x1,
 #'   describing and testing heterogeneity} \item{weighting}{a string indicating
 #'   the selected weighting method} \item{stratdata}{a matrix containing stratum
 #'   estimates and weights}}
+#'
+#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @references
+#'   Laud PJ. Equal-tailed confidence intervals for comparison of
+#'   rates. Pharmaceutical Statistics 2017; 16:334-348.
+#'
+#'   Laud PJ. Corrigendum: Equal-tailed confidence intervals for comparison of
+#'   rates. Pharmaceutical Statistics 2018; 17:290-293.
+#'
 #' @export
 scasci <- function(x1,
                    n1,
@@ -1233,6 +1243,15 @@ scasci <- function(x1,
 #'   the selected weighting method} \item{stratdata}{a matrix containing stratum
 #'   estimates and weights}
 #'   \item{call}{details of the function call}}
+#'
+#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @references
+#'   Laud PJ. Equal-tailed confidence intervals for comparison of
+#'   rates. Pharmaceutical Statistics 2017; 16:334-348.
+#'
+#'   Laud PJ. Corrigendum: Equal-tailed confidence intervals for comparison of
+#'   rates. Pharmaceutical Statistics 2018; 17:290-293.
+#'
 #' @export
 tdasci <- function(x1,
                    n1,
@@ -1295,14 +1314,21 @@ tdasci <- function(x1,
   )
 }
 
-# vectorized limit-finding routine - turns out not to be any quicker but is
-# neater. The bisection method is just as efficient as the secant method
-# suggested by G&N, and affords greater control over whether the final estimate
-# has score<z the secant method is better for RR and for Poisson rates, where
-# there is no upper bound for d, however it is not guaranteed to converge New
-# version not reliant on point estimate This could be modified to solve upper
-# and lower limits simultaneously
-# Internal function
+#' Bisection root-finding
+#'
+#' vectorized limit-finding routine - turns out not to be any quicker but is
+#' neater. The bisection method is just as efficient as the secant method
+#' suggested by G&N, and affords greater control over whether the final estimate
+#' has score<z the secant method is better for RR and for Poisson rates, where
+#' there is no upper bound for d, however it is not guaranteed to converge New
+#' version not reliant on point estimate This could be modified to solve upper
+#' and lower limits simultaneously
+#'
+#' @inheritParams scoreci
+#'
+#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#'
+#' @noRd
 bisect <- function(ftn,
                    contrast,
                    distrib,
@@ -1356,9 +1382,30 @@ bisect <- function(ftn,
   }
 }
 
-# Internal function to evaluate the score at a given value of theta, given the
-# observed data using the MLE solution (and notation) given in F&M, extended
-# in Laud 2017. This function is vectorised in x1,x2
+#' Evaluate the score at a given value of theta given the observed data
+#'
+#' Using the MLE solution (and notation) given in F&M, extended
+#' in Laud 2017. This function is vectorised in x1,x2
+#'
+#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @references
+#'   Laud PJ. Equal-tailed confidence intervals for comparison of
+#'   rates. Pharmaceutical Statistics 2017; 16:334-348.
+#'
+#'   Laud PJ. Corrigendum: Equal-tailed confidence intervals for comparison of
+#'   rates. Pharmaceutical Statistics 2018; 17:290-293.
+#'
+#'   Miettinen OS, Nurminen M. Comparative analysis of two rates. Statistics in
+#'   Medicine 1985; 4:213-226.
+#'
+#'   Farrington CP, Manning G. Test statistics and sample size formulae for
+#'   comparative binomial trials with null hypothesis of non-zero risk
+#'   difference or non-unity relative risk. Statistics in Medicine 1990;
+#'   9(12):1447-1454.
+#'
+#' @inheritParams scoreci
+#'
+#' @noRd
 scoretheta <- function(theta,
                        x1,
                        n1,
