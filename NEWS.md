@@ -5,9 +5,11 @@
 * `cc` continuity correction is now available for all methods for all contrasts. 
 * `cctype` controls the type of correction to apply for `contrast` = "RR".
 * New default `method_RD` = "Score_closed" for non-iterative calculation of 
-  the Tango score interval for `contrast` = "RD".
+  the Tango score interval for `contrast` = "RD". Thanks to Tony Yang for 
+  permission to use the code in his 2013 paper.
 * New default `method_RR` = "Score_closed" for non-iterative calculation of 
-  the Tang score interval for `contrast` = "RR".
+  the Tang score interval for `contrast` = "RR". Thanks to Guogen Shan for 
+  contributing code via email.
 * Added paired MOVER methods with `method_RD` = "MOVER" and `method_RR` = "MOVER".
   Also "MOVER_newc" incorporates Newcombe's correlation correction.
 * Added `moverbase`, for specifying different versions of the MOVER methods 
