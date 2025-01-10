@@ -63,8 +63,8 @@ An online calculator based on this package is available
 ## Installation
 
 The current official
-(i.e. \[CRAN\]<https://cran.r-project.org/web/packages/ratesci/index.html>)
-release can be installed within R with:
+(i.e. \[CRAN\]<https://CRAN.R-project.org/package=ratesci>) release can
+be installed within R with:
 
 ``` r
 install.packages("ratesci")
