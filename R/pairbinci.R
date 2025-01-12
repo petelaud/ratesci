@@ -802,10 +802,10 @@ moverpair <- function(x,
   np2 <- x[2] + x[4]
   cor_hat <- (x[1] * x[4] - x[2] * x[3]) / sqrt(x1p * n2p * xp1 * np2)
   if (corc == TRUE) {
-      if (x[1] * x[4] - x[2] * x[3] > 0) {
-        cor_hat <- (max(x[1] * x[4] - x[2] * x[3] - N / 2, 0) /
-          sqrt(x1p * n2p * xp1 * np2))
-      }
+    if (x[1] * x[4] - x[2] * x[3] > 0) {
+      cor_hat <- (max(x[1] * x[4] - x[2] * x[3] - N / 2, 0) /
+        sqrt(x1p * n2p * xp1 * np2))
+    }
   }
   if (is.na(cor_hat) | is.infinite(cor_hat)) {
     cor_hat <- 0
@@ -815,17 +815,17 @@ moverpair <- function(x,
     estimate <- p1phat / pp1hat
     A <- (p1phat - l1) * (u2 - pp1hat) * cor_hat
     B <- (u1 - p1phat) * (pp1hat - l2) * cor_hat
-      lower <- (A - p1phat * pp1hat +
-                  sqrt(pmax(0, (A - p1phat * pp1hat)^2 -
-               l1 * (2 * p1phat - l1) * u2 * (2 * pp1hat - u2)))) /
-        (u2 * (u2 - 2 * pp1hat))
-      upper <- (B - p1phat * pp1hat -
-                  sqrt(pmax(0, (B - p1phat * pp1hat)^2 -
-               u1 * (2 * p1phat - u1) * l2 * (2 * pp1hat - l2)))) /
-        (l2 * (l2 - 2 * pp1hat))
-      if (is.na(upper) | upper < 0) {
-        upper <- Inf
-      }
+    lower <- (A - p1phat * pp1hat +
+      sqrt(pmax(0, (A - p1phat * pp1hat)^2 -
+        l1 * (2 * p1phat - l1) * u2 * (2 * pp1hat - u2)))) /
+      (u2 * (u2 - 2 * pp1hat))
+    upper <- (B - p1phat * pp1hat -
+      sqrt(pmax(0, (B - p1phat * pp1hat)^2 -
+        u1 * (2 * p1phat - u1) * l2 * (2 * pp1hat - l2)))) /
+      (l2 * (l2 - 2 * pp1hat))
+    if (is.na(upper) | upper < 0) {
+      upper <- Inf
+    }
   } else if (contrast == "RD") {
     estimate <- p1phat - pp1hat
     lower <- p1phat - pp1hat -
