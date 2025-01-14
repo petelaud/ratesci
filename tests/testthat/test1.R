@@ -165,7 +165,7 @@ test_that("Closed form methods match iterative results for paired intervals", {
       round(sapply(
         1:dim(combos)[1],
         function(i) {
-          pairbinci(x = combos[i, ], contrast = "RD", method_RD = "Score")$estimates[, c(1, 3)]
+          pairbinci(x = combos[i, ], contrast = "RD", method_RD = "Score", precis = 8)$estimates[, c(1, 3)]
         }
       ), 5)
     )),
@@ -184,7 +184,7 @@ test_that("Closed form methods match iterative results for paired intervals", {
       round(sapply(
         1:dim(combos)[1],
         function(i) {
-          pairbinci(x = combos[i, ], contrast = "RD", method_RD = "Score", cc = TRUE)$estimates[, c(1, 3)]
+          pairbinci(x = combos[i, ], contrast = "RD", method_RD = "Score", cc = TRUE, precis = 8)$estimates[, c(1, 3)]
         }
       ), 5)
     )),
@@ -203,7 +203,7 @@ test_that("Closed form methods match iterative results for paired intervals", {
       round(sapply(
         1:dim(combos)[1],
         function(i) {
-          pairbinci(x = combos[i, ], contrast = "RR", method_RR = "Score")$estimates[, c(1, 3)]
+          pairbinci(x = combos[i, ], contrast = "RR", method_RR = "Score", precis = 8)$estimates[, c(1, 3)]
         }
       ), 3)
     )),
@@ -223,7 +223,7 @@ test_that("Closed form methods match iterative results for paired intervals", {
       round(sapply(
         1:dim(combos)[1],
         function(i) {
-          pairbinci(x = combos[i, ], contrast = "RR", method_RR = "Score", cc = 0.5)$estimates[, c(1, 3)]
+          pairbinci(x = combos[i, ], contrast = "RR", method_RR = "Score", cc = 0.5, precis = 8)$estimates[, c(1, 3)]
         }
       ), 2)
     )),
