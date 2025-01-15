@@ -30,9 +30,10 @@
 #'   correction. When a score-based method is used, cc = 0.5 corresponds to the
 #'   continuity-corrected McNemar test.
 #' @param cctype Character string indicating the type of continuity correction
-#'   ("constant" or "delrocco") to be applied for contrast = "RR".
-#'   (Note: both options produce non-equivariant intervals, an improved
-#'   correction is currently under evaluation - watch this space.)
+#'   ("new", constant" or "delrocco") to be applied for contrast = "RR".
+#'   (Note: "constant" and "delrocco" options produce non-equivariant intervals,
+#'   and are likely to be deprecated in a future release (as well as the
+#'   cctype argument itself).
 #' @param theta0 Number to be used in a one-sided significance test (e.g.
 #'   non-inferiority margin). 1-sided p-value will be < 0.025 iff 2-sided 95\% CI
 #'   excludes theta0. NB: can also be used for a superiority test by setting
@@ -157,7 +158,7 @@ pairbinci <- function(x,
                       contrast = "RD",
                       level = 0.95,
                       cc = FALSE,
-                      cctype = "constant",
+                      cctype = "new",
                       method_RD = "Score_closed",
                       method_RR = "Score_closed",
                       method_OR = "SCAS",
@@ -426,7 +427,7 @@ scorepair <- function(theta,
                       x,
                       contrast = "RD",
                       cc = FALSE,
-                      cctype = "constant",
+                      cctype = "new",
                       ...) {
   N <- sum(x)
   if (as.character(cc) == "TRUE") cc <- 0.5
@@ -640,7 +641,7 @@ tangoci <- function(x,
 #' @noRd
 tangci <- function(x,
                    cc = FALSE,
-                   cctype = "constant",
+                   cctype = "new",
                    level = 0.95,
                    ctrl = 1e-10) {
   if (as.character(cc) == "TRUE") {
@@ -665,28 +666,33 @@ tangci <- function(x,
 
   alpha <- 1 - level
   z <- qnorm(1 - alpha / 2)
+  corr2 <- 0
   if (cctype == "delrocco") {
-    # Version proposed by DelRocco et al
-    corr <- cc * xp1 / N
+    # Version proposed by DelRocco et al, doesn't match cc'd McNemar test
+    # and is not equivariant
+    corr1 <- cc * xp1 / N
   } else if (cctype == "constant") {
-    # Alternative constant version
-    corr <- cc * 2
+    # Alternative constant version isn't equivariant
+    corr1 <- cc * 2
+  } else if (cctype == "new") {
+    # This version is equivariant
+    corr1 <- corr2 <- cc
   }
   if (doublezero) {
     lower <- 0
     upper <- Inf
   } else if (!doublezero) {
-    a_lower <- xp1^4 + z^2 * xp1^3
-    b_lower <- (-(2 * xp1^2 + z^2 * xp1) *
-      (2 * xp1 * (x1p - corr) + z^2 * (x11 + x12 + x21)))
-    c_lower <- (6 * xp1^2 * (x1p - corr)^2 +
+    a_lower <- (xp1 + corr2)^4 + z^2 * xp1 * (xp1 + corr2)^2
+    b_lower <- (-(2 * (xp1 + corr2)^2 + z^2 * xp1) *
+      (2 * (xp1 + corr2) * (x1p - corr1) + z^2 * (x11 + x12 + x21)))
+    c_lower <- (6 * (xp1 + corr2)^2 * (x1p - corr1)^2 +
       z^4 * (x1p + xp1) * (x11 + x12 + x21) +
-      z^2 * xp1 * ((x1p - corr)^2 +
-        4 * (x11 + x12 + x21) * (x1p - corr) +
-        x1p * xp1))
-    d_lower <- (-(2 * (x1p - corr)^2 + z^2 * x1p) *
-      (2 * xp1 * (x1p - corr) + z^2 * (x11 + x12 + x21)))
-    e_lower <- (x1p - corr)^4 + z^2 * x1p * (x1p - corr)^2
+      z^2 * (xp1 * (x1p - corr1)^2 +
+        4 * (x11 + x12 + x21) * (x1p - corr1) * (xp1 + corr2) +
+        x1p * (xp1 + corr2)^2))
+    d_lower <- (-(2 * (x1p - corr1)^2 + z^2 * x1p) *
+      (2 * (xp1 + corr2) * (x1p - corr1) + z^2 * (x11 + x12 + x21)))
+    e_lower <- (x1p - corr1)^4 + z^2 * x1p * (x1p - corr1)^2
 
     b_lower <- b_lower / a_lower
     c_lower <- c_lower / a_lower
@@ -694,17 +700,17 @@ tangci <- function(x,
     e_lower <- e_lower / a_lower
     a_lower <- a_lower / a_lower
 
-    a_upper <- xp1^4 + z^2 * xp1^3
-    b_upper <- (-(2 * xp1^2 + z^2 * xp1) *
-      (2 * xp1 * (x1p + corr) + z^2 * (x11 + x12 + x21)))
-    c_upper <- (6 * xp1^2 * (x1p + corr)^2 +
+    a_upper <- (xp1 - corr2)^4 + z^2 * xp1 * (xp1 - corr2)^2
+    b_upper <- (-(2 * (xp1 - corr2)^2 + z^2 * xp1) *
+      (2 * (xp1 - corr2) * (x1p + corr1) + z^2 * (x11 + x12 + x21)))
+    c_upper <- (6 * (xp1 - corr2)^2 * (x1p + corr1)^2 +
       z^4 * (x1p + xp1) * (x11 + x12 + x21) +
-      z^2 * xp1 * ((x1p + corr)^2 +
-        4 * (x11 + x12 + x21) * (x1p + corr) +
-        x1p * xp1))
-    d_upper <- (-(2 * (x1p + corr)^2 + z^2 * x1p) *
-      (2 * xp1 * (x1p + corr) + z^2 * (x11 + x12 + x21)))
-    e_upper <- (x1p + corr)^4 + z^2 * x1p * (x1p + corr)^2
+      z^2 * (xp1 * (x1p + corr1)^2 +
+        4 * (x11 + x12 + x21) * (x1p + corr1) * (xp1 - corr2) +
+        x1p * (xp1 - corr2)^2))
+    d_upper <- (-(2 * (x1p + corr1)^2 + z^2 * x1p) *
+      (2 * (xp1 - corr2) * (x1p + corr1) + z^2 * (x11 + x12 + x21)))
+    e_upper <- (x1p + corr1)^4 + z^2 * x1p * (x1p + corr1)^2
 
     b_upper <- b_upper / a_upper
     c_upper <- c_upper / a_upper
