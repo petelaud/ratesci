@@ -482,10 +482,11 @@ scorepair <- function(theta,
     corr <- 2 * cc * sign(Stheta) / N
     p12 <- p21 + theta
     # Previously p1d and p2d were the estimates of b/N and c/N,
-    # checking if they should be (a+b)/N and (a+c)/N
+    # checking if they should be (a+b)/N and (a+c)/N -
+    # - no, that has inferior CP
     p11 <- x[1] / N
-    p1d <- p12 + p11
-    p2d <- p21 + p11
+    p1d <- p12 # + p11
+    p2d <- p21 # + p11
     mu3 <- (p1d * (1 - p1d) * (1 - 2 * p1d) +
       ((-1)^3) * p2d * (1 - p2d) * (1 - 2 * p2d) +
       3 * (-1) * (p11 * (1 - p1d)^2 + p21 * p1d^2 - p1d * p2d * (1 - p1d)) +
