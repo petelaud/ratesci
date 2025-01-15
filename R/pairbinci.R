@@ -34,6 +34,11 @@
 #'   (Note: "constant" and "delrocco" options produce non-equivariant intervals,
 #'   and are likely to be deprecated in a future release (as well as the
 #'   cctype argument itself).
+#' @param skew Logical (default TRUE) indicating whether to apply skewness
+#'   correction or not. (Under evaluation.)
+#'   - Only applies for the iterative method_RD or method_RR = "Score"
+#' @param bcf Logical (default FALSE) indicating whether to apply bias correction
+#'   in the score denominator. (Under evaluation.)
 #' @param theta0 Number to be used in a one-sided significance test (e.g.
 #'   non-inferiority margin). 1-sided p-value will be < 0.025 iff 2-sided 95\% CI
 #'   excludes theta0. NB: can also be used for a superiority test by setting
@@ -71,6 +76,8 @@
 #'   "SCAS" = skewness-corrected score (default)
 #' @param precis Number (default 6) specifying precision (i.e. number of decimal
 #'   places) to be used in optimisation subroutine for the confidence interval.
+#' @param warn Logical (default TRUE) giving the option to suppress warnings.
+#' @param ... Other arguments.
 #' @importFrom stats uniroot pbinom ppois dpois
 #' @return A list containing the following components: \describe{
 #'   \item{data}{the input data in 2x2 matrix form}
@@ -163,7 +170,11 @@ pairbinci <- function(x,
                       method_OR = "SCAS",
                       moverbase = "SCAS",
                       theta0 = NULL,
-                      precis = 6) {
+                      skew = FALSE,
+                      bcf = FALSE,
+                      precis = 6,
+                      warn = TRUE,
+                      ...) {
   if (!(tolower(substr(contrast, 1, 2)) %in% c("rd", "rr", "or"))) {
     print("Contrast must be one of 'RD', 'RR' or 'OR'")
     stop()
@@ -178,6 +189,24 @@ pairbinci <- function(x,
     print("Method_RR must be one of 'Score_closed', 'Score', 'TDAS', 'MOVER' or 'MOVER_newc'")
     stop()
   }
+if (FALSE) {
+  if (skew == TRUE &&
+    (tolower(substr(method_RR, 1, 12)) == c("score_closed"))) {
+    method_RR <- "Score"
+    if (warn == TRUE) {
+      print(paste("Closed-form calculation not available with skewness correction -
+         method_RR is set to 'Score' instead"))
+    }
+  }
+  if (skew == TRUE &&
+      (tolower(substr(method_RD, 1, 12)) %in% c("score_closed"))) {
+    method_RD <- "Score"
+    if (warn == TRUE) {
+      print(paste("Closed-form calculation not available with skewness correction -
+         method_RD is set to 'Score' instead"))
+    }
+  }
+}
   if (!(tolower(substr(method_OR, 1, 4)) %in%
     c("scas", "wils", "midp", "jeff"))) {
     print("Method_OR must be one of 'SCAS', 'wilson', 'midp' or 'jeff'")
@@ -292,13 +321,13 @@ pairbinci <- function(x,
       myfun <- function(theta) {
         scorepair(
           theta = theta, x = x, contrast = contrast, cc = cc,
-          cctype = cctype
+          cctype = cctype, skew = skew, bcf = bcf
         )$score
       }
       myfun0 <- function(theta) {
         scorepair(
           theta = theta, x = x, contrast = contrast, cc = 0,
-          cctype = cctype
+          cctype = cctype, skew = skew, bcf = bcf
         )$score
       }
       # Use bisection routine to locate lower and upper confidence limits
@@ -324,9 +353,10 @@ pairbinci <- function(x,
       # Closed-form versions of Score methods by Chang (for RD Tango method)
       #  & DelRocco (for RR Tang method):
     } else if (contrast == "RD" && method_RD == "Score_closed") {
-      estimates <- tangoci(x = x, level = level, cc = cc)
+      estimates <- tangoci(x = x, level = level, cc = cc, bcf = bcf)
     } else if (contrast == "RR" && method_RR == "Score_closed") {
-      estimates <- tangci(x = x, level = level, cc = cc, cctype = cctype)
+      estimates <- tangci(x = x, level = level, cc = cc,
+                              cctype = cctype, bcf = bcf)
     }
     # MOVER methods for RD and RR
     if ((contrast == "RD" && method_RD == "MOVER")) {
@@ -375,11 +405,11 @@ pairbinci <- function(x,
       }
       scorezero <- scorepair(
         theta = theta00, x = x, contrast = contrast,
-        cc = cc, cctype = cctype
+        cc = cc, cctype = cctype, skew = skew, bcf = bcf
       )
       scorenull <- scorepair(
         theta = theta0, x = x, contrast = contrast,
-        cc = cc, cctype = cctype
+        cc = cc, cctype = cctype, skew = skew, bcf = bcf
       )
       pval_left <- scorenull$pval
       pval_right <- 1 - pval_left
@@ -427,39 +457,93 @@ scorepair <- function(theta,
                       contrast = "RD",
                       cc = FALSE,
                       cctype = "new",
+                      skew = FALSE,
+                      bcf = FALSE,
                       ...) {
   N <- sum(x)
+  lambda <- switch(as.character(bcf),
+    "TRUE" = N / (N - 1),
+    "FALSE" = 1
+  )
   if (as.character(cc) == "TRUE") cc <- 0.5
 
   if (contrast == "RD") {
-    # notation per Tango 1999 letter
-    Stheta <- ((x[2] - x[3]) - N * theta)
+    # notation per Tango 1999 letter, divided by N
+    # (to get numerator on the right scale for skewness correction)
+    # Variance is divided by N^2 accordingly
+    # and continuity correction term also divided by N
+    Stheta <- ((x[2] - x[3]) - N * theta) / N
     A <- 2 * N
     B <- -x[2] - x[3] + (2 * N - x[2] + x[3]) * theta
     C_ <- -x[3] * theta * (1 - theta)
     num <- (-B + Re(sqrt(as.complex(B^2 - 4 * A * C_))))
-    p2d <- ifelse(num == 0, 0, num / (2 * A))
-    V <- pmax(0, N * (2 * p2d + theta * (1 - theta)))
-    corr <- 2 * cc * sign(Stheta)
+    p21 <- ifelse(num == 0, 0, num / (2 * A))
+    V <- pmax(0, N * (2 * p21 + theta * (1 - theta))) * lambda / (N^2)
+    corr <- 2 * cc * sign(Stheta) / N
+    p12 <- p21 + theta
+    # Previously p1d and p2d were the estimates of b/N and c/N,
+    # checking if they should be (a+b)/N and (a+c)/N
+    p11 <- x[1] / N
+    p1d <- p12 + p11
+    p2d <- p21 + p11
+    mu3 <- (p1d * (1 - p1d) * (1 - 2 * p1d) +
+      ((-1)^3) * p2d * (1 - p2d) * (1 - 2 * p2d) +
+      3 * (-1) * (p11 * (1 - p1d)^2 + p21 * p1d^2 - p1d * p2d * (1 - p1d)) +
+      3 * ((-1)^2) * (p11 * (1 - p2d)^2 + p12 * p2d^2 - p1d * p2d * (1 - p2d))) / (N^2)
   }
   if (contrast == "RR") {
-    # per Tang 2003
-    Stheta <- ((x[2] + x[1]) - (x[3] + x[1]) * theta)
+    # per Tang 2003, but divided by N
+    Stheta <- ((x[2] + x[1]) - (x[3] + x[1]) * theta) / N
     A <- N * (1 + theta)
     B <- (x[1] + x[3]) * theta^2 - (x[1] + x[2] + 2 * x[3])
     C_ <- x[3] * (1 - theta) * (x[1] + x[2] + x[3]) / N
     num <- (-B + Re(sqrt(as.complex(B^2 - 4 * A * C_))))
     q21 <- ifelse(num == 0, 0, num / (2 * A))
-    V <- pmax(0, N * (1 + theta) * q21 + (x[1] + x[2] + x[3]) * (theta - 1))
-    if (cctype == "constant") corr <- cc * 2 * sign(Stheta)
-    if (cctype == "delrocco") corr <- cc * (x[1] + x[3]) / N * sign(Stheta)
+    V <- pmax(0, N * (1 + theta) * q21 + (x[1] + x[2] + x[3]) * (theta - 1)) * lambda / (N^2)
+    if (cctype == "constant") corr <- cc * 2 * sign(Stheta) / N
+    if (cctype == "delrocco") corr <- cc * (x[1] + x[3]) / N * sign(Stheta) / N
+    # Equivariant continuity correction for RR, aligned with McNemar cc.
+    if (cctype == "new") corr <- cc * (1 + theta) * sign(Stheta) / N
+
+    # Experimental skewness correction, taken from unpaired formula,
+    # assuming coskewness is negligible.
+    q12 <- (q21 + (theta - 1) * (1 - x[4] / N)) / theta
+    # Below from Nam/Blackwelder. Requires theta<>1
+    #    q12 = (theta*q21 - (theta - 1)*(1 - x[4]/N))
+    #    q11 = (q12 - theta*q21)/(theta-1)
+    #    p2d <- q21 + q11
+    #    p1d <- q12 + q11
+    # Below from Tang 2003
+#    q11 = ((x[1] + x[2] + x[3])/N - (1+theta)*q21)/theta
+    q11 <- (1 - x[4] / N - (1 + theta) * q21) / theta
+    # My crude version
+#    q11 <- x[1] / N
+    p2d <- q21 + q11
+#    p1d <- q12 + q11
+    p1d <- p2d * theta
+    mu3 <- (p1d * (1 - p1d) * (1 - 2 * p1d) +
+      ((-theta)^3) * p2d * (1 - p2d) * (1 - 2 * p2d) +
+      3 * (-theta) * (q11 * (1 - p1d)^2 + q21 * p1d^2 - p1d * p2d * (1 - p1d)) +
+      3 * ((-theta)^2) * (q11 * (1 - p2d)^2 + q12 * p2d^2 - p1d * p2d * (1 - p2d))) / (N^2)
   }
-  score <- ifelse(Stheta == 0, 0, (Stheta - corr) / sqrt(V))
+  scterm <- mu3 / (6 * V^(3 / 2))
+  scterm[mu3 == 0] <- 0
+  score1 <- ifelse(Stheta == 0, 0, (Stheta - corr) / sqrt(V))
+  A <- scterm
+  B <- 1
+  C_ <- -(score1 + scterm)
+  num <- (-B + sqrt(pmax(0, B^2 - 4 * A * C_)))
+  dsct <- B^2 - 4 * A * C_
+  score <- ifelse((skew == FALSE | scterm == 0),
+                  score1, num / (2 * A)
+  )
   score[abs(Stheta) < abs(corr)] <- 0
+
   pval <- pnorm(score)
   outlist <- list(score = score, pval = pval)
   return(outlist)
 }
+
 
 #' Closed form Tango asymptotic score confidence intervals for a paired
 #' difference of proportions (RD).
@@ -484,8 +568,9 @@ scorepair <- function(theta,
 #' @noRd
 tangoci <- function(x,
                     level = 0.95,
-                    cc = FALSE) {
-  options(digits = 12)
+                    cc = FALSE,
+                    bcf = FALSE) {
+#  options(digits = 12)
   if (as.character(cc) == "TRUE") {
     cc <- 0.5 # Default correction for paired RD aligned with cc'd McNemar test
   }
@@ -496,10 +581,17 @@ tangoci <- function(x,
   xi <- table(x1i, x2i)
 
   N <- sum(x)
+  lambda <- switch(as.character(bcf),
+    "TRUE" = N / (N - 1),
+    "FALSE" = 1
+  )
+
+#  x12 <- x[2]
+#  x21 <- x[3]
   b <- x[2]
   c <- x[3]
   alpha <- 1 - level
-  g <- qnorm(1 - alpha / 2)^2
+  g <- qnorm(1 - alpha / 2)^2 * lambda
 
   # Updated to include continuity correction from Chang 2024
   keep1 <- keep2 <- NULL
@@ -519,8 +611,26 @@ tangoci <- function(x,
     u3 <- m3 / m0
     u4 <- m4 / m0
 
-    if (b != c | cc > 0) {
-      #  if (TRUE) {
+    if (u1 == 0 & u3 == 0) {
+      # Special case with b=c=N/2 reduces to a quadratic equation
+      #    x^4 + u2 x^2 + u4 = 0 reduces to
+      #    x^2 = sqrt((-u2 + sqrt(u2^2 - 4*u4))/2)
+      keep2 = sqrt((-u2 + sqrt(u2^2 - 4*u4))/2)
+      keep1 = -keep2
+    } else if (b == c & cc == 0) {
+      u2 <- -(((b + c) / g + 1) / (N / g + 1)^2)
+      root1 <- -sqrt(-u2)
+      root2 <- sqrt(-u2)
+      root <- c(root1, root2)
+    } else if (cc > 0 & b == c & b == N / 2) {
+      # Rare special case fails to find solution to the quartic
+      # and we have to resort to iterative method
+      root <- pairbinci(x = x, contrast = "RD", method_RD = "Score", level = level, cc = cc, bcf = bcf)$estimates[c(1, 3)]
+      # Alternative method using polynomial()
+      #    lowertheta <- solve(polynom::polynomial(c(u4, u3, u2, u1, 1)))
+      #    root1 <- min(as.numeric(ifelse(Im(lowertheta) == 0, Re(lowertheta), NA)), na.rm = TRUE)
+      #    root2 <- max(as.numeric(ifelse(Im(lowertheta) == 0, Re(lowertheta), NA)), na.rm = TRUE)
+    } else if (b != c | (cc > 0 & !(b == c & b == N / 2))) {
       nu1 <- -u2
       nu2 <- u1 * u3 - 4 * u4
       nu3 <- -(u3^2 + u1^2 * u4 - 4 * u2 * u4)
@@ -600,13 +710,6 @@ tangoci <- function(x,
       keep1 <- root[1]
     } else if (uplow == 1) keep2 <- root[2]
   }
-  if (b == c & b == N / 2) {
-    # Rare special case fails to find solution to the quartic
-    # and we have to resort to iterative method
-    fixint <- pairbinci(x = x, contrast = "RD", method_RD = "Score", level = level, cc = cc)$estimates[c(1, 3)]
-    keep1 <- fixint[1]
-    keep2 <- fixint[2]
-  }
 
   estimates <- cbind(
     Lower = keep1, MLE = (b - c) / N, Upper = keep2,
@@ -645,7 +748,8 @@ tangoci <- function(x,
 tangci <- function(x,
                    cc = FALSE,
                    cctype = "new",
-                   level = 0.95,
+                   bcf = FALSE,
+                   level = 0.95) {
   if (as.character(cc) == "TRUE") {
     cc <- 0.5
   }
@@ -653,6 +757,7 @@ tangci <- function(x,
   infflag <- (x[1] + x[3] == 0)
   doublezero <- (x[1] + x[2] + x[3] == 0)
 
+  N <- sum(x)
   x11 <- x[1]
   x12 <- x[2]
   x21 <- x[3]
@@ -661,10 +766,13 @@ tangci <- function(x,
   xp1 <- x11 + x21
   x1p <- x11 + x12
   estimate <- x1p / xp1
-  N <- sum(x)
+  lambda <- switch(as.character(bcf),
+    "TRUE" = N / (N - 1),
+    "FALSE" = 1
+  )
 
   alpha <- 1 - level
-  z <- qnorm(1 - alpha / 2)
+  z <- qnorm(1 - alpha / 2) * sqrt(lambda)
   corr2 <- 0
   if (cctype == "delrocco") {
     # Version proposed by DelRocco et al, doesn't match cc'd McNemar test

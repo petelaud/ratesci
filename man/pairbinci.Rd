@@ -15,7 +15,11 @@ pairbinci(
   method_OR = "SCAS",
   moverbase = "SCAS",
   theta0 = NULL,
-  precis = 6
+  skew = FALSE,
+  bcf = FALSE,
+  precis = 6,
+  warn = TRUE,
+  ...
 )
 }
 \arguments{
@@ -84,8 +88,21 @@ non-inferiority margin). 1-sided p-value will be < 0.025 iff 2-sided 95\\% CI
 excludes theta0. NB: can also be used for a superiority test by setting
 theta0 = 0.}
 
+\item{skew}{Logical (default TRUE) indicating whether to apply skewness
+correction or not. (Under evaluation.)
+\itemize{
+\item Only applies for the iterative method_RD or method_RR = "Score"
+}}
+
+\item{bcf}{Logical (default FALSE) indicating whether to apply bias correction
+in the score denominator. (Under evaluation.)}
+
 \item{precis}{Number (default 6) specifying precision (i.e. number of decimal
 places) to be used in optimisation subroutine for the confidence interval.}
+
+\item{warn}{Logical (default TRUE) giving the option to suppress warnings.}
+
+\item{...}{Other arguments.}
 }
 \value{
 A list containing the following components: \describe{
