@@ -9,7 +9,7 @@ pairbinci(
   contrast = "RD",
   level = 0.95,
   cc = FALSE,
-  cctype = "constant",
+  cctype = "new",
   method_RD = "Score_closed",
   method_RR = "Score_closed",
   method_OR = "SCAS",
@@ -39,9 +39,10 @@ correction. When a score-based method is used, cc = 0.5 corresponds to the
 continuity-corrected McNemar test.}
 
 \item{cctype}{Character string indicating the type of continuity correction
-("constant" or "delrocco") to be applied for contrast = "RR".
-(Note: both options produce non-equivariant intervals, an improved
-correction is currently under evaluation - watch this space.)}
+("new", constant" or "delrocco") to be applied for contrast = "RR".
+(Note: "constant" and "delrocco" options produce non-equivariant intervals,
+and are likely to be deprecated in a future release (as well as the
+cctype argument itself).}
 
 \item{method_RD}{Character string indicating the confidence interval method
 to be used for contrast = "RD". "Score" = iterative Tango asymptotic score,

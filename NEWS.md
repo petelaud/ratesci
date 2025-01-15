@@ -1,5 +1,10 @@
 # ratesci (development version)
 
+## New features
+### In `pairbinci()`:
+* `cc` uses a new form of correction giving equivariant intervals. Also allow
+  consistency with the continuity-corrected McNemar test (or an intermediate 
+  correction of the user's choosing).
 # ratesci 0.5.0 (2025-01-10)
 
 ## New features
