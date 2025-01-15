@@ -72,7 +72,6 @@
 #' @param precis Number (default 6) specifying precision (i.e. number of decimal
 #'   places) to be used in optimisation subroutine for the confidence interval.
 #' @importFrom stats uniroot pbinom ppois dpois
-#' @importFrom polynom polynomial
 #' @return A list containing the following components: \describe{
 #'   \item{data}{the input data in 2x2 matrix form}
 #'   \item{estimates}{the requested contrast, with its confidence interval and
@@ -621,16 +620,20 @@ tangoci <- function(x,
 #' ratio of proportions (RR).
 #'
 #' R code to calculate Tang's score-based CI using a non-iterative method.
+#' without dependence on polynom package and without needing ctrl argument.
 #' For contrast = "RR" only.
-#' # Adapted from code kindly provided by Guogen Shan for the closed-form
+#' This could be combined with tangoci to avoid code repetition.
+#' Adapted from code kindly provided by Guogen Shan for the closed-form
 #' ASCC method proposed in DelRocco et al. 2023.
 #' with modified form of continuity correction
 #' for consistency with McNemar test, and unified code with/without cc.
 #' cctype = "constant" uses correction of cc * (2) with e.g. cc=0.5
 #' instead of xp1 / (m * N) with m=2 as used by DelRocco
 #'   - Note the latter produces a relatively much smaller correction
+#' cctype = "new" produces an equivariant interval. Other types (and the
+#' cctype argument itself) will likely be deprecated in a future release.
 #'
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}, Guogen Shan
+#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
 #' @references
 #'   DelRocco N et al. New Confidence Intervals for Relative Risk of Two
 #'   Correlated Proportions.
@@ -643,7 +646,6 @@ tangci <- function(x,
                    cc = FALSE,
                    cctype = "new",
                    level = 0.95,
-                   ctrl = 1e-10) {
   if (as.character(cc) == "TRUE") {
     cc <- 0.5
   }
@@ -651,9 +653,6 @@ tangci <- function(x,
   infflag <- (x[1] + x[3] == 0)
   doublezero <- (x[1] + x[2] + x[3] == 0)
 
-  if (any(x == 0)) {
-    x <- x + ctrl # This avoids failure of the polynomial() function call later
-  }
   x11 <- x[1]
   x12 <- x[2]
   x21 <- x[3]
@@ -682,61 +681,100 @@ tangci <- function(x,
     lower <- 0
     upper <- Inf
   } else if (!doublezero) {
-    a_lower <- (xp1 + corr2)^4 + z^2 * xp1 * (xp1 + corr2)^2
-    b_lower <- (-(2 * (xp1 + corr2)^2 + z^2 * xp1) *
-      (2 * (xp1 + corr2) * (x1p - corr1) + z^2 * (x11 + x12 + x21)))
-    c_lower <- (6 * (xp1 + corr2)^2 * (x1p - corr1)^2 +
-      z^4 * (x1p + xp1) * (x11 + x12 + x21) +
-      z^2 * (xp1 * (x1p - corr1)^2 +
-        4 * (x11 + x12 + x21) * (x1p - corr1) * (xp1 + corr2) +
-        x1p * (xp1 + corr2)^2))
-    d_lower <- (-(2 * (x1p - corr1)^2 + z^2 * x1p) *
-      (2 * (xp1 + corr2) * (x1p - corr1) + z^2 * (x11 + x12 + x21)))
-    e_lower <- (x1p - corr1)^4 + z^2 * x1p * (x1p - corr1)^2
+    for (uplow in c(-1, 1)) {
+      cor1 <- corr1 * uplow
+      cor2 <- corr2 * uplow
 
-    b_lower <- b_lower / a_lower
-    c_lower <- c_lower / a_lower
-    d_lower <- d_lower / a_lower
-    e_lower <- e_lower / a_lower
-    a_lower <- a_lower / a_lower
+      m0 <- (xp1 - cor2)^4 + z^2 * xp1 * (xp1 - cor2)^2
+      m1 <- (-(2 * (xp1 - cor2)^2 + z^2 * xp1) *
+        (2 * (xp1 - cor2) * (x1p + cor1) + z^2 * (x11 + x12 + x21)))
+      m2 <- (6 * (xp1 - cor2)^2 * (x1p + cor1)^2 +
+        z^4 * (x1p + xp1) * (x11 + x12 + x21) +
+        z^2 * (xp1 * (x1p + cor1)^2 +
+          4 * (x11 + x12 + x21) * (x1p + cor1) * (xp1 - cor2) +
+          x1p * (xp1 - cor2)^2))
+      m3 <- (-(2 * (x1p + cor1)^2 + z^2 * x1p) *
+        (2 * (xp1 - cor2) * (x1p + cor1) + z^2 * (x11 + x12 + x21)))
+      m4 <- (x1p + cor1)^4 + z^2 * x1p * (x1p + cor1)^2
 
-    a_upper <- (xp1 - corr2)^4 + z^2 * xp1 * (xp1 - corr2)^2
-    b_upper <- (-(2 * (xp1 - corr2)^2 + z^2 * xp1) *
-      (2 * (xp1 - corr2) * (x1p + corr1) + z^2 * (x11 + x12 + x21)))
-    c_upper <- (6 * (xp1 - corr2)^2 * (x1p + corr1)^2 +
-      z^4 * (x1p + xp1) * (x11 + x12 + x21) +
-      z^2 * (xp1 * (x1p + corr1)^2 +
-        4 * (x11 + x12 + x21) * (x1p + corr1) * (xp1 - corr2) +
-        x1p * (xp1 - corr2)^2))
-    d_upper <- (-(2 * (x1p + corr1)^2 + z^2 * x1p) *
-      (2 * (xp1 - corr2) * (x1p + corr1) + z^2 * (x11 + x12 + x21)))
-    e_upper <- (x1p + corr1)^4 + z^2 * x1p * (x1p + corr1)^2
+      y1A <- h1 <- h2 <- h3 <- h4 <- root1 <- root2 <- root3 <- root4 <- c()
+      if (m0 == 0 & m1 == 0) {
+        # Solve quadratic equation instead
+        root1 <- quadroot(m2, m3, m4)
+      } else {
 
-    b_upper <- b_upper / a_upper
-    c_upper <- c_upper / a_upper
-    d_upper <- d_upper / a_upper
-    e_upper <- e_upper / a_upper
-    a_upper <- a_upper / a_upper
+        u1 <- m1 / m0
+        u2 <- m2 / m0
+        u3 <- m3 / m0
+        u4 <- m4 / m0
 
-    if (!zeroflag) {
-      lowertheta <- solve(polynom::polynomial(
-        c(e_lower, d_lower, c_lower, b_lower, a_lower)
-      ))
-      lowertheta <- as.numeric(ifelse(Im(lowertheta) == 0, Re(lowertheta), NA))
-      lower <- min(lowertheta, na.rm = TRUE)
-    } else if (zeroflag) {
-      estimate <- 0
-      lower <- 0
-    }
-    if (!infflag) {
-      uppertheta <- solve(polynom::polynomial(
-        c(e_upper, d_upper, c_upper, b_upper, a_upper)
-      ))
-      uppertheta <- as.numeric(ifelse(Im(uppertheta) == 0, Re(uppertheta), NA))
-      upper <- max(uppertheta, na.rm = TRUE)
-    } else if (infflag) {
-      estimate <- Inf
-      upper <- Inf
+        nu1 <- -u2
+        nu2 <- u1 * u3 - 4 * u4
+        nu3 <- -(u3^2 + u1^2 * u4 - 4 * u2 * u4)
+
+        d1 <- nu2 - nu1^2 / 3
+        d2 <- 2 * nu1^3 / 27 - nu1 * nu2 / 3 + nu3
+        CritQ <- d2^2 / 4 + d1^3 / 27
+
+        if (CritQ > 0) { ## keep one real root;
+          BigA <- -d2 / 2 + Re(sqrt(as.complex(CritQ)))
+          BigB <- -d2 / 2 - Re(sqrt(as.complex(CritQ)))
+          x1 <- sign(BigA) * abs(BigA)^(1 / 3) + sign(BigB) * abs(BigB)^(1 / 3)
+          y1A <- x1 - nu1 / 3
+        }
+
+        if (CritQ == 0) { ## keep two real roots;
+          BigA <- -d2 / 2 + Re(sqrt(as.complex(CritQ)))
+          BigB <- -d2 / 2 - Re(sqrt(as.complex(CritQ)))
+          Omega <- complex(real = -1 / 2, imaginary = sqrt(3) / 2)
+          Omega2 <- complex(real = -1 / 2, imaginary = -sqrt(3) / 2)
+          x1 <- sign(BigA) * abs(BigA)^(1 / 3) + sign(BigB) * abs(BigB)^(1 / 3)
+          x2 <- Omega * sign(BigA) * abs(BigA)^(1 / 3) +
+            Omega * sign(BigB) * abs(BigB)^(1 / 3)
+          y1A[1] <- x1 - nu1 / 3
+          y1A[2] <- x2 - nu1 / 3
+        }
+
+        if (CritQ < 0) { ## keep three real roots;
+          BigA <- -d2 / 2 + sqrt(as.complex(CritQ))
+          BigB <- -d2 / 2 - sqrt(as.complex(CritQ))
+          Omega <- complex(real = -1 / 2, imaginary = sqrt(3) / 2)
+          Omega2 <- complex(real = -1 / 2, imaginary = -sqrt(3) / 2)
+          x1 <- BigA^(1 / 3) + BigB^(1 / 3)
+          x2 <- Omega * BigA^(1 / 3) + Omega2 * BigB^(1 / 3)
+          x3 <- Omega2 * BigA^(1 / 3) + Omega * BigB^(1 / 3)
+          y1A[1] <- x1 - nu1 / 3
+          y1A[2] <- x2 - nu1 / 3
+          y1A[3] <- x3 - nu1 / 3
+        }
+
+        y1 <- Re(y1A) # keep the real part;
+        ny <- length(y1)
+
+        for (i in 1:ny) {
+          h1[i] <- Re(sqrt(as.complex(u1^2 / 4 - u2 + y1[i])))
+          h2[i] <- (u1 * y1[i] / 2 - u3) / (2 * h1[i])
+          h3[i] <- (u1 / 2 + h1[i])^2 - 4 * (y1[i] / 2 + h2[i])
+          h4[i] <- (h1[i] - u1 / 2)^2 - 4 * (y1[i] / 2 - h2[i])
+          if (h3[i] >= 0) {
+            root1[i] <- (-(u1 / 2 + h1[i]) + sqrt(h3[i])) / 2
+            root2[i] <- (-(u1 / 2 + h1[i]) - sqrt(h3[i])) / 2
+          }
+          if (h4[i] >= 0) {
+            root3[i] <- ((h1[i] - u1 / 2) + sqrt(h4[i])) / 2
+            root4[i] <- ((h1[i] - u1 / 2) - sqrt(h4[i])) / 2
+          }
+        }
+      }
+      if (uplow == -1) {
+        lower <- ifelse(zeroflag, 0,
+          max(0, min(root1, root2, root3, root4, na.rm = TRUE))
+        )
+      } else if (uplow == 1) {
+        upper <- ifelse(infflag, Inf,
+          max(root1, root2, root3, root4, na.rm = TRUE)
+        )
+      }
     }
   }
 
