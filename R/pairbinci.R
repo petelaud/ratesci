@@ -488,9 +488,10 @@ scorepair <- function(theta,
     p1d <- p12 # + p11
     p2d <- p21 # + p11
     mu3 <- (p1d * (1 - p1d) * (1 - 2 * p1d) +
-      ((-1)^3) * p2d * (1 - p2d) * (1 - 2 * p2d) +
-      3 * (-1) * (p11 * (1 - p1d)^2 + p21 * p1d^2 - p1d * p2d * (1 - p1d)) +
-      3 * ((-1)^2) * (p11 * (1 - p2d)^2 + p12 * p2d^2 - p1d * p2d * (1 - p2d))) / (N^2)
+      ((-1)^3) * p2d * (1 - p2d) * (1 - 2 * p2d) #+
+#      3 * (-1) * (p11 * (1 - p1d)^2 + p21 * p1d^2 - p1d * p2d * (1 - p1d)) +
+#      3 * ((-1)^2) * (p11 * (1 - p2d)^2 + p12 * p2d^2 - p1d * p2d * (1 - p2d))
+           ) / (N^2)
   }
   if (contrast == "RR") {
     # per Tang 2003, but divided by N
@@ -500,7 +501,8 @@ scorepair <- function(theta,
     C_ <- x[3] * (1 - theta) * (x[1] + x[2] + x[3]) / N
     num <- (-B + Re(sqrt(as.complex(B^2 - 4 * A * C_))))
     q21 <- ifelse(num == 0, 0, num / (2 * A))
-    V <- pmax(0, N * (1 + theta) * q21 + (x[1] + x[2] + x[3]) * (theta - 1)) * lambda / (N^2)
+#    V <- pmax(0, N * (1 + theta) * q21 + (x[1] + x[2] + x[3]) * (theta - 1)) * lambda / (N^2)
+
     if (cctype == "constant") corr <- cc * 2 * sign(Stheta) / N
     if (cctype == "delrocco") corr <- cc * (x[1] + x[3]) / N * sign(Stheta) / N
     # Equivariant continuity correction for RR, aligned with McNemar cc.
@@ -517,11 +519,15 @@ scorepair <- function(theta,
     # Below from Tang 2003
 #    q11 = ((x[1] + x[2] + x[3])/N - (1+theta)*q21)/theta
     q11 <- (1 - x[4] / N - (1 + theta) * q21) / theta
+    q22 <- 1 - q11 - q12 - q21
     # My crude version
 #    q11 <- x[1] / N
     p2d <- q21 + q11
 #    p1d <- q12 + q11
     p1d <- p2d * theta
+
+    V <- pmax(0, (p1d * (1 - p1d) + ((-theta)^2) * p2d * (1 - p2d) -
+      2 * (q11 * q22 - q12 * q21)) / N)
     mu3 <- (p1d * (1 - p1d) * (1 - 2 * p1d) +
       ((-theta)^3) * p2d * (1 - p2d) * (1 - 2 * p2d) +
       3 * (-theta) * (q11 * (1 - p1d)^2 + q21 * p1d^2 - p1d * p2d * (1 - p1d)) +
