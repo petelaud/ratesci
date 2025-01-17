@@ -478,20 +478,26 @@ scorepair <- function(theta,
     C_ <- -x[3] * theta * (1 - theta)
     num <- (-B + Re(sqrt(as.complex(B^2 - 4 * A * C_))))
     p21 <- ifelse(num == 0, 0, num / (2 * A))
-    V <- pmax(0, N * (2 * p21 + theta * (1 - theta))) * lambda / (N^2)
     corr <- 2 * cc * sign(Stheta) / N
     p12 <- p21 + theta
-    # Previously p1d and p2d were the estimates of b/N and c/N,
-    # checking if they should be (a+b)/N and (a+c)/N -
-    # - no, that has inferior CP
-    p11 <- x[1] / N
-    p1d <- p12 # + p11
-    p2d <- p21 # + p11
+    # From Tango
+    p11 <- ifelse(x[1] == 0, 0, x[1] / (x[1] + x[4]) * (1 - p12 - p21))
+    #    p22 <- ifelse(x[4] == 0, 0, x[4] / (x[1] + x[4]) * (1 - p12 - p21))
+    p22 <- 1 - p11 - p12 - p21
+    p2d <- pmin(1, pmax(0, p21 + p11))
+    #    p1d <- pmin(1, pmax(0, p12 + p11))
+    p1d <- p2d + theta
+
+    # Tango variance
+    #    V <- pmax(0, N * (2 * p21 + theta * (1 - theta))) * lambda / (N^2)
+    # Equivalent
+    V <- pmax(0, (p1d * (1 - p1d) + p2d * (1 - p2d) -
+      2 * (p11 * p22 - p12 * p21)) / N) * lambda
     mu3 <- (p1d * (1 - p1d) * (1 - 2 * p1d) +
-      ((-1)^3) * p2d * (1 - p2d) * (1 - 2 * p2d) #+
-#      3 * (-1) * (p11 * (1 - p1d)^2 + p21 * p1d^2 - p1d * p2d * (1 - p1d)) +
-#      3 * ((-1)^2) * (p11 * (1 - p2d)^2 + p12 * p2d^2 - p1d * p2d * (1 - p2d))
-           ) / (N^2)
+      ((-1)^3) * p2d * (1 - p2d) * (1 - 2 * p2d) +
+      3 * (-1) * (p11 * (1 - p1d)^2 + p21 * p1d^2 - p1d * p2d * (1 - p1d)) +
+      3 * ((-1)^2) * (p11 * (1 - p2d)^2 + p12 * p2d^2 - p1d * p2d * (1 - p2d))
+    ) / (N^2)
   }
   if (contrast == "RR") {
     # per Tang 2003, but divided by N
@@ -501,46 +507,39 @@ scorepair <- function(theta,
     C_ <- x[3] * (1 - theta) * (x[1] + x[2] + x[3]) / N
     num <- (-B + Re(sqrt(as.complex(B^2 - 4 * A * C_))))
     q21 <- ifelse(num == 0, 0, num / (2 * A))
-#    V <- pmax(0, N * (1 + theta) * q21 + (x[1] + x[2] + x[3]) * (theta - 1)) * lambda / (N^2)
 
     if (cctype == "constant") corr <- cc * 2 * sign(Stheta) / N
     if (cctype == "delrocco") corr <- cc * (x[1] + x[3]) / N * sign(Stheta) / N
     # Equivariant continuity correction for RR, aligned with McNemar cc.
     if (cctype == "new") corr <- cc * (1 + theta) * sign(Stheta) / N
 
-    # Experimental skewness correction, taken from unpaired formula,
-    # assuming coskewness is negligible.
     q12 <- (q21 + (theta - 1) * (1 - x[4] / N)) / theta
-    # Below from Nam/Blackwelder. Requires theta<>1
-    #    q12 = (theta*q21 - (theta - 1)*(1 - x[4]/N))
-    #    q11 = (q12 - theta*q21)/(theta-1)
-    #    p2d <- q21 + q11
-    #    p1d <- q12 + q11
     # Below from Tang 2003
-#    q11 = ((x[1] + x[2] + x[3])/N - (1+theta)*q21)/theta
     q11 <- (1 - x[4] / N - (1 + theta) * q21) / theta
     q22 <- 1 - q11 - q12 - q21
-    # My crude version
-#    q11 <- x[1] / N
     p2d <- q21 + q11
 #    p1d <- q12 + q11
     p1d <- p2d * theta
 
-    V <- pmax(0, (p1d * (1 - p1d) + ((-theta)^2) * p2d * (1 - p2d) -
-      2 * (q11 * q22 - q12 * q21)) / N)
+    # Tang variance
+    #    V <- pmax(0, N * (1 + theta) * q21 + (x[1] + x[2] + x[3]) * (theta - 1)) * lambda / (N^2)
+    # Nam-Blackwelder variance
+    #    V <- pmax(0, theta*(q12 + q21) / N) * lambda
+    # Equivalent consistent with scoreci notation
+    V <- pmax(0, (p1d * (1 - p1d) + theta^2 * p2d * (1 - p2d) -
+      2 * theta * (q11 * q22 - q12 * q21)) / N) * lambda
     mu3 <- (p1d * (1 - p1d) * (1 - 2 * p1d) +
       ((-theta)^3) * p2d * (1 - p2d) * (1 - 2 * p2d) +
       3 * (-theta) * (q11 * (1 - p1d)^2 + q21 * p1d^2 - p1d * p2d * (1 - p1d)) +
       3 * ((-theta)^2) * (q11 * (1 - p2d)^2 + q12 * p2d^2 - p1d * p2d * (1 - p2d))) / (N^2)
   }
   scterm <- mu3 / (6 * V^(3 / 2))
-  scterm[mu3 == 0] <- 0
+  scterm[abs(mu3) < 1E-10] <- 0 # Avoids issues with e.g. x = c(1, 3, 0, 6)
   score1 <- ifelse(Stheta == 0, 0, (Stheta - corr) / sqrt(V))
   A <- scterm
   B <- 1
   C_ <- -(score1 + scterm)
   num <- (-B + sqrt(pmax(0, B^2 - 4 * A * C_)))
-  dsct <- B^2 - 4 * A * C_
   score <- ifelse((skew == FALSE | scterm == 0),
                   score1, num / (2 * A)
   )

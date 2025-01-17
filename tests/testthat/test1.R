@@ -148,6 +148,26 @@ test_that("Transposed inputs produce inverted paired intervals", {
     ), 5)))
   )
   expect_equal(
+    t(unname(round(sapply(
+      1:dim(combos)[1],
+      function(i) pairbinci(x = combos[i, ], contrast = "RD", cc=T)$estimates[, c(1, 3)]
+    ), 5))),
+    t(unname(round(-sapply(
+      1:dim(combos)[1],
+      function(i) pairbinci(x = combos[i, c(1, 3, 2, 4)], contrast = "RD", cc=T)$estimates[, c(3, 1)]
+    ), 5)))
+  )
+  expect_equal(
+    t(unname(round(sapply(
+      1:dim(combos)[1],
+      function(i) pairbinci(x = combos[i, ], contrast = "RD", method_RD="Score", skew=T)$estimates[, c(1, 3)]
+    ), 5))),
+    t(unname(round(-sapply(
+      1:dim(combos)[1],
+      function(i) pairbinci(x = combos[i, c(1, 3, 2, 4)], contrast = "RD", method_RD="Score", skew=T)$estimates[, c(3, 1)]
+    ), 5)))
+  )
+  expect_equal(
     t(unname(round(1 / round(1 / sapply(
       1:dim(combos)[1],
       function(i) pairbinci(x = combos[i, ], contrast = "RR")$estimates[, c(1, 3)]
@@ -155,6 +175,26 @@ test_that("Transposed inputs produce inverted paired intervals", {
     t(unname(round(1 / round(sapply(
       1:dim(combos)[1],
       function(i) pairbinci(x = combos[i, c(1, 3, 2, 4)], contrast = "RR")$estimates[, c(3, 1)]
+    ), 5), 5)))
+  )
+  expect_equal(
+    t(unname(round(1 / round(1 / sapply(
+      1:dim(combos)[1],
+      function(i) pairbinci(x = combos[i, ], contrast = "RR", cc=T)$estimates[, c(1, 3)]
+    ), 5), 5))),
+    t(unname(round(1 / round(sapply(
+      1:dim(combos)[1],
+      function(i) pairbinci(x = combos[i, c(1, 3, 2, 4)], contrast = "RR", cc=T)$estimates[, c(3, 1)]
+    ), 5), 5)))
+  )
+  expect_equal(
+    t(unname(round(1 / round(1 / sapply(
+      1:dim(combos)[1],
+      function(i) pairbinci(x = combos[i, ], contrast = "RR", method_RR="Score", skew=T)$estimates[, c(1, 3)]
+    ), 5), 5))),
+    t(unname(round(1 / round(sapply(
+      1:dim(combos)[1],
+      function(i) pairbinci(x = combos[i, c(1, 3, 2, 4)], contrast = "RR", method_RR="Score", skew=T)$estimates[, c(3, 1)]
     ), 5), 5)))
   )
 })
