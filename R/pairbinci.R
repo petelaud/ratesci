@@ -60,6 +60,7 @@
 #'                  estimate from Newcombe's RD method,
 #'   "TDAS" = t-distribution asymptotic score (experimental method, seems to
 #'   struggle with low numbers).
+#'   "Bonett" = Hybrid Bonett-Price method (with or without cc)
 #' @param method_OR Character string indicating the confidence interval method
 #'   to be used for contrast = "OR", all of which are based on transformation of
 #'   an interval for a single proportion b/(b+c):
@@ -132,6 +133,10 @@
 #'   comparing matched proportions.
 #'   Statistics in Medicine 2005; 24:729-740
 #'
+#'   Bonett DG, Price RM. Confidence intervals for a ratio of binomial
+#'   proportions based on paired data.
+#'   Statistics in Medicine 2006; 25:3039-3047
+#'
 #'   Tang M-L, Li H-Q, Tang N-S. Confidence interval construction for proportion
 #'   ratio in paired studies based on hybrid method.
 #'   Statistical Methods in Medical Research 2010; 21(4):361-378
@@ -185,8 +190,8 @@ pairbinci <- function(x,
     stop()
   }
   if (!(tolower(substr(method_RR, 1, 4)) %in%
-    c("tdas", "scor", "move"))) {
-    print("Method_RR must be one of 'Score_closed', 'Score', 'TDAS', 'MOVER' or 'MOVER_newc'")
+    c("tdas", "scor", "move", "bone"))) {
+    print("Method_RR must be one of 'Score_closed', 'Score', 'Bonett', 'TDAS', 'MOVER' or 'MOVER_newc'")
     stop()
   }
 if (FALSE) {
@@ -384,6 +389,12 @@ if (FALSE) {
       estimates <- moverpair(
         x = x, contrast = "RR", level = level,
         method = moverbase, cc = cc, corc = TRUE
+      )
+      outlist <- list(data = xi, estimates = estimates)
+    }
+    if ((contrast == "RR" && method_RR == "Bonett")) {
+      estimates <- bonettci(
+        x = x, level = level, cc = cc
       )
       outlist <- list(data = xi, estimates = estimates)
     }
@@ -997,4 +1008,61 @@ moverpair <- function(x,
   estimates <- cbind(Lower = lower, Estimate = estimate, Upper = upper)
   row.names(estimates) <- NULL
   return(estimates)
+}
+
+
+#' Bonett-Price confidence intervals for a paired ratio (RR)
+#'
+#' R code to calculate Bonett-Price's hybrid score-based CI
+#' For contrast = "RR" only.
+#' Code is adapted from Appendix A of Bonett & Price 2006
+#'
+#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @references
+#'   Bonett DG, Price RM. Confidence intervals for a ratio of binomial
+#'   proportions based on paired data.
+#'   Statistics in Medicine 2006; 25:3039-3047
+#'
+#' @inheritParams pairbinci
+#' x <- c(230, 95, 41, 0)
+#' @noRd
+bonettci <- function(x,
+                    level = 0.95,
+                    cc = FALSE) {
+  x11 <- x[1]
+  x10 <- x[2]
+  x01 <- x[3]
+  z0 <- qnorm(1 - (1 - level) / 2)
+  n = x11 + x10 + x01
+  x1 = x11 + x10
+  x0 = x11 + x01
+  estimate <- x1/x0
+  s1 = sqrt((1 - (x1 + 1)/(n + 2))/(x1 + 1))
+  s0 = sqrt((1 - (x0 + 1)/(n + 2))/(x0 + 1))
+  s2 = sqrt((x10 + x01 + 2)/((x1 + 1)*(x0 + 1)))
+  k = s2/(s1 + s0)
+  z = k*z0
+  b = 2*(n + z^2)
+  if (cc == FALSE) {
+    ll1 = (2*x1 + z^2 - z*sqrt(z^2 + 4*x1*(1 - x1/n)))/b
+    ul1 = (2*x1 + z^2 + z*sqrt(z^2 + 4*x1*(1 - x1/n)))/b
+    ll0 = (2*x0 + z^2 - z*sqrt(z^2 + 4*x0*(1 - x0/n)))/b
+    ul0 = (2*x0 + z^2 + z*sqrt(z^2 + 4*x0*(1 - x0/n)))/b
+    ul = ul1/ll0
+    ll = ll1/ul0
+  } else {
+    c = 1/n
+    ll1 <- ifelse(x1 == 0, 0,
+                  (2*x1 + z^2 - 1 - z*sqrt(z^2 - 2 - c + 4*(x1/n)*(n - x1 + 1)))/b)
+    ul1 <- ifelse(x1 == n, 1,
+                  (2*x1 + z^2 + 1 + z*sqrt(z^2 + 2 - c + 4*(x1/n)*(n - x1 - 1)))/b)
+    ll0 <- ifelse(x0 == 0, 0,
+                  (2*x0 + z^2 - 1 - z*sqrt(z^2 - 2 - c + 4*(x0/n)*(n - x0 + 1)))/b)
+    ul0  <- ifelse(x0 == n, 1,
+                   (2*x0 + z^2 + 1 + z*sqrt(z^2 + 2 - c + 4*(x0/n)*(n - x0 - 1)))/b)
+    ul = ul1/ll0
+    ll = ll1/ul0
+  }
+  estimates <- cbind(Lower = ll, Estimate = estimate, Upper = ul)
+  estimates
 }
