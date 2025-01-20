@@ -65,7 +65,8 @@ to be used for contrast = "RR". "Score" = iterative Tang asymptotic score,
 "MOVER_newc" = hybrid MOVER method with "correction" to correlation
 estimate from Newcombe's RD method,
 "TDAS" = t-distribution asymptotic score (experimental method, seems to
-struggle with low numbers).}
+struggle with low numbers).
+"Bonett" = Hybrid Bonett-Price method (with or without cc)}
 
 \item{method_OR}{Character string indicating the confidence interval method
 to be used for contrast = "OR", all of which are based on transformation of
@@ -173,6 +174,10 @@ Statistics in Medicine 2003; 22:1217-1233
 Agresti A, Min Y. Simple improved confidence intervals for
 comparing matched proportions.
 Statistics in Medicine 2005; 24:729-740
+
+Bonett DG, Price RM. Confidence intervals for a ratio of binomial
+proportions based on paired data.
+Statistics in Medicine 2006; 25:3039-3047
 
 Tang M-L, Li H-Q, Tang N-S. Confidence interval construction for proportion
 ratio in paired studies based on hybrid method.

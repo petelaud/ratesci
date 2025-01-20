@@ -385,16 +385,16 @@ if (FALSE) {
       )
       outlist <- list(data = xi, estimates = estimates)
     }
-    if ((contrast == "RR" && method_RR == "MOVER_newc")) {
+    if (contrast == "RR" && method_RR == "MOVER_newc") {
       estimates <- moverpair(
         x = x, contrast = "RR", level = level,
         method = moverbase, cc = cc, corc = TRUE
       )
       outlist <- list(data = xi, estimates = estimates)
     }
-    if ((contrast == "RR" && method_RR == "Bonett")) {
+    if (contrast == "RR" && tolower(method_RR) == "bonett") {
       estimates <- bonettci(
-        x = x, level = level, cc = cc
+        x = x, level = level, cc = cc, method = moverbase
       )
       outlist <- list(data = xi, estimates = estimates)
     }
@@ -1024,45 +1024,37 @@ moverpair <- function(x,
 #'   Statistics in Medicine 2006; 25:3039-3047
 #'
 #' @inheritParams pairbinci
-#' x <- c(230, 95, 41, 0)
+#'
 #' @noRd
 bonettci <- function(x,
-                    level = 0.95,
-                    cc = FALSE) {
+                     level = 0.95,
+                     method = "wilson",
+                     cc = FALSE) {
   x11 <- x[1]
   x10 <- x[2]
   x01 <- x[3]
   z0 <- qnorm(1 - (1 - level) / 2)
-  n = x11 + x10 + x01
-  x1 = x11 + x10
-  x0 = x11 + x01
-  estimate <- x1/x0
-  s1 = sqrt((1 - (x1 + 1)/(n + 2))/(x1 + 1))
-  s0 = sqrt((1 - (x0 + 1)/(n + 2))/(x0 + 1))
-  s2 = sqrt((x10 + x01 + 2)/((x1 + 1)*(x0 + 1)))
-  k = s2/(s1 + s0)
-  z = k*z0
-  b = 2*(n + z^2)
-  if (cc == FALSE) {
-    ll1 = (2*x1 + z^2 - z*sqrt(z^2 + 4*x1*(1 - x1/n)))/b
-    ul1 = (2*x1 + z^2 + z*sqrt(z^2 + 4*x1*(1 - x1/n)))/b
-    ll0 = (2*x0 + z^2 - z*sqrt(z^2 + 4*x0*(1 - x0/n)))/b
-    ul0 = (2*x0 + z^2 + z*sqrt(z^2 + 4*x0*(1 - x0/n)))/b
-    ul = ul1/ll0
-    ll = ll1/ul0
-  } else {
-    c = 1/n
-    ll1 <- ifelse(x1 == 0, 0,
-                  (2*x1 + z^2 - 1 - z*sqrt(z^2 - 2 - c + 4*(x1/n)*(n - x1 + 1)))/b)
-    ul1 <- ifelse(x1 == n, 1,
-                  (2*x1 + z^2 + 1 + z*sqrt(z^2 + 2 - c + 4*(x1/n)*(n - x1 - 1)))/b)
-    ll0 <- ifelse(x0 == 0, 0,
-                  (2*x0 + z^2 - 1 - z*sqrt(z^2 - 2 - c + 4*(x0/n)*(n - x0 + 1)))/b)
-    ul0  <- ifelse(x0 == n, 1,
-                   (2*x0 + z^2 + 1 + z*sqrt(z^2 + 2 - c + 4*(x0/n)*(n - x0 - 1)))/b)
-    ul = ul1/ll0
-    ll = ll1/ul0
+  n <- x11 + x10 + x01
+  x1 <- x11 + x10
+  x0 <- x11 + x01
+  estimate <- x1 / x0
+  s1 <- sqrt((1 - (x1 + 1) / (n + 2)) / (x1 + 1))
+  s0 <- sqrt((1 - (x0 + 1) / (n + 2)) / (x0 + 1))
+  s2 <- sqrt((x10 + x01 + 2) / ((x1 + 1) * (x0 + 1)))
+  k <- s2 / (s1 + s0)
+  z <- k * z0
+  adjlevel <- 1 - 2 * (1 - pnorm(z))
+  b <- 2 * (n + z^2)
+  if (method == "wilson") {
+    j1 <- wilsonci(x = x1, n = n, distrib = "bin", level = adjlevel, cc = cc)
+    j2 <- wilsonci(x = x0, n = n, distrib = "bin", level = adjlevel, cc = cc)
+  } else if (method == "jeff") {
+    j1 <- rateci(x = x1, n = n, distrib = "bin", level = adjlevel, cc = cc)$jeff
+    j2 <- rateci(x = x0, n = n, distrib = "bin", level = adjlevel, cc = cc)$jeff
   }
+  ul <- j1[, 3] / j2[, 1]
+  ll <- j1[, 1] / j2[, 3]
   estimates <- cbind(Lower = ll, Estimate = estimate, Upper = ul)
+  row.names(estimates) <- NULL
   estimates
 }
