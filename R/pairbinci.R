@@ -1055,10 +1055,10 @@ bpci <- function(x,
     p21 <- (x01 + 1) / (n + 2)
     estimate <- p12 - p21
     v <- (p12 + p21 - (p12 - p21)^2) / (n + 2)
-    estimates <- pmax(-1, pmin(1, c(estimate - z0 * sqrt(v),
-                   estimate,
-                   estimate + z0 * sqrt(v)
-                  )))
+    estimates <- cbind(lower = pmax(-1, estimate - z0 * sqrt(v)),
+                   Estimate = estimate,
+                   upper = pmin(1, estimate + z0 * sqrt(v))
+                  )
   } else if (contrast == "RR") {
     estimate <- x1 / x0
     n <- x11 + x10 + x01
