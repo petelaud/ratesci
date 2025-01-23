@@ -13,7 +13,7 @@ pairbinci(
   method_RD = "Score_closed",
   method_RR = "Score_closed",
   method_OR = "SCAS",
-  moverbase = "SCAS",
+  moverbase = "jeff",
   theta0 = NULL,
   skew = FALSE,
   bcf = FALSE,
@@ -56,7 +56,8 @@ Newcombe, but with a choice of input methods - see moverbase),
 "MOVER_newc" = hybrid MOVER method with "correction" to correlation
 estimate (Newcombe's "method 10"),
 "TDAS" = t-distribution asymptotic score (experimental method, seems to
-struggle with low numbers).}
+struggle with low numbers).
+"BP" = Wald with Bonett-Price adjustment}
 
 \item{method_RR}{Character string indicating the confidence interval method
 to be used for contrast = "RR". "Score" = iterative Tang asymptotic score,
@@ -66,7 +67,7 @@ to be used for contrast = "RR". "Score" = iterative Tang asymptotic score,
 estimate from Newcombe's RD method,
 "TDAS" = t-distribution asymptotic score (experimental method, seems to
 struggle with low numbers).
-"Bonett" = Hybrid Bonett-Price method (with or without cc)}
+"BP" = Hybrid Bonett-Price method (with or without cc)}
 
 \item{method_OR}{Character string indicating the confidence interval method
 to be used for contrast = "OR", all of which are based on transformation of

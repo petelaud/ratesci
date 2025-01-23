@@ -52,6 +52,7 @@
 #'                  estimate (Newcombe's "method 10"),
 #'   "TDAS" = t-distribution asymptotic score (experimental method, seems to
 #'   struggle with low numbers).
+#'   "BP" = Wald with Bonett-Price adjustment
 #' @param method_RR Character string indicating the confidence interval method
 #'   to be used for contrast = "RR". "Score" = iterative Tang asymptotic score,
 #'   "Score_closed" = closed form solution for Tang interval (default),
@@ -60,7 +61,7 @@
 #'                  estimate from Newcombe's RD method,
 #'   "TDAS" = t-distribution asymptotic score (experimental method, seems to
 #'   struggle with low numbers).
-#'   "Bonett" = Hybrid Bonett-Price method (with or without cc)
+#'   "BP" = Hybrid Bonett-Price method (with or without cc)
 #' @param method_OR Character string indicating the confidence interval method
 #'   to be used for contrast = "OR", all of which are based on transformation of
 #'   an interval for a single proportion b/(b+c):
@@ -173,7 +174,7 @@ pairbinci <- function(x,
                       method_RD = "Score_closed",
                       method_RR = "Score_closed",
                       method_OR = "SCAS",
-                      moverbase = "SCAS",
+                      moverbase = "jeff",
                       theta0 = NULL,
                       skew = FALSE,
                       bcf = FALSE,
@@ -185,13 +186,13 @@ pairbinci <- function(x,
     stop()
   }
   if (!(tolower(substr(method_RD, 1, 4)) %in%
-    c("tdas", "scor", "move"))) {
-    print("Method_RD must be one of 'Score_closed', 'Score', 'TDAS', 'MOVER' or 'MOVER_newc'")
+    c("tdas", "scor", "move", "bp"))) {
+    print("Method_RD must be one of 'Score_closed', 'Score', 'BP', 'TDAS', 'MOVER' or 'MOVER_newc'")
     stop()
   }
   if (!(tolower(substr(method_RR, 1, 4)) %in%
-    c("tdas", "scor", "move", "bone"))) {
-    print("Method_RR must be one of 'Score_closed', 'Score', 'Bonett', 'TDAS', 'MOVER' or 'MOVER_newc'")
+    c("tdas", "scor", "move", "bp"))) {
+    print("Method_RR must be one of 'Score_closed', 'Score', 'BP', 'TDAS', 'MOVER' or 'MOVER_newc'")
     stop()
   }
 if (FALSE) {
@@ -392,9 +393,15 @@ if (FALSE) {
       )
       outlist <- list(data = xi, estimates = estimates)
     }
-    if (contrast == "RR" && tolower(method_RR) == "bonett") {
-      estimates <- bonettci(
-        x = x, level = level, cc = cc, method = moverbase
+    if (contrast == "RR" && tolower(method_RR) == "bp") {
+      estimates <- bpci(
+        x = x, contrast = contrast, level = level, cc = cc, method = moverbase
+      )
+      outlist <- list(data = xi, estimates = estimates)
+    }
+    if (contrast == "RD" && tolower(method_RD) == "bp") {
+      estimates <- bpci(
+        x = x, contrast = contrast, level = level
       )
       outlist <- list(data = xi, estimates = estimates)
     }
@@ -1023,38 +1030,56 @@ moverpair <- function(x,
 #'   proportions based on paired data.
 #'   Statistics in Medicine 2006; 25:3039-3047
 #'
+#'   Bonett DG, Price RM. Adjusted Wald Confidence Interval for a Difference
+#'   of Binomial Proportions Based on Paired Data.
+#'   Journal of Educational and Behavioral Statistics 2012; 37(4):479-488
+#'
 #' @inheritParams pairbinci
 #'
 #' @noRd
-bonettci <- function(x,
-                     level = 0.95,
-                     method = "wilson",
-                     cc = FALSE) {
+bpci <- function(x,
+                 level = 0.95,
+                 contrast = "RD",
+                 method = "wilson",
+                 cc = FALSE) {
   x11 <- x[1]
   x10 <- x[2]
   x01 <- x[3]
   z0 <- qnorm(1 - (1 - level) / 2)
-  n <- x11 + x10 + x01
   x1 <- x11 + x10
   x0 <- x11 + x01
-  estimate <- x1 / x0
-  s1 <- sqrt((1 - (x1 + 1) / (n + 2)) / (x1 + 1))
-  s0 <- sqrt((1 - (x0 + 1) / (n + 2)) / (x0 + 1))
-  s2 <- sqrt((x10 + x01 + 2) / ((x1 + 1) * (x0 + 1)))
-  k <- s2 / (s1 + s0)
-  z <- k * z0
-  adjlevel <- 1 - 2 * (1 - pnorm(z))
-  b <- 2 * (n + z^2)
-  if (method == "wilson") {
-    j1 <- wilsonci(x = x1, n = n, distrib = "bin", level = adjlevel, cc = cc)
-    j2 <- wilsonci(x = x0, n = n, distrib = "bin", level = adjlevel, cc = cc)
-  } else if (method == "jeff") {
-    j1 <- rateci(x = x1, n = n, distrib = "bin", level = adjlevel, cc = cc)$jeff
-    j2 <- rateci(x = x0, n = n, distrib = "bin", level = adjlevel, cc = cc)$jeff
+
+  if (contrast == "RD") {
+    n <- sum(x)
+    p12 <- (x10 + 1) / (n + 2)
+    p21 <- (x01 + 1) / (n + 2)
+    estimate <- p12 - p21
+    v <- (p12 + p21 - (p12 - p21)^2) / (n + 2)
+    estimates <- pmax(-1, pmin(1, c(estimate - z0 * sqrt(v),
+                   estimate,
+                   estimate + z0 * sqrt(v)
+                  )))
+  } else if (contrast == "RR") {
+    estimate <- x1 / x0
+    n <- x11 + x10 + x01
+    s1 <- sqrt((1 - (x1 + 1) / (n + 2)) / (x1 + 1))
+    s0 <- sqrt((1 - (x0 + 1) / (n + 2)) / (x0 + 1))
+    s2 <- sqrt((x10 + x01 + 2) / ((x1 + 1) * (x0 + 1)))
+    k <- s2 / (s1 + s0)
+    z <- k * z0
+    adjlevel <- 1 - 2 * (1 - pnorm(z))
+    b <- 2 * (n + z^2)
+    if (method == "wilson") {
+      j1 <- wilsonci(x = x1, n = n, distrib = "bin", level = adjlevel, cc = cc)
+      j2 <- wilsonci(x = x0, n = n, distrib = "bin", level = adjlevel, cc = cc)
+    } else if (method == "jeff") {
+      j1 <- rateci(x = x1, n = n, distrib = "bin", level = adjlevel, cc = cc)$jeff
+      j2 <- rateci(x = x0, n = n, distrib = "bin", level = adjlevel, cc = cc)$jeff
+    }
+    ul <- j1[, 3] / j2[, 1]
+    ll <- j1[, 1] / j2[, 3]
+    estimates <- cbind(Lower = ll, Estimate = estimate, Upper = ul)
+    row.names(estimates) <- NULL
   }
-  ul <- j1[, 3] / j2[, 1]
-  ll <- j1[, 1] / j2[, 3]
-  estimates <- cbind(Lower = ll, Estimate = estimate, Upper = ul)
-  row.names(estimates) <- NULL
   estimates
 }
