@@ -368,7 +368,7 @@ if (FALSE) {
     if ((contrast == "RD" && method_RD == "MOVER")) {
       estimates <- moverpair(
         x = x, contrast = "RD", level = level,
-        method = moverbase, cc = cc
+        method = moverbase, cc = cc, corc = FALSE
       )
       outlist <- list(data = xi, estimates = estimates)
     }
@@ -382,7 +382,7 @@ if (FALSE) {
     if ((contrast == "RR" && method_RR == "MOVER")) {
       estimates <- moverpair(
         x = x, contrast = "RR", level = level,
-        method = moverbase, cc = cc
+        method = moverbase, cc = cc, corc = FALSE
       )
       outlist <- list(data = xi, estimates = estimates)
     }
@@ -943,7 +943,7 @@ moverpair <- function(x,
                       contrast = "RR",
                       method = "SCAS",
                       cc = FALSE,
-                      corc = FALSE) {
+                      corc = TRUE) {
   if (!is.numeric(c(x))) {
     print("Non-numeric inputs!")
     stop()
@@ -971,8 +971,12 @@ moverpair <- function(x,
   u1 <- j1[, 3]
   l2 <- j2[, 1]
   u2 <- j2[, 3]
-  p1phat <- j1[, 2]
-  pp1hat <- j2[, 2]
+#  Early version using medians for p1 & p2 for method="jeff" instead of x/N
+#  Slightly improves coverage, but has inferior location
+#  p1phat <- j1[, 2]
+#  pp1hat <- j2[, 2]
+  p1phat <- x1p / N
+  pp1hat <- xp1 / N
 
   n2p <- x[3] + x[4]
   np2 <- x[2] + x[4]
