@@ -100,6 +100,22 @@ test_that("p-values consistent with paired confidence interval", {
             ))
   )
 })
+test_that("paired confidence interval (with bcf=FALSE) consistent with McNemar test", {
+  expect_equal(
+   c1 <-  (sapply(1:dim(combos)[1],
+            function(i) {
+              pairbinci(x = combos[i, ], contrast = "RD", method_RD = "Score", bcf = FALSE)$estimates[1] > 0 |
+                pairbinci(x = combos[i, ], contrast = "RD", method_RD = "Score", bcf = FALSE)$estimates[3] < 0
+            }
+    )),
+  c2 <-   (sapply(1:dim(combos)[1],
+            function(i) {
+              mctest <- mcnemar.test(x = matrix(combos[i, ], nrow = 2), correct = FALSE)$p.value
+              ifelse(is.na(mctest), FALSE, mctest < 0.05)
+            }
+    ))
+  )
+})
 for (contrast in c("RR", "OR")) {
   test_that("p-values consistent with paired confidence interval", {
     expect_equal(
