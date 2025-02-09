@@ -241,6 +241,17 @@ if (FALSE) {
   x1i <- rep(c(1, 1, 0, 0), x)
   x2i <- rep(c(1, 0, 1, 0), x)
   xi <- table(x1i, x2i)
+  x1 <- x[1] + x[2]
+  x2 <- x[1] + x[3]
+  N <- sum(x)
+  p1hat <- x1 / N
+  p2hat <- x2 / N
+  phi_hat <- phi_c <- (x[1] * x[4] - x[2] * x[3]) / sqrt(x1 * (N - x1) * x2 * (N - x2))
+  if (x[1] * x[4] - x[2] * x[3] > 0) {
+    phi_c <- (max(x[1] * x[4] - x[2] * x[3] - N / 2, 0) /
+                sqrt(x1 * (N - x1) * x2 * (N - x2)))
+  }
+  psi_hat <- x[1] * x[4] / (x[2] * x[3])
 
   if (contrast == "OR") {
     # special case for OR, use conditional method based on transforming the
@@ -352,9 +363,15 @@ if (FALSE) {
         distrib = "bin", precis = precis + 1, contrast = contrast,
         uplow = "up"
       )
+      at_MLE <- scorepair(
+        theta = MLE, x = x, contrast = contrast, cc = cc,
+        cctype = cctype, skew = skew, bcf = bcf
+      )
       estimates <- cbind(
         Lower = lower, MLE = MLE, Upper = upper,
-        level = level
+        level = level, p1hat = p1hat, p2hat = p2hat,
+        p1d = at_MLE$p1d, p2d = at_MLE$p2d,
+        phi_hat = phi_hat, phi_c = phi_c, psi_hat = psi_hat
       )
       # Closed-form versions of Score methods by Chang (for RD Tango method)
       #  & DelRocco (for RR Tang method):
@@ -564,7 +581,11 @@ scorepair <- function(theta,
   score[abs(Stheta) < abs(corr)] <- 0
 
   pval <- pnorm(score)
-  outlist <- list(score = score, pval = pval)
+  outlist <- list(
+    score = score, p1d = p1d, p2d = p2d,
+    mu3 = mu3, pval = pval
+  )
+#  outlist <- list(score = score, pval = pval)
   return(outlist)
 }
 
@@ -1016,7 +1037,8 @@ moverpair <- function(x,
         2 * (u1 - p1phat) * (pp1hat - l2) * cor_hat)
   }
 
-  estimates <- cbind(Lower = lower, Estimate = estimate, Upper = upper)
+  estimates <- cbind(Lower = lower, Estimate = estimate, Upper = upper, level = level,
+                     p1hat = p1phat, p2hat = pp1hat, phi_hat = cor_hat)
   row.names(estimates) <- NULL
   return(estimates)
 }
