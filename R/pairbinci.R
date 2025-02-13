@@ -218,8 +218,8 @@ if (FALSE) {
   }
 }
   if (!(tolower(substr(method_OR, 1, 4)) %in%
-    c("scas", "wils", "midp", "jeff", "wald", "lapl", "scor"))) {
-    print("Method_OR must be one of 'Wald', 'Laplace', 'SCAS', 'wilson', 'midp' or 'jeff'")
+    c("scas", "wils", "midp", "jeff"))) {
+    print("Method_OR must be one of 'SCASp', 'wilson', 'midp' or 'jeff'")
     stop()
   }
   if (!(tolower(substr(moverbase, 1, 4)) %in%
@@ -302,28 +302,6 @@ if (FALSE) {
     } else if (method_OR == "jeff") {
       trans_ci <- jeffreysci(x = b, n = b + c, cc = cc, level = level)
       estimates <- (trans_ci / (1 - trans_ci))
-      outlist <- list(xi, estimates = estimates)
-    } else if (method_OR == "Wald") {
-      # Attempt to use MH estimator variance from Breslow1996 / Greenland 2000
-      z <- qnorm(1 - (1 - level) / 2)
-      b.adj <- max(b, 0.5)
-      c.adj <- max(c, 0.5)
-      logthetahat <- log(b.adj/c.adj)
-      varlog <- (1/b.adj + 1/c.adj)
-      estimates <- exp(logthetahat + c(-1, 0, 1) * z * sqrt(varlog))
-      dim(estimates) <- c(1, length(estimates))
-      dimnames(estimates)[[2]] <- c("Lower", "est", "Upper")
-      outlist <- list(xi, estimates = estimates)
-    } else if (method_OR == "Laplace") {
-      # Attempt to use Laplace estimator variance from Greenland 2000
-      z <- qnorm(1 - (1 - level) / 2)
-      b.adj <- b+1
-      c.adj <- c+1
-      logthetahat <- log(b.adj/c.adj)
-      varlog <- (1/b.adj + 1/c.adj)
-      estimates <- exp(logthetahat + c(-1, 0, 1) * z * sqrt(varlog))
-      dim(estimates) <- c(1, length(estimates))
-      dimnames(estimates)[[2]] <- c("Lower", "est", "Upper")
       outlist <- list(xi, estimates = estimates)
     }
   } else if (contrast != "OR") {
@@ -696,7 +674,7 @@ tangoci <- function(x,
     } else if (cc > 0 & b == c & b == N / 2) {
       # Rare special case fails to find solution to the quartic
       # and we have to resort to iterative method
-      root <- pairbinci(x = x, contrast = "RD", method_RD = "Score", level = level, cc = cc, bcf = bcf)$estimates[c(1, 3)]
+      root <- pairbinci(x = x, contrast = "RD", method_RD = "Score", level = level, cc = cc, bcf = bcf, skew = FALSE)$estimates[c(1, 3)]
       # Alternative method using polynomial()
       #    lowertheta <- solve(polynom::polynomial(c(u4, u3, u2, u1, 1)))
       #    root1 <- min(as.numeric(ifelse(Im(lowertheta) == 0, Re(lowertheta), NA)), na.rm = TRUE)
