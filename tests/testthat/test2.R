@@ -121,10 +121,10 @@ for (contrast in c("RR", "OR")) {
     expect_equal(
       unname(sapply(1:dim(combos)[1],
               function(i) pairbinci(x = combos[i, ], contrast = contrast,
-                                    method_OR = "SCAS")$estimates[, "Lower"] > 1)),
+                                    method_OR = "SCASp")$estimates[, "Lower"] > 1)),
       unname(sapply(1:dim(combos)[1],
               function(i) pairbinci(x = combos[i, ], contrast = contrast,
-                                    method_OR = "SCAS")$pval[, "pval_right"] < 0.025))
+                                    method_OR = "SCASp")$pval[, "pval_right"] < 0.025))
     )
   })
 }
