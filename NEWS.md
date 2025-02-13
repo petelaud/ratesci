@@ -2,12 +2,23 @@
 
 ## New features
 ### In `pairbinci()`:
-* `cc` uses a new form of correction giving equivariant intervals. Also allow
-  consistency with the continuity-corrected McNemar test (or an intermediate 
-  correction of the user's choosing).
-* `skew` for skewness correction (under evaluation). 
-* `bcf` for variance bias correction (under evaluation).
+* `cc` uses a new form of correction for RR giving equivariant intervals. Also 
+  allows consistency with the continuity-corrected McNemar test (or an 
+  intermediate correction of the user's choosing).
+* Default paired RD and RR method changed to new SCAS method 
+  (i.e. including skewness correction - manuscript in progress).
+* `skew` for skewness correction. 
+* `bcf` for variance bias correction.
+* Bonett-Price methods for RD and RR (including option for Jeffreys variant).
+* Default paired MOVER method changed to Jeffreys.
+* Default conditional odds ratio method changed to SCASp.
+* MOVER calculations now use x/N as point estimate instead of median from the
+  Beta distribution.
+* Output object now includes estimates of p1, p2 and phi.
 
+## Other
+* Tests added to confirm consistency of AS methods vs McNemar test
+* Dependence on polynom package removed.
 
 # ratesci 0.5.0 (2025-01-10)
 
