@@ -44,10 +44,11 @@ correction. When a score-based method is used, cc = 0.5 corresponds to the
 continuity-corrected McNemar test.}
 
 \item{cctype}{Character string indicating the type of continuity correction
-("new", constant" or "delrocco") to be applied for contrast = "RR".
+("new", "constant" or "delrocco") to be applied for contrast = "RR".
 (Note: "constant" and "delrocco" options produce non-equivariant intervals,
 and are likely to be deprecated in a future release (as well as the
-cctype argument itself).}
+cctype argument itself).
+Has no effect unless contrast = 'RR' and method_RR = "Score" or "Score_closed".}
 
 \item{method_RD}{Character string indicating the confidence interval method
 to be used for contrast = "RD".
