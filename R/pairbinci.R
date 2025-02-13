@@ -1048,10 +1048,11 @@ moverpair <- function(x,
 }
 
 
-#' Bonett-Price confidence intervals for a paired ratio (RR)
+#' Bonett-Price confidence intervals for a paired difference (RD) or ratio (RR)
 #'
-#' R code to calculate Bonett-Price's hybrid score-based CI
-#' For contrast = "RR" only.
+#' R code to calculate Bonett-Price's hybrid score-based CI for contrast = "RR",
+#' and adjusted Wald-based method by the same authors for contrast = "RD".
+#'
 #' Code is adapted from Appendix A of Bonett & Price 2006
 #'
 #' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
