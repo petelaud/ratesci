@@ -9,8 +9,6 @@
 ^hidetests$
 ^to-do.md
 ^CRAN-RELEASE$
-^R/pairbinci-public.R$
-^R/pairbinci-dev-old.R$
 ^revdep$
 ^README\.Rmd$
 ^CRAN-SUBMISSION$

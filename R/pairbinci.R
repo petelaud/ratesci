@@ -5,12 +5,13 @@
 #' (For paired Poisson rates, suggest use the tdasci function with distrib = "poi",
 #' and weighting = "MH", with pairs as strata.)
 #' This function applies the score-based Tango and Tang methods for RD and
-#' RR respectively, with iterative and closed-form versions, as well as an
+#' RR respectively, with iterative and closed-form versions, and a skewness
+#' correction for improved 1-sided coverage. Also includes an
 #' experimental method using the stratified TDAS method with pairs as strata.
 #' Also includes MOVER options using the Method of Variance Estimates Recovery
-#' for paired RD and RR.
+#' for paired RD and RR, incorporating Newcombe's correlation correction.
 #' For OR, intervals are produced based on transforming various intervals for
-#' the single proportion, including SCAS, mid-p and Jeffreys.
+#' the single proportion, including SCASp, mid-p and Jeffreys.
 #' All methods have options for continuity correction, and the magnitude of
 #' correction can be customised.
 #'
@@ -23,7 +24,8 @@
 #'   d is the number of pairs with no event under both conditions
 #'   (Note the order of a and d is only important for contrast="RR".)
 #' @param contrast Character string indicating the contrast of interest:
-#'   "RD" = rate difference (default), "RR" = rate ratio, "OR" = odds ratio.
+#'   "RD" = rate difference (default), "RR" = rate ratio, "OR" = conditional
+#'   odds ratio.
 #' @param level Number specifying confidence level (between 0 and 1, default
 #'   0.95).
 #' @param cc Number or logical (default FALSE) specifying (amount of) continuity
@@ -35,7 +37,7 @@
 #'   and are likely to be deprecated in a future release (as well as the
 #'   cctype argument itself).
 #' @param skew Logical (default TRUE) indicating whether to apply skewness
-#'   correction or not. (Under evaluation.)
+#'   correction or not. (Under evaluation, manuscript in progress.)
 #'   - Only applies for the iterative method_RD or method_RR = "Score"
 #' @param bcf Logical (default FALSE) indicating whether to apply bias correction
 #'   in the score denominator. (Under evaluation.)
@@ -44,28 +46,30 @@
 #'   excludes theta0. NB: can also be used for a superiority test by setting
 #'   theta0 = 0.
 #' @param method_RD Character string indicating the confidence interval method
-#'   to be used for contrast = "RD". "Score" = iterative Tango asymptotic score,
-#'   "Score_closed" = closed form solution for Tango interval (default),
+#'   to be used for contrast = "RD".
+#'   "Score" = iterative Tango asymptotic score (default),
+#'   "Score_closed" = closed form solution for Tango interval,
 #'   "MOVER" = hybrid MOVER method for paired RD (as per "method 8" in
 #'             Newcombe, but with a choice of input methods - see moverbase),
-#'   "MOVER_newc" = hybrid MOVER method with "correction" to correlation
+#'   "MOVER_newc" = hybrid MOVER method with correction to correlation
 #'                  estimate (Newcombe's "method 10"),
 #'   "TDAS" = t-distribution asymptotic score (experimental method, seems to
 #'   struggle with low numbers).
 #'   "BP" = Wald with Bonett-Price adjustment
 #' @param method_RR Character string indicating the confidence interval method
-#'   to be used for contrast = "RR". "Score" = iterative Tang asymptotic score,
-#'   "Score_closed" = closed form solution for Tang interval (default),
+#'   to be used for contrast = "RR".
+#'   "Score" = iterative Tang asymptotic score (default),
+#'   "Score_closed" = closed form solution for Tang interval,
 #'   "MOVER" = hybrid MOVER method for paired RR,
-#'   "MOVER_newc" = hybrid MOVER method with "correction" to correlation
+#'   "MOVER_newc" = hybrid MOVER method with correction to correlation
 #'                  estimate from Newcombe's RD method,
 #'   "TDAS" = t-distribution asymptotic score (experimental method, seems to
 #'   struggle with low numbers).
 #'   "BP" = Hybrid Bonett-Price method (with or without cc)
 #' @param method_OR Character string indicating the confidence interval method
-#'   to be used for contrast = "OR", all of which are based on transformation of
-#'   an interval for a single proportion b/(b+c):
-#'   "SCAS" = transformed skewness-corrected score (default),
+#'   to be used for contrast = "OR" (conditional odds ratio), all of which are
+#'   based on transformation of an interval for a single proportion b/(b+c):
+#'   "SCASp" = transformed skewness-corrected score (default),
 #'   "jeff" = transformed Jeffreys,
 #'   "midp" = transformed mid-p,
 #'   "wilson" = transformed Wilson score - included for reference only, not
@@ -75,7 +79,7 @@
 #'   "wilson" = Wilson score (not recommended, known to be skewed),
 #'   "jeff" = Jeffreys equal-tailed interval,
 #'   "midp" = mid-p,
-#'   "SCAS" = skewness-corrected score (default)
+#'   "SCASp" = skewness-corrected score (default)
 #' @param precis Number (default 6) specifying precision (i.e. number of decimal
 #'   places) to be used in optimisation subroutine for the confidence interval.
 #' @param warn Logical (default TRUE) giving the option to suppress warnings.
@@ -95,17 +99,17 @@
 #' pairbinci(x = c(53, 16, 8, 9), contrast = "RD", method_RD = "TDAS")
 #' pairbinci(x = c(53, 16, 8, 9), contrast = "RR", method_RR = "Score")
 #' pairbinci(x = c(53, 16, 8, 9), contrast = "RR", method_RR = "TDAS")
-#' pairbinci(x = c(53, 16, 8, 9), contrast = "OR", method_OR = "SCAS")
+#' pairbinci(x = c(53, 16, 8, 9), contrast = "OR", method_OR = "SCASp")
 #' # Example from Fagerland et al 2014
 #' pairbinci(x = c(1, 1, 7, 12), contrast = "RD", method_RD = "Score_closed")
 #' pairbinci(x = c(1, 1, 7, 12), contrast = "RD", method_RD = "MOVER_newc", moverbase = "wilson")
-#' pairbinci(x = c(1, 1, 7, 12), contrast = "RD", method_RD = "MOVER_newc", moverbase = "SCAS")
+#' pairbinci(x = c(1, 1, 7, 12), contrast = "RD", method_RD = "MOVER_newc", moverbase = "jeff")
 #' pairbinci(x = c(1, 1, 7, 12), contrast = "RR", method_RR = "Score_closed")
 #' pairbinci(x = c(1, 1, 7, 12), contrast = "RR", method_RR = "MOVER_newc", moverbase = "wilson")
-#' pairbinci(x = c(1, 1, 7, 12), contrast = "RR", method_RR = "MOVER_newc", moverbase = "SCAS")
+#' pairbinci(x = c(1, 1, 7, 12), contrast = "RR", method_RR = "MOVER_newc", moverbase = "jeff")
 #' pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method_OR = "wilson")
 #' pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method_OR = "midp")
-#' pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method_OR = "SCAS")
+#' pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method_OR = "SCASp")
 #'
 #' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
 #' @references
@@ -173,7 +177,7 @@ pairbinci <- function(x,
                       cctype = "new",
                       method_RD = "Score",
                       method_RR = "Score",
-                      method_OR = "Wilson",
+                      method_OR = "SCASp",
                       moverbase = "jeff",
                       theta0 = NULL,
                       skew = TRUE,
@@ -220,7 +224,7 @@ if (FALSE) {
   }
   if (!(tolower(substr(moverbase, 1, 4)) %in%
     c("scas", "wils", "midp", "jeff"))) {
-    print("moverbase must be one of 'SCAS', 'wilson', 'midp' or 'jeff'")
+    print("moverbase must be one of 'SCASp', 'wilson', 'midp' or 'jeff'")
     stop()
   }
   if (!is.numeric(c(x))) {
@@ -258,7 +262,7 @@ if (FALSE) {
     # SCAS interval for a single proportion
     b <- x[2]
     c <- x[3]
-    if (method_OR == "SCAS") {
+    if (method_OR == "SCASp") {
       trans_th0 <- NULL
       if (is.null(theta0)) theta0 <- 1
       trans_th0 <- theta0 / (1 + theta0)
@@ -983,8 +987,8 @@ tangci <- function(x,
 #' @noRd
 moverpair <- function(x,
                       level = 0.95,
-                      contrast = "RR",
-                      method = "SCAS",
+                      contrast = "RD",
+                      method = "jeff",
                       cc = FALSE,
                       corc = TRUE) {
   if (!is.numeric(c(x))) {
@@ -997,7 +1001,7 @@ moverpair <- function(x,
   N <- sum(x)
   z <- qnorm(1 - (1 - level) / 2)
   ## First calculate l1, u1, l2, u2 based on an interval for p1p and pp1
-  if (method == "SCAS") {
+  if (method == "SCASp") {
     j1 <- rateci(x = x1p, n = N, distrib = "bin", level = level, cc = cc)$scas
     j2 <- rateci(x = xp1, n = N, distrib = "bin", level = level, cc = cc)$scas
   } else if (method == "wilson") {

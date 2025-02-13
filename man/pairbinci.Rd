@@ -10,13 +10,13 @@ pairbinci(
   level = 0.95,
   cc = FALSE,
   cctype = "new",
-  method_RD = "Score_closed",
-  method_RR = "Score_closed",
-  method_OR = "SCAS",
+  method_RD = "Score",
+  method_RR = "Score",
+  method_OR = "SCASp",
   moverbase = "jeff",
   theta0 = NULL,
-  skew = FALSE,
-  bcf = FALSE,
+  skew = TRUE,
+  bcf = TRUE,
   precis = 6,
   warn = TRUE,
   ...
@@ -33,7 +33,8 @@ d is the number of pairs with no event under both conditions
 (Note the order of a and d is only important for contrast="RR".)}
 
 \item{contrast}{Character string indicating the contrast of interest:
-"RD" = rate difference (default), "RR" = rate ratio, "OR" = odds ratio.}
+"RD" = rate difference (default), "RR" = rate ratio, "OR" = conditional
+odds ratio.}
 
 \item{level}{Number specifying confidence level (between 0 and 1, default
 0.95).}
@@ -49,30 +50,32 @@ and are likely to be deprecated in a future release (as well as the
 cctype argument itself).}
 
 \item{method_RD}{Character string indicating the confidence interval method
-to be used for contrast = "RD". "Score" = iterative Tango asymptotic score,
-"Score_closed" = closed form solution for Tango interval (default),
+to be used for contrast = "RD".
+"Score" = iterative Tango asymptotic score (default),
+"Score_closed" = closed form solution for Tango interval,
 "MOVER" = hybrid MOVER method for paired RD (as per "method 8" in
 Newcombe, but with a choice of input methods - see moverbase),
-"MOVER_newc" = hybrid MOVER method with "correction" to correlation
+"MOVER_newc" = hybrid MOVER method with correction to correlation
 estimate (Newcombe's "method 10"),
 "TDAS" = t-distribution asymptotic score (experimental method, seems to
 struggle with low numbers).
 "BP" = Wald with Bonett-Price adjustment}
 
 \item{method_RR}{Character string indicating the confidence interval method
-to be used for contrast = "RR". "Score" = iterative Tang asymptotic score,
-"Score_closed" = closed form solution for Tang interval (default),
+to be used for contrast = "RR".
+"Score" = iterative Tang asymptotic score (default),
+"Score_closed" = closed form solution for Tang interval,
 "MOVER" = hybrid MOVER method for paired RR,
-"MOVER_newc" = hybrid MOVER method with "correction" to correlation
+"MOVER_newc" = hybrid MOVER method with correction to correlation
 estimate from Newcombe's RD method,
 "TDAS" = t-distribution asymptotic score (experimental method, seems to
 struggle with low numbers).
 "BP" = Hybrid Bonett-Price method (with or without cc)}
 
 \item{method_OR}{Character string indicating the confidence interval method
-to be used for contrast = "OR", all of which are based on transformation of
-an interval for a single proportion b/(b+c):
-"SCAS" = transformed skewness-corrected score (default),
+to be used for contrast = "OR" (conditional odds ratio), all of which are
+based on transformation of an interval for a single proportion b/(b+c):
+"SCASp" = transformed skewness-corrected score (default),
 "jeff" = transformed Jeffreys,
 "midp" = transformed mid-p,
 "wilson" = transformed Wilson score - included for reference only, not
@@ -83,7 +86,7 @@ for the MOVER methods (when method_RR or method_RD = "MOVER"):
 "wilson" = Wilson score (not recommended, known to be skewed),
 "jeff" = Jeffreys equal-tailed interval,
 "midp" = mid-p,
-"SCAS" = skewness-corrected score (default)}
+"SCASp" = skewness-corrected score (default)}
 
 \item{theta0}{Number to be used in a one-sided significance test (e.g.
 non-inferiority margin). 1-sided p-value will be < 0.025 iff 2-sided 95\\% CI
@@ -91,7 +94,7 @@ excludes theta0. NB: can also be used for a superiority test by setting
 theta0 = 0.}
 
 \item{skew}{Logical (default TRUE) indicating whether to apply skewness
-correction or not. (Under evaluation.)
+correction or not. (Under evaluation, manuscript in progress.)
 \itemize{
 \item Only applies for the iterative method_RD or method_RR = "Score"
 }}
@@ -122,12 +125,13 @@ rate ratio ('RR') or odds ratio ('OR'), for paired binomial data.
 (For paired Poisson rates, suggest use the tdasci function with distrib = "poi",
 and weighting = "MH", with pairs as strata.)
 This function applies the score-based Tango and Tang methods for RD and
-RR respectively, with iterative and closed-form versions, as well as an
+RR respectively, with iterative and closed-form versions, and a skewness
+correction for improved 1-sided coverage. Also includes an
 experimental method using the stratified TDAS method with pairs as strata.
 Also includes MOVER options using the Method of Variance Estimates Recovery
-for paired RD and RR.
+for paired RD and RR, incorporating Newcombe's correlation correction.
 For OR, intervals are produced based on transforming various intervals for
-the single proportion, including SCAS, mid-p and Jeffreys.
+the single proportion, including SCASp, mid-p and Jeffreys.
 All methods have options for continuity correction, and the magnitude of
 correction can be customised.
 }
@@ -137,17 +141,17 @@ pairbinci(x = c(53, 16, 8, 9), contrast = "RD", method_RD = "Score")
 pairbinci(x = c(53, 16, 8, 9), contrast = "RD", method_RD = "TDAS")
 pairbinci(x = c(53, 16, 8, 9), contrast = "RR", method_RR = "Score")
 pairbinci(x = c(53, 16, 8, 9), contrast = "RR", method_RR = "TDAS")
-pairbinci(x = c(53, 16, 8, 9), contrast = "OR", method_OR = "SCAS")
+pairbinci(x = c(53, 16, 8, 9), contrast = "OR", method_OR = "SCASp")
 # Example from Fagerland et al 2014
 pairbinci(x = c(1, 1, 7, 12), contrast = "RD", method_RD = "Score_closed")
 pairbinci(x = c(1, 1, 7, 12), contrast = "RD", method_RD = "MOVER_newc", moverbase = "wilson")
-pairbinci(x = c(1, 1, 7, 12), contrast = "RD", method_RD = "MOVER_newc", moverbase = "SCAS")
+pairbinci(x = c(1, 1, 7, 12), contrast = "RD", method_RD = "MOVER_newc", moverbase = "jeff")
 pairbinci(x = c(1, 1, 7, 12), contrast = "RR", method_RR = "Score_closed")
 pairbinci(x = c(1, 1, 7, 12), contrast = "RR", method_RR = "MOVER_newc", moverbase = "wilson")
-pairbinci(x = c(1, 1, 7, 12), contrast = "RR", method_RR = "MOVER_newc", moverbase = "SCAS")
+pairbinci(x = c(1, 1, 7, 12), contrast = "RR", method_RR = "MOVER_newc", moverbase = "jeff")
 pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method_OR = "wilson")
 pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method_OR = "midp")
-pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method_OR = "SCAS")
+pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method_OR = "SCASp")
 
 }
 \references{
