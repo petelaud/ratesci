@@ -166,7 +166,9 @@ exactci <- function( # function to calculate exact 'exact' confidence interval
   distrib = "bin",
   precis = 8) {
   alpha <- 1 - level
-  est <- ifelse(distrib == "poi", x, x / n)
+  if (distrib == "poi") {
+    est <- x
+    } else est <- x / n
   if (as.character(midp) == "TRUE") midp <- 0.5
   if (distrib == "bin") {
     lowroot <- function(p) {
