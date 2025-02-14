@@ -20,6 +20,7 @@ scaspci <- function(x,
                     distrib = "bin",
                     level = 0.95,
 #                    bcf = FALSE,
+#                    bign = n, # extra argument could be needed for bcf for transformed OR interval
                     cc = FALSE,
                     ...) {
   #  x <- Rmpfr::mpfr(x, 120)
@@ -27,13 +28,19 @@ scaspci <- function(x,
   #  level <- Rmpfr::mpfr(level, 120)
   if (as.character(cc) == "TRUE") cc <- 0.5
   z <- qnorm(1 - (1 - level) / 2)
-#  if (distrib == "bin") {
-    # Yet to be implemented into formula
-#    lambda <- switch(as.character(bcf),
-#                     "TRUE" = n / (n - 1),
-#                     "FALSE" = 1
-#    )
-#  } else lambda <- 1
+  if (FALSE) {
+    # bcf yet to be implemented into the non-iterative formula
+    # - need to work through the algebra
+    if (distrib == "bin") {
+      lambda <- switch(as.character(bcf),
+                       "TRUE" = bign / (bign - 1),
+                       "FALSE" = 1
+      )
+    } else lambda <- 1
+    # Simple adjustment to z doesn't match with iterative method
+    za <- qnorm(1 - (1 - level) / 2) * sqrt(lambda)
+  }
+
   if (distrib == "poi") {
     Du <- (x + cc) / n - (z^2 - 1) / (6 * n)
     #    Dl <- Rmpfr::pmax(0, (x - cc) / n - (z^2 - 1) / (6 * n))
