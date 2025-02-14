@@ -224,20 +224,18 @@ wilsonci <- function(x,
                      cc = FALSE,
                      distrib = "bin") {
   if (as.character(cc) == "TRUE") cc <- 0.5
-  corr <- cc / n
   z <- qnorm(1 - (1 - level) / 2)
   est <- x / n
   if (distrib == "bin") {
-    lower <- (2 * (x - cc) + z^2 -
+    # See Newcombe 1998, set LCL to 0 if x = 0
+    lower <- ifelse(x == 0, 0, (2 * (x - cc) + z^2 -
                 z * sqrt(z^2 - 2 * (2 * cc + cc / n) +
                            4 * ((x / n) * (n * (1 - x / n) + 2 * cc)))
-    ) / (2 * (n + z^2))
-    lower[x == 0] <- 0 # See Newcombe 1998
-    upper <- (2 * (x + cc) + z^2 +
+    ) / (2 * (n + z^2)))
+    upper <- ifelse(x == n, 1, (2 * (x + cc) + z^2 +
                 z * sqrt(z^2 + 2 * (2 * cc - cc / n) +
                            4 * ((x / n) * (n * (1 - x / n) - 2 * cc)))
-    ) / (2 * (n + z^2))
-    upper[x == n] <- 1
+    ) / (2 * (n + z^2)))
   } else if (distrib == "poi") {
     lower <- ((x - cc) + z^2 / 2 - z * sqrt(x - cc + z^2 / 4)) / n
     lower[x == 0] <- 0
