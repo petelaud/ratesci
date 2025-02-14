@@ -1409,8 +1409,8 @@ bisect <- function(ftn,
 scoretheta <- function(theta,
                        x1,
                        n1,
-                       x2 = NULL,
-                       n2 = NULL,
+                       x2 = 0,
+                       n2 = 0,
                        distrib = "bin",
                        contrast = "RD",
                        bcf = TRUE,
@@ -1567,7 +1567,7 @@ scoretheta <- function(theta,
     Stheta <- p1hat - theta
     Stheta[n1 == 0] <- 0
     if (distrib == "bin") {
-      V <- (pmax(0, (theta * (1 - theta) / n1)))
+      V <- (pmax(0, (theta * (1 - theta) / n1))) * lambda
       mu3 <- (theta * (1 - theta) * (1 - 2 * theta) / (n1^2))
     } else if (distrib == "poi") {
       V <- theta / n1

@@ -19,6 +19,7 @@ scaspci <- function(x,
                     n,
                     distrib = "bin",
                     level = 0.95,
+#                    bcf = FALSE,
                     cc = FALSE,
                     ...) {
   #  x <- Rmpfr::mpfr(x, 120)
@@ -26,6 +27,13 @@ scaspci <- function(x,
   #  level <- Rmpfr::mpfr(level, 120)
   if (as.character(cc) == "TRUE") cc <- 0.5
   z <- qnorm(1 - (1 - level) / 2)
+#  if (distrib == "bin") {
+    # Yet to be implemented into formula
+#    lambda <- switch(as.character(bcf),
+#                     "TRUE" = n / (n - 1),
+#                     "FALSE" = 1
+#    )
+#  } else lambda <- 1
   if (distrib == "poi") {
     Du <- (x + cc) / n - (z^2 - 1) / (6 * n)
     #    Dl <- Rmpfr::pmax(0, (x - cc) / n - (z^2 - 1) / (6 * n))

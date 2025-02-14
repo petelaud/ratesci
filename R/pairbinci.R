@@ -261,27 +261,37 @@ if (FALSE) {
   if (contrast == "OR") {
     # special case for OR, use conditional method based on transforming the
     # SCAS interval for a single proportion
+    # Transformed SCAS method with bias correction factor based on
+    # N/(N-1) i.e. full sample size, not the number of discordant pairs
+    # This gives a p-value matching that for other bias-corrected methods
     b <- x[2]
     c <- x[3]
     if (method_OR == "SCASp") {
       trans_th0 <- NULL
       if (is.null(theta0)) theta0 <- 1
       trans_th0 <- theta0 / (1 + theta0)
-      OR_ci <- scaspci(
-        x = b, n = b + c, distrib = "bin",
-        level = level, cc = cc
-      )
+#  To be reinstated when bcf argument is added to scaspi
+#      OR_ci <- scaspci(
+#        x = b, n = b + c, distrib = "bin",
+#        level = level, cc = cc
+#      )
+      # the trick here is to use the n2 argument, which is usually redundant
+      # for contrast = "p".
+      OR_ci <- scoreci(
+        x1 = b, n1 = b + c, n2 = x[1] + x[4], contrast = "p", distrib = "bin",
+        level = level, cc = cc, bcf = bcf, skew = TRUE
+      )$estimates[, 1:3, drop = FALSE]
       estimates <- OR_ci / (1 - OR_ci)
       scorezero <- scoretheta(
-        theta = 0.5, x1 = b, n1 = b + c,
-        contrast = "p", distrib = "bin",
+        theta = 0.5, x1 = b, n1 = b + c, n2 = x[1] + x[4],
+        contrast = "p", distrib = "bin", bcf = bcf,
         skew = TRUE, cc = cc, level = level
       )
       chisq_zero <- scorezero$score^2
       pval2sided <- pchisq(chisq_zero, 1, lower.tail = FALSE)
       scoreth0 <- scoretheta(
-        theta = trans_th0, x1 = b, n1 = b + c,
-        contrast = "p", distrib = "bin",
+        theta = trans_th0, x1 = b, n1 = b + c, n2 = x[1] + x[4],
+        contrast = "p", distrib = "bin", bcf = bcf,
         skew = TRUE, cc = cc, level = level
       )
       pval_left <- scoreth0$pval

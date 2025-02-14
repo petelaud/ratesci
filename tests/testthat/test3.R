@@ -318,7 +318,7 @@ test_that("legacy & new methods match published examples", {
     c(-0.020, 0.207)
   )
   expect_equal(
-    unname(round(pairbinci(x = c(53, 16, 8, 9), contrast = "OR")$estimates[, c(1, 3)], 4)),
+    unname(round(pairbinci(x = c(53, 16, 8, 9), contrast = "OR", method_OR = "SCASp", bcf = FALSE)$estimates[, c(1, 3)], 4)),
     c(0.8718, 4.8816)
   )
 
