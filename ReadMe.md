@@ -123,7 +123,7 @@ For comparisons of rates (contrasts RD, RR and OR):
 - `moverbci()`: wrapper function to compute MOVER-B intervals.
 - `pairbinci()`: for paired binomial data, including asymptotic score
   and MOVER methods for RD and RR, and transformed binomial intervals
-  for OR.
+  for conditional OR.
 
 For single binomial or Poisson rates:
 

@@ -16,6 +16,9 @@
   Beta distribution.
 * Output object now includes estimates of p1, p2 and phi.
 
+### In `scoreci()`:
+* `bcf` option now implemented for contrast = "p".
+
 ## Other
 * Tests added to confirm consistency of AS methods vs McNemar test
 * Dependence on polynom package removed.

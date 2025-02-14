@@ -70,7 +70,7 @@ For comparisons of rates (contrasts RD, RR and OR):
 * `tdasci()`: wrapper function to compute TDAS stratified intervals incorporating random effects.
 * `moverci()`: for the MOVER methods, including Newcombe and MOVER-J.
 * `moverbci()`: wrapper function to compute MOVER-B intervals.
-* `pairbinci()`: for paired binomial data, including asymptotic score and MOVER methods for RD and RR, and transformed binomial intervals for OR.
+* `pairbinci()`: for paired binomial data, including asymptotic score and MOVER methods for RD and RR, and transformed binomial intervals for conditional OR.
 
 For single binomial or Poisson rates:
 
