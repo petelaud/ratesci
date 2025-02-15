@@ -35,7 +35,7 @@ An online calculator based on this package is available [here](https://ssu.shef.
 
 ## Installation
 
-The current official (i.e. [CRAN]https://CRAN.R-project.org/package=ratesci) release can be installed within R with:
+The current official (i.e. [CRAN](https://CRAN.R-project.org/package=ratesci)) release can be installed within R with:
 
 ``` r
 install.packages("ratesci")
