@@ -19,8 +19,8 @@ scaspci <- function(x,
                     n,
                     distrib = "bin",
                     level = 0.95,
-#                    bcf = FALSE,
-#                    bign = n, # extra argument could be needed for bcf for transformed OR interval
+                    bcf = FALSE,
+                    bign = n, # extra argument could be needed for bcf for transformed OR interval
                     cc = FALSE,
                     ...) {
   #  x <- Rmpfr::mpfr(x, 120)
@@ -28,9 +28,7 @@ scaspci <- function(x,
   #  level <- Rmpfr::mpfr(level, 120)
   if (as.character(cc) == "TRUE") cc <- 0.5
   z <- qnorm(1 - (1 - level) / 2)
-  if (FALSE) {
-    # bcf yet to be implemented into the non-iterative formula
-    # - need to work through the algebra
+    # bcf for the non-iterative formula
     if (distrib == "bin") {
       lambda <- switch(as.character(bcf),
                        "TRUE" = bign / (bign - 1),
@@ -39,7 +37,6 @@ scaspci <- function(x,
     } else lambda <- 1
     # Simple adjustment to z doesn't match with iterative method
     za <- qnorm(1 - (1 - level) / 2) * sqrt(lambda)
-  }
 
   if (distrib == "poi") {
     Du <- (x + cc) / n - (z^2 - 1) / (6 * n)
@@ -55,20 +52,20 @@ scaspci <- function(x,
     A0 <- 1
     C0 <- D0^2
   } else if (distrib == "bin") {
-    E <- (z^2 - 1) / (3 * n) - 1
+    E <- (z^2 - 1) / (3 * n * lambda) - 1
     # Alteration to published formula,
     # to deal with non-nested intervals when level > 0.99
     #    Du <- Rmpfr::pmax(0, (n - x - cc) / n - (z^2 - 1) / (6 * n))
     #    Dl <- Rmpfr::pmax(0, (x - cc) / n - (z^2 - 1) / (6 * n))
-    Du <- pmax(0, (n - x - cc) / n - (z^2 - 1) / (6 * n))
-    Dl <- pmax(0, (x - cc) / n - (z^2 - 1) / (6 * n))
-    A <- z^2 / n + E^2
-    Bu <- 2 * E * Du - z^2 / n
-    Bl <- 2 * E * Dl - z^2 / n
+    Du <- pmax(0, (n - x - cc) / n - (z^2 - 1) / (6 * n * lambda))
+    Dl <- pmax(0, (x - cc) / n - (z^2 - 1) / (6 * n * lambda))
+    A <- za^2 / n + E^2
+    Bu <- 2 * E * Du - za^2 / n
+    Bl <- 2 * E * Dl - za^2 / n
     Cu <- Du^2
     Cl <- Dl^2
-    E0 <- 1 + 1 / (3 * n)
-    D0 <- -1 / (6 * n) - x / n
+    E0 <- 1 + 1 / (3 * n * lambda)
+    D0 <- -1 / (6 * n * lambda) - x / n
     A0 <- E0^2
     B0 <- 2 * E0 * D0
     C0 <- D0^2
