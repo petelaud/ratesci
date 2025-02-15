@@ -270,20 +270,19 @@ if (FALSE) {
       trans_th0 <- NULL
       if (is.null(theta0)) theta0 <- 1
       trans_th0 <- theta0 / (1 + theta0)
-#  To be consolidated when bcf argument is added to closed form function scaspi
-      if (bcf == FALSE) {
+#      if (bcf == FALSE) {
         OR_ci <- scaspci(
           x = b, n = b + c, distrib = "bin",
-          level = level, cc = cc
+          level = level, cc = cc, bcf = bcf, bign = N
         )
-      } else {
+#      } else {
         # the trick here is to use the n2 argument, which is usually redundant
         # for contrast = "p".
-        OR_ci <- scoreci(
-          x1 = b, n1 = b + c, n2 = x[1] + x[4], contrast = "p", distrib = "bin",
-          level = level, cc = cc, bcf = bcf, skew = TRUE
-        )$estimates[, 1:3, drop = FALSE]
-      }
+#        OR_ci <- scoreci(
+#          x1 = b, n1 = b + c, n2 = x[1] + x[4], contrast = "p", distrib = "bin",
+#          level = level, cc = cc, bcf = bcf, skew = TRUE
+#        )$estimates[, 1:3, drop = FALSE]
+#      }
       estimates <- OR_ci / (1 - OR_ci)
       scorezero <- scoretheta(
         theta = 0.5, x1 = b, n1 = b + c, n2 = x[1] + x[4],
