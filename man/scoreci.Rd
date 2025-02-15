@@ -80,8 +80,7 @@ Experimental for distrib = "poi".}
 \item{bcf}{Logical (default TRUE) indicating whether to apply bias correction
 in the score denominator. Applicable to distrib = "bin" only. (NB: bcf =
 FALSE option is really only included for legacy validation against previous
-published methods (i.e. Gart & Nam, Mee, or standard Chi-squared test).
-Ignored for contrast = "p".}
+published methods (i.e. Gart & Nam, Mee, or standard Chi-squared test).}
 
 \item{cc}{Number or logical (default FALSE) specifying (amount of) continuity
 correction. Numeric value is taken as the gamma parameter in Laud 2017,

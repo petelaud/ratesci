@@ -49,7 +49,6 @@
 #'   in the score denominator. Applicable to distrib = "bin" only. (NB: bcf =
 #'   FALSE option is really only included for legacy validation against previous
 #'   published methods (i.e. Gart & Nam, Mee, or standard Chi-squared test).
-#'   Ignored for contrast = "p".
 #' @param cc Number or logical (default FALSE) specifying (amount of) continuity
 #'   correction. Numeric value is taken as the gamma parameter in Laud 2017,
 #'   Appendix S2 (default 0.5 for 'conventional' correction if cc = TRUE).

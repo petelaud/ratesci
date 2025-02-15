@@ -6,7 +6,16 @@
 single binomial or Poisson rate using closed-form calculations.
 This function is vectorised in x, n.}
 \usage{
-scaspci(x, n, distrib = "bin", level = 0.95, cc = FALSE, ...)
+scaspci(
+  x,
+  n,
+  distrib = "bin",
+  level = 0.95,
+  bcf = FALSE,
+  bign = n,
+  cc = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{Numeric vector of number of events.}
@@ -19,6 +28,12 @@ data: "bin" = binomial (default), "poi" = Poisson.}
 
 \item{level}{Number specifying confidence level (between 0 and 1, default
 0.95).}
+
+\item{bcf}{Logical (default TRUE) indicating whether to apply bias correction
+in the score denominator. Applicable to distrib = "bin" only.}
+
+\item{bign}{Sample size N to be used in the calculation of bcf, if different
+from n.}
 
 \item{cc}{Number or logical (default FALSE) specifying (amount of) continuity
 correction. Numeric value is taken as the gamma parameter in Laud 2017,

@@ -9,6 +9,10 @@
 #'   data: "bin" = binomial (default), "poi" = Poisson.
 #' @param level Number specifying confidence level (between 0 and 1, default
 #'   0.95).
+#' @param bcf Logical (default TRUE) indicating whether to apply bias correction
+#'   in the score denominator. Applicable to distrib = "bin" only.
+#' @param bign Sample size N to be used in the calculation of bcf, if different
+#'   from n.
 #' @param cc Number or logical (default FALSE) specifying (amount of) continuity
 #'   correction. Numeric value is taken as the gamma parameter in Laud 2017,
 #'   Appendix S2 (default 0.5 for 'conventional' correction if cc = TRUE).
