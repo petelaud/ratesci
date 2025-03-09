@@ -242,6 +242,15 @@ pairbinci <- function(x,
     print("Non-numeric inputs!")
     stop()
   }
+  if (method == "BP" && contrast == "RD" && cc != FALSE) {
+    cc <- FALSE
+    if (warn == TRUE) {
+      print(paste("Continuity correction not available for
+         Wald with Bonett-Price adjustment for RD -
+         cc is set to FALSE"))
+    }
+
+  }
   if (as.character(cc) == "TRUE") cc <- 0.5
   # Default correction aligned with cc'd McNemar test
   # Note that this is 0.5 for consistency with other functions in the ratesci
