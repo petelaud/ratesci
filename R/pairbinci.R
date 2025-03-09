@@ -360,6 +360,8 @@ pairbinci <- function(x,
           contrast = contrast, distrib = "bin", level = level, cc = cc,
           theta0 = theta0, warn = FALSE
         )
+        estimates <- out$estimates[, , drop = FALSE]
+        pval <- out$pval
         outlist <- list(
           data = xi,
           estimates = out$estimates[, 1:3, drop = FALSE],
