@@ -31,9 +31,9 @@
 #'   to be used. The following are available for contrast = "RD" or "RR":
 #'   "Score" = iterative Tango (for RD) / Tang (for RR) asymptotic score (default),
 #'   "Score_closed" = closed form solution for Tango/Tang interval,
-#'   "MOVER" = hybrid MOVER method for paired RD (as per "method 8" in
-#'             Newcombe, but with a choice of input methods - see moverbase),
-#'   "MOVER_newc" = hybrid MOVER method with correction to correlation
+#'   "MOVER" = hybrid MOVER method (as per "method 8" in Newcombe, but with
+#'             a choice of input methods - see moverbase),
+#'   "MOVER_newc" = hybrid MOVER methods with correction to correlation
 #'                  estimate (Newcombe's "method 10"),
 #'   "TDAS" = t-distribution asymptotic score (experimental method, seems to
 #'   struggle with low numbers).
@@ -170,7 +170,7 @@
 #' @export
 pairbinci <- function(x,
                       contrast = "RD",
-                      method = "Score",
+                      method = ifelse(contrast == "OR", "SCASp", "Score"),
                       moverbase = "jeff",
                       method_RD = NULL,
                       method_RR = NULL,
@@ -232,11 +232,13 @@ pairbinci <- function(x,
       stop()
     }
   }
-  if (contrast == "OR" && !(tolower(substr(method, 1, 4)) %in%
-    c("scas", "wils", "midp", "jeff"))) {
-    print("Method must be one of 'SCASp', 'wilson', 'midp' or 'jeff' for
-          contrast = 'OR'")
-    stop()
+  if (contrast == "OR") {
+    if (!(tolower(substr(method, 1, 4)) %in%
+          c("scas", "wils", "midp", "jeff"))) {
+        print("Method must be one of 'SCASp', 'wilson', 'midp' or 'jeff' for
+              contrast = 'OR'")
+      stop()
+    }
   }
   if (!is.numeric(c(x))) {
     print("Non-numeric inputs!")
