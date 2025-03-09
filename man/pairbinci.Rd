@@ -120,13 +120,14 @@ as specified}}
 }
 \description{
 Confidence intervals for the rate (or risk) difference ('RD'),
-rate ratio ('RR') or odds ratio ('OR'), for paired binomial data.
+rate ratio ('RR') or conditional odds ratio ('OR'), for paired binomial data.
 (For paired Poisson rates, suggest use the tdasci function with distrib = "poi",
 and weighting = "MH", with pairs as strata.)
 This function applies the score-based Tango and Tang methods for RD and
 RR respectively, with iterative and closed-form versions, and a skewness
-correction for improved 1-sided coverage. Also includes an
-experimental method using the stratified TDAS method with pairs as strata.
+correction for improved one-sided coverage.
+Also includes an experimental method using the stratified TDAS method
+with pairs as strata (to be deprecated?).
 Also includes MOVER options using the Method of Variance Estimates Recovery
 for paired RD and RR, incorporating Newcombe's correlation correction.
 For OR, intervals are produced based on transforming various intervals for

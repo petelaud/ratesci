@@ -20,6 +20,10 @@
 ### In `scoreci()`:
 * `bcf` option now implemented for contrast = "p".
 
+### In `scaspci()`:
+* `bign` allows a different sample size to be used in the bias correction 
+  (used within transformed SCASp method for paired OR in `pairbinci`).
+
 ## Other
 * `method_RD`, `method_RR` and `method_OR` are replaced with `method`.
 * Tests added to confirm consistency of AS methods vs McNemar test

@@ -1359,7 +1359,7 @@ bisect <- function(ftn,
     check <- (scor <= 0) | is.na(scor)
     # ??scor=NA only happens when |p1-p2|=1 and |theta|=1 for RD
     # (in which case hi==lo anyway), or if p1=p2=0
-    # also for RR when p1=0 and theta=0
+    # also for RR when p1=0 and theta=0, or paired RR when theta=0 or Inf
     hi[check] <- mid[check]
     lo[!check] <- mid[!check]
     niter <- niter + 1

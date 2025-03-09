@@ -53,9 +53,10 @@ reference.
 
 For those wishing to achieve strictly conservative coverage, so-called
 ‘continuity corrections’ are provided as approximations to ‘exact’
-methods. The performance of these adjustments has not been extensively
-evaluated, but they appear to be more successful for SCAS than for
-MOVER, in terms of achieving conservative coverage.
+methods, with the option to adjust the strength of the correction. The
+performance of these adjustments has not been extensively evaluated, but
+they appear to be more successful for SCAS than for MOVER, in terms of
+achieving conservative coverage.
 
 An online calculator based on this package is available
 [here](https://ssu.shef.ac.uk/ratesci/calc.php)
