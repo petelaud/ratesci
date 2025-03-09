@@ -1,5 +1,5 @@
-library(ratesci)
-context("Examples")
+# Tests of outputs vs published examples in the literature
+# context("Examples")
 
 test_that("legacy & new methods match published examples", {
 

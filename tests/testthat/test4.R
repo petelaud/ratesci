@@ -1,5 +1,5 @@
-library(ratesci)
-context("Laud 2017 Examples")
+# Tests of outputs vs self-published examples
+# context("Laud 2017 Examples")
 
 alpha <- 0.05
 x1hkp <- c(12, 19, 5)

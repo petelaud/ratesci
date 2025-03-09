@@ -6,24 +6,28 @@
 * `bcf` for variance bias correction.
 * Default paired RD and RR method changed to new SCAS method 
   (i.e. including skewness correction - manuscript under review).
-* Bonett-Price methods for RD and RR (including Jeffreys variant option for RR).
+* Bonett-Price methods for RD and RR (including proposed Jeffreys variant 
+  option for RR).
 * Default paired MOVER method changed to Jeffreys.
 * MOVER calculations now use x/N as point estimate instead of median from the
   Beta distribution.
 * `cc` uses a new form of correction for RR giving equivariant intervals. Also 
   allows consistency with the continuity-corrected McNemar test (or an 
   intermediate correction of the user's choosing).
-* Default conditional odds ratio method changed to SCASp (with closed-form calculation).
+* Default conditional odds ratio method changed to SCASp (with closed-form 
+  calculation).
 * Output object now includes estimates of p1, p2 and phi.
 * Output object now includes function call.
-
-### In `scoreci()`:
-* `bcf` option now implemented for contrast = "p".
 
 ### In `scaspci()`:
 * `bcf` option now implemented for contrast = "p".
 * `bign` allows a different sample size to be used in the bias correction 
   (used within transformed SCASp method for paired OR in `pairbinci`).
+
+### In `scoreci()`:
+* `bcf` option now implemented for contrast = "p".
+* (Note adjusted sample size for bias correction can be achieved by including a 
+   non-zero value for n2.)
 
 ## Bug fixes
 ### In `exactci()`:
@@ -31,8 +35,9 @@
 
 ## Other
 * `method_RD`, `method_RR` and `method_OR` are replaced with `method`.
-* Tests added to confirm consistency of AS methods vs McNemar test
+* Tests added to confirm consistency of AS methods vs McNemar test.
 * Dependence on polynom package removed.
+* Edition 3 of testthat implemented.
 
 # ratesci 0.5.0 (2025-01-10)
 

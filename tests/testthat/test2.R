@@ -1,5 +1,5 @@
-library(ratesci)
-context("p-values")
+# Tests for consistency of confidence intervals vs p-values
+# context("p-values")
 
 n1 <- 40
 n2 <- 20
