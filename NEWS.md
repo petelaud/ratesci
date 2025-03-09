@@ -20,6 +20,7 @@
 * `bcf` option now implemented for contrast = "p".
 
 ## Other
+* `method_RD`, `method_RR` and `method_OR` are replaced with `method`.
 * Tests added to confirm consistency of AS methods vs McNemar test
 * Dependence on polynom package removed.
 

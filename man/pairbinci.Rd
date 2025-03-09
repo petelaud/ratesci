@@ -7,13 +7,14 @@
 pairbinci(
   x,
   contrast = "RD",
+  method = "Score",
+  moverbase = "jeff",
+  method_RD = NULL,
+  method_RR = NULL,
+  method_OR = NULL,
   level = 0.95,
   cc = FALSE,
   cctype = "new",
-  method_RD = "Score",
-  method_RR = "Score",
-  method_OR = "SCASp",
-  moverbase = "jeff",
   theta0 = NULL,
   skew = TRUE,
   bcf = TRUE,
@@ -36,6 +37,41 @@ d is the number of pairs with no event under both conditions
 "RD" = rate difference (default), "RR" = rate ratio, "OR" = conditional
 odds ratio.}
 
+\item{method}{Character string indicating the confidence interval method
+to be used. The following are available for contrast = "RD" or "RR":
+"Score" = iterative Tango (for RD) / Tang (for RR) asymptotic score (default),
+"Score_closed" = closed form solution for Tango/Tang interval,
+"MOVER" = hybrid MOVER method for paired RD (as per "method 8" in
+Newcombe, but with a choice of input methods - see moverbase),
+"MOVER_newc" = hybrid MOVER method with correction to correlation
+estimate (Newcombe's "method 10"),
+"TDAS" = t-distribution asymptotic score (experimental method, seems to
+struggle with low numbers).
+"BP" = Wald with Bonett-Price adjustment for RD, or Hybrid Bonett-Price
+method for RR
+For contrast = "OR", one of the following methods may be selected,
+all of which are based on transformation of an interval for a single
+proportion b/(b+c):
+"SCASp" = transformed skewness-corrected score (default),
+"jeff" = transformed Jeffreys,
+"midp" = transformed mid-p,
+"wilson" = transformed Wilson score - included for reference only, not
+recommended.}
+
+\item{moverbase}{Character string indicating the base method used as input
+for the MOVER methods for RD or RR (when method = "MOVER" or "MOVER_newc"),
+and for the Hybrid BP method for RR:
+"jeff" = Jeffreys equal-tailed interval (default),
+"SCASp" = skewness-corrected score,
+"midp" = mid-p,
+"wilson" = Wilson score (not recommended, known to be skewed)}
+
+\item{method_RD}{(deprecated: parameter renamed to method)}
+
+\item{method_RR}{(deprecated: parameter renamed to method)}
+
+\item{method_OR}{(deprecated: parameter renamed to method)}
+
 \item{level}{Number specifying confidence level (between 0 and 1, default
 0.95).}
 
@@ -48,46 +84,7 @@ continuity-corrected McNemar test.}
 (Note: "constant" and "delrocco" options produce non-equivariant intervals,
 and are likely to be deprecated in a future release (as well as the
 cctype argument itself).
-Has no effect unless contrast = 'RR' and method_RR = "Score" or "Score_closed".}
-
-\item{method_RD}{Character string indicating the confidence interval method
-to be used for contrast = "RD".
-"Score" = iterative Tango asymptotic score (default),
-"Score_closed" = closed form solution for Tango interval,
-"MOVER" = hybrid MOVER method for paired RD (as per "method 8" in
-Newcombe, but with a choice of input methods - see moverbase),
-"MOVER_newc" = hybrid MOVER method with correction to correlation
-estimate (Newcombe's "method 10"),
-"TDAS" = t-distribution asymptotic score (experimental method, seems to
-struggle with low numbers).
-"BP" = Wald with Bonett-Price adjustment}
-
-\item{method_RR}{Character string indicating the confidence interval method
-to be used for contrast = "RR".
-"Score" = iterative Tang asymptotic score (default),
-"Score_closed" = closed form solution for Tang interval,
-"MOVER" = hybrid MOVER method for paired RR,
-"MOVER_newc" = hybrid MOVER method with correction to correlation
-estimate from Newcombe's RD method,
-"TDAS" = t-distribution asymptotic score (experimental method, seems to
-struggle with low numbers).
-"BP" = Hybrid Bonett-Price method (with or without cc)}
-
-\item{method_OR}{Character string indicating the confidence interval method
-to be used for contrast = "OR" (conditional odds ratio), all of which are
-based on transformation of an interval for a single proportion b/(b+c):
-"SCASp" = transformed skewness-corrected score (default),
-"jeff" = transformed Jeffreys,
-"midp" = transformed mid-p,
-"wilson" = transformed Wilson score - included for reference only, not
-recommended.}
-
-\item{moverbase}{Character string indicating the base method used as input
-for the MOVER methods (when method_RR or method_RD = "MOVER"):
-"wilson" = Wilson score (not recommended, known to be skewed),
-"jeff" = Jeffreys equal-tailed interval,
-"midp" = mid-p,
-"SCASp" = skewness-corrected score (default)}
+Has no effect unless contrast = 'RR' and method = "Score" or "Score_closed".}
 
 \item{theta0}{Number to be used in a one-sided significance test (e.g.
 non-inferiority margin). 1-sided p-value will be < 0.025 iff 2-sided 95\\% CI
@@ -97,7 +94,7 @@ theta0 = 0.}
 \item{skew}{Logical (default TRUE) indicating whether to apply skewness
 correction or not. (Under evaluation, manuscript in progress.)
 \itemize{
-\item Only applies for the iterative method_RD or method_RR = "Score"
+\item Only applies for the iterative method = "Score"
 }}
 
 \item{bcf}{Logical (default FALSE) indicating whether to apply bias correction
@@ -138,21 +135,21 @@ correction can be customised.
 }
 \examples{
 # Data example from Agresti-Min 2005
-pairbinci(x = c(53, 16, 8, 9), contrast = "RD", method_RD = "Score")
-pairbinci(x = c(53, 16, 8, 9), contrast = "RD", method_RD = "TDAS")
-pairbinci(x = c(53, 16, 8, 9), contrast = "RR", method_RR = "Score")
-pairbinci(x = c(53, 16, 8, 9), contrast = "RR", method_RR = "TDAS")
-pairbinci(x = c(53, 16, 8, 9), contrast = "OR", method_OR = "SCASp")
+pairbinci(x = c(53, 16, 8, 9), contrast = "RD", method = "Score")
+pairbinci(x = c(53, 16, 8, 9), contrast = "RD", method = "TDAS")
+pairbinci(x = c(53, 16, 8, 9), contrast = "RR", method = "Score")
+pairbinci(x = c(53, 16, 8, 9), contrast = "RR", method = "TDAS")
+pairbinci(x = c(53, 16, 8, 9), contrast = "OR", method = "SCASp")
 # Example from Fagerland et al 2014
-pairbinci(x = c(1, 1, 7, 12), contrast = "RD", method_RD = "Score_closed")
-pairbinci(x = c(1, 1, 7, 12), contrast = "RD", method_RD = "MOVER_newc", moverbase = "wilson")
-pairbinci(x = c(1, 1, 7, 12), contrast = "RD", method_RD = "MOVER_newc", moverbase = "jeff")
-pairbinci(x = c(1, 1, 7, 12), contrast = "RR", method_RR = "Score_closed")
-pairbinci(x = c(1, 1, 7, 12), contrast = "RR", method_RR = "MOVER_newc", moverbase = "wilson")
-pairbinci(x = c(1, 1, 7, 12), contrast = "RR", method_RR = "MOVER_newc", moverbase = "jeff")
-pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method_OR = "wilson")
-pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method_OR = "midp")
-pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method_OR = "SCASp")
+pairbinci(x = c(1, 1, 7, 12), contrast = "RD", method = "Score_closed")
+pairbinci(x = c(1, 1, 7, 12), contrast = "RD", method = "MOVER_newc", moverbase = "wilson")
+pairbinci(x = c(1, 1, 7, 12), contrast = "RD", method = "MOVER_newc", moverbase = "jeff")
+pairbinci(x = c(1, 1, 7, 12), contrast = "RR", method = "Score_closed")
+pairbinci(x = c(1, 1, 7, 12), contrast = "RR", method = "MOVER_newc", moverbase = "wilson")
+pairbinci(x = c(1, 1, 7, 12), contrast = "RR", method = "MOVER_newc", moverbase = "jeff")
+pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method = "wilson")
+pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method = "midp")
+pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method = "SCASp")
 
 }
 \references{

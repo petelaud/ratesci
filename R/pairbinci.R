@@ -26,6 +26,33 @@
 #' @param contrast Character string indicating the contrast of interest:
 #'   "RD" = rate difference (default), "RR" = rate ratio, "OR" = conditional
 #'   odds ratio.
+#' @param method Character string indicating the confidence interval method
+#'   to be used. The following are available for contrast = "RD" or "RR":
+#'   "Score" = iterative Tango (for RD) / Tang (for RR) asymptotic score (default),
+#'   "Score_closed" = closed form solution for Tango/Tang interval,
+#'   "MOVER" = hybrid MOVER method for paired RD (as per "method 8" in
+#'             Newcombe, but with a choice of input methods - see moverbase),
+#'   "MOVER_newc" = hybrid MOVER method with correction to correlation
+#'                  estimate (Newcombe's "method 10"),
+#'   "TDAS" = t-distribution asymptotic score (experimental method, seems to
+#'   struggle with low numbers).
+#'   "BP" = Wald with Bonett-Price adjustment for RD, or Hybrid Bonett-Price
+#'          method for RR
+#'   For contrast = "OR", one of the following methods may be selected,
+#'   all of which are based on transformation of an interval for a single
+#'   proportion b/(b+c):
+#'   "SCASp" = transformed skewness-corrected score (default),
+#'   "jeff" = transformed Jeffreys,
+#'   "midp" = transformed mid-p,
+#'   "wilson" = transformed Wilson score - included for reference only, not
+#'   recommended.
+#' @param moverbase Character string indicating the base method used as input
+#'   for the MOVER methods for RD or RR (when method = "MOVER" or "MOVER_newc"),
+#'   and for the Hybrid BP method for RR:
+#'   "jeff" = Jeffreys equal-tailed interval (default),
+#'   "SCASp" = skewness-corrected score,
+#'   "midp" = mid-p,
+#'   "wilson" = Wilson score (not recommended, known to be skewed)
 #' @param level Number specifying confidence level (between 0 and 1, default
 #'   0.95).
 #' @param cc Number or logical (default FALSE) specifying (amount of) continuity
@@ -36,51 +63,19 @@
 #'   (Note: "constant" and "delrocco" options produce non-equivariant intervals,
 #'   and are likely to be deprecated in a future release (as well as the
 #'   cctype argument itself).
-#'   Has no effect unless contrast = 'RR' and method_RR = "Score" or "Score_closed".
+#'   Has no effect unless contrast = 'RR' and method = "Score" or "Score_closed".
 #' @param skew Logical (default TRUE) indicating whether to apply skewness
 #'   correction or not. (Under evaluation, manuscript in progress.)
-#'   - Only applies for the iterative method_RD or method_RR = "Score"
+#'   - Only applies for the iterative method = "Score"
 #' @param bcf Logical (default FALSE) indicating whether to apply bias correction
 #'   in the score denominator. (Under evaluation.)
 #' @param theta0 Number to be used in a one-sided significance test (e.g.
 #'   non-inferiority margin). 1-sided p-value will be < 0.025 iff 2-sided 95\% CI
 #'   excludes theta0. NB: can also be used for a superiority test by setting
 #'   theta0 = 0.
-#' @param method_RD Character string indicating the confidence interval method
-#'   to be used for contrast = "RD".
-#'   "Score" = iterative Tango asymptotic score (default),
-#'   "Score_closed" = closed form solution for Tango interval,
-#'   "MOVER" = hybrid MOVER method for paired RD (as per "method 8" in
-#'             Newcombe, but with a choice of input methods - see moverbase),
-#'   "MOVER_newc" = hybrid MOVER method with correction to correlation
-#'                  estimate (Newcombe's "method 10"),
-#'   "TDAS" = t-distribution asymptotic score (experimental method, seems to
-#'   struggle with low numbers).
-#'   "BP" = Wald with Bonett-Price adjustment
-#' @param method_RR Character string indicating the confidence interval method
-#'   to be used for contrast = "RR".
-#'   "Score" = iterative Tang asymptotic score (default),
-#'   "Score_closed" = closed form solution for Tang interval,
-#'   "MOVER" = hybrid MOVER method for paired RR,
-#'   "MOVER_newc" = hybrid MOVER method with correction to correlation
-#'                  estimate from Newcombe's RD method,
-#'   "TDAS" = t-distribution asymptotic score (experimental method, seems to
-#'   struggle with low numbers).
-#'   "BP" = Hybrid Bonett-Price method (with or without cc)
-#' @param method_OR Character string indicating the confidence interval method
-#'   to be used for contrast = "OR" (conditional odds ratio), all of which are
-#'   based on transformation of an interval for a single proportion b/(b+c):
-#'   "SCASp" = transformed skewness-corrected score (default),
-#'   "jeff" = transformed Jeffreys,
-#'   "midp" = transformed mid-p,
-#'   "wilson" = transformed Wilson score - included for reference only, not
-#'   recommended.
-#' @param moverbase Character string indicating the base method used as input
-#'   for the MOVER methods (when method_RR or method_RD = "MOVER"):
-#'   "wilson" = Wilson score (not recommended, known to be skewed),
-#'   "jeff" = Jeffreys equal-tailed interval,
-#'   "midp" = mid-p,
-#'   "SCASp" = skewness-corrected score (default)
+#' @param method_RD (deprecated: parameter renamed to method)
+#' @param method_RR (deprecated: parameter renamed to method)
+#' @param method_OR (deprecated: parameter renamed to method)
 #' @param precis Number (default 6) specifying precision (i.e. number of decimal
 #'   places) to be used in optimisation subroutine for the confidence interval.
 #' @param warn Logical (default TRUE) giving the option to suppress warnings.
@@ -96,21 +91,21 @@
 #'   as specified}}
 #' @examples
 #' # Data example from Agresti-Min 2005
-#' pairbinci(x = c(53, 16, 8, 9), contrast = "RD", method_RD = "Score")
-#' pairbinci(x = c(53, 16, 8, 9), contrast = "RD", method_RD = "TDAS")
-#' pairbinci(x = c(53, 16, 8, 9), contrast = "RR", method_RR = "Score")
-#' pairbinci(x = c(53, 16, 8, 9), contrast = "RR", method_RR = "TDAS")
-#' pairbinci(x = c(53, 16, 8, 9), contrast = "OR", method_OR = "SCASp")
+#' pairbinci(x = c(53, 16, 8, 9), contrast = "RD", method = "Score")
+#' pairbinci(x = c(53, 16, 8, 9), contrast = "RD", method = "TDAS")
+#' pairbinci(x = c(53, 16, 8, 9), contrast = "RR", method = "Score")
+#' pairbinci(x = c(53, 16, 8, 9), contrast = "RR", method = "TDAS")
+#' pairbinci(x = c(53, 16, 8, 9), contrast = "OR", method = "SCASp")
 #' # Example from Fagerland et al 2014
-#' pairbinci(x = c(1, 1, 7, 12), contrast = "RD", method_RD = "Score_closed")
-#' pairbinci(x = c(1, 1, 7, 12), contrast = "RD", method_RD = "MOVER_newc", moverbase = "wilson")
-#' pairbinci(x = c(1, 1, 7, 12), contrast = "RD", method_RD = "MOVER_newc", moverbase = "jeff")
-#' pairbinci(x = c(1, 1, 7, 12), contrast = "RR", method_RR = "Score_closed")
-#' pairbinci(x = c(1, 1, 7, 12), contrast = "RR", method_RR = "MOVER_newc", moverbase = "wilson")
-#' pairbinci(x = c(1, 1, 7, 12), contrast = "RR", method_RR = "MOVER_newc", moverbase = "jeff")
-#' pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method_OR = "wilson")
-#' pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method_OR = "midp")
-#' pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method_OR = "SCASp")
+#' pairbinci(x = c(1, 1, 7, 12), contrast = "RD", method = "Score_closed")
+#' pairbinci(x = c(1, 1, 7, 12), contrast = "RD", method = "MOVER_newc", moverbase = "wilson")
+#' pairbinci(x = c(1, 1, 7, 12), contrast = "RD", method = "MOVER_newc", moverbase = "jeff")
+#' pairbinci(x = c(1, 1, 7, 12), contrast = "RR", method = "Score_closed")
+#' pairbinci(x = c(1, 1, 7, 12), contrast = "RR", method = "MOVER_newc", moverbase = "wilson")
+#' pairbinci(x = c(1, 1, 7, 12), contrast = "RR", method = "MOVER_newc", moverbase = "jeff")
+#' pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method = "wilson")
+#' pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method = "midp")
+#' pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method = "SCASp")
 #'
 #' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
 #' @references
@@ -173,59 +168,72 @@
 #' @export
 pairbinci <- function(x,
                       contrast = "RD",
+                      method = "Score",
+                      moverbase = "jeff",
+                      method_RD = NULL,
+                      method_RR = NULL,
+                      method_OR = NULL,
                       level = 0.95,
                       cc = FALSE,
                       cctype = "new",
-                      method_RD = "Score",
-                      method_RR = "Score",
-                      method_OR = "SCASp",
-                      moverbase = "jeff",
                       theta0 = NULL,
                       skew = TRUE,
                       bcf = TRUE,
                       precis = 6,
                       warn = TRUE,
                       ...) {
+  if (!is.null(method_RD)) {
+    warning(
+      "argument method_RD is deprecated; please use method instead.",
+      call. = FALSE
+    )
+    method <- method_RD
+  }
+  if (!is.null(method_RR)) {
+    warning(
+      "argument method_RR is deprecated; please use method instead.",
+      call. = FALSE
+    )
+    method <- method_RR
+  }
+  if (!is.null(method_OR)) {
+    warning(
+      "argument method_OR is deprecated; please use method instead.",
+      call. = FALSE
+    )
+    method <- method_OR
+  }
   if (!(tolower(substr(contrast, 1, 2)) %in% c("rd", "rr", "or"))) {
     print("Contrast must be one of 'RD', 'RR' or 'OR'")
     stop()
   }
-  if (!(tolower(substr(method_RD, 1, 4)) %in%
-    c("tdas", "scor", "move", "bp"))) {
-    print("Method_RD must be one of 'Score_closed', 'Score', 'BP', 'TDAS', 'MOVER' or 'MOVER_newc'")
-    stop()
-  }
-  if (!(tolower(substr(method_RR, 1, 4)) %in%
-    c("tdas", "scor", "move", "bp"))) {
-    print("Method_RR must be one of 'Score_closed', 'Score', 'BP', 'TDAS', 'MOVER' or 'MOVER_newc'")
-    stop()
-  }
-if (FALSE) {
-  if (skew == TRUE &&
-    (tolower(substr(method_RR, 1, 12)) == c("score_closed"))) {
-    method_RR <- "Score"
-    if (warn == TRUE) {
-      print(paste("Closed-form calculation not available with skewness correction -
-         method_RR is set to 'Score' instead"))
+  if (contrast %in% c("RD", "RR")) {
+    if (!(tolower(substr(method, 1, 4)) %in%
+          c("tdas", "scor", "move", "bp"))) {
+      print("Method must be one of 'Score_closed', 'Score', 'BP', 'TDAS',
+          'MOVER' or 'MOVER_newc' for contrast = 'RD' or 'RR'")
+      stop()
+    }
+    # if (FALSE) {
+    if (skew == TRUE &&
+        (tolower(substr(method, 1, 12)) == "score_closed")) {
+      method <- "Score"
+      if (warn == TRUE) {
+        print(paste("Closed-form calculation not available with skewness correction -
+         method is set to 'Score' instead"))
+      }
+    }
+    # }
+    if (!(tolower(substr(moverbase, 1, 4)) %in%
+          c("scas", "wils", "midp", "jeff"))) {
+      print("moverbase must be one of 'SCASp', 'wilson', 'midp' or 'jeff'")
+      stop()
     }
   }
-  if (skew == TRUE &&
-      (tolower(substr(method_RD, 1, 12)) %in% c("score_closed"))) {
-    method_RD <- "Score"
-    if (warn == TRUE) {
-      print(paste("Closed-form calculation not available with skewness correction -
-         method_RD is set to 'Score' instead"))
-    }
-  }
-}
-  if (!(tolower(substr(method_OR, 1, 4)) %in%
+  if (contrast == "OR" && !(tolower(substr(method, 1, 4)) %in%
     c("scas", "wils", "midp", "jeff"))) {
-    print("Method_OR must be one of 'SCASp', 'wilson', 'midp' or 'jeff'")
-    stop()
-  }
-  if (!(tolower(substr(moverbase, 1, 4)) %in%
-    c("scas", "wils", "midp", "jeff"))) {
-    print("moverbase must be one of 'SCASp', 'wilson', 'midp' or 'jeff'")
+    print("Method must be one of 'SCASp', 'wilson', 'midp' or 'jeff' for
+          contrast = 'OR'")
     stop()
   }
   if (!is.numeric(c(x))) {
@@ -266,7 +274,7 @@ if (FALSE) {
     # This gives a p-value matching that for other bias-corrected methods
     b <- x[2]
     c <- x[3]
-    if (method_OR == "SCASp") {
+    if (method == "SCASp") {
       trans_th0 <- NULL
       if (is.null(theta0)) theta0 <- 1
       trans_th0 <- theta0 / (1 + theta0)
@@ -304,22 +312,21 @@ if (FALSE) {
         scorenull, pval_left, pval_right
       )
       outlist <- list(xi, estimates = estimates, pval = pval)
-    } else if (method_OR == "midp") {
+    } else if (method == "midp") {
       trans_ci <- exactci(x = b, n = b + c, midp = 0.5 - cc, level = level)
       estimates <- (trans_ci / (1 - trans_ci))
       outlist <- list(xi, estimates = estimates)
-    } else if (method_OR == "wilson") {
+    } else if (method == "wilson") {
       trans_ci <- wilsonci(x = b, n = b + c, cc = cc, level = level)
       estimates <- (trans_ci / (1 - trans_ci))
       outlist <- list(xi, estimates = estimates)
-    } else if (method_OR == "jeff") {
+    } else if (method == "jeff") {
       trans_ci <- jeffreysci(x = b, n = b + c, cc = cc, level = level)
       estimates <- (trans_ci / (1 - trans_ci))
       outlist <- list(xi, estimates = estimates)
     }
   } else if (contrast != "OR") {
-    if ((contrast == "RD" && method_RD == "TDAS") ||
-      (contrast == "RR" && method_RR == "TDAS")) {
+    if (method == "TDAS") {
       # stratified TDAS method for paired data as suggested in Laud 2017
       n1i <- n2i <- rep(1, sum(x))
       if (doublezero && contrast == "RR") {
@@ -350,8 +357,7 @@ if (FALSE) {
       }
     }
     # Iterative Score methods by Tango (for RD) & Tang (for RR):
-    if ((contrast == "RD" && method_RD == "Score") ||
-      (contrast == "RR" && method_RR == "Score")) {
+    if (method == "Score") {
       myfun <- function(theta) {
         scorepair(
           theta = theta, x = x, contrast = contrast, cc = cc,
@@ -392,58 +398,41 @@ if (FALSE) {
       )
       # Closed-form versions of Score methods by Chang (for RD Tango method)
       #  & DelRocco (for RR Tang method):
-    } else if (contrast == "RD" && method_RD == "Score_closed") {
+    } else if (contrast == "RD" && method == "Score_closed") {
       estimates <- tangoci(x = x, level = level, cc = cc, bcf = bcf)
-    } else if (contrast == "RR" && method_RR == "Score_closed") {
+    } else if (contrast == "RR" && method == "Score_closed") {
       estimates <- tangci(x = x, level = level, cc = cc,
                               cctype = cctype, bcf = bcf)
     }
     # MOVER methods for RD and RR
-    if ((contrast == "RD" && method_RD == "MOVER")) {
+    if (method == "MOVER") {
       estimates <- moverpair(
-        x = x, contrast = "RD", level = level,
+        x = x, contrast = contrast, level = level,
         method = moverbase, cc = cc, corc = FALSE
       )
       outlist <- list(data = xi, estimates = estimates)
     }
-    if ((contrast == "RD" && method_RD == "MOVER_newc")) {
+    if (method == "MOVER_newc") {
       estimates <- moverpair(
-        x = x, contrast = "RD", level = level,
+        x = x, contrast = contrast, level = level,
         method = moverbase, cc = cc, corc = TRUE
       )
       outlist <- list(data = xi, estimates = estimates)
     }
-    if ((contrast == "RR" && method_RR == "MOVER")) {
-      estimates <- moverpair(
-        x = x, contrast = "RR", level = level,
-        method = moverbase, cc = cc, corc = FALSE
-      )
-      outlist <- list(data = xi, estimates = estimates)
-    }
-    if (contrast == "RR" && method_RR == "MOVER_newc") {
-      estimates <- moverpair(
-        x = x, contrast = "RR", level = level,
-        method = moverbase, cc = cc, corc = TRUE
-      )
-      outlist <- list(data = xi, estimates = estimates)
-    }
-    if (contrast == "RR" && tolower(method_RR) == "bp") {
+    if (contrast == "RR" && tolower(method) == "bp") {
       estimates <- bpci(
         x = x, contrast = contrast, level = level, cc = cc, method = moverbase
       )
       outlist <- list(data = xi, estimates = estimates)
     }
-    if (contrast == "RD" && tolower(method_RD) == "bp") {
+    if (contrast == "RD" && tolower(method) == "bp") {
       estimates <- bpci(
         x = x, contrast = contrast, level = level
       )
       outlist <- list(data = xi, estimates = estimates)
     }
 
-    if ((contrast == "RD" && method_RD == "Score") ||
-      (contrast == "RR" && method_RR == "Score") ||
-      (contrast == "RD" && method_RD == "Score_closed") ||
-      (contrast == "RR" && method_RR == "Score_closed")) {
+    if ((method == "Score") || (method == "Score_closed")) {
       # optionally add p-value for a test of null hypothesis: theta<=theta0
       # default value of theta0 depends on contrast
       if (contrast == "RD") {
@@ -687,7 +676,7 @@ tangoci <- function(x,
     } else if (cc > 0 & b == c & b == N / 2) {
       # Rare special case fails to find solution to the quartic
       # and we have to resort to iterative method
-      root <- pairbinci(x = x, contrast = "RD", method_RD = "Score", level = level, cc = cc, bcf = bcf, skew = FALSE)$estimates[c(1, 3)]
+      root <- pairbinci(x = x, contrast = "RD", method = "Score", level = level, cc = cc, bcf = bcf, skew = FALSE)$estimates[c(1, 3)]
       # Alternative method using polynomial()
       #    lowertheta <- solve(polynom::polynomial(c(u4, u3, u2, u1, 1)))
       #    root1 <- min(as.numeric(ifelse(Im(lowertheta) == 0, Re(lowertheta), NA)), na.rm = TRUE)
