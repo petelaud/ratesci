@@ -116,6 +116,7 @@ the specified confidence level}
 against the null hypothesis that p_1 = p_2 (McNemar's test), and one-sided
 significance tests against the null hypothesis that theta >= or <= theta0
 as specified}}
+\item{call}{details of the function call}
 }
 \description{
 Confidence intervals for the rate (or risk) difference ('RD'),

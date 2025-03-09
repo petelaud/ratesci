@@ -89,6 +89,7 @@
 #'   against the null hypothesis that p_1 = p_2 (McNemar's test), and one-sided
 #'   significance tests against the null hypothesis that theta >= or <= theta0
 #'   as specified}}
+#'   \item{call}{details of the function call}
 #' @examples
 #' # Data example from Agresti-Min 2005
 #' pairbinci(x = c(53, 16, 8, 9), contrast = "RD", method = "Score")
@@ -464,6 +465,14 @@ pairbinci <- function(x,
       outlist <- list(data = xi, estimates = estimates, pval = pval)
     }
   }
+  outlist <- list(data = xi, estimates = round(estimates, precis))
+  if (!(method %in% c("MOVER", "MOVER_newc", "midp", "wilson", "jeff"))) {
+    outlist <- append(outlist, list(pval = pval))
+  }
+  outlist <- append(outlist, list(call = c(
+    contrast = contrast, method = method, moverbase = moverbase,
+    level = level, bcf = bcf, skew = skew, cc = cc, cctype = cctype
+  )))
   return(outlist)
 }
 

@@ -15,6 +15,7 @@
 * MOVER calculations now use x/N as point estimate instead of median from the
   Beta distribution.
 * Output object now includes estimates of p1, p2 and phi.
+* Output object now includes function call.
 
 ### In `scoreci()`:
 * `bcf` option now implemented for contrast = "p".
