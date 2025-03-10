@@ -142,61 +142,74 @@ test_that("Transposed inputs produce inverted paired intervals", {
   expect_equal(
     t(unname(round(sapply(
       1:dim(combos)[1],
-      function(i) pairbinci(x = combos[i, ], contrast = "RD")$estimates[, c(1, 3)]
+      function(i) pairbinci(x = combos[i, ],
+                            contrast = "RD")$estimates[, c(1, 3)]
     ), 5))),
     t(unname(round(-sapply(
       1:dim(combos)[1],
-      function(i) pairbinci(x = combos[i, c(1, 3, 2, 4)], contrast = "RD")$estimates[, c(3, 1)]
+      function(i) pairbinci(x = combos[i, c(1, 3, 2, 4)],
+                            contrast = "RD")$estimates[, c(3, 1)]
     ), 5)))
   )
   expect_equal(
     t(unname(round(sapply(
       1:dim(combos)[1],
-      function(i) pairbinci(x = combos[i, ], contrast = "RD", cc=T)$estimates[, c(1, 3)]
+      function(i) pairbinci(x = combos[i, ],
+                            contrast = "RD", cc = T)$estimates[, c(1, 3)]
     ), 5))),
     t(unname(round(-sapply(
       1:dim(combos)[1],
-      function(i) pairbinci(x = combos[i, c(1, 3, 2, 4)], contrast = "RD", cc=T)$estimates[, c(3, 1)]
+      function(i) pairbinci(x = combos[i, c(1, 3, 2, 4)],
+                            contrast = "RD", cc = T)$estimates[, c(3, 1)]
     ), 5)))
   )
   expect_equal(
     t(unname(round(sapply(
       1:dim(combos)[1],
-      function(i) pairbinci(x = combos[i, ], contrast = "RD", method="Score", skew=T)$estimates[, c(1, 3)]
+      function(i) pairbinci(x = combos[i, ], contrast = "RD",
+                            method = "Score", skew = T)$estimates[, c(1, 3)]
     ), 5))),
     t(unname(round(-sapply(
       1:dim(combos)[1],
-      function(i) pairbinci(x = combos[i, c(1, 3, 2, 4)], contrast = "RD", method="Score", skew=T)$estimates[, c(3, 1)]
+      function(i) pairbinci(x = combos[i, c(1, 3, 2, 4)], contrast = "RD",
+                            method = "Score", skew = T)$estimates[, c(3, 1)]
     ), 5)))
   )
   expect_equal(
     t(unname(round(1 / round(1 / sapply(
       1:dim(combos)[1],
-      function(i) pairbinci(x = combos[i, ], contrast = "RR", precis = 8)$estimates[, c(1, 3)]
+      function(i) pairbinci(x = combos[i, ], contrast = "RR",
+                            precis = 8)$estimates[, c(1, 3)]
     ), 5), 5))),
     t(unname(round(1 / round(sapply(
       1:dim(combos)[1],
-      function(i) pairbinci(x = combos[i, c(1, 3, 2, 4)], contrast = "RR", precis = 8)$estimates[, c(3, 1)]
+      function(i) pairbinci(x = combos[i, c(1, 3, 2, 4)], contrast = "RR",
+                            precis = 8)$estimates[, c(3, 1)]
     ), 5), 5)))
   )
   expect_equal(
     t(unname(round(1 / round(1 / sapply(
       1:dim(combos)[1],
-      function(i) pairbinci(x = combos[i, ], contrast = "RR", cc=T, precis = 8)$estimates[, c(1, 3)]
+      function(i) pairbinci(x = combos[i, ], contrast = "RR", cc = T,
+                            precis = 8)$estimates[, c(1, 3)]
     ), 5), 5))),
     t(unname(round(1 / round(sapply(
       1:dim(combos)[1],
-      function(i) pairbinci(x = combos[i, c(1, 3, 2, 4)], contrast = "RR", cc=T, precis = 8)$estimates[, c(3, 1)]
+      function(i) pairbinci(x = combos[i, c(1, 3, 2, 4)], contrast = "RR",
+                            cc = T, precis = 8)$estimates[, c(3, 1)]
     ), 5), 5)))
   )
   expect_equal(
     t(unname(round(1 / round(1 / sapply(
       1:dim(combos)[1],
-      function(i) pairbinci(x = combos[i, ], contrast = "RR", method="Score", skew=T, precis = 8)$estimates[, c(1, 3)]
+      function(i) pairbinci(x = combos[i, ], contrast = "RR", method = "Score",
+                            skew = T, precis = 8)$estimates[, c(1, 3)]
     ), 5), 5))),
     t(unname(round(1 / round(sapply(
       1:dim(combos)[1],
-      function(i) pairbinci(x = combos[i, c(1, 3, 2, 4)], contrast = "RR", method="Score", skew=T, precis = 8)$estimates[, c(3, 1)]
+      function(i) pairbinci(x = combos[i, c(1, 3, 2, 4)],
+                            contrast = "RR", method = "Score", skew = T,
+                            precis = 8)$estimates[, c(3, 1)]
     ), 5), 5)))
   )
 })
@@ -207,7 +220,8 @@ test_that("Closed form methods match iterative results for paired intervals", {
       round(sapply(
         1:dim(combos)[1],
         function(i) {
-          pairbinci(x = combos[i, ], contrast = "RD", method = "Score", skew = FALSE, precis = 8)$estimates[, c(1, 3)]
+          pairbinci(x = combos[i, ], contrast = "RD", method = "Score",
+                    skew = FALSE, precis = 8)$estimates[, c(1, 3)]
         }
       ), 5)
     )),
@@ -215,7 +229,8 @@ test_that("Closed form methods match iterative results for paired intervals", {
       round(sapply(
         1:dim(combos)[1],
         function(i) {
-          pairbinci(x = combos[i, ], contrast = "RD", method = "Score_closed", skew = FALSE, precis = 8)$estimates[, c(1, 3)]
+          pairbinci(x = combos[i, ], contrast = "RD", method = "Score_closed",
+                    skew = FALSE, precis = 8)$estimates[, c(1, 3)]
         }
       ), 5)
     ))
@@ -226,7 +241,9 @@ test_that("Closed form methods match iterative results for paired intervals", {
       round(sapply(
         1:dim(combos)[1],
         function(i) {
-          pairbinci(x = combos[i, ], contrast = "RD", method = "Score", skew = FALSE, bcf = FALSE, cc = TRUE, precis = 8)$estimates[, c(1, 3)]
+          pairbinci(x = combos[i, ], contrast = "RD", method = "Score",
+                    skew = FALSE, bcf = FALSE, cc = TRUE,
+                    precis = 8)$estimates[, c(1, 3)]
         }
       ), 5)
     )),
@@ -234,7 +251,9 @@ test_that("Closed form methods match iterative results for paired intervals", {
       round(sapply(
         1:dim(combos)[1],
         function(i) {
-          pairbinci(x = combos[i, ], contrast = "RD", method = "Score_closed", skew = FALSE, bcf = FALSE, cc = TRUE, precis = 8)$estimates[, c(1, 3)]
+          pairbinci(x = combos[i, ], contrast = "RD", method = "Score_closed",
+                    skew = FALSE, bcf = FALSE, cc = TRUE,
+                    precis = 8)$estimates[, c(1, 3)]
         }
       ), 5)
     ))
@@ -245,7 +264,8 @@ test_that("Closed form methods match iterative results for paired intervals", {
       round(sapply(
         1:dim(combos)[1],
         function(i) {
-          pairbinci(x = combos[i, ], contrast = "RR", method = "Score", skew = FALSE, precis = 8)$estimates[, c(1, 3)]
+          pairbinci(x = combos[i, ], contrast = "RR", method = "Score",
+                    skew = FALSE, precis = 8)$estimates[, c(1, 3)]
         }
       ), 3)
     )),
@@ -253,7 +273,8 @@ test_that("Closed form methods match iterative results for paired intervals", {
       round(sapply(
         1:dim(combos)[1],
         function(i) {
-          pairbinci(x = combos[i, ], contrast = "RR", method = "Score_closed", skew = FALSE, precis = 8)$estimates[, c(1, 3)]
+          pairbinci(x = combos[i, ], contrast = "RR", method = "Score_closed",
+                    skew = FALSE, precis = 8)$estimates[, c(1, 3)]
         }
       ), 3)
     ))
@@ -265,7 +286,8 @@ test_that("Closed form methods match iterative results for paired intervals", {
       round(sapply(
         1:dim(combos)[1],
         function(i) {
-          pairbinci(x = combos[i, ], contrast = "RR", method = "Score", skew = FALSE, cc = 0.5, precis = 8)$estimates[, c(1, 3)]
+          pairbinci(x = combos[i, ], contrast = "RR", method = "Score",
+                    skew = FALSE, cc = 0.5, precis = 8)$estimates[, c(1, 3)]
         }
       ), 2)
     )),
@@ -273,10 +295,11 @@ test_that("Closed form methods match iterative results for paired intervals", {
       round(sapply(
         1:dim(combos)[1],
         function(i) {
-          #          for (i in 1:dim(combos)[1]) {
-          pairbinci(x = combos[i, ], contrast = "RR", method = "Score_closed", skew = FALSE, cc = 0.5)$estimates[, c(1, 3)]
+#          for (i in 1:dim(combos)[1]) {
+          pairbinci(x = combos[i, ], contrast = "RR", method = "Score_closed",
+                    skew = FALSE, cc = 0.5)$estimates[, c(1, 3)]
         }
-        #          }
+#          }
       ), 2)
     ))
   )
