@@ -1101,14 +1101,16 @@ scoreci <- function(x1,
       )
     )
   }
+  # Set unused arguments to null to omit them from call
   if (simpleskew == FALSE) simpleskew <- NULL
   if (contrast != "RR") RRtang <- NULL
   if (stratified == FALSE) random <- NULL
-  outlist <- append(outlist, list(call = c(
-    distrib = distrib, contrast = contrast, level = level, bcf = bcf, skew = skew,
-    simpleskew = simpleskew, ORbias = ORbias, RRtang = RRtang,
+  call <- c(
+    distrib = distrib, contrast = contrast, level = level, bcf = bcf,
+    skew = skew, simpleskew = simpleskew, ORbias = ORbias, RRtang = RRtang,
     cc = cc, random = random
-  )))
+  )
+  outlist <- append(outlist, list(call = call))
   return(outlist)
 }
 

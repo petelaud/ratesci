@@ -474,10 +474,14 @@ pairbinci <- function(x,
   if (!(method %in% c("MOVER", "MOVER_newc", "midp", "wilson", "jeff"))) {
     outlist <- append(outlist, list(pval = pval))
   }
-  outlist <- append(outlist, list(call = c(
+  # Set unused arguments to null to omit them from call
+  if (!(method %in% c("MOVER", "MOVER_newc"))) moverbase <- NULL
+  if (cc == FALSE) cctype <- NULL
+  call <- c(
     contrast = contrast, method = method, moverbase = moverbase,
     level = level, bcf = bcf, skew = skew, cc = cc, cctype = cctype
-  )))
+  )
+  outlist <- append(outlist, list(call = call))
   return(outlist)
 }
 

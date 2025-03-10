@@ -32,7 +32,6 @@ For those wishing to achieve strictly conservative coverage, so-called 'continui
 
 An online calculator based on this package is available [here](https://ssu.shef.ac.uk/ratesci/calc.php)
 
-
 ## Installation
 
 The current official (i.e. [CRAN](https://CRAN.R-project.org/package=ratesci)) release can be installed within R with:

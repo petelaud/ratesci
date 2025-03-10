@@ -131,8 +131,8 @@ pairbinci(x = c(1, 1, 7, 12), precis = 4)
 #> [1,] 4.285714 0.03843393      0 -2.070197 0.01921697   0.980783
 #> 
 #> $call
-#>  contrast    method moverbase     level       bcf      skew        cc    cctype 
-#>      "RD"   "Score"    "jeff"    "0.95"    "TRUE"    "TRUE"   "FALSE"     "new"
+#> contrast   method    level      bcf     skew       cc 
+#>     "RD"  "Score"   "0.95"   "TRUE"   "TRUE"  "FALSE"
 ```
 
 #### Overview
