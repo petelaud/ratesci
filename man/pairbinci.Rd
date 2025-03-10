@@ -28,8 +28,8 @@ pairbinci(
 where:
 a is the number of pairs with the event (e.g. success) under both
 conditions (e.g. treated/untreated, or case/control)
-b is the count of the number with the event on condition 1 only (= n12)
-c is the count of the number with the event on condition 2 only (= n21)
+b is the count of the number with the event on condition 1 only (= x12)
+c is the count of the number with the event on condition 2 only (= x21)
 d is the number of pairs with no event under both conditions
 (Note the order of a and d is only important for contrast="RR".)}
 

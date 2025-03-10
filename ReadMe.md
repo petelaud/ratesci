@@ -121,7 +121,7 @@ pairbinci(x = c(1, 1, 7, 12), precis = 4)
 #>   1  1  1
 #> 
 #> $estimates
-#>        Lower     MLE   Upper level  p1hat p2hat    p1d    p2d phi_hat phi_c
+#>        Lower     MLE   Upper level  p1hat p2hat  p1mle  p2mle phi_hat phi_c
 #> [1,] -0.5281 -0.2859 -0.0184  0.95 0.0952 0.381 0.0952 0.3811  0.0795     0
 #>      psi_hat
 #> [1,]  1.7143
@@ -148,9 +148,9 @@ For comparisons of rates (contrasts RD, RR and OR):
   incorporating random effects.
 - `moverci()`: for the MOVER methods, including Newcombe and MOVER-J.
 - `moverbci()`: wrapper function to compute MOVER-B intervals.
-- `pairbinci()`: for paired binomial data, including asymptotic score
-  and MOVER methods for RD and RR, and transformed binomial intervals
-  for conditional OR.
+- `pairbinci()`: for paired binomial data, including SCAS, asymptotic
+  score and MOVER methods for RD and RR, and transformed binomial
+  intervals for conditional OR.
 
 For single binomial or Poisson rates:
 
