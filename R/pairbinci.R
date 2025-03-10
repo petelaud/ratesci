@@ -20,8 +20,8 @@
 #'   where:
 #'   a is the number of pairs with the event (e.g. success) under both
 #'     conditions (e.g. treated/untreated, or case/control)
-#'   b is the count of the number with the event on condition 1 only (= n12)
-#'   c is the count of the number with the event on condition 2 only (= n21)
+#'   b is the count of the number with the event on condition 1 only (= x12)
+#'   c is the count of the number with the event on condition 2 only (= x21)
 #'   d is the number of pairs with no event under both conditions
 #'   (Note the order of a and d is only important for contrast="RR".)
 #' @param contrast Character string indicating the contrast of interest:
@@ -285,35 +285,26 @@ pairbinci <- function(x,
     # Transformed SCAS method with bias correction factor based on
     # N/(N-1) i.e. full sample size, not the number of discordant pairs
     # This gives a p-value matching that for other bias-corrected methods
-    b <- x[2]
-    c <- x[3]
+    x12 <- x[2]
+    x21 <- x[3]
     if (method == "SCASp") {
       trans_th0 <- NULL
       if (is.null(theta0)) theta0 <- 1
       trans_th0 <- theta0 / (1 + theta0)
-#      if (bcf == FALSE) {
         OR_ci <- scaspci(
-          x = b, n = b + c, distrib = "bin",
+          x = x12, n = x12 + x21, distrib = "bin",
           level = level, cc = cc, bcf = bcf, bign = N
         )
-#      } else {
-        # the trick here is to use the n2 argument, which is usually redundant
-        # for contrast = "p".
-#        OR_ci <- scoreci(
-#          x1 = b, n1 = b + c, n2 = x[1] + x[4], contrast = "p", distrib = "bin",
-#          level = level, cc = cc, bcf = bcf, skew = TRUE
-#        )$estimates[, 1:3, drop = FALSE]
-#      }
       estimates <- OR_ci / (1 - OR_ci)
       scorezero <- scoretheta(
-        theta = 0.5, x1 = b, n1 = b + c, n2 = x[1] + x[4],
+        theta = 0.5, x1 = x12, n1 = x12 + x21, n2 = x[1] + x[4],
         contrast = "p", distrib = "bin", bcf = bcf,
         skew = TRUE, cc = cc, level = level
       )
       chisq_zero <- scorezero$score^2
       pval2sided <- pchisq(chisq_zero, 1, lower.tail = FALSE)
       scoreth0 <- scoretheta(
-        theta = trans_th0, x1 = b, n1 = b + c, n2 = x[1] + x[4],
+        theta = trans_th0, x1 = x12, n1 = x12 + x21, n2 = x[1] + x[4],
         contrast = "p", distrib = "bin", bcf = bcf,
         skew = TRUE, cc = cc, level = level
       )
@@ -326,15 +317,15 @@ pairbinci <- function(x,
       )
       outlist <- list(xi, estimates = estimates, pval = pval)
     } else if (method == "midp") {
-      trans_ci <- exactci(x = b, n = b + c, midp = 0.5 - cc, level = level)
+      trans_ci <- exactci(x = x12, n = x12 + x21, midp = 0.5 - cc, level = level)
       estimates <- (trans_ci / (1 - trans_ci))
       outlist <- list(xi, estimates = estimates)
     } else if (method == "wilson") {
-      trans_ci <- wilsonci(x = b, n = b + c, cc = cc, level = level)
+      trans_ci <- wilsonci(x = x12, n = x12 + x21, cc = cc, level = level)
       estimates <- (trans_ci / (1 - trans_ci))
       outlist <- list(xi, estimates = estimates)
     } else if (method == "jeff") {
-      trans_ci <- jeffreysci(x = b, n = b + c, cc = cc, level = level)
+      trans_ci <- jeffreysci(x = x12, n = x12 + x21, cc = cc, level = level)
       estimates <- (trans_ci / (1 - trans_ci))
       outlist <- list(xi, estimates = estimates)
     }
@@ -408,7 +399,7 @@ pairbinci <- function(x,
       estimates <- cbind(
         Lower = lower, MLE = MLE, Upper = upper,
         level = level, p1hat = p1hat, p2hat = p2hat,
-        p1d = at_MLE$p1d, p2d = at_MLE$p2d,
+        p1mle = at_MLE$p1d, p2mle = at_MLE$p2d,
         phi_hat = phi_hat, phi_c = phi_c, psi_hat = psi_hat
       )
       # Closed-form versions of Score methods by Chang (for RD Tango method)
@@ -614,7 +605,6 @@ scorepair <- function(theta,
     score = score, p1d = p1d, p2d = p2d,
     mu3 = mu3, pval = pval
   )
-#  outlist <- list(score = score, pval = pval)
   return(outlist)
 }
 
@@ -660,10 +650,8 @@ tangoci <- function(x,
     "FALSE" = 1
   )
 
-#  x12 <- x[2]
-#  x21 <- x[3]
-  b <- x[2]
-  c <- x[3]
+  x12 <- x[2]
+  x21 <- x[3]
   alpha <- 1 - level
   g <- qnorm(1 - alpha / 2)^2 * lambda
 
@@ -672,13 +660,13 @@ tangoci <- function(x,
   for (uplow in c(-1, 1)) {
     corr <- 2 * cc * uplow
     G <- N^2 + g * N
-    H <- 0.5 * g * (2 * N - b + c) - 2 * N * (b - c + corr) - g * N
-    I <- (b - c + corr)^2 - 0.5 * g * (b + c)
+    H <- 0.5 * g * (2 * N - x12 + x21) - 2 * N * (x12 - x21 + corr) - g * N
+    I <- (x12 - x21 + corr)^2 - 0.5 * g * (x12 + x21)
     m0 <- G^2
     m1 <- 2 * G * H
-    m2 <- H^2 + 2 * G * I - 0.25 * g^2 * ((2 * N - b + c)^2 - 8 * N * c)
-    m3 <- 2 * H * I - 0.25 * g^2 * (8 * N * c - 2 * (b + c) * (2 * N - b + c))
-    m4 <- I^2 - 0.25 * g^2 * (b + c)^2
+    m2 <- H^2 + 2 * G * I - 0.25 * g^2 * ((2 * N - x12 + x21)^2 - 8 * N * x21)
+    m3 <- 2 * H * I - 0.25 * g^2 * (8 * N * x21 - 2 * (x12 + x21) * (2 * N - x12 + x21))
+    m4 <- I^2 - 0.25 * g^2 * (x12 + x21)^2
 
     u1 <- m1 / m0
     u2 <- m2 / m0
@@ -686,17 +674,17 @@ tangoci <- function(x,
     u4 <- m4 / m0
 
     if (u1 == 0 & u3 == 0) {
-      # Special case with b=c=N/2 reduces to a quadratic equation
+      # Special case with x12 = x21 = N/2 reduces to a quadratic equation
       #    x^4 + u2 x^2 + u4 = 0 reduces to
       #    x^2 = sqrt((-u2 + sqrt(u2^2 - 4*u4))/2)
       keep2 = sqrt((-u2 + sqrt(u2^2 - 4*u4))/2)
       keep1 = -keep2
-    } else if (b == c & cc == 0) {
-      u2 <- -(((b + c) / g + 1) / (N / g + 1)^2)
+    } else if (x12 == x21 & cc == 0) {
+      u2 <- -(((x12 + x21) / g + 1) / (N / g + 1)^2)
       root1 <- -sqrt(-u2)
       root2 <- sqrt(-u2)
       root <- c(root1, root2)
-    } else if (cc > 0 & b == c & b == N / 2) {
+    } else if (cc > 0 & x12 == x21 & x12 == N / 2) {
       # Rare special case fails to find solution to the quartic
       # and we have to resort to iterative method
       root <- pairbinci(x = x, contrast = "RD", method = "Score", level = level, cc = cc, bcf = bcf, skew = FALSE)$estimates[c(1, 3)]
@@ -704,7 +692,7 @@ tangoci <- function(x,
       #    lowertheta <- solve(polynom::polynomial(c(u4, u3, u2, u1, 1)))
       #    root1 <- min(as.numeric(ifelse(Im(lowertheta) == 0, Re(lowertheta), NA)), na.rm = TRUE)
       #    root2 <- max(as.numeric(ifelse(Im(lowertheta) == 0, Re(lowertheta), NA)), na.rm = TRUE)
-    } else if (b != c | (cc > 0 & !(b == c & b == N / 2))) {
+    } else if (x12 != x21 | (cc > 0 & !(x12 == x21 & x12 == N / 2))) {
       nu1 <- -u2
       nu2 <- u1 * u3 - 4 * u4
       nu3 <- -(u3^2 + u1^2 * u4 - 4 * u2 * u4)
@@ -767,15 +755,15 @@ tangoci <- function(x,
       lower <- max(-1, min(root1, root2, root3, root4, na.rm = TRUE))
       upper <- min(max(root1, root2, root3, root4, na.rm = TRUE), 1)
 
-      if (b == N & c == 0) {
+      if (x12 == N & x21 == 0) {
         root <- c(lower, 1)
-      } else if (b == 0 & c == N) {
+      } else if (x12 == 0 & x21 == N) {
         root <- c(-1, upper)
       } else {
         root <- c(lower, upper)
       }
     }
-    if (b == c & cc == 0) { # Only works without cc
+    if (x12 == x21 & cc == 0) { # Only works without cc
       root1 <- -sqrt(-u2)
       root2 <- sqrt(-u2)
       root <- c(root1, root2)
@@ -786,7 +774,7 @@ tangoci <- function(x,
   }
 
   estimates <- cbind(
-    Lower = keep1, MLE = (b - c) / N, Upper = keep2,
+    Lower = keep1, MLE = (x12 - x21) / N, Upper = keep2,
     level = level
   )
 
@@ -1124,7 +1112,6 @@ bpci <- function(x,
     k <- s2 / (s1 + s0)
     z <- k * z0
     adjlevel <- 1 - 2 * (1 - pnorm(z))
-    b <- 2 * (n + z^2)
     if (method == "wilson") {
       j1 <- wilsonci(x = x1, n = n, distrib = "bin", level = adjlevel, cc = cc)
       j2 <- wilsonci(x = x0, n = n, distrib = "bin", level = adjlevel, cc = cc)
