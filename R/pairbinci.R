@@ -211,14 +211,14 @@ pairbinci <- function(x,
   }
   if (contrast %in% c("RD", "RR")) {
     if (!(tolower(substr(method, 1, 4)) %in%
-          c("tdas", "scor", "move", "bp"))) {
+      c("tdas", "scor", "move", "bp"))) {
       print("Method must be one of 'Score_closed', 'Score', 'BP', 'TDAS',
           'MOVER' or 'MOVER_newc' for contrast = 'RD' or 'RR'")
       stop()
     }
     # if (FALSE) {
     if (skew == TRUE &&
-        (tolower(substr(method, 1, 12)) == "score_closed")) {
+      (tolower(substr(method, 1, 12)) == "score_closed")) {
       method <- "Score"
       if (warn == TRUE) {
         print(paste("Closed-form calculation not available with skewness correction -
@@ -227,15 +227,15 @@ pairbinci <- function(x,
     }
     # }
     if (!(tolower(substr(moverbase, 1, 4)) %in%
-          c("scas", "wils", "midp", "jeff"))) {
+      c("scas", "wils", "midp", "jeff"))) {
       print("moverbase must be one of 'SCASp', 'wilson', 'midp' or 'jeff'")
       stop()
     }
   }
   if (contrast == "OR") {
     if (!(tolower(substr(method, 1, 4)) %in%
-          c("scas", "wils", "midp", "jeff"))) {
-        print("Method must be one of 'SCASp', 'wilson', 'midp' or 'jeff' for
+      c("scas", "wils", "midp", "jeff"))) {
+      print("Method must be one of 'SCASp', 'wilson', 'midp' or 'jeff' for
               contrast = 'OR'")
       stop()
     }
@@ -251,7 +251,6 @@ pairbinci <- function(x,
          Wald with Bonett-Price adjustment for RD -
          cc is set to FALSE"))
     }
-
   }
   if (as.character(cc) == "TRUE") cc <- 0.5
   # Default correction aligned with cc'd McNemar test
@@ -275,7 +274,7 @@ pairbinci <- function(x,
   phi_hat <- phi_c <- (x[1] * x[4] - x[2] * x[3]) / sqrt(x1 * (N - x1) * x2 * (N - x2))
   if (x[1] * x[4] - x[2] * x[3] > 0) {
     phi_c <- (max(x[1] * x[4] - x[2] * x[3] - N / 2, 0) /
-                sqrt(x1 * (N - x1) * x2 * (N - x2)))
+      sqrt(x1 * (N - x1) * x2 * (N - x2)))
   }
   psi_hat <- x[1] * x[4] / (x[2] * x[3])
 
@@ -291,10 +290,10 @@ pairbinci <- function(x,
       trans_th0 <- NULL
       if (is.null(theta0)) theta0 <- 1
       trans_th0 <- theta0 / (1 + theta0)
-        OR_ci <- scaspci(
-          x = x12, n = x12 + x21, distrib = "bin",
-          level = level, cc = cc, bcf = bcf, bign = N
-        )
+      OR_ci <- scaspci(
+        x = x12, n = x12 + x21, distrib = "bin",
+        level = level, cc = cc, bcf = bcf, bign = N
+      )
       estimates <- OR_ci / (1 - OR_ci)
       scorezero <- scoretheta(
         theta = 0.5, x1 = x12, n1 = x12 + x21, n2 = x[1] + x[4],
@@ -407,8 +406,10 @@ pairbinci <- function(x,
     } else if (contrast == "RD" && method == "Score_closed") {
       estimates <- tangoci(x = x, level = level, cc = cc, bcf = bcf)
     } else if (contrast == "RR" && method == "Score_closed") {
-      estimates <- tangci(x = x, level = level, cc = cc,
-                              cctype = cctype, bcf = bcf)
+      estimates <- tangci(
+        x = x, level = level, cc = cc,
+        cctype = cctype, bcf = bcf
+      )
     }
     # MOVER methods for RD and RR
     if (method == "MOVER") {
@@ -577,7 +578,7 @@ scorepair <- function(theta,
     q11 <- (1 - x[4] / N - (1 + theta) * q21) / theta
     q22 <- 1 - q11 - q12 - q21
     p2d <- q21 + q11
-#    p1d <- q12 + q11
+    #    p1d <- q12 + q11
     p1d <- p2d * theta
 
     # Tang variance
@@ -600,7 +601,7 @@ scorepair <- function(theta,
   C_ <- -(score1 + scterm)
   num <- (-B + sqrt(pmax(0, B^2 - 4 * A * C_)))
   score <- ifelse((skew == FALSE | scterm == 0),
-                  score1, num / (2 * A)
+    score1, num / (2 * A)
   )
   score[abs(Stheta) < abs(corr)] <- 0
 
@@ -638,7 +639,7 @@ tangoci <- function(x,
                     level = 0.95,
                     cc = FALSE,
                     bcf = FALSE) {
-#  options(digits = 12)
+  #  options(digits = 12)
   if (as.character(cc) == "TRUE") {
     cc <- 0.5 # Default correction for paired RD aligned with cc'd McNemar test
   }
@@ -681,8 +682,8 @@ tangoci <- function(x,
       # Special case with x12 = x21 = N/2 reduces to a quadratic equation
       #    x^4 + u2 x^2 + u4 = 0 reduces to
       #    x^2 = sqrt((-u2 + sqrt(u2^2 - 4*u4))/2)
-      keep2 = sqrt((-u2 + sqrt(u2^2 - 4*u4))/2)
-      keep1 = -keep2
+      keep2 <- sqrt((-u2 + sqrt(u2^2 - 4 * u4)) / 2)
+      keep1 <- -keep2
     } else if (x12 == x21 & cc == 0) {
       u2 <- -(((x12 + x21) / g + 1) / (N / g + 1)^2)
       root1 <- -sqrt(-u2)
@@ -876,7 +877,6 @@ tangci <- function(x,
         # Solve quadratic equation instead
         root1 <- quadroot(m2, m3, m4)
       } else {
-
         u1 <- m1 / m0
         u2 <- m2 / m0
         u3 <- m3 / m0
@@ -1013,10 +1013,10 @@ moverpair <- function(x,
   u1 <- j1[, 3]
   l2 <- j2[, 1]
   u2 <- j2[, 3]
-#  Early version using medians for p1 & p2 for method="jeff" instead of x/N
-#  Slightly improves coverage, but has inferior location
-#  p1phat <- j1[, 2]
-#  pp1hat <- j2[, 2]
+  #  Early version using medians for p1 & p2 for method="jeff" instead of x/N
+  #  Slightly improves coverage, but has inferior location
+  #  p1phat <- j1[, 2]
+  #  pp1hat <- j2[, 2]
   p1phat <- x1p / N
   pp1hat <- xp1 / N
 
@@ -1058,8 +1058,10 @@ moverpair <- function(x,
         2 * (u1 - p1phat) * (pp1hat - l2) * cor_hat)
   }
 
-  estimates <- cbind(Lower = lower, Estimate = estimate, Upper = upper, level = level,
-                     p1hat = p1phat, p2hat = pp1hat, phi_hat = cor_hat)
+  estimates <- cbind(
+    Lower = lower, Estimate = estimate, Upper = upper, level = level,
+    p1hat = p1phat, p2hat = pp1hat, phi_hat = cor_hat
+  )
   row.names(estimates) <- NULL
   return(estimates)
 }
@@ -1103,10 +1105,11 @@ bpci <- function(x,
     p21 <- (x01 + 1) / (n + 2)
     estimate <- p12 - p21
     v <- (p12 + p21 - (p12 - p21)^2) / (n + 2)
-    estimates <- cbind(lower = pmax(-1, estimate - z0 * sqrt(v)),
-                   Estimate = estimate,
-                   upper = pmin(1, estimate + z0 * sqrt(v))
-                  )
+    estimates <- cbind(
+      lower = pmax(-1, estimate - z0 * sqrt(v)),
+      Estimate = estimate,
+      upper = pmin(1, estimate + z0 * sqrt(v))
+    )
   } else if (contrast == "RR") {
     estimate <- x1 / x0
     n <- x11 + x10 + x01

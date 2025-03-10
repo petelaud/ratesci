@@ -776,8 +776,10 @@ scoreci <- function(x1,
   estimates <- cbind(
     round(cbind(Lower = lower, MLE = point, Upper = upper), precis),
     level = level, inputs,
-    round(cbind(p1hat = p1hat_w, p2hat = p2hat_w, p1mle = p1d_w, p2mle = p2d_w),
-          precis)
+    round(
+      cbind(p1hat = p1hat_w, p2hat = p2hat_w, p1mle = p1d_w, p2mle = p2d_w),
+      precis
+    )
   )
 
   # optionally add p-value for a test of null hypothesis: theta <= theta0
