@@ -22,7 +22,8 @@
 ### In `scaspci()`:
 * `bcf` option now implemented for contrast = "p".
 * `bign` allows a different sample size to be used in the bias correction 
-  (used within transformed SCASp method for paired OR in `pairbinci`).
+  (used within transformed SCASp method for paired OR in `pairbinci`, for 
+  consistency with 'N-1' test).
 
 ### In `scoreci()`:
 * `bcf` option now implemented for contrast = "p".

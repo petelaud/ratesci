@@ -8,16 +8,16 @@ pairbinci(
   x,
   contrast = "RD",
   method = ifelse(contrast == "OR", "SCASp", "Score"),
-  moverbase = "jeff",
+  moverbase = ifelse(method \%in\% c("MOVER", "MOVER_newc", "BP"), "jeff", NULL),
   method_RD = NULL,
   method_RR = NULL,
   method_OR = NULL,
   level = 0.95,
+  bcf = TRUE,
+  skew = TRUE,
   cc = FALSE,
   cctype = "new",
   theta0 = NULL,
-  skew = TRUE,
-  bcf = TRUE,
   precis = 6,
   warn = TRUE,
   ...
@@ -75,12 +75,24 @@ and for the Hybrid BP method for RR:
 \item{level}{Number specifying confidence level (between 0 and 1, default
 0.95).}
 
+\item{bcf}{Logical (default FALSE) indicating whether to apply bias correction
+in the score denominator. (Under evaluation.)}
+
+\item{skew}{Logical (default TRUE) indicating whether to apply skewness
+correction or not. (Under evaluation, manuscript under review.)
+\itemize{
+\item Only applies for the iterative method = "Score"
+}}
+
 \item{cc}{Number or logical (default FALSE) specifying (amount of) continuity
 correction. When a score-based method is used, cc = 0.5 corresponds to the
 continuity-corrected McNemar test.}
 
 \item{cctype}{Character string indicating the type of continuity correction
-("new", "constant" or "delrocco") to be applied for contrast = "RR".
+to be applied for contrast = "RR":
+"new" = new equivariant correction (Laud 2025, Statistics in Biosciences)
+"delrocco" = correction proposed by DelRocco et al. 2023
+"constant" = another alternative giving a larger correction
 (Note: "constant" and "delrocco" options produce non-equivariant intervals,
 and are likely to be deprecated in a future release (as well as the
 cctype argument itself).
@@ -90,15 +102,6 @@ Has no effect unless contrast = 'RR' and method = "Score" or "Score_closed".}
 non-inferiority margin). 1-sided p-value will be < 0.025 iff 2-sided 95\\% CI
 excludes theta0. NB: can also be used for a superiority test by setting
 theta0 = 0.}
-
-\item{skew}{Logical (default TRUE) indicating whether to apply skewness
-correction or not. (Under evaluation, manuscript in progress.)
-\itemize{
-\item Only applies for the iterative method = "Score"
-}}
-
-\item{bcf}{Logical (default FALSE) indicating whether to apply bias correction
-in the score denominator. (Under evaluation.)}
 
 \item{precis}{Number (default 6) specifying precision (i.e. number of decimal
 places) to be used in optimisation subroutine for the confidence interval.}
@@ -111,9 +114,11 @@ places) to be used in optimisation subroutine for the confidence interval.}
 A list containing the following components: \describe{
 \item{data}{the input data in 2x2 matrix form}
 \item{estimates}{the requested contrast, with its confidence interval and
-the specified confidence level}
+the specified confidence level, along with estimates of the marginal
+probabilities and the correlation coefficient (uncorrected and
+corrected)}
 \item{pval}{the corresponding 2-sided significance test
-against the null hypothesis that p_1 = p_2 (McNemar's test), and one-sided
+against the null hypothesis that p_1 = p_2, and one-sided
 significance tests against the null hypothesis that theta >= or <= theta0
 as specified}}
 \item{call}{details of the function call}
@@ -126,10 +131,11 @@ and weighting = "MH", with pairs as strata.)
 This function applies the score-based Tango and Tang methods for RD and
 RR respectively, with iterative and closed-form versions, and a skewness
 correction for improved one-sided coverage.
+Also includes MOVER options using the Method of Variance Estimates Recovery
+for paired RD and RR, incorporating Newcombe's correlation correction, and
+some simpler methods by Bonett & Price for RD and RR.
 Also includes an experimental method using the stratified TDAS method
 with pairs as strata (to be deprecated?).
-Also includes MOVER options using the Method of Variance Estimates Recovery
-for paired RD and RR, incorporating Newcombe's correlation correction.
 For OR, intervals are produced based on transforming various intervals for
 the single proportion, including SCASp, mid-p and Jeffreys.
 All methods have options for continuity correction, and the magnitude of
@@ -210,6 +216,10 @@ Statistics in Biosciences 2023; 15:1–30
 Chang P et al. Continuity corrected score confidence interval for the
 difference in proportions in paired data.
 Journal of Applied Statistics 2024; 51-1:139-152
+
+Laud PJ. Comments on "New Confidence Intervals for Relative Risk of Two
+Correlated Proportions" (2023).
+Statistics in Biosciences 2025;
 }
 \author{
 Pete Laud, \email{p.j.laud@sheffield.ac.uk}

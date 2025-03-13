@@ -7,10 +7,11 @@
 #' This function applies the score-based Tango and Tang methods for RD and
 #' RR respectively, with iterative and closed-form versions, and a skewness
 #' correction for improved one-sided coverage.
+#' Also includes MOVER options using the Method of Variance Estimates Recovery
+#' for paired RD and RR, incorporating Newcombe's correlation correction, and
+#' some simpler methods by Bonett & Price for RD and RR.
 #' Also includes an experimental method using the stratified TDAS method
 #' with pairs as strata (to be deprecated?).
-#' Also includes MOVER options using the Method of Variance Estimates Recovery
-#' for paired RD and RR, incorporating Newcombe's correlation correction.
 #' For OR, intervals are produced based on transforming various intervals for
 #' the single proportion, including SCASp, mid-p and Jeffreys.
 #' All methods have options for continuity correction, and the magnitude of
@@ -56,20 +57,23 @@
 #'   "wilson" = Wilson score (not recommended, known to be skewed)
 #' @param level Number specifying confidence level (between 0 and 1, default
 #'   0.95).
+#' @param bcf Logical (default FALSE) indicating whether to apply bias correction
+#'   in the score denominator. (Under evaluation.)
+#' @param skew Logical (default TRUE) indicating whether to apply skewness
+#'   correction or not. (Under evaluation, manuscript under review.)
+#'   - Only applies for the iterative method = "Score"
 #' @param cc Number or logical (default FALSE) specifying (amount of) continuity
 #'   correction. When a score-based method is used, cc = 0.5 corresponds to the
 #'   continuity-corrected McNemar test.
 #' @param cctype Character string indicating the type of continuity correction
-#'   ("new", "constant" or "delrocco") to be applied for contrast = "RR".
+#'   to be applied for contrast = "RR":
+#'   "new" = new equivariant correction (Laud 2025, Statistics in Biosciences)
+#'   "delrocco" = correction proposed by DelRocco et al. 2023
+#'   "constant" = another alternative giving a larger correction
 #'   (Note: "constant" and "delrocco" options produce non-equivariant intervals,
 #'   and are likely to be deprecated in a future release (as well as the
 #'   cctype argument itself).
 #'   Has no effect unless contrast = 'RR' and method = "Score" or "Score_closed".
-#' @param skew Logical (default TRUE) indicating whether to apply skewness
-#'   correction or not. (Under evaluation, manuscript in progress.)
-#'   - Only applies for the iterative method = "Score"
-#' @param bcf Logical (default FALSE) indicating whether to apply bias correction
-#'   in the score denominator. (Under evaluation.)
 #' @param theta0 Number to be used in a one-sided significance test (e.g.
 #'   non-inferiority margin). 1-sided p-value will be < 0.025 iff 2-sided 95\% CI
 #'   excludes theta0. NB: can also be used for a superiority test by setting
@@ -85,9 +89,11 @@
 #' @return A list containing the following components: \describe{
 #'   \item{data}{the input data in 2x2 matrix form}
 #'   \item{estimates}{the requested contrast, with its confidence interval and
-#'   the specified confidence level}
+#'   the specified confidence level, along with estimates of the marginal
+#'   probabilities and the correlation coefficient (uncorrected and
+#'   corrected)}
 #'   \item{pval}{the corresponding 2-sided significance test
-#'   against the null hypothesis that p_1 = p_2 (McNemar's test), and one-sided
+#'   against the null hypothesis that p_1 = p_2, and one-sided
 #'   significance tests against the null hypothesis that theta >= or <= theta0
 #'   as specified}}
 #'   \item{call}{details of the function call}
@@ -167,20 +173,24 @@
 #'   difference in proportions in paired data.
 #'   Journal of Applied Statistics 2024; 51-1:139-152
 #'
+#'   Laud PJ. Comments on "New Confidence Intervals for Relative Risk of Two
+#'   Correlated Proportions" (2023).
+#'   Statistics in Biosciences 2025;
+#'
 #' @export
 pairbinci <- function(x,
                       contrast = "RD",
                       method = ifelse(contrast == "OR", "SCASp", "Score"),
-                      moverbase = "jeff",
+                      moverbase = ifelse(method %in% c("MOVER", "MOVER_newc", "BP"), "jeff", NULL),
                       method_RD = NULL,
                       method_RR = NULL,
                       method_OR = NULL,
                       level = 0.95,
+                      bcf = TRUE,
+                      skew = TRUE,
                       cc = FALSE,
                       cctype = "new",
                       theta0 = NULL,
-                      skew = TRUE,
-                      bcf = TRUE,
                       precis = 6,
                       warn = TRUE,
                       ...) {
@@ -800,14 +810,19 @@ tangoci <- function(x,
 #' cctype = "constant" uses correction of cc * (2) with e.g. cc=0.5
 #' instead of xp1 / (m * N) with m=2 as used by DelRocco
 #'   - Note the latter produces a relatively much smaller correction
-#' cctype = "new" produces an equivariant interval. Other types (and the
-#' cctype argument itself) will likely be deprecated in a future release.
+#' cctype = "new" uses cc * (1 + theta) produces an equivariant interval.
+#' Other types (and the cctype argument itself) will likely be deprecated
+#' in a future release.
 #'
 #' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
 #' @references
 #'   DelRocco N et al. New Confidence Intervals for Relative Risk of Two
 #'   Correlated Proportions.
 #'   Statistics in Biosciences 2023; 15:1–30
+#'
+#'   Laud PJ. Comments on "New Confidence Intervals for Relative Risk of Two
+#'   Correlated Proportions" (2023).
+#'   Statistics in Biosciences 2025;
 #'
 #' @inheritParams pairbinci
 #'
