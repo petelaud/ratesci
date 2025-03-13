@@ -127,6 +127,22 @@ rateci <- function(x,
     n <- rep(n, length.out = length(x))
   }
   if (as.character(cc) == "TRUE") cc <- 0.5
+  if (!is.numeric(c(x, n, level))) {
+    print("Non-numeric inputs!")
+    stop()
+  }
+  if (distrib == "bin" && any(x > n + 0.001)) {
+    print("x > n not possible for distrib = 'bin'")
+    stop()
+  }
+  if (any(c(x, n) < 0)) {
+    print("Negative inputs!")
+    stop()
+  }
+  if (n == 0) {
+    print("Sample size is zero!")
+    stop()
+  }
 
   ci_scas <- scaspci(
     x = x,
