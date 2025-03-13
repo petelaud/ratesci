@@ -288,7 +288,7 @@ pairbinci <- function(x,
   # and output 2x2 table for validation
   x1i <- rep(c(1, 1, 0, 0), x)
   x2i <- rep(c(1, 0, 1, 0), x)
-  xi <- table(x1i, x2i)
+  xi <- table(x1i = factor(x1i, levels = c(0, 1)), x2i = factor(x2i, levels = c(0, 1)))
   x1 <- x[1] + x[2]
   x2 <- x[1] + x[3]
   N <- sum(x)
@@ -495,12 +495,17 @@ pairbinci <- function(x,
     }
   }
   outlist <- list(data = xi, estimates = round(estimates, precis))
+  # MOVER methods don't produce p-values
   if (!(method %in% c("MOVER", "MOVER_newc", "midp", "wilson", "jeff"))) {
     outlist <- append(outlist, list(pval = pval))
   }
   # Set unused arguments to null to omit them from call
-  if (!(method %in% c("MOVER", "MOVER_newc"))) moverbase <- NULL
+  if (!(method %in% c("MOVER", "MOVER_newc") ||
+        (method == "BP" && contrast == "RR"))) {
+    moverbase <- NULL
+  }
   if (cc == FALSE) cctype <- NULL
+  if (!(contrast == "RR" && method %in% c("Score", "Score_closed"))) cctype <- NULL
   call <- c(
     contrast = contrast, method = method, moverbase = moverbase,
     level = level, bcf = bcf, skew = skew, cc = cc, cctype = cctype
