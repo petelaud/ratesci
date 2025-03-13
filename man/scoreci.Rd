@@ -75,6 +75,7 @@ Only applies if contrast is "OR".}
 Stheta = (p1hat - p2hat * theta) / p2d (see Tang 2020).
 Default TRUE for stratified = TRUE, with weighting = "IVS" or "INV".
 Forced to FALSE for stratified = TRUE, with other weightings.
+Has no effect when stratified = FALSE, as p2d terms cancel out.
 Experimental for distrib = "poi".}
 
 \item{bcf}{Logical (default TRUE) indicating whether to apply bias correction
