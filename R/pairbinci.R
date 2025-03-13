@@ -194,6 +194,22 @@ pairbinci <- function(x,
                       precis = 6,
                       warn = TRUE,
                       ...) {
+  if (!is.numeric(c(x))) {
+    print("Non-numeric inputs!")
+    stop()
+  }
+  if (!(is.vector(x) && length(x) == 4)) {
+    print("Input x must be a vector of length 4!")
+    stop()
+  }
+  if (any(x < 0)) {
+    print("Negative inputs!")
+    stop()
+  }
+  if (sum(x) == 0) {
+    print("Sample size is zero!")
+    stop()
+  }
   if (!is.null(method_RD)) {
     warning(
       "argument method_RD is deprecated; please use method instead.",
@@ -236,8 +252,9 @@ pairbinci <- function(x,
       }
     }
     # }
-    if (!(tolower(substr(moverbase, 1, 4)) %in%
-      c("scas", "wils", "midp", "jeff"))) {
+    if (method %in% c("MOVER", "MOVER_newc", "BP") &&
+      !(tolower(substr(moverbase, 1, 4)) %in%
+        c("scas", "wils", "midp", "jeff"))) {
       print("moverbase must be one of 'SCASp', 'wilson', 'midp' or 'jeff'")
       stop()
     }
@@ -249,10 +266,6 @@ pairbinci <- function(x,
               contrast = 'OR'")
       stop()
     }
-  }
-  if (!is.numeric(c(x))) {
-    print("Non-numeric inputs!")
-    stop()
   }
   if (method == "BP" && contrast == "RD" && cc != FALSE) {
     cc <- FALSE
