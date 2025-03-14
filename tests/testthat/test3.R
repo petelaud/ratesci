@@ -536,4 +536,40 @@ test_that("legacy & new methods match published examples", {
       c(1.4667, 3.0608)
     )
   }
+
+
+  # Single proportion, examples from Newcombe 1998
+  # Wilson
+  expect_equal(
+    unname(round(wilsonci(x = 0, n = 20), 4)[, c(1, 3)]),
+    c(0, 0.1611)
+  )
+  # SCAS
+  expect_equal(
+    unname(round(scaspci(x = 0, n = 20), 4)[, c(1, 3)]),
+    c(0, 0.1297)
+  )
+  # Wilson
+  expect_equal(
+    unname(round(wilsonci(x = 1, n = 29), 4)[, c(1, 3)]),
+    c(0.0061, 0.1718)
+  )
+  # SCAS
+  expect_equal(
+    unname(round(scaspci(x = 1, n = 29), 4)[, c(1, 3)]),
+    c(0.0020, 0.1549)
+  )
+
+  # Wilson clustered, Liang example data used in Short et al 2020
+  expect_equal(
+    unname(round(wilsonci(x = 60, n = 203, xihat = 1.349133), 3)[, c(1, 3)]),
+    c(0.228, 0.373)
+  )
+  # SCAS clustered
+  expect_equal(
+    unname(round(scaspci(x = 60, n = 203, xihat = 1.349133), 3)[, c(1, 3)]),
+    c(0.228, 0.372)
+  )
+
+
 })

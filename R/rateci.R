@@ -13,6 +13,10 @@
 #'   in the score denominator. Applicable to distrib = "bin" only.
 #' @param bign Sample size N to be used in the calculation of bcf, if different
 #'   from n.
+#' @param xihat Number specifying estimated variance inflation factor for a
+#'   skewness corrected version of the Saha Wilson Score interval for clustered
+#'   binomial proportions. Need to calculate using BMS and WMS as per Saha 2016.
+#'   Used by new clusterpci() function for data entered per cluster.
 #' @param cc Number or logical (default FALSE) specifying (amount of) continuity
 #'   correction. Numeric value is taken as the gamma parameter in Laud 2017,
 #'   Appendix S2 (default 0.5 for 'conventional' correction if cc = TRUE).
@@ -25,11 +29,9 @@ scaspci <- function(x,
                     level = 0.95,
                     bcf = FALSE,
                     bign = n, # extra argument could be needed for bcf for transformed OR interval
+                    xihat = 1,
                     cc = FALSE,
                     ...) {
-  #  x <- Rmpfr::mpfr(x, 120)
-  #  n <- Rmpfr::mpfr(n, 120)
-  #  level <- Rmpfr::mpfr(level, 120)
   if (as.character(cc) == "TRUE") cc <- 0.5
   z <- qnorm(1 - (1 - level) / 2)
     # bcf for the non-iterative formula
@@ -39,8 +41,9 @@ scaspci <- function(x,
                        "FALSE" = 1
       )
     } else lambda <- 1
-    # Simple adjustment to z doesn't match with iterative method
-    za <- qnorm(1 - (1 - level) / 2) * sqrt(lambda)
+    # Apply optional variance bias correction factor
+    # and optional variance inflation factor for clustered data
+    za <- qnorm(1 - (1 - level) / 2) * sqrt(lambda * xihat)
 
   if (distrib == "poi") {
     Du <- (x + cc) / n - (z^2 - 1) / (6 * n)
@@ -56,20 +59,20 @@ scaspci <- function(x,
     A0 <- 1
     C0 <- D0^2
   } else if (distrib == "bin") {
-    E <- (z^2 - 1) / (3 * n * lambda) - 1
+    E <- (z^2 - 1) / (3 * n * lambda * xihat) - 1
     # Alteration to published formula,
     # to deal with non-nested intervals when level > 0.99
     #    Du <- Rmpfr::pmax(0, (n - x - cc) / n - (z^2 - 1) / (6 * n))
     #    Dl <- Rmpfr::pmax(0, (x - cc) / n - (z^2 - 1) / (6 * n))
-    Du <- pmax(0, (n - x - cc) / n - (z^2 - 1) / (6 * n * lambda))
-    Dl <- pmax(0, (x - cc) / n - (z^2 - 1) / (6 * n * lambda))
+    Du <- pmax(0, (n - x - cc) / n - (z^2 - 1) / (6 * n * lambda * xihat))
+    Dl <- pmax(0, (x - cc) / n - (z^2 - 1) / (6 * n * lambda * xihat))
     A <- za^2 / n + E^2
     Bu <- 2 * E * Du - za^2 / n
     Bl <- 2 * E * Dl - za^2 / n
     Cu <- Du^2
     Cl <- Dl^2
-    E0 <- 1 + 1 / (3 * n * lambda)
-    D0 <- -1 / (6 * n * lambda) - x / n
+    E0 <- 1 + 1 / (3 * n * lambda * xihat)
+    D0 <- -1 / (6 * n * lambda * xihat) - x / n
     A0 <- E0^2
     B0 <- 2 * E0 * D0
     C0 <- D0^2
@@ -227,6 +230,8 @@ exactci <- function( # function to calculate exact 'exact' confidence interval
 #'
 #' with optional continuity correction
 #'
+#' @param xihat Number specifying estimated variance inflation factor for the
+#'   Saha Wilson Score interval for clustered binomial proportions
 #' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
 #' @references
 #' Altman DG, Machin D, Bryant TN et al (2000) Statistics with confidence,
@@ -246,20 +251,23 @@ wilsonci <- function(x,
                      n,
                      level = 0.95,
                      cc = FALSE,
+                     xihat = 1,
                      distrib = "bin") {
   if (as.character(cc) == "TRUE") cc <- 0.5
   z <- qnorm(1 - (1 - level) / 2)
   est <- x / n
   if (distrib == "bin") {
+    # Apply optional variance inflation factor for clustered data
+    za <- z * sqrt(xihat)
     # See Newcombe 1998, set LCL to 0 if x = 0
-    lower <- ifelse(x == 0, 0, (2 * (x - cc) + z^2 -
-                z * sqrt(z^2 - 2 * (2 * cc + cc / n) +
+    lower <- ifelse(x == 0, 0, (2 * (x - cc) + za^2 -
+                za * sqrt(za^2 - 2 * (2 * cc + cc / n) +
                            4 * ((x / n) * (n * (1 - x / n) + 2 * cc)))
-    ) / (2 * (n + z^2)))
-    upper <- ifelse(x == n, 1, (2 * (x + cc) + z^2 +
-                z * sqrt(z^2 + 2 * (2 * cc - cc / n) +
+    ) / (2 * (n + za^2)))
+    upper <- ifelse(x == n, 1, (2 * (x + cc) + za^2 +
+                za * sqrt(za^2 + 2 * (2 * cc - cc / n) +
                            4 * ((x / n) * (n * (1 - x / n) - 2 * cc)))
-    ) / (2 * (n + z^2)))
+    ) / (2 * (n + za^2)))
   } else if (distrib == "poi") {
     lower <- ((x - cc) + z^2 / 2 - z * sqrt(x - cc + z^2 / 4)) / n
     lower[x == 0] <- 0

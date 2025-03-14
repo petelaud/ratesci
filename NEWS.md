@@ -1,6 +1,9 @@
 # ratesci (development version)
 
 ## New features
+* New function `clusterpci()` for estimation of a single binomial proportion 
+  from clustered data.
+
 ### In `pairbinci()`:
 * `skew` for skewness correction. 
 * `bcf` for variance bias correction.
@@ -8,7 +11,7 @@
   (i.e. including skewness correction - manuscript under review).
 * Bonett-Price methods for RD and RR (including proposed Jeffreys variant 
   option for RR).
-* Default paired MOVER method changed to Jeffreys.
+* Default for MOVER method changed to Jeffreys.
 * MOVER calculations now use x/N as point estimate instead of median from the
   Beta distribution.
 * `cc` uses a new form of correction for RR giving equivariant intervals. Also 

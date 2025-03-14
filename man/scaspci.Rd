@@ -13,6 +13,7 @@ scaspci(
   level = 0.95,
   bcf = FALSE,
   bign = n,
+  xihat = 1,
   cc = FALSE,
   ...
 )
@@ -34,6 +35,11 @@ in the score denominator. Applicable to distrib = "bin" only.}
 
 \item{bign}{Sample size N to be used in the calculation of bcf, if different
 from n.}
+
+\item{xihat}{Number specifying estimated variance inflation factor for a
+skewness corrected version of the Saha Wilson Score interval for clustered
+binomial proportions. Need to calculate using BMS and WMS as per Saha 2016.
+Used by new clusterpci() function for data entered per cluster.}
 
 \item{cc}{Number or logical (default FALSE) specifying (amount of) continuity
 correction. Numeric value is taken as the gamma parameter in Laud 2017,

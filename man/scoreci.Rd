@@ -8,8 +8,8 @@ rates.}
 scoreci(
   x1,
   n1,
-  x2 = NULL,
-  n2 = NULL,
+  x2 = 0,
+  n2 = 0,
   distrib = "bin",
   contrast = "RD",
   level = 0.95,
@@ -144,12 +144,15 @@ stratified = "TRUE":
 "IVS" = Inverse Variance of Score (see Laud 2017 for details),
 "INV" = Inverse Variance (bcf omitted, default for contrast = "OR"),
 "MH" = Mantel-Haenszel (default for contrast = "RD" or "RR"),
+(= sample size for contrast = "p")
 "MN" = Miettinen-Nurminen weights.
 (similar to MH for contrast = "RD" or "RR",
 similar to INV for contrast = "OR")
 For CI consistent with a CMH test, select skew = FALSE, random = FALSE,
 and use default MH weighting for RD/RR and INV for OR.
-Weighting = 'MN' also matches the CMH test.}
+Weighting = 'MN' also matches the CMH test.
+Note: Alternative user-specified weighting may also be applied, via the
+'wt' argument.}
 
 \item{MNtol}{Numeric value indicating convergence tolerance to be used in
 iteration with weighting = "MN".}
