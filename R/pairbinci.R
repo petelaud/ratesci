@@ -95,8 +95,8 @@
 #'   \item{pval}{the corresponding 2-sided significance test
 #'   against the null hypothesis that p_1 = p_2, and one-sided
 #'   significance tests against the null hypothesis that theta >= or <= theta0
-#'   as specified}}
-#'   \item{call}{details of the function call}
+#'   as specified}
+#'   \item{call}{details of the function call}}
 #' @examples
 #' # Data example from Agresti-Min 2005
 #' pairbinci(x = c(53, 16, 8, 9), contrast = "RD", method = "Score")

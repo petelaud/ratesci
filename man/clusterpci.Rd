@@ -21,7 +21,7 @@ correction or not. (To be evaluated)}
 A list containing the following components: \describe{
 \item{estimates}{the estimate and confidence interval for p and
 the specified confidence level, along with estimates of the ICC and
-the variance inflation factor, xihat}
+the variance inflation factor, xihat}}
 }
 \description{
 Asymptotic Score confidence intervals for a proportion estimated from

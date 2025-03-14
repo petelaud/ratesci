@@ -14,7 +14,7 @@
 #' @return A list containing the following components: \describe{
 #'   \item{estimates}{the estimate and confidence interval for p and
 #'   the specified confidence level, along with estimates of the ICC and
-#'   the variance inflation factor, xihat}
+#'   the variance inflation factor, xihat}}
 #' @examples
 #'   # Data example from Liang 1992, used in Saha 2016:
 #'   x <- c(rep(c(0, 1), c(36, 12)),
