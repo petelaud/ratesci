@@ -245,8 +245,8 @@
 #' @export
 scoreci <- function(x1,
                     n1,
-                    x2 = NULL,
-                    n2 = NULL,
+                    x2 = 0,
+                    n2 = 0,
                     distrib = "bin",
                     contrast = "RD",
                     level = 0.95,
@@ -645,6 +645,8 @@ scoreci <- function(x1,
       p2d_w <- sum(wt_MLE * at_MLE$p2d) / sum(wt_MLE)
     } else {
       p2d_w <- NULL
+      p2hat_w <- NULL
+      p2hat <- NULL
     }
     if (!is.null(wt)) {
       weighting <- "User-defined"
@@ -654,7 +656,13 @@ scoreci <- function(x1,
     p1hat_w <- p1hat
     p2hat_w <- p2hat
     p1d_w <- p1d_MLE
-    if (contrast != "p") p2d_w <- p2d_MLE else p2d_w <- NULL
+    if (contrast != "p") {
+      p2d_w <- p2d_MLE
+    } else {
+      p2d_w <- NULL
+      p2hat_w <- NULL
+      p2hat <- NULL
+    }
     wt_MLE <- NULL
   }
 
@@ -1088,6 +1096,10 @@ scoreci <- function(x1,
     wt1pct <- 100 * wt_FE / sum(wt_FE)
     if (random == TRUE && prediction == TRUE) {
       outlist <- append(outlist, list(prediction = pred))
+    }
+    if (contrast == "p") {
+      x2 <- NULL
+      if (n2 == 0) n2 <- NULL
     }
     outlist <- append(
       outlist,
