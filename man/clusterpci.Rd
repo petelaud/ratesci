@@ -4,7 +4,7 @@
 \alias{clusterpci}
 \title{Confidence intervals for a single binomial rate from clustered data.}
 \usage{
-clusterpci(x, n, level = 0.95, skew = TRUE)
+clusterpci(x, n, level = 0.95, skew = TRUE, cc = FALSE)
 }
 \arguments{
 \item{x}{Numeric vector of number of events per cluster.}
@@ -16,6 +16,10 @@ clusterpci(x, n, level = 0.95, skew = TRUE)
 
 \item{skew}{Logical (default TRUE) indicating whether to apply skewness
 correction or not. (To be evaluated)}
+
+\item{cc}{Number or logical (default FALSE) specifying (amount of) continuity
+correction. Numeric value is taken as the gamma parameter in Laud 2017,
+Appendix S2 (default 0.5 for 'conventional' correction if cc = TRUE).}
 }
 \value{
 A list containing the following components: \describe{
@@ -30,7 +34,9 @@ With optional skewness correction to improve interval location
 (to be evaluated).
 }
 \examples{
-  # Data example from Liang 1992, used in Saha 2016:
+  # Data example from Liang 1992, used in Saha 2016 and Short 2020:
+  # Note Saha states the ICC estimate is 0.1871 and Short makes it 0.1855.
+  # I agree with Short - CI limits differ from Saha to the 4th dp.
   x <- c(rep(c(0, 1), c(36, 12)),
          rep(c(0, 1, 2), c(15, 7, 1)),
          rep(c(0, 1, 2, 3), c(5, 7, 3, 2)),
@@ -41,17 +47,21 @@ With optional skewness correction to improve interval location
          rep(3, 17),
          rep(4, 7),
          rep(6, 5))
+  # Wilson-based interval
   clusterpci(x, n, skew = FALSE)
+  # Skewness-corrected version
   clusterpci(x, n, skew = TRUE)
+  # With continuity adjustment
+  clusterpci(x, n, skew = FALSE, cc = TRUE)
 }
 \references{
 Saha K, Miller D and Wang S. A comparison of some approximate confidence
 intervals for a single proportion for clustered binary outcome data.
-Int J Biostat 2016; 12: 1–18
+Int J Biostat 2016; 12:1–18
 
-Short MI et al. (2020) A novel confidence interval for a single proportion
+Short MI et al. A novel confidence interval for a single proportion
 in the presence of clustered binary outcome data.
-Stat Meth Med Res 29(1) 111–121
+Stat Meth Med Res 2020; 29(1):111–121
 }
 \author{
 Pete Laud, \email{p.j.laud@sheffield.ac.uk}

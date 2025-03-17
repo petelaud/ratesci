@@ -260,14 +260,20 @@ wilsonci <- function(x,
     # Apply optional variance inflation factor for clustered data
     za <- z * sqrt(xihat)
     # See Newcombe 1998, set LCL to 0 if x = 0
-    lower <- ifelse(x == 0, 0, (2 * (x - cc) + za^2 -
-                za * sqrt(za^2 - 2 * (2 * cc + cc / n) +
+    lower <- ifelse(x == 0,
+                    0,
+                    (2 * (x - cc) + za^2 -
+                       za * sqrt(za^2 - 2 * (2 * cc + cc / n) +
                            4 * ((x / n) * (n * (1 - x / n) + 2 * cc)))
-    ) / (2 * (n + za^2)))
-    upper <- ifelse(x == n, 1, (2 * (x + cc) + za^2 +
-                za * sqrt(za^2 + 2 * (2 * cc - cc / n) +
+                     ) / (2 * (n + za^2))
+                    )
+    upper <- ifelse(x == n,
+                    1,
+                    (2 * (x + cc) + za^2 +
+                       za * sqrt(za^2 + 2 * (2 * cc - cc / n) +
                            4 * ((x / n) * (n * (1 - x / n) - 2 * cc)))
-    ) / (2 * (n + za^2)))
+                     ) / (2 * (n + za^2))
+                    )
   } else if (distrib == "poi") {
     lower <- ((x - cc) + z^2 / 2 - z * sqrt(x - cc + z^2 / 4)) / n
     lower[x == 0] <- 0
