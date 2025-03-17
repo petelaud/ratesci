@@ -18,6 +18,8 @@
 #'   for a single rate
 #'   \item pairbinci: for paired binomial data (includes asymptotic score and
 #'   MOVER options)
+#'   \item clusterpci: for estimation of binomial proportions based on
+#'   clustered data
 #' }
 #' @name ratesci-package
 #' @references
@@ -68,6 +70,9 @@
 #' normal mean and standard deviation. Statistical Methods in Medical Research
 #' 2012; 21(4):347-359.
 #'
+#' Saha K, Miller D and Wang S. A comparison of some approximate confidence
+#' intervals for a single proportion for clustered binary outcome data.
+#' Int J Biostat 2016; 12:1–18
 
 ## usethis namespace: start
 ## usethis namespace: end

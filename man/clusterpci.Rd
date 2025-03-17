@@ -32,6 +32,7 @@ Asymptotic Score confidence intervals for a proportion estimated from
 a clustered sample, as decribed by Saha et al. 2016.
 With optional skewness correction to improve interval location
 (to be evaluated).
+To be added: Hypothesis test.
 }
 \examples{
   # Data example from Liang 1992, used in Saha 2016 and Short 2020:

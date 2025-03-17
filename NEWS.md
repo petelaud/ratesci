@@ -16,7 +16,7 @@
   Beta distribution.
 * `cc` uses a new form of correction for RR giving equivariant intervals. Also 
   allows consistency with the continuity-corrected McNemar test (or an 
-  intermediate correction of the user's choosing).
+  intermediate correction of the user's choosing). `cctype` is deprecated.
 * Default conditional odds ratio method changed to SCASp (with closed-form 
   calculation).
 * Output object now includes estimates of p1, p2 and phi.

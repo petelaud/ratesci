@@ -18,20 +18,21 @@ confidence intervals for rate (or risk) difference (‘RD’), rate ratio
 (‘RR’, also known as relative risk), or odds ratio (‘OR’). All three
 contrasts apply for binomial proportions, and the first two may also be
 used for the comparison of Poisson ‘exposure-adjusted’ incidence rates.
-The scoreci function incorporates ‘skewness-corrected’ asymptotic score
-(‘SCAS’) methods, which ensure equal-tailed coverage (or central
-location), in other words for a nominal 95% confidence interval, the
-one-sided non-coverage probability is (on average) close to 2.5% on each
-side. Stratified calculations are also catered for (e.g. meta-analysis,
+`scoreci()` incorporates ‘skewness-corrected’ asymptotic score (‘SCAS’)
+methods, which ensure equal-tailed coverage (or central location), in
+other words for a nominal 95% confidence interval, the one-sided
+non-coverage probability is (on average) close to 2.5% on each side.
+Stratified calculations are also catered for (e.g. meta-analysis,
 including random effects), as well as confidence intervals for the
-single binomial or Poisson rate, and for binomial matched pairs (with
-the pairbinci function). Corresponding hypothesis tests against any
-specified null parameter value are provided in each case. Omission of
-the skewness correction is also allowed, resulting in the
-often-recommended ‘Miettinen-Nurminen’ asymptotic score methods, which
-can have inferior one-sided coverage, especially for RR. The hypothesis
-test for binomial RD or RR when the skewness correction is omitted
-corresponds to the Farrington-Manning test.
+single binomial or Poisson rate, and for clustered binomial proportion
+(with `clusterpci()`) and binomial matched pairs (with `pairbinci()`).
+Corresponding hypothesis tests against any specified null parameter
+value are provided in each case. Omission of the skewness correction is
+also allowed, resulting in the often-recommended ‘Miettinen-Nurminen’
+asymptotic score methods, which can have inferior one-sided coverage,
+especially for RR. The hypothesis test for binomial RD or RR when the
+skewness correction is omitted corresponds to the Farrington-Manning
+test.
 
 The stratified (fixed effects) version without skewness correction
 produces a hypothesis test which is equivalent to the
@@ -42,8 +43,8 @@ the hypothesis tests are equivalent to a Chi-squared test, and for
 paired proportions, a McNemar test (in both cases with extension to null
 hypotheses for equivalence/non-inferiority tests).
 
-For large (single-stratum) sample sizes, the ‘MOVER’ methods (moverci
-function) improve on traditional approximate methods with respect to
+For large (single-stratum) sample sizes, the ‘MOVER’ methods
+(`moverci()`) improve on traditional approximate methods with respect to
 one-sided and two-sided coverage, particularly in the case of RR. Being
 based on Bayesian methods, these also allow the option to incorporate
 prior beliefs about the rates in each group - by default, the
@@ -160,3 +161,5 @@ For single binomial or Poisson rates:
   single rate (with option to incorporate prior information).
 - `rateci()`: wrapper function for selected methods for a single rate,
   including SCAS, Jeffreys, midp and Clopper-Pearson/Garwood.
+- `clusterpci()`: Saha’s Wilson-based interval for a single proportion
+  based on clustered data, with a skewness-corrected version.

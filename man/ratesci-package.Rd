@@ -6,7 +6,7 @@
 \alias{ratesci-package}
 \title{ratesci: Confidence Intervals for Comparisons of Binomial or Poisson Rates}
 \description{
-Computes confidence intervals for the rate (or risk) difference ('RD') or rate ratio (or relative risk, 'RR') for binomial proportions or Poisson rates, or for odds ratio ('OR', binomial only). Also confidence intervals for a single binomial or Poisson rate, and intervals for matched pairs. Includes skewness-corrected asymptotic score ('SCAS') methods, which have been developed in Laud (2017) \doi{10.1002/pst.1813} from Miettinen & Nurminen (1985) \doi{10.1002/sim.4780040211} and Gart & Nam (1988) \doi{10.2307/2531848}, and in Laud (2025, under review) for paired proportions. The same score produces hypothesis tests analogous to the test for binomial RD and RR by Farrington & Manning (1990) \doi{10.1002/sim.4780091208}, or the McNemar test for paired data. The package also includes MOVER methods (Method Of Variance Estimates Recovery) for all contrasts, derived from the Newcombe method but with options to use equal-tailed intervals in place of the Wilson score method, and generalised for Bayesian applications incorporating prior information. So-called 'exact' methods for strictly conservative coverage are approximated using continuity corrections, and the amount of correction can be selected to avoid over-conservative coverage. Also includes methods for stratified calculations (e.g. meta-analysis), either assuming fixed effects (matching the CMH test) or incorporating stratum heterogeneity.
+Computes confidence intervals for the rate (or risk) difference ('RD') or rate ratio (or relative risk, 'RR') for binomial proportions or Poisson rates, or for odds ratio ('OR', binomial only). Also confidence intervals for a single binomial or Poisson rate (with adjustment for clustered binomial data), and intervals for matched pairs. Includes skewness-corrected asymptotic score ('SCAS') methods, which have been developed in Laud (2017) \doi{10.1002/pst.1813} from Miettinen & Nurminen (1985) \doi{10.1002/sim.4780040211} and Gart & Nam (1988) \doi{10.2307/2531848}, and in Laud (2025, under review) for paired proportions. The same score produces hypothesis tests analogous to the test for binomial RD and RR by Farrington & Manning (1990) \doi{10.1002/sim.4780091208}, or the McNemar test for paired data. The package also includes MOVER methods (Method Of Variance Estimates Recovery) for all contrasts, derived from the Newcombe method but with options to use equal-tailed intervals in place of the Wilson score method, and generalised for Bayesian applications incorporating prior information. So-called 'exact' methods for strictly conservative coverage are approximated using continuity corrections, and the amount of correction can be selected to avoid over-conservative coverage. Also includes methods for stratified calculations (e.g. meta-analysis), either assuming fixed effects (matching the CMH test) or incorporating stratum heterogeneity.
 }
 \section{ratesci functions}{
 
@@ -24,6 +24,8 @@ single rate
 for a single rate
 \item pairbinci: for paired binomial data (includes asymptotic score and
 MOVER options)
+\item clusterpci: for estimation of binomial proportions based on
+clustered data
 }
 }
 
@@ -74,6 +76,10 @@ proportions: comparison of eleven methods. Statistics in Medicine 1998;
 Donner A, Zou G. Closed-form confidence intervals for functions of the
 normal mean and standard deviation. Statistical Methods in Medical Research
 2012; 21(4):347-359.
+
+Saha K, Miller D and Wang S. A comparison of some approximate confidence
+intervals for a single proportion for clustered binary outcome data.
+Int J Biostat 2016; 12:1–18
 }
 \seealso{
 Useful links:
