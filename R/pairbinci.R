@@ -25,6 +25,8 @@
 #'   c is the count of the number with the event on condition 2 only (= x21)
 #'   d is the number of pairs with no event under both conditions
 #'   (Note the order of a and d is only important for contrast="RR".)
+#' @param level Number specifying confidence level (between 0 and 1, default
+#'   0.95).
 #' @param contrast Character string indicating the contrast of interest:
 #'   "RD" = rate difference (default), "RR" = rate ratio, "OR" = conditional
 #'   odds ratio.
@@ -55,8 +57,6 @@
 #'   "SCASp" = skewness-corrected score,
 #'   "midp" = mid-p,
 #'   "wilson" = Wilson score (not recommended, known to be skewed)
-#' @param level Number specifying confidence level (between 0 and 1, default
-#'   0.95).
 #' @param bcf Logical (default FALSE) indicating whether to apply bias correction
 #'   in the score denominator. (Under evaluation.)
 #' @param skew Logical (default TRUE) indicating whether to apply skewness
@@ -65,15 +65,7 @@
 #' @param cc Number or logical (default FALSE) specifying (amount of) continuity
 #'   correction. When a score-based method is used, cc = 0.5 corresponds to the
 #'   continuity-corrected McNemar test.
-#' @param cctype Character string indicating the type of continuity correction
-#'   to be applied for contrast = "RR":
-#'   "new" = new equivariant correction (Laud 2025, Statistics in Biosciences)
-#'   "delrocco" = correction proposed by DelRocco et al. 2023
-#'   "constant" = another alternative giving a larger correction
-#'   (Note: "constant" and "delrocco" options produce non-equivariant intervals,
-#'   and are likely to be deprecated in a future release (as well as the
-#'   cctype argument itself).
-#'   Has no effect unless contrast = 'RR' and method = "Score" or "Score_closed".
+#' @param cctype (deprecated: new equivariant cc method implemented instead)
 #' @param theta0 Number to be used in a one-sided significance test (e.g.
 #'   non-inferiority margin). 1-sided p-value will be < 0.025 iff 2-sided 95\% CI
 #'   excludes theta0. NB: can also be used for a superiority test by setting
@@ -177,22 +169,25 @@
 #'   Correlated Proportions" (2023).
 #'   Statistics in Biosciences 2025;
 #'
+#'   Laud PJ. Improved confidence intervals and tests for paired binomial
+#'   proportions. (Under review)
+#'
 #' @export
 pairbinci <- function(x,
+                      level = 0.95,
                       contrast = "RD",
                       method = ifelse(contrast == "OR", "SCASp", "Score"),
                       moverbase = ifelse(method %in% c("MOVER", "MOVER_newc", "BP"), "jeff", NULL),
-                      method_RD = NULL,
-                      method_RR = NULL,
-                      method_OR = NULL,
-                      level = 0.95,
                       bcf = TRUE,
                       skew = TRUE,
                       cc = FALSE,
-                      cctype = "new",
                       theta0 = NULL,
                       precis = 6,
                       warn = TRUE,
+                      method_RD = NULL,
+                      method_RR = NULL,
+                      method_OR = NULL,
+                      cctype = NULL,
                       ...) {
   if (!is.numeric(c(x))) {
     print("Non-numeric inputs!")
@@ -209,6 +204,13 @@ pairbinci <- function(x,
   if (sum(x) == 0) {
     print("Sample size is zero!")
     stop()
+  }
+  if (!is.null(cctype)) {
+    warning(
+      "argument cctype is deprecated; previous options are replaced with a single
+       cc method that produces an equivariant interval.",
+      call. = FALSE
+    )
   }
   if (!is.null(method_RD)) {
     warning(
@@ -389,13 +391,13 @@ pairbinci <- function(x,
       myfun <- function(theta) {
         scorepair(
           theta = theta, x = x, contrast = contrast, cc = cc,
-          cctype = cctype, skew = skew, bcf = bcf
+          skew = skew, bcf = bcf
         )$score
       }
       myfun0 <- function(theta) {
         scorepair(
           theta = theta, x = x, contrast = contrast, cc = 0,
-          cctype = cctype, skew = skew, bcf = bcf
+          skew = skew, bcf = bcf
         )$score
       }
       # Use bisection routine to locate lower and upper confidence limits
@@ -416,7 +418,7 @@ pairbinci <- function(x,
       )
       at_MLE <- scorepair(
         theta = MLE, x = x, contrast = contrast, cc = cc,
-        cctype = cctype, skew = skew, bcf = bcf
+        skew = skew, bcf = bcf
       )
       estimates <- cbind(
         Lower = lower, MLE = MLE, Upper = upper,
@@ -430,8 +432,7 @@ pairbinci <- function(x,
       estimates <- tangoci(x = x, level = level, cc = cc, bcf = bcf)
     } else if (contrast == "RR" && method == "Score_closed") {
       estimates <- tangci(
-        x = x, level = level, cc = cc,
-        cctype = cctype, bcf = bcf
+        x = x, level = level, cc = cc, bcf = bcf
       )
     }
     # MOVER methods for RD and RR
@@ -476,11 +477,11 @@ pairbinci <- function(x,
       }
       scorezero <- scorepair(
         theta = theta00, x = x, contrast = contrast,
-        cc = cc, cctype = cctype, skew = skew, bcf = bcf
+        cc = cc, skew = skew, bcf = bcf
       )
       scorenull <- scorepair(
         theta = theta0, x = x, contrast = contrast,
-        cc = cc, cctype = cctype, skew = skew, bcf = bcf
+        cc = cc, skew = skew, bcf = bcf
       )
       pval_left <- scorenull$pval
       pval_right <- 1 - pval_left
@@ -504,11 +505,9 @@ pairbinci <- function(x,
         (method == "BP" && contrast == "RR"))) {
     moverbase <- NULL
   }
-  if (cc == FALSE) cctype <- NULL
-  if (!(contrast == "RR" && method %in% c("Score", "Score_closed"))) cctype <- NULL
   call <- c(
     contrast = contrast, method = method, moverbase = moverbase,
-    level = level, bcf = bcf, skew = skew, cc = cc, cctype = cctype
+    level = level, bcf = bcf, skew = skew, cc = cc
   )
   outlist <- append(outlist, list(call = call))
   return(outlist)
@@ -543,10 +542,9 @@ pairbinci <- function(x,
 scorepair <- function(theta,
                       x,
                       contrast = "RD",
+                      skew = TRUE,
+                      bcf = TRUE,
                       cc = FALSE,
-                      cctype = "new",
-                      skew = FALSE,
-                      bcf = FALSE,
                       ...) {
   N <- sum(x)
   lambda <- switch(as.character(bcf),
@@ -596,10 +594,9 @@ scorepair <- function(theta,
     num <- (-B + Re(sqrt(as.complex(B^2 - 4 * A * C_))))
     q21 <- ifelse(num == 0, 0, num / (2 * A))
 
-    if (cctype == "constant") corr <- cc * 2 * sign(Stheta) / N
-    if (cctype == "delrocco") corr <- cc * (x[1] + x[3]) / N * sign(Stheta) / N
     # Equivariant continuity correction for RR, aligned with McNemar cc.
-    if (cctype == "new") corr <- cc * (1 + theta) * sign(Stheta) / N
+    # replaces previous 'delrocco' and 'constant' cctype options
+      corr <- cc * (1 + theta) * sign(Stheta) / N
 
     q12 <- (q21 + (theta - 1) * (1 - x[4] / N)) / theta
     # Below from Tang 2003
@@ -665,8 +662,8 @@ scorepair <- function(theta,
 #' @noRd
 tangoci <- function(x,
                     level = 0.95,
-                    cc = FALSE,
-                    bcf = FALSE) {
+                    bcf = TRUE,
+                    cc = FALSE) {
   #  options(digits = 12)
   if (as.character(cc) == "TRUE") {
     cc <- 0.5 # Default correction for paired RD aligned with cc'd McNemar test
@@ -823,14 +820,8 @@ tangoci <- function(x,
 #' This could be combined with tangoci to avoid code repetition.
 #' Adapted from code kindly provided by Guogen Shan for the closed-form
 #' ASCC method proposed in DelRocco et al. 2023.
-#' with modified form of continuity correction
+#' with modified form of continuity correction (Laud 2025)
 #' for consistency with McNemar test, and unified code with/without cc.
-#' cctype = "constant" uses correction of cc * (2) with e.g. cc=0.5
-#' instead of xp1 / (m * N) with m=2 as used by DelRocco
-#'   - Note the latter produces a relatively much smaller correction
-#' cctype = "new" uses cc * (1 + theta) produces an equivariant interval.
-#' Other types (and the cctype argument itself) will likely be deprecated
-#' in a future release.
 #'
 #' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
 #' @references
@@ -840,16 +831,15 @@ tangoci <- function(x,
 #'
 #'   Laud PJ. Comments on "New Confidence Intervals for Relative Risk of Two
 #'   Correlated Proportions" (2023).
-#'   Statistics in Biosciences 2025;
+#'   Statistics in Biosciences 2025; https://doi.org/10.1007/s12561-025-09479-4
 #'
 #' @inheritParams pairbinci
 #'
 #' @noRd
 tangci <- function(x,
-                   cc = FALSE,
-                   cctype = "new",
-                   bcf = FALSE,
-                   level = 0.95) {
+                   level = 0.95,
+                   bcf = TRUE,
+                   cc = FALSE) {
   if (as.character(cc) == "TRUE") {
     cc <- 0.5
   }
@@ -874,17 +864,8 @@ tangci <- function(x,
   alpha <- 1 - level
   z <- qnorm(1 - alpha / 2) * sqrt(lambda)
   corr2 <- 0
-  if (cctype == "delrocco") {
-    # Version proposed by DelRocco et al, doesn't match cc'd McNemar test
-    # and is not equivariant
-    corr1 <- cc * xp1 / N
-  } else if (cctype == "constant") {
-    # Alternative constant version isn't equivariant
-    corr1 <- cc * 2
-  } else if (cctype == "new") {
-    # This version is equivariant
-    corr1 <- corr2 <- cc
-  }
+  # Previous cctype options replaced with an equivariant method
+  corr1 <- corr2 <- cc
   if (doublezero) {
     lower <- 0
     upper <- Inf
@@ -1017,8 +998,8 @@ moverpair <- function(x,
                       level = 0.95,
                       contrast = "RD",
                       method = "jeff",
-                      cc = FALSE,
-                      corc = TRUE) {
+                      corc = TRUE,
+                      cc = FALSE) {
   if (!is.numeric(c(x))) {
     print("Non-numeric inputs!")
     stop()

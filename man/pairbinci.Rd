@@ -6,20 +6,20 @@
 \usage{
 pairbinci(
   x,
+  level = 0.95,
   contrast = "RD",
   method = ifelse(contrast == "OR", "SCASp", "Score"),
   moverbase = ifelse(method \%in\% c("MOVER", "MOVER_newc", "BP"), "jeff", NULL),
-  method_RD = NULL,
-  method_RR = NULL,
-  method_OR = NULL,
-  level = 0.95,
   bcf = TRUE,
   skew = TRUE,
   cc = FALSE,
-  cctype = "new",
   theta0 = NULL,
   precis = 6,
   warn = TRUE,
+  method_RD = NULL,
+  method_RR = NULL,
+  method_OR = NULL,
+  cctype = NULL,
   ...
 )
 }
@@ -32,6 +32,9 @@ b is the count of the number with the event on condition 1 only (= x12)
 c is the count of the number with the event on condition 2 only (= x21)
 d is the number of pairs with no event under both conditions
 (Note the order of a and d is only important for contrast="RR".)}
+
+\item{level}{Number specifying confidence level (between 0 and 1, default
+0.95).}
 
 \item{contrast}{Character string indicating the contrast of interest:
 "RD" = rate difference (default), "RR" = rate ratio, "OR" = conditional
@@ -66,15 +69,6 @@ and for the Hybrid BP method for RR:
 "midp" = mid-p,
 "wilson" = Wilson score (not recommended, known to be skewed)}
 
-\item{method_RD}{(deprecated: parameter renamed to method)}
-
-\item{method_RR}{(deprecated: parameter renamed to method)}
-
-\item{method_OR}{(deprecated: parameter renamed to method)}
-
-\item{level}{Number specifying confidence level (between 0 and 1, default
-0.95).}
-
 \item{bcf}{Logical (default FALSE) indicating whether to apply bias correction
 in the score denominator. (Under evaluation.)}
 
@@ -88,16 +82,6 @@ correction or not. (Under evaluation, manuscript under review.)
 correction. When a score-based method is used, cc = 0.5 corresponds to the
 continuity-corrected McNemar test.}
 
-\item{cctype}{Character string indicating the type of continuity correction
-to be applied for contrast = "RR":
-"new" = new equivariant correction (Laud 2025, Statistics in Biosciences)
-"delrocco" = correction proposed by DelRocco et al. 2023
-"constant" = another alternative giving a larger correction
-(Note: "constant" and "delrocco" options produce non-equivariant intervals,
-and are likely to be deprecated in a future release (as well as the
-cctype argument itself).
-Has no effect unless contrast = 'RR' and method = "Score" or "Score_closed".}
-
 \item{theta0}{Number to be used in a one-sided significance test (e.g.
 non-inferiority margin). 1-sided p-value will be < 0.025 iff 2-sided 95\\% CI
 excludes theta0. NB: can also be used for a superiority test by setting
@@ -107,6 +91,14 @@ theta0 = 0.}
 places) to be used in optimisation subroutine for the confidence interval.}
 
 \item{warn}{Logical (default TRUE) giving the option to suppress warnings.}
+
+\item{method_RD}{(deprecated: parameter renamed to method)}
+
+\item{method_RR}{(deprecated: parameter renamed to method)}
+
+\item{method_OR}{(deprecated: parameter renamed to method)}
+
+\item{cctype}{(deprecated: new equivariant cc method implemented instead)}
 
 \item{...}{Other arguments.}
 }
@@ -220,6 +212,9 @@ Journal of Applied Statistics 2024; 51-1:139-152
 Laud PJ. Comments on "New Confidence Intervals for Relative Risk of Two
 Correlated Proportions" (2023).
 Statistics in Biosciences 2025;
+
+Laud PJ. Improved confidence intervals and tests for paired binomial
+proportions. (Under review)
 }
 \author{
 Pete Laud, \email{p.j.laud@sheffield.ac.uk}
