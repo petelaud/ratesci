@@ -85,6 +85,7 @@ Int J Biostat 2016; 12:1–18
 Useful links:
 \itemize{
   \item \url{https://github.com/petelaud/ratesci}
+  \item \url{https://petelaud.github.io/ratesci/}
   \item Report bugs at \url{https://github.com/petelaud/ratesci/issues}
 }
 
