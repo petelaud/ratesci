@@ -35,7 +35,9 @@
 
 ## Bug fixes
 ### In `exactci()`:
-* Corrected point estimate reported for vector inputs.
+* Corrected duplicate point estimate reported for vector inputs.
+* Derive point estimates to match LCL and UCL with level = 0.
+* Corrected LCL for Poisson mid-p method.
 
 ## Other
 * `method_RD`, `method_RR` and `method_OR` are replaced with `method`.
