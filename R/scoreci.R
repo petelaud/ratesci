@@ -48,7 +48,8 @@
 #' @param bcf Logical (default TRUE) indicating whether to apply bias correction
 #'   in the score denominator. Applicable to distrib = "bin" only. (NB: bcf =
 #'   FALSE option is really only included for legacy validation against previous
-#'   published methods (i.e. Gart & Nam, Mee, or standard Chi-squared test).
+#'   published methods (i.e. Gart & Nam, Mee, or standard Chi-squared test)
+#'   and for contrast = "p".
 #' @param cc Number or logical (default FALSE) specifying (amount of) continuity
 #'   correction. Numeric value is taken as the gamma parameter in Laud 2017,
 #'   Appendix S2 (default 0.5 for 'conventional' correction if cc = TRUE).
@@ -257,7 +258,7 @@ scoreci <- function(x1,
                     simpleskew = FALSE,
                     ORbias = TRUE,
                     RRtang = NULL,
-                    bcf = TRUE,
+                    bcf = ifelse(contrast != "p", TRUE, FALSE),
                     cc = FALSE,
                     theta0 = NULL,
                     precis = 6,

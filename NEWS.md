@@ -23,13 +23,13 @@
 * Output object now includes function call.
 
 ### In `scaspci()`:
-* `bcf` option now implemented for contrast = "p".
+* `bcf` option now implemented for contrast = "p" (default = FALSE).
 * `bign` allows a different sample size to be used in the bias correction 
   (used within transformed SCASp method for paired OR in `pairbinci`, for 
   consistency with 'N-1' test).
 
 ### In `scoreci()`:
-* `bcf` option now implemented for contrast = "p".
+* `bcf` option now implemented for contrast = "p" (default = FALSE).
 * (Note adjusted sample size for bias correction can be achieved by including a 
    non-zero value for n2.)
 
