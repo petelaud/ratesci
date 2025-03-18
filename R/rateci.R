@@ -197,22 +197,31 @@ exactci <- function( # function to calculate exact 'exact' confidence interval
   distrib = "bin",
   precis = 8) {
   alpha <- 1 - level
-  if (distrib == "poi") {
-    est <- x
-    } else est <- x / n
+#  if (distrib == "poi") {
+#    est <- x
+#    } else est <- x / n
   if (as.character(midp) == "TRUE") midp <- 0.5
   if (distrib == "bin") {
     lowroot <- function(p) {
       pbinom(x - 1, n, p) + midp * dbinom(x, n, p) -
         (1 - alpha / 2)
     }
-    uproot <- function(p) pbinom(x, n, p) - midp * dbinom(x, n, p) - alpha / 2
+    midroot <- function(p) {
+      pbinom(x - 1, n, p) + 0.5 * dbinom(x, n, p) - 0.5
+    }
+    uproot <- function(p) {
+      pbinom(x, n, p) - midp * dbinom(x, n, p) - alpha / 2
+      }
   } else if (distrib == "poi") {
     lowroot <- function(p) ppois(x, p) + midp * dpois(x, p) - (1 - alpha / 2)
     uproot <- function(p) ppois(x, p) - midp * dpois(x, p) - alpha / 2
   }
   lower <- bisect(
     ftn = lowroot, precis = precis, uplow = "low",
+    contrast = "p", distrib = distrib
+  )
+  est <- bisect(
+    ftn = midroot, precis = precis, uplow = "low",
     contrast = "p", distrib = distrib
   )
   upper <- bisect(
