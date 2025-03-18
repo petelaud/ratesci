@@ -5,8 +5,9 @@
 # (or n-1 or n-2) which had been apparent during development with level > 0.99.
 
 # n <- round(runif(1000, 15, 9000), 0)
-n <- seq(15, 9000, length.out = 1000)
+n <- round(seq(15, 9000, length.out = 1000))
 xs <- rep_len(0:10, 1000)
+
 rounded <- 10
 for (level in c(0.9, 0.95, 0.99, 0.999)) {
   test_that("noniterative scas matches iterative version", {
