@@ -420,17 +420,3 @@ moverbci <- function(x1,
     ...
   )
 }
-
-#' Internal function - superseded by new wilsonci function
-#'
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
-#'
-#' @noRd
-quadroot <- function(a, b, c_) {
-  # GET ROOTS OF A QUADRATIC EQUATION
-  r1x <- (-b + sqrt(b^2 - 4 * a * c_)) / (2 * a)
-  r2x <- (-b - sqrt(b^2 - 4 * a * c_)) / (2 * a)
-  r1 <- pmin(r1x, r2x)
-  r2 <- pmax(r1x, r2x)
-  cbind(r1, r2)
-}
