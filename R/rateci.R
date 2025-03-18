@@ -91,7 +91,7 @@ scaspci <- function(x,
       ((-Bu + sqrt(pmax(0, Bu^2 - 4 * A * Cu))) / (2 * A))
     }
   ))
-  return((CI))
+  return(CI)
 }
 
 #' Selected confidence intervals for the single binomial or Poisson rate.
@@ -110,8 +110,6 @@ scaspci <- function(x,
 #'   0.95).
 #' @param cc Number or logical (default FALSE) specifying continuity
 #'   correction.
-#' @param precis Number (default 6) specifying precision (i.e. number of decimal
-#'   places) to be used in optimisation subroutine for the SCAS and exact methods.
 #' @return A list containing, for each method, a matrix containing lower and upper
 #'   confidence limits for each value of x and n. Methods shown depend on the cc
 #'   parameter, which specifies whether the continuity correction is applied to
@@ -123,8 +121,7 @@ rateci <- function(x,
                    n,
                    distrib = "bin",
                    level = 0.95,
-                   cc = FALSE,
-                   precis = 6) {
+                   cc = FALSE) {
   # in case x is input as a vector but n is not
   if (length(n) < length(x) && length(x) > 1) {
     n <- rep(n, length.out = length(x))
@@ -169,8 +166,7 @@ rateci <- function(x,
     n = n,
     level = level,
     midp = 0.5 - cc,
-    distrib = distrib,
-    precis = precis
+    distrib = distrib
   )
   if (cc == 0) {
     return(list(scas = ci_scas, jeff = ci_jeff, midp = ci_exact))

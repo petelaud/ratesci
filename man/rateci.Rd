@@ -4,7 +4,7 @@
 \alias{rateci}
 \title{Selected confidence intervals for the single binomial or Poisson rate.}
 \usage{
-rateci(x, n, distrib = "bin", level = 0.95, cc = FALSE, precis = 6)
+rateci(x, n, distrib = "bin", level = 0.95, cc = FALSE)
 }
 \arguments{
 \item{x}{Numeric vector of number of events.}
@@ -20,9 +20,6 @@ data: "bin" = binomial (default), "poi" = Poisson.}
 
 \item{cc}{Number or logical (default FALSE) specifying continuity
 correction.}
-
-\item{precis}{Number (default 6) specifying precision (i.e. number of decimal
-places) to be used in optimisation subroutine for the SCAS and exact methods.}
 }
 \value{
 A list containing, for each method, a matrix containing lower and upper
