@@ -213,7 +213,8 @@ exactci <- function( # function to calculate exact 'exact' confidence interval
       pbinom(x, n, p) - midp * dbinom(x, n, p) - alpha / 2
       }
   } else if (distrib == "poi") {
-    lowroot <- function(p) ppois(x, p) + midp * dpois(x, p) - (1 - alpha / 2)
+    lowroot <- function(p) ppois(x - 1, p) + midp * dpois(x, p) - (1 - alpha / 2)
+    midroot <- function(p) ppois(x - 1, p) + 0.5 * dpois(x, p) - 0.5
     uproot <- function(p) ppois(x, p) - midp * dpois(x, p) - alpha / 2
   }
   lower <- bisect(
