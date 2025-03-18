@@ -94,11 +94,6 @@ and skewness correction (`skew`) are applied, continuity correction
 confidence interval. (For Miettinen-Nurminen, use `skew` = FALSE, for
 Gart-Nam, use `bcf` = FALSE.)
 
-An example of a paired analysis follows, using the data from Table II of
-Fagerland et al. Here the bias and skewness corrections are again
-applied by default. Omitting both would produce the Tango asymptotic
-score interval for RD, or the Tang method for RR.
-
 ``` r
 library(ratesci)
 scoreci(x1 = 5, n1 = 56, x2 = 0, n2 = 29, precis = 4)
@@ -113,7 +108,15 @@ scoreci(x1 = 5, n1 = 56, x2 = 0, n2 = 29, precis = 4)
 #> $call
 #>  distrib contrast    level      bcf     skew       cc 
 #>    "bin"     "RD"   "0.95"   "TRUE"   "TRUE"  "FALSE"
+```
 
+An example of a paired analysis follows, using the data from Table II of
+Fagerland et al. Here the bias and skewness corrections are again
+applied by default. Omitting both would produce the Tango asymptotic
+score interval for `contrast = RD`, or the Tang method for
+`contrast = RR`.
+
+``` r
 pairbinci(x = c(1, 1, 7, 12), precis = 4)
 #> $data
 #>    x2i

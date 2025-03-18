@@ -1,0 +1,79 @@
+---
+title: "Single_rate"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{CI_rate}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(ratesci)
+```
+
+## Introduction to `rateci()` and related functions for single rate estimation
+
+For estimation of a confidence interval for a single binomial proportion, the SCAS (Skewness-corrected asymptotic score) method is recommended, as one that achieves close to nominal two-sided and one-sided coverage (on average). It is a modified version of the Wilson Score method. The plot below illustrates the interval non-coverage (i.e. 1 minus the actual probability that the interval contains the true value of p) achieved by SCAS compared to some other popular methods, using moving average smoothing:
+
+![](../man/figures/singlepropLNCP50.png)
+For example, the SCAS 95% interval for the proportion 1/29 is obtained with `scaspci()`:
+
+```{r}
+scaspci(x = 1, n = 29)
+```
+
+`rateci()` also provides two other methods with similar coverage properties (Jeffreys and mid-p):
+
+```{r}
+rateci(x = 1, n = 29)
+```
+
+The Jeffreys interval can also incorporate prior information about p for an approximate Bayesian confidence interval. For example, a pilot study estimate of 1/10 would suggest a Beta(1,9) prior for p:
+
+```{r}
+jeffreysci(x = 1, n = 29, ai = 1, bi = 9)
+```
+
+If more conservative coverage is required, a "continuity adjustment" may be deployed with `cc`, as follows, giving continuity-adjusted SCAS or Jeffreys, and (if `cc` is TRUE or 0.5), the Clopper-Pearson method. Note intermediate adjustments smaller than 0.5 give a more refined adjustment.
+
+```{r}
+rateci(x = 1, n = 29, cc = TRUE)
+```
+
+For stratified datasets, use `scoreci()` with `contrast = "p"` and `stratified = TRUE`:
+
+```{r}
+scoreci(x1 = c(1, 0, 2), n1 = c(29, 4, 50), contrast = "p", stratified = TRUE)
+```
+
+For clustered data, use `clusterpci()`:
+```{r}
+  # Data from Liang 1992
+  x <- c(rep(c(0, 1), c(36, 12)),
+          rep(c(0, 1, 2), c(15, 7, 1)),
+          rep(c(0, 1, 2, 3), c(5, 7, 3, 2)),
+          rep(c(0, 1, 2), c(3, 3, 1)),
+          c(0, 2, 3, 4, 6))
+  n <- c(rep(1, 48),
+          rep(2, 23),
+          rep(3, 17),
+          rep(4, 7),
+          rep(6, 5))
+  # Wilson-based interval as per Saha et al.
+  clusterpci(x, n, skew = FALSE)
+  # Skewness-corrected version
+  clusterpci(x, n, skew = TRUE)
+```
+
+All of the above (except `clusterpci()`) can also handle Poisson exposure-adjusted rates, using `distrib = "poi"`.
+
+<!-- ## Additional details -->
+
+<!-- Confidence intervals for a single binomial proportion, x/n, have a long history. The 'classic' method everyone learns about in school is known as the Wald method, based on a large-sample "simple asymptotic" Normal approximation. It is easily demonstrated that this method fails to achieve the nominal confidence level, even when n is quite large. -->

@@ -2,3 +2,29 @@ url: https://petelaud.github.io/ratesci/
 template:
   bootstrap: 5
 
+reference:
+- title: Core functions
+  desc: >
+    The main nuts & bolts of the package.
+
+- subtitle: CIs for a single proportion or rate
+  contents:
+  - scaspci
+  - jeffreysci
+  - clusterpci
+
+- subtitle: CIs for a contrast of two proportions or rates
+  contents:
+  - scoreci
+  - moverci
+  - pairbinci
+
+- title: Wrapper functions
+  desc: >
+    User-friendly convenience functions with restricted set of options
+  contents:
+  - rateci
+  - scasci
+  - tdasci
+  - moverbci
+
