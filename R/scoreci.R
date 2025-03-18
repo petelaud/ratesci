@@ -1100,7 +1100,7 @@ scoreci <- function(x1,
     }
     if (contrast == "p") {
       x2 <- NULL
-      if (n2 == 0) n2 <- NULL
+      if (sum(n2) == 0) n2 <- NULL
     }
     outlist <- append(
       outlist,
