@@ -4,23 +4,21 @@
 #' comparisons of binomial and Poisson rates.
 #'
 #' @section ratesci functions:
-#' \itemize{
-#'   \item scoreci: for score-based confidence intervals
-#'   \item scasci: wrapper function to compute SCAS interval
-#'   \item tdasci: wrapper function to compute TDAS random effects stratified
+#'   * scoreci(): for score-based confidence intervals
+#'   * scasci(): wrapper function to compute SCAS interval
+#'   * tdasci(): wrapper function to compute TDAS random effects stratified
 #'    interval
-#'   \item moverci: for the MOVER method
-#'   \item moverbci: wrapper function to compute MOVER-B interval
-#'   \item jeffreysci: wrapper function to compute Jeffreys interval for a
+#'   * moverci(): for the MOVER method
+#'   * moverbci(): wrapper function to compute MOVER-B interval
+#'   * jeffreysci(): wrapper function to compute Jeffreys interval for a
 #'   single rate
-#'   \item scaspci: non-iterative SCAS method for a single rate
-#'   \item rateci: wrapper function for SCAS, Jeffreys or 'exact' methods
+#'   * scaspci(): non-iterative SCAS method for a single rate
+#'   * rateci(): wrapper function for SCAS, Jeffreys or 'exact' methods
 #'   for a single rate
-#'   \item pairbinci: for paired binomial data (includes asymptotic score and
+#'   * pairbinci(): for paired binomial data (includes asymptotic score and
 #'   MOVER options)
-#'   \item clusterpci: for estimation of binomial proportions based on
+#'   * clusterpci(): for estimation of binomial proportions based on
 #'   clustered data
-#' }
 #' @name ratesci-package
 #' @references
 #' Laud PJ. Equal-tailed confidence intervals for comparison of

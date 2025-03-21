@@ -3,7 +3,8 @@
 \name{tdasci}
 \alias{tdasci}
 \title{t-distribution asymptotic score ("TDAS") confidence intervals for
-comparisons of independent binomial or Poisson rates.}
+random effects stratified comparisons of independent binomial or
+Poisson rates.}
 \usage{
 tdasci(
   x1,
@@ -40,13 +41,11 @@ times (for Poisson rates) in each group.}
 \item{distrib}{Character string indicating distribution assumed for the input
 data: "bin" = binomial (default), "poi" = Poisson.}
 
-\item{contrast}{Character string indicating the contrast of interest:
-\itemize{
-\item "RD" = rate difference (default),
-\item "RR" = rate ratio,
-\item "OR" = odds ratio.
-\item "p" gives an interval for the single proportion or rate x1/n1.
-}}
+\item{contrast}{Character string indicating the contrast of interest: \cr
+"RD" = rate difference (default); \cr
+"RR" = rate ratio; \cr
+"OR" = odds ratio; \cr
+"p" gives an interval for the single proportion or rate x1/n1.}
 
 \item{level}{Number specifying confidence level (between 0 and 1, default
 0.95).}
@@ -91,13 +90,13 @@ x-axis of plots (useful for ratio contrasts which can be infinite).}
 
 \item{weighting}{String indicating which weighting method to use if
 stratified = "TRUE": \cr
-"IVS" = Inverse Variance of Score (see Laud 2017 for details), \cr
-"INV" = Inverse Variance (bcf omitted, default for contrast = "OR"), \cr
-"MH" = Mantel-Haenszel (default for contrast = "RD" or "RR"),
-(= sample size for contrast = "p") \cr
+"IVS" = Inverse Variance of Score (see Laud 2017 for details); \cr
+"INV" = Inverse Variance (bcf omitted, default for contrast = "OR"); \cr
+"MH" = Mantel-Haenszel (default for contrast = "RD" or "RR");
+(= sample size for contrast = "p"); \cr
 "MN" = Miettinen-Nurminen weights.
 (similar to MH for contrast = "RD" or "RR",
-similar to INV for contrast = "OR"). \cr
+similar to INV for contrast = "OR"); \cr
 For CI consistent with a CMH test, select skew = FALSE, random = FALSE,
 and use default MH weighting for RD/RR and INV for OR. \cr
 Weighting = 'MN' also matches the CMH test. \cr

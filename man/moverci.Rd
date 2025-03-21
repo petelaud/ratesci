@@ -44,21 +44,23 @@ Appendix S2 (default 0.5 if cc = TRUE). Forced equal to 0.5 if type = "exact".}
 \item{distrib}{Character string indicating distribution assumed for the input
 data: "bin" = binomial (default), "poi" = Poisson.}
 
-\item{contrast}{Character string indicating the contrast of interest: "RD" =
-rate difference (default), "RR" = rate ratio, "OR" = odds ratio.
-contrast="p" gives an interval for the single proportion x1/n1.}
+\item{contrast}{Character string indicating the contrast of interest: \cr
+"RD" = rate difference (default); \cr
+"RR" = rate ratio; \cr
+"OR" = odds ratio; \cr
+"p" gives an interval for the single proportion x1/n1.}
 
 \item{type}{Character string indicating the method used for the intervals for
-the individual group rates.
-"jeff" = Jeffreys equal-tailed intervals (default);
+the individual group rates. \cr
+"jeff" = Jeffreys equal-tailed intervals (default); \cr
 "exact" = Clopper-Pearson/Garwood exact intervals (note this does NOT
 result in a strictly conservative interval for the contrast, except for
 contrast = "p". The scoreci function with cc = TRUE is recommended as a
-superior approximation of 'exact' methods);
-"midp" = mid-p intervals;
-"SCAS" = SCAS non-iterative intervals;
+superior approximation of 'exact' methods); \cr
+"midp" = mid-p intervals; \cr
+"SCAS" = SCAS non-iterative intervals; \cr
 "wilson" = Wilson score intervals (as per Newcombe 1998).
-(Rao score is used for distrib = "poi")
+(Rao score is used for distrib = "poi") \cr
 NB: "wilson" option is included only for legacy validation against previous
 published method by Newcombe. It is not recommended, as type = "jeff"
 or other equal-tailed options achieve much better coverage properties.}
