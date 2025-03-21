@@ -50,9 +50,13 @@ times (for Poisson rates) in each group.}
 \item{distrib}{Character string indicating distribution assumed for the input
 data: "bin" = binomial (default), "poi" = Poisson.}
 
-\item{contrast}{Character string indicating the contrast of interest: "RD" =
-rate difference (default), "RR" = rate ratio, "OR" = odds ratio.
-contrast="p" gives an interval for the single proportion or rate x1/n1.}
+\item{contrast}{Character string indicating the contrast of interest:
+\itemize{
+\item "RD" = rate difference (default),
+\item "RR" = rate ratio,
+\item "OR" = odds ratio.
+\item "p" gives an interval for the single proportion or rate x1/n1.
+}}
 
 \item{level}{Number specifying confidence level (between 0 and 1, default
 0.95).}
@@ -63,8 +67,9 @@ the Miettinen-Nurminen method).}
 
 \item{simpleskew}{Logical (default FALSE) indicating whether to use the
 "simplified" skewness correction instead of the quadratic solution.
-See Laud 2021 for details. NOTE: this version of the score is only
-suitable for obtaining confidence limits, not p-values.}
+See Laud 2021 for details. \cr
+NOTE: this version of the score is only suitable for obtaining confidence
+limits, not p-values.}
 
 \item{ORbias}{Logical (default is TRUE for contrast="OR", otherwise
 NULL) indicating whether to apply additional bias correction for OR derived
@@ -79,14 +84,14 @@ Has no effect when stratified = FALSE, as p2d terms cancel out.
 Experimental for distrib = "poi".}
 
 \item{bcf}{Logical (default TRUE) indicating whether to apply bias correction
-in the score denominator. Applicable to distrib = "bin" only. (NB: bcf =
-FALSE option is really only included for legacy validation against previous
-published methods (i.e. Gart & Nam, Mee, or standard Chi-squared test)
-and for contrast = "p".}
+in the score denominator. Applicable to distrib = "bin" only. \cr
+NOTE: bcf = FALSE option is really only included for legacy validation
+against previous published methods (i.e. Gart & Nam, Mee, or standard
+Chi-squared test) and for contrast = "p".}
 
 \item{cc}{Number or logical (default FALSE) specifying (amount of) continuity
 correction. Numeric value is taken as the gamma parameter in Laud 2017,
-Appendix S2 (default 0.5 for 'conventional' correction if cc = TRUE).
+Appendix S2 (default 0.5 for 'conventional' correction if cc = TRUE). \cr
 IMPORTANT NOTES:
 \enumerate{
 \item This is a 'continuity correction' aimed at approximating strictly
@@ -104,7 +109,7 @@ a less conservative correction, such as cc = 0.25 suggested in Laud 2017
 \item{theta0}{Number to be used in a one-sided significance test (e.g.
 non-inferiority margin). 1-sided p-value will be <0.025 iff 2-sided 95\\% CI
 excludes theta0. (If bcf = FALSE and skew = FALSE this gives a
-Farrington-Manning test.)
+Farrington-Manning test.) \cr
 By default, a two-sided test against theta0 = 0 (for RD) or 1 (for RR/OR)
 is also output:
 \itemize{
@@ -135,23 +140,23 @@ evaluating heterogeneity of stratified datasets.}
 \item{ylim}{pair of values indicating range of values to be plotted.}
 
 \item{stratified}{Logical (default FALSE) indicating whether to combine
-vector inputs into a single stratified analysis.
+vector inputs into a single stratified analysis. \cr
 IMPORTANT NOTE: The mechanism for stratified calculations is enabled for
 contrast = "p", but the performance of the resulting intervals has not
 been fully evaluated.}
 
 \item{weighting}{String indicating which weighting method to use if
-stratified = "TRUE":
-"IVS" = Inverse Variance of Score (see Laud 2017 for details),
-"INV" = Inverse Variance (bcf omitted, default for contrast = "OR"),
+stratified = "TRUE": \cr
+"IVS" = Inverse Variance of Score (see Laud 2017 for details), \cr
+"INV" = Inverse Variance (bcf omitted, default for contrast = "OR"), \cr
 "MH" = Mantel-Haenszel (default for contrast = "RD" or "RR"),
-(= sample size for contrast = "p")
+(= sample size for contrast = "p") \cr
 "MN" = Miettinen-Nurminen weights.
 (similar to MH for contrast = "RD" or "RR",
-similar to INV for contrast = "OR")
+similar to INV for contrast = "OR"). \cr
 For CI consistent with a CMH test, select skew = FALSE, random = FALSE,
-and use default MH weighting for RD/RR and INV for OR.
-Weighting = 'MN' also matches the CMH test.
+and use default MH weighting for RD/RR and INV for OR. \cr
+Weighting = 'MN' also matches the CMH test. \cr
 Note: Alternative user-specified weighting may also be applied, via the
 'wt' argument.}
 
@@ -181,7 +186,7 @@ Has no effect on estimates, just the heterogeneity test.}
 
 \item{random}{Logical (default FALSE) indicating whether to perform random
 effects meta-analysis for stratified data, using the t-distribution (TDAS)
-method for stratified data (defined in Laud 2017).
+method for stratified data (defined in Laud 2017). \cr
 NOTE: If random = TRUE, then skew = TRUE only affects the per-stratum
 estimates.}
 
