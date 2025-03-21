@@ -158,9 +158,11 @@ data: "bin" = binomial (default), "poi" = Poisson.</p></dd>
 
 
 <dt id="arg-contrast">contrast<a class="anchor" aria-label="anchor" href="#arg-contrast"></a></dt>
-<dd><p>Character string indicating the contrast of interest: "RD" =
-rate difference (default), "RR" = rate ratio, "OR" = odds ratio.
-contrast="p" gives an interval for the single proportion or rate x1/n1.</p></dd>
+<dd><p>Character string indicating the contrast of interest:</p><ul><li><p>"RD" = rate difference (default),</p></li>
+<li><p>"RR" = rate ratio,</p></li>
+<li><p>"OR" = odds ratio.</p></li>
+<li><p>"p" gives an interval for the single proportion or rate x1/n1.</p></li>
+</ul></dd>
 
 
 <dt id="arg-level">level<a class="anchor" aria-label="anchor" href="#arg-level"></a></dt>
@@ -177,8 +179,9 @@ the Miettinen-Nurminen method).</p></dd>
 <dt id="arg-simpleskew">simpleskew<a class="anchor" aria-label="anchor" href="#arg-simpleskew"></a></dt>
 <dd><p>Logical (default FALSE) indicating whether to use the
 "simplified" skewness correction instead of the quadratic solution.
-See Laud 2021 for details. NOTE: this version of the score is only
-suitable for obtaining confidence limits, not p-values.</p></dd>
+See Laud 2021 for details. <br>
+NOTE: this version of the score is only suitable for obtaining confidence
+limits, not p-values.</p></dd>
 
 
 <dt id="arg-orbias">ORbias<a class="anchor" aria-label="anchor" href="#arg-orbias"></a></dt>
@@ -199,16 +202,16 @@ Experimental for distrib = "poi".</p></dd>
 
 <dt id="arg-bcf">bcf<a class="anchor" aria-label="anchor" href="#arg-bcf"></a></dt>
 <dd><p>Logical (default TRUE) indicating whether to apply bias correction
-in the score denominator. Applicable to distrib = "bin" only. (NB: bcf =
-FALSE option is really only included for legacy validation against previous
-published methods (i.e. Gart &amp; Nam, Mee, or standard Chi-squared test)
-and for contrast = "p".</p></dd>
+in the score denominator. Applicable to distrib = "bin" only. <br>
+NOTE: bcf = FALSE option is really only included for legacy validation
+against previous published methods (i.e. Gart &amp; Nam, Mee, or standard
+Chi-squared test) and for contrast = "p".</p></dd>
 
 
 <dt id="arg-cc">cc<a class="anchor" aria-label="anchor" href="#arg-cc"></a></dt>
 <dd><p>Number or logical (default FALSE) specifying (amount of) continuity
 correction. Numeric value is taken as the gamma parameter in Laud 2017,
-Appendix S2 (default 0.5 for 'conventional' correction if cc = TRUE).
+Appendix S2 (default 0.5 for 'conventional' correction if cc = TRUE). <br>
 IMPORTANT NOTES:</p><ol><li><p>This is a 'continuity correction' aimed at approximating strictly
 conservative coverage, NOT for dealing with zero cell counts. Such
 'sparse data adjustments' are not needed in the score method,
@@ -226,7 +229,7 @@ a less conservative correction, such as cc = 0.25 suggested in Laud 2017
 <dd><p>Number to be used in a one-sided significance test (e.g.
 non-inferiority margin). 1-sided p-value will be &lt;0.025 iff 2-sided 95\<!-- % CI -->
 excludes theta0. (If bcf = FALSE and skew = FALSE this gives a
-Farrington-Manning test.)
+Farrington-Manning test.) <br>
 By default, a two-sided test against theta0 = 0 (for RD) or 1 (for RR/OR)
 is also output:</p><ul><li><p>If bcf = FALSE and skew = FALSE this is the same as K. Pearson's Chi-squared
 test in the single stratum case.</p></li>
@@ -269,7 +272,7 @@ evaluating heterogeneity of stratified datasets.</p></dd>
 
 <dt id="arg-stratified">stratified<a class="anchor" aria-label="anchor" href="#arg-stratified"></a></dt>
 <dd><p>Logical (default FALSE) indicating whether to combine
-vector inputs into a single stratified analysis.
+vector inputs into a single stratified analysis. <br>
 IMPORTANT NOTE: The mechanism for stratified calculations is enabled for
 contrast = "p", but the performance of the resulting intervals has not
 been fully evaluated.</p></dd>
@@ -277,17 +280,17 @@ been fully evaluated.</p></dd>
 
 <dt id="arg-weighting">weighting<a class="anchor" aria-label="anchor" href="#arg-weighting"></a></dt>
 <dd><p>String indicating which weighting method to use if
-stratified = "TRUE":
-"IVS" = Inverse Variance of Score (see Laud 2017 for details),
-"INV" = Inverse Variance (bcf omitted, default for contrast = "OR"),
+stratified = "TRUE": <br>
+"IVS" = Inverse Variance of Score (see Laud 2017 for details), <br>
+"INV" = Inverse Variance (bcf omitted, default for contrast = "OR"), <br>
 "MH" = Mantel-Haenszel (default for contrast = "RD" or "RR"),
-(= sample size for contrast = "p")
+(= sample size for contrast = "p") <br>
 "MN" = Miettinen-Nurminen weights.
 (similar to MH for contrast = "RD" or "RR",
-similar to INV for contrast = "OR")
+similar to INV for contrast = "OR"). <br>
 For CI consistent with a CMH test, select skew = FALSE, random = FALSE,
-and use default MH weighting for RD/RR and INV for OR.
-Weighting = 'MN' also matches the CMH test.
+and use default MH weighting for RD/RR and INV for OR. <br>
+Weighting = 'MN' also matches the CMH test. <br>
 Note: Alternative user-specified weighting may also be applied, via the
 'wt' argument.</p></dd>
 
@@ -331,7 +334,7 @@ Has no effect on estimates, just the heterogeneity test.</p></dd>
 <dt id="arg-random">random<a class="anchor" aria-label="anchor" href="#arg-random"></a></dt>
 <dd><p>Logical (default FALSE) indicating whether to perform random
 effects meta-analysis for stratified data, using the t-distribution (TDAS)
-method for stratified data (defined in Laud 2017).
+method for stratified data (defined in Laud 2017). <br>
 NOTE: If random = TRUE, then skew = TRUE only affects the per-stratum
 estimates.</p></dd>
 

@@ -3,7 +3,7 @@ pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   single_rate: single_rate.html
-last_built: 2025-03-21T11:26Z
+last_built: 2025-03-21T12:49Z
 urls:
   reference: https://petelaud.github.io/ratesci/reference
   article: https://petelaud.github.io/ratesci/articles

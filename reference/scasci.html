@@ -114,9 +114,11 @@ data: "bin" = binomial (default), "poi" = Poisson.</p></dd>
 
 
 <dt id="arg-contrast">contrast<a class="anchor" aria-label="anchor" href="#arg-contrast"></a></dt>
-<dd><p>Character string indicating the contrast of interest: "RD" =
-rate difference (default), "RR" = rate ratio, "OR" = odds ratio.
-contrast="p" gives an interval for the single proportion or rate x1/n1.</p></dd>
+<dd><p>Character string indicating the contrast of interest:</p><ul><li><p>"RD" = rate difference (default),</p></li>
+<li><p>"RR" = rate ratio,</p></li>
+<li><p>"OR" = odds ratio.</p></li>
+<li><p>"p" gives an interval for the single proportion or rate x1/n1.</p></li>
+</ul></dd>
 
 
 <dt id="arg-level">level<a class="anchor" aria-label="anchor" href="#arg-level"></a></dt>
@@ -127,7 +129,7 @@ contrast="p" gives an interval for the single proportion or rate x1/n1.</p></dd>
 <dt id="arg-cc">cc<a class="anchor" aria-label="anchor" href="#arg-cc"></a></dt>
 <dd><p>Number or logical (default FALSE) specifying (amount of) continuity
 correction. Numeric value is taken as the gamma parameter in Laud 2017,
-Appendix S2 (default 0.5 for 'conventional' correction if cc = TRUE).
+Appendix S2 (default 0.5 for 'conventional' correction if cc = TRUE). <br>
 IMPORTANT NOTES:</p><ol><li><p>This is a 'continuity correction' aimed at approximating strictly
 conservative coverage, NOT for dealing with zero cell counts. Such
 'sparse data adjustments' are not needed in the score method,
@@ -178,7 +180,7 @@ x-axis of plots (useful for ratio contrasts which can be infinite).</p></dd>
 
 <dt id="arg-stratified">stratified<a class="anchor" aria-label="anchor" href="#arg-stratified"></a></dt>
 <dd><p>Logical (default FALSE) indicating whether to combine
-vector inputs into a single stratified analysis.
+vector inputs into a single stratified analysis. <br>
 IMPORTANT NOTE: The mechanism for stratified calculations is enabled for
 contrast = "p", but the performance of the resulting intervals has not
 been fully evaluated.</p></dd>
@@ -186,17 +188,17 @@ been fully evaluated.</p></dd>
 
 <dt id="arg-weighting">weighting<a class="anchor" aria-label="anchor" href="#arg-weighting"></a></dt>
 <dd><p>String indicating which weighting method to use if
-stratified = "TRUE":
-"IVS" = Inverse Variance of Score (see Laud 2017 for details),
-"INV" = Inverse Variance (bcf omitted, default for contrast = "OR"),
+stratified = "TRUE": <br>
+"IVS" = Inverse Variance of Score (see Laud 2017 for details), <br>
+"INV" = Inverse Variance (bcf omitted, default for contrast = "OR"), <br>
 "MH" = Mantel-Haenszel (default for contrast = "RD" or "RR"),
-(= sample size for contrast = "p")
+(= sample size for contrast = "p") <br>
 "MN" = Miettinen-Nurminen weights.
 (similar to MH for contrast = "RD" or "RR",
-similar to INV for contrast = "OR")
+similar to INV for contrast = "OR"). <br>
 For CI consistent with a CMH test, select skew = FALSE, random = FALSE,
-and use default MH weighting for RD/RR and INV for OR.
-Weighting = 'MN' also matches the CMH test.
+and use default MH weighting for RD/RR and INV for OR. <br>
+Weighting = 'MN' also matches the CMH test. <br>
 Note: Alternative user-specified weighting may also be applied, via the
 'wt' argument.</p></dd>
 
