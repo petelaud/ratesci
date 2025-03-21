@@ -114,11 +114,11 @@ data: "bin" = binomial (default), "poi" = Poisson.</p></dd>
 
 
 <dt id="arg-contrast">contrast<a class="anchor" aria-label="anchor" href="#arg-contrast"></a></dt>
-<dd><p>Character string indicating the contrast of interest:</p><ul><li><p>"RD" = rate difference (default),</p></li>
-<li><p>"RR" = rate ratio,</p></li>
-<li><p>"OR" = odds ratio.</p></li>
-<li><p>"p" gives an interval for the single proportion or rate x1/n1.</p></li>
-</ul></dd>
+<dd><p>Character string indicating the contrast of interest: <br>
+"RD" = rate difference (default); <br>
+"RR" = rate ratio; <br>
+"OR" = odds ratio; <br>
+"p" gives an interval for the single proportion or rate x1/n1.</p></dd>
 
 
 <dt id="arg-level">level<a class="anchor" aria-label="anchor" href="#arg-level"></a></dt>
@@ -189,13 +189,13 @@ been fully evaluated.</p></dd>
 <dt id="arg-weighting">weighting<a class="anchor" aria-label="anchor" href="#arg-weighting"></a></dt>
 <dd><p>String indicating which weighting method to use if
 stratified = "TRUE": <br>
-"IVS" = Inverse Variance of Score (see Laud 2017 for details), <br>
-"INV" = Inverse Variance (bcf omitted, default for contrast = "OR"), <br>
-"MH" = Mantel-Haenszel (default for contrast = "RD" or "RR"),
-(= sample size for contrast = "p") <br>
+"IVS" = Inverse Variance of Score (see Laud 2017 for details); <br>
+"INV" = Inverse Variance (bcf omitted, default for contrast = "OR"); <br>
+"MH" = Mantel-Haenszel (default for contrast = "RD" or "RR");
+(= sample size for contrast = "p"); <br>
 "MN" = Miettinen-Nurminen weights.
 (similar to MH for contrast = "RD" or "RR",
-similar to INV for contrast = "OR"). <br>
+similar to INV for contrast = "OR"); <br>
 For CI consistent with a CMH test, select skew = FALSE, random = FALSE,
 and use default MH weighting for RD/RR and INV for OR. <br>
 Weighting = 'MN' also matches the CMH test. <br>
