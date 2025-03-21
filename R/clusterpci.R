@@ -4,7 +4,9 @@
 #' a clustered sample, as decribed by Saha et al. 2016.
 #' With optional skewness correction to improve interval location
 #' (to be evaluated).
-#' To be added: Hypothesis test.
+#' To be added:
+#' * Hypothesis test.
+#' * Poisson rate version? (Possibly using dispersion index = var/mean)
 #'
 #' @param x Numeric vector of number of events per cluster.
 #' @param n Numeric vector of sample sizes per cluster.

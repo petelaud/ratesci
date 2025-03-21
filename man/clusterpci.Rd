@@ -32,7 +32,11 @@ Asymptotic Score confidence intervals for a proportion estimated from
 a clustered sample, as decribed by Saha et al. 2016.
 With optional skewness correction to improve interval location
 (to be evaluated).
-To be added: Hypothesis test.
+To be added:
+\itemize{
+\item Hypothesis test.
+\item Poisson rate version? (Possibly using dispersion index = var/mean)
+}
 }
 \examples{
   # Data example from Liang 1992, used in Saha 2016 and Short 2020:
