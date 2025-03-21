@@ -5,12 +5,18 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Single_rate • ratesci</title>
+<title>Single rate • ratesci</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Single_rate">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Single rate">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -33,7 +39,7 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/single_rate.html">Single_rate</a></li>
+<li><a class="dropdown-item" href="../articles/single_rate.html">Single rate</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -55,8 +61,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>Single_rate</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>Single rate</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/petelaud/ratesci/blob/master/vignettes/single_rate.Rmd" class="external-link"><code>vignettes/single_rate.Rmd</code></a></small>
@@ -68,100 +73,159 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/petelaud/ratesci" class="external-link">ratesci</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
-<h2 id="introduction-to-rateci-and-related-functions-for-single-rate-estimation">Introduction to <code>rateci()</code> and related functions for
-single rate estimation<a class="anchor" aria-label="anchor" href="#introduction-to-rateci-and-related-functions-for-single-rate-estimation"></a>
+<h2 id="introduction-to-rateci-and-related-functions-for-estimation-of-a-single-binomial-or-poisson-rate">Introduction to <code>rateci()</code> and related functions for
+estimation of a single binomial or Poisson rate<a class="anchor" aria-label="anchor" href="#introduction-to-rateci-and-related-functions-for-estimation-of-a-single-binomial-or-poisson-rate"></a>
 </h2>
 <p>For estimation of a confidence interval for a single binomial
-proportion, the SCAS (Skewness-corrected asymptotic score) method is
-recommended, as one that achieves close to nominal two-sided and
-one-sided coverage (on average). It is a modified version of the Wilson
+proportion (<code>x/n</code>), the Skewness-Corrected Asymptotic Score
+(SCAS) method is recommended, as one that succeeds, on average, at
+containing the true proportion p with the appropriate nominal
+probability (e.g. 95%), and has evenly distributed tail
+probabilities<span class="citation">(<a href="#ref-laud2017">Laud
+2017</a>, Appendix S3.5)</span>. It is a modified version of the Wilson
 Score method. The plot below illustrates the interval non-coverage
 (i.e. 1 minus the actual probability that the interval contains the true
 value of p) achieved by SCAS compared to some other popular methods,
 using moving average smoothing:</p>
-<p><img src="../reference/figures/singlepropLNCP50.png"> For example, the
+<p><img src="../reference/figures/singlepropLNCP50.png">For example, the
 SCAS 95% interval for the proportion 1/29 is obtained with
-<code><a href="../reference/scaspci.html">scaspci()</a></code>:</p>
+<code><a href="../reference/scaspci.html">scaspci()</a></code>, using closed-form calculation<span class="citation">(<a href="#ref-laud2017">Laud 2017</a>, Appendix
+A.4)</span>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/scaspci.html">scaspci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">29</span><span class="op">)</span></span>
-<span><span class="co">#&gt;            Lower        MLE     Upper</span></span>
-<span><span class="co">#&gt; [1,] 0.001991554 0.03977273 0.1548909</span></span></code></pre></div>
+<span><span class="co">#&gt;        Lower    MLE Upper</span></span>
+<span><span class="co">#&gt; [1,] 0.00199 0.0398 0.155</span></span></code></pre></div>
 <p><code><a href="../reference/rateci.html">rateci()</a></code> also provides two other methods with similar
-coverage properties (Jeffreys and mid-p):</p>
+coverage properties (Jeffreys and mid-p) <span class="citation">(<a href="#ref-laud2018">Laud 2018</a>)</span>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/rateci.html">rateci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">29</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $scas</span></span>
-<span><span class="co">#&gt;            Lower        MLE     Upper</span></span>
-<span><span class="co">#&gt; [1,] 0.001991554 0.03977273 0.1548909</span></span>
+<span><span class="co">#&gt;        Lower    MLE Upper</span></span>
+<span><span class="co">#&gt; [1,] 0.00199 0.0398 0.155</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $jeff</span></span>
-<span><span class="co">#&gt;            Lower        est     Upper</span></span>
-<span><span class="co">#&gt; [1,] 0.003746174 0.04031598 0.1500777</span></span>
+<span><span class="co">#&gt;        Lower    est Upper</span></span>
+<span><span class="co">#&gt; [1,] 0.00375 0.0403  0.15</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $midp</span></span>
-<span><span class="co">#&gt;            Lower        MLE     Upper</span></span>
-<span><span class="co">#&gt; [1,] 0.001724769 0.03911135 0.1585374</span></span></code></pre></div>
+<span><span class="co">#&gt;        Lower    MLE Upper</span></span>
+<span><span class="co">#&gt; [1,] 0.00172 0.0391 0.159</span></span></code></pre></div>
 <p>The Jeffreys interval can also incorporate prior information about p
 for an approximate Bayesian confidence interval. For example, a pilot
 study estimate of 1/10 would suggest a Beta(1,9) prior for p:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/jeffreysci.html">jeffreysci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">29</span>, ai <span class="op">=</span> <span class="fl">1</span>, bi <span class="op">=</span> <span class="fl">9</span><span class="op">)</span></span>
-<span><span class="co">#&gt;            Lower        est    Upper</span></span>
-<span><span class="co">#&gt; [1,] 0.006438717 0.04377508 0.138099</span></span></code></pre></div>
+<span><span class="co">#&gt;        Lower    est Upper</span></span>
+<span><span class="co">#&gt; [1,] 0.00644 0.0438 0.138</span></span></code></pre></div>
 <p>If more conservative coverage is required, a “continuity adjustment”
 may be deployed with <code>cc</code>, as follows, giving
 continuity-adjusted SCAS or Jeffreys, and (if <code>cc</code> is TRUE or
 0.5), the Clopper-Pearson method. Note intermediate adjustments smaller
-than 0.5 give a more refined adjustment.</p>
+than 0.5 give a more refined adjustment<span class="citation">(<a href="#ref-laud2017">Laud 2017</a>, Appendix S2)</span>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/rateci.html">rateci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">29</span>, cc <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $scas_cc</span></span>
-<span><span class="co">#&gt;             Lower        MLE     Upper</span></span>
-<span><span class="co">#&gt; [1,] 6.185396e-06 0.03977273 0.1816531</span></span>
+<span><span class="co">#&gt;         Lower    MLE Upper</span></span>
+<span><span class="co">#&gt; [1,] 6.19e-06 0.0398 0.182</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $jeff_cc</span></span>
-<span><span class="co">#&gt;             Lower        est     Upper</span></span>
-<span><span class="co">#&gt; [1,] 0.0008726469 0.04031598 0.1776443</span></span>
+<span><span class="co">#&gt;         Lower    est Upper</span></span>
+<span><span class="co">#&gt; [1,] 0.000873 0.0403 0.178</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $cp</span></span>
-<span><span class="co">#&gt;             Lower        MLE     Upper</span></span>
-<span><span class="co">#&gt; [1,] 0.0008726455 0.03911135 0.1776443</span></span></code></pre></div>
+<span><span class="co">#&gt;         Lower    MLE Upper</span></span>
+<span><span class="co">#&gt; [1,] 0.000873 0.0391 0.178</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="stratified-and-clustered-datasets">Stratified and clustered datasets<a class="anchor" aria-label="anchor" href="#stratified-and-clustered-datasets"></a>
+</h3>
 <p>For stratified datasets, use <code><a href="../reference/scoreci.html">scoreci()</a></code> with
-<code>contrast = "p"</code> and <code>stratified = TRUE</code>:</p>
+<code>contrast = "p"</code> and <code>stratified = TRUE</code> (again,
+the skewness correction is recommended, but may be omitted). By default,
+a “fixed effects” analysis is produced, i.e. one which assumes a common
+true parameter p across strata. The default stratum weighting uses the
+inverse variance of the score underlying the SCAS/Wilson method,
+evaluated at the MLE for the pooled proportion (thus avoiding infinite
+weights for boundary cases). Alternative weights are sample size
+(<code>weighting = "MH"</code>) or custom user-specified weights
+supplied via the <code>wt</code> argument. For example, population
+weighting would be applied via a vector (e.g. <code>wt = Ni</code>)
+containing the true population size (or true population proportion
+<code>Ni/N</code>) represented by each stratum. (Note this is not
+divided by the sample size/proportion per stratum, because the weighting
+is applied at the group level, not the case level.)</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span>, n1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">29</span>, <span class="fl">4</span>, <span class="fl">50</span><span class="op">)</span>, contrast <span class="op">=</span> <span class="st">"p"</span>, stratified <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $estimates</span></span>
-<span><span class="co">#&gt;            Lower        MLE      Upper level      p1hat      p1mle</span></span>
-<span><span class="co">#&gt; [1,] 0.009586021 0.03799999 0.09442595  0.95 0.03614458 0.03799999</span></span>
+<span><span class="co">#&gt;        Lower   MLE  Upper level  p1hat p1mle</span></span>
+<span><span class="co">#&gt; [1,] 0.00959 0.038 0.0944  0.95 0.0361 0.038</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $pval</span></span>
-<span><span class="co">#&gt;         chisq   pval2sided theta0 scorenull    pval_left pval_right</span></span>
-<span><span class="co">#&gt; [1,] 71.43373 2.867277e-17    0.5 -8.451848 1.433638e-17          1</span></span>
+<span><span class="co">#&gt;      chisq pval2sided theta0 scorenull pval_left pval_right</span></span>
+<span><span class="co">#&gt; [1,]  71.4   2.87e-17    0.5     -8.45  1.43e-17          1</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $Qtest</span></span>
 <span><span class="co">#&gt;            Q         Q_df     pval_het           I2         tau2           Qc </span></span>
-<span><span class="co">#&gt;    0.1732891    2.0000000    0.9170030    0.0000000    0.0000000    0.0000000 </span></span>
+<span><span class="co">#&gt;        0.173        2.000        0.917        0.000        0.000        0.000 </span></span>
 <span><span class="co">#&gt; pval_qualhet </span></span>
-<span><span class="co">#&gt;    0.7500000 </span></span>
+<span><span class="co">#&gt;        0.750 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $weighting</span></span>
 <span><span class="co">#&gt; [1] "IVS"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $stratdata</span></span>
-<span><span class="co">#&gt;      x1j n1j     p1hatj  wt_fixed wtpct_fixed wtpct_rand    theta_j     lower_j</span></span>
-<span><span class="co">#&gt; [1,]   1  29 0.03448276  793.3037   34.939759  34.939759 0.03977272 0.001991540</span></span>
-<span><span class="co">#&gt; [2,]   0   4 0.00000000  109.4212    4.819277   4.819277 0.03846154 0.000000000</span></span>
-<span><span class="co">#&gt; [3,]   2  50 0.04000000 1367.7650   60.240964  60.240964 0.04304636 0.007211596</span></span>
-<span><span class="co">#&gt;        upper_j          V_j     Stheta_j         Q_j</span></span>
-<span><span class="co">#&gt; [1,] 0.1548909 0.0012605513 -0.003517229 0.009813880</span></span>
-<span><span class="co">#&gt; [2,] 0.4866570 0.0091389971 -0.037999988 0.158004105</span></span>
-<span><span class="co">#&gt; [3,] 0.1243474 0.0007311198  0.002000012 0.005471127</span></span>
+<span><span class="co">#&gt;      x1j n1j p1hatj wt_fixed wtpct_fixed wtpct_rand theta_j lower_j upper_j</span></span>
+<span><span class="co">#&gt; [1,]   1  29 0.0345      793       34.94      34.94  0.0398 0.00199   0.155</span></span>
+<span><span class="co">#&gt; [2,]   0   4 0.0000      109        4.82       4.82  0.0385 0.00000   0.487</span></span>
+<span><span class="co">#&gt; [3,]   2  50 0.0400     1368       60.24      60.24  0.0430 0.00721   0.124</span></span>
+<span><span class="co">#&gt;           V_j Stheta_j     Q_j</span></span>
+<span><span class="co">#&gt; [1,] 0.001261 -0.00352 0.00981</span></span>
+<span><span class="co">#&gt; [2,] 0.009139 -0.03800 0.15800</span></span>
+<span><span class="co">#&gt; [3,] 0.000731  0.00200 0.00547</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $call</span></span>
 <span><span class="co">#&gt;  distrib contrast    level      bcf     skew       cc   random </span></span>
 <span><span class="co">#&gt;    "bin"      "p"   "0.95"  "FALSE"   "TRUE"  "FALSE"  "FALSE"</span></span></code></pre></div>
-<p>For clustered data, use <code><a href="../reference/clusterpci.html">clusterpci()</a></code>:</p>
+<p>For a “random effects” analysis, use <code>random = TRUE</code>. This
+is unlikely to give a meaningful estimate of stratum variation if the
+number of strata is small. Quantification of the stratum variability is
+provided in the <code>Qtest</code> output object, regardless of the
+selected <code>random</code> argument.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span>, n1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">29</span>, <span class="fl">4</span>, <span class="fl">50</span><span class="op">)</span>, contrast <span class="op">=</span> <span class="st">"p"</span>, stratified <span class="op">=</span> <span class="cn">TRUE</span>, random <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $estimates</span></span>
+<span><span class="co">#&gt;       Lower    MLE  Upper level  p1hat  p1mle</span></span>
+<span><span class="co">#&gt; [1,] 0.0102 0.0361 0.0621  0.95 0.0361 0.0361</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $pval</span></span>
+<span><span class="co">#&gt;      chisq pval2sided theta0 scorenull pval_left pval_right</span></span>
+<span><span class="co">#&gt; [1,]  5905   0.000169    0.5     -76.8  8.47e-05          1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $Qtest</span></span>
+<span><span class="co">#&gt;            Q         Q_df     pval_het           I2         tau2           Qc </span></span>
+<span><span class="co">#&gt;        0.173        2.000        0.917        0.000        0.000        0.000 </span></span>
+<span><span class="co">#&gt; pval_qualhet </span></span>
+<span><span class="co">#&gt;        0.750 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $weighting</span></span>
+<span><span class="co">#&gt; [1] "IVS"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $stratdata</span></span>
+<span><span class="co">#&gt;      x1j n1j p1hatj wt_fixed wtpct_fixed wtpct_rand theta_j lower_j upper_j</span></span>
+<span><span class="co">#&gt; [1,]   1  29 0.0345      793       34.94      34.94  0.0398 0.00199   0.155</span></span>
+<span><span class="co">#&gt; [2,]   0   4 0.0000      109        4.82       4.82  0.0385 0.00000   0.487</span></span>
+<span><span class="co">#&gt; [3,]   2  50 0.0400     1368       60.24      60.24  0.0430 0.00721   0.124</span></span>
+<span><span class="co">#&gt;           V_j Stheta_j     Q_j</span></span>
+<span><span class="co">#&gt; [1,] 0.001261 -0.00352 0.00981</span></span>
+<span><span class="co">#&gt; [2,] 0.009139 -0.03800 0.15800</span></span>
+<span><span class="co">#&gt; [3,] 0.000731  0.00200 0.00547</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $call</span></span>
+<span><span class="co">#&gt;  distrib contrast    level      bcf     skew       cc   random </span></span>
+<span><span class="co">#&gt;    "bin"      "p"   "0.95"  "FALSE"   "TRUE"  "FALSE"   "TRUE"</span></span></code></pre></div>
+<p>For clustered data, use <code><a href="../reference/clusterpci.html">clusterpci()</a></code>, which applies the
+Wilson-based method proposed by <span class="citation">(<a href="#ref-saha2015">Saha, Miller, and Wang 2015</a>)</span>, and a
+skewness-corrected version:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>  <span class="co"># Data from Liang 1992</span></span>
 <span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">36</span>, <span class="fl">12</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>          <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>, <span class="fl">7</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -175,18 +239,39 @@ than 0.5 give a more refined adjustment.</p>
 <span>          <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="co"># Wilson-based interval as per Saha et al.</span></span>
 <span>  <span class="fu"><a href="../reference/clusterpci.html">clusterpci</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">n</span>, skew <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;          Lower       MLE     Upper totx totn    xihat       ICC</span></span>
-<span><span class="co">#&gt; [1,] 0.2284814 0.2955665 0.3728302   60  203 1.349133 0.1855342</span></span>
+<span><span class="co">#&gt;       Lower    MLE  Upper totx totn xihat    ICC</span></span>
+<span><span class="co">#&gt; [1,] 0.2285 0.2956 0.3728   60  203 1.349 0.1855</span></span>
 <span>  <span class="co"># Skewness-corrected version</span></span>
 <span>  <span class="fu"><a href="../reference/clusterpci.html">clusterpci</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">n</span>, skew <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;          Lower      MLE     Upper totx totn    xihat       ICC</span></span>
-<span><span class="co">#&gt; [1,] 0.2276278 0.295815 0.3723694   60  203 1.349133 0.1855342</span></span></code></pre></div>
+<span><span class="co">#&gt;       Lower    MLE  Upper totx totn xihat    ICC</span></span>
+<span><span class="co">#&gt; [1,] 0.2276 0.2958 0.3724   60  203 1.349 0.1855</span></span></code></pre></div>
 <p>All of the above (except <code><a href="../reference/clusterpci.html">clusterpci()</a></code>) can also handle
-Poisson exposure-adjusted rates, using <code>distrib = "poi"</code>.</p>
+Poisson exposure-adjusted rates, using <code>distrib = "poi"</code>,
+where <code>n</code> represents the exposure time.</p>
 <!-- ## Additional details -->
-<!-- Confidence intervals for a single binomial proportion, x/n, have a long history. The 'classic' method everyone learns about in school is known as the Wald method, based on a large-sample "simple asymptotic" Normal approximation. It is easily demonstrated that this method fails to achieve the nominal confidence level, even when n is quite large. -->
+<!-- Confidence intervals for a single binomial proportion, x/n, have a long history. The 'classic' ('conventional' / 'textbook') method everyone learns about in school is known as the Wald method, based on a large-sample "simple asymptotic" Normal approximation. It is easily demonstrated that this method generally fails to achieve the nominal confidence level, even when n is quite large. In other words, a 95% Wald confidence interval will contain the true value of p less than 95% of the time. For small proportions, the actual coverage can be alarmingly low. the Wald method can also produce intervals that contain impossible negative values of p, and an extremely unrealistic interval of [0, 0] when x = 0. -->
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-laud2017" class="csl-entry">
+Laud, Peter J. 2017. <span>“Equal<span>-</span>Tailed Confidence
+Intervals for Comparison of Rates.”</span> <em>Pharmaceutical
+Statistics</em> 16 (5): 334–48. <a href="https://doi.org/10.1002/pst.1813" class="external-link">https://doi.org/10.1002/pst.1813</a>.
 </div>
-  </main>
+<div id="ref-laud2018" class="csl-entry">
+———. 2018. <span>“Equal<span>-</span>Tailed Confidence Intervals for
+Comparison of Rates.”</span> <em>Pharmaceutical Statistics</em> 17 (3):
+290–93. <a href="https://doi.org/10.1002/pst.1855" class="external-link">https://doi.org/10.1002/pst.1855</a>.
+</div>
+<div id="ref-saha2015" class="csl-entry">
+Saha, Krishna K., Daniel Miller, and Suojin Wang. 2015. <span>“A
+Comparison of Some Approximate Confidence Intervals for a Single
+Proportion for Clustered Binary Outcome Data.”</span> <em>The
+International Journal of Biostatistics</em> 12 (2). <a href="https://doi.org/10.1515/ijb-2015-0024" class="external-link">https://doi.org/10.1515/ijb-2015-0024</a>.
+</div>
+</div>
+</div>
+</div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
