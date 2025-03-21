@@ -88,12 +88,12 @@ This builds the package from source based on the current version on
 Below is a basic example which shows you how to request a confidence
 interval for the difference between proportions 5/56 - 0/29. The `$call`
 output element shows that the default settings give an interval for the
-risk difference (`contrast` = “RD”), for binomial proportions (`distrib`
-= “bin”), at a 95% confidence level. Variance bias correction (`bcf`)
-and skewness correction (`skew`) are applied, continuity correction
-(`cc`) is not. This is the skewness-corrected asymptotic score (“SCAS”)
-confidence interval. (For Miettinen-Nurminen, use `skew` = FALSE, for
-Gart-Nam, use `bcf` = FALSE.)
+risk difference (`contrast = "RD"`), for binomial proportions
+(`distrib = "bin"`), at a 95% confidence level. Variance bias correction
+(`bcf`) and skewness correction (`skew`) are applied, continuity
+correction (`cc`) is not. This is the skewness-corrected asymptotic
+score (“SCAS”) confidence interval. (For Miettinen-Nurminen, use
+`skew = FALSE`, for Gart-Nam, use `bcf = FALSE`.)
 
 ``` r
 library(ratesci)
@@ -116,8 +116,8 @@ scoreci(x1 = 5, n1 = 56, x2 = 0, n2 = 29, precis = 4)
 An example of a paired analysis follows, using the data from Table II of
 Fagerland et al. Here the bias and skewness corrections are again
 applied by default. Omitting both would produce the Tango asymptotic
-score interval for `contrast = RD`, or the Tang method for
-`contrast = RR`.
+score interval for `contrast = "RD"`, or the Tang method for
+`contrast = "RR"`.
 
 ``` r
 pairbinci(x = c(1, 1, 7, 12), precis = 4)
