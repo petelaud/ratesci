@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 ```
 
 # ratesci <a href="https://petelaud.github.io/ratesci/"><img src="man/figures/logo.png" alt="ratesci website" align="right" height="139"/></a>
-
+ 
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/petelaud/ratesci/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/petelaud/ratesci/actions/workflows/R-CMD-check.yaml) [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![CRAN_Version](https://www.r-pkg.org/badges/version/ratesci)](https://cran.r-project.org/package=ratesci) [![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/ratesci)](https://cranlogs.r-pkg.org/badges/grand-total/ratesci)
