@@ -4,8 +4,8 @@
 n1 <- 40
 n2 <- 20
 xs <- expand.grid(0:n1, 0:n2)
-x1 <- xs[43, 1]
-x2 <- xs[43, 2]
+x1 <- xs[ , 1]
+x2 <- xs[ , 2]
 
 for (cc in c(FALSE, TRUE)) {
   for (skew in c(TRUE, FALSE)) {
@@ -53,32 +53,32 @@ for (cc in c(FALSE, TRUE)) {
         tolerance = 1E-5
       )
       expect_equal(
-        signif(unname(scoreci(
+        (unname(scoreci(
           x1 = x1, n1 = n1, x2 = x2, n2 = n2, skew = skew, cc = cc,
           contrast = "RR", distrib = "poi", precis = 10
-        )$estimates)[, 1], digits = 5),
-        signif(1 / unname(scoreci(
+        )$estimates)[, 1]),
+        (1 / unname(scoreci(
           x1 = x2, n1 = n2, x2 = x1, n2 = n1, skew = skew, cc = cc,
           contrast = "RR", distrib = "poi", precis = 10
-        )$estimates)[, 3], digits = 5)
+        )$estimates)[, 3]),
+        tolerance = 1E-5
       )
       expect_equal(
-        round(signif(unname(scoreci(
+        (unname(scoreci(
           x1 = x1, n1 = n1, x2 = x2, n2 = n2, skew = skew,
           cc = cc, contrast = "OR", precis = 10
-        )$estimates)[, 1], digits = 5), 6),
-        round(signif(unname(1 / scoreci(
+        )$estimates)[, 1]),
+        (unname(1 / scoreci(
           x1 = x2, n1 = n2, x2 = x1, n2 = n1, skew = skew,
           cc = cc, contrast = "OR", precis = 10
-        )$estimates)[, 3], digits = 5), 6)
+        )$estimates)[, 3]),
+        tolerance = 1E-5
       )
     })
   }
 }
 
 
-midp <- TRUE
-distrib <- "bin"
 for (midp in c(FALSE, TRUE)) {
     test_that("Transposed inputs produce inverted intervals", {
       expect_equal(
@@ -91,7 +91,8 @@ for (midp in c(FALSE, TRUE)) {
         )
     })
 }
-for (midp in c(FALSE, TRUE)) {
+for (distrib in c("bin", "poi")) {
+  for (midp in c(FALSE, TRUE)) {
   test_that("Midpoint equals UCL and LCL for level = 0", {
     expect_equal(
       unname(exactci(x = 0:40, n = 40,
@@ -112,7 +113,7 @@ for (midp in c(FALSE, TRUE)) {
       tolerance = 1E-5
     )
   })
-}
+}}
 
 
 test_that("Tang score matches IVS", {

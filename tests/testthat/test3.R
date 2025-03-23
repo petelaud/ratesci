@@ -549,6 +549,21 @@ test_that("legacy & new methods match published examples", {
     unname(round(scaspci(x = 0, n = 20), 4)[, c(1, 3)]),
     c(0, 0.1297)
   )
+  # mid-p
+  expect_equal(
+    unname(round(exactci(x = 0, n = 20, midp = TRUE), 4)[, c(1, 3)]),
+    c(0.00, 0.1391)
+  )
+  # Clopper-Pearson
+  expect_equal(
+    unname(round(exactci(x = 0, n = 20, midp = FALSE), 4)[, c(1, 3)]),
+    c(0.00, 0.1684)
+  )
+  # Jeffreys, cf Brown et al. 2001
+  expect_equal(
+    unname(round(jeffreysci(x = 0, n = 20), 3)[, c(1, 3)]),
+    c(0.00, 0.117)
+  )
   # Wilson
   expect_equal(
     unname(round(wilsonci(x = 1, n = 29), 4)[, c(1, 3)]),
@@ -558,6 +573,21 @@ test_that("legacy & new methods match published examples", {
   expect_equal(
     unname(round(scaspci(x = 1, n = 29), 4)[, c(1, 3)]),
     c(0.0020, 0.1549)
+  )
+  # mid-p
+  expect_equal(
+    unname(round(exactci(x = 1, n = 29, midp = TRUE), 4)[, c(1, 3)]),
+    c(0.0017, 0.1585)
+  )
+  # Clopper-Pearson
+  expect_equal(
+    unname(round(exactci(x = 1, n = 29, midp = FALSE), 4)[, c(1, 3)]),
+    c(0.0009, 0.1776)
+  )
+  # Jeffreys, cf Brown et al. 2001
+  expect_equal(
+    unname(round(jeffreysci(x = 1, n = 29), 3)[, c(1, 3)]),
+    c(0.004, 0.150)
   )
 
   # Wilson clustered, Liang example data used in Short et al 2020
