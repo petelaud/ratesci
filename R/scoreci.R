@@ -133,7 +133,6 @@
 #'   evaluating heterogeneity of stratified datasets.
 #' @param MNtol Numeric value indicating convergence tolerance to be used in
 #'   iteration with weighting = "MN".
-#' @param tdas (deprecated: parameter renamed to random)
 #' @param random Logical (default FALSE) indicating whether to perform random
 #'   effects meta-analysis for stratified data, using the t-distribution (TDAS)
 #'   method for stratified data (defined in Laud 2017). \cr
@@ -277,18 +276,10 @@ scoreci <- function(x1,
                     sda = NULL,
                     fda = NULL,
                     dropzeros = FALSE,
-                    tdas = NULL,
                     random = FALSE,
                     prediction = FALSE,
                     warn = TRUE,
                     ...) {
-  if (!is.null(tdas)) {
-    warning(
-      "argument tdas is deprecated; please use random instead.",
-      call. = FALSE
-    )
-    random <- tdas
-  }
   if (!(tolower(substr(distrib, 1, 3)) %in% c("bin", "poi"))) {
     print("Distrib must be one of 'bin' or 'poi'")
     stop()
