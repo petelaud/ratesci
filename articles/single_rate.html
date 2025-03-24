@@ -152,79 +152,83 @@ containing the true population size (or true population proportion
 <code>Ni/N</code>) represented by each stratum. (Note this is not
 divided by the sample size/proportion per stratum, because the weighting
 is applied at the group level, not the case level.)</p>
+<p>Below is an illustration using the systematic review of the effect on
+mortality of corticosteroids in traumatic brain injury (MRC CRASH
+trial):</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span>, n1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">29</span>, <span class="fl">4</span>, <span class="fl">50</span><span class="op">)</span>, contrast <span class="op">=</span> <span class="st">"p"</span>, stratified <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; $estimates</span></span>
-<span><span class="co">#&gt;        Lower   MLE  Upper level  p1hat p1mle</span></span>
-<span><span class="co">#&gt; [1,] 0.00959 0.038 0.0944  0.95 0.0361 0.038</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $pval</span></span>
-<span><span class="co">#&gt;      chisq pval2sided theta0 scorenull pval_left pval_right</span></span>
-<span><span class="co">#&gt; [1,]  71.4   2.87e-17    0.5     -8.45  1.43e-17          1</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $Qtest</span></span>
-<span><span class="co">#&gt;            Q         Q_df     pval_het           I2         tau2           Qc </span></span>
-<span><span class="co">#&gt;        0.173        2.000        0.917        0.000        0.000        0.000 </span></span>
-<span><span class="co">#&gt; pval_qualhet </span></span>
-<span><span class="co">#&gt;        0.750 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $weighting</span></span>
-<span><span class="co">#&gt; [1] "IVS"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $stratdata</span></span>
-<span><span class="co">#&gt;      x1j n1j p1hatj wt_fixed wtpct_fixed wtpct_rand theta_j lower_j upper_j</span></span>
-<span><span class="co">#&gt; [1,]   1  29 0.0345      793       34.94      34.94  0.0398 0.00199   0.155</span></span>
-<span><span class="co">#&gt; [2,]   0   4 0.0000      109        4.82       4.82  0.0385 0.00000   0.487</span></span>
-<span><span class="co">#&gt; [3,]   2  50 0.0400     1368       60.24      60.24  0.0430 0.00721   0.124</span></span>
-<span><span class="co">#&gt;           V_j Stheta_j     Q_j</span></span>
-<span><span class="co">#&gt; [1,] 0.001261 -0.00352 0.00981</span></span>
-<span><span class="co">#&gt; [2,] 0.009139 -0.03800 0.15800</span></span>
-<span><span class="co">#&gt; [3,] 0.000731  0.00200 0.00547</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $call</span></span>
-<span><span class="co">#&gt;  distrib contrast    level      bcf     skew       cc   random </span></span>
-<span><span class="co">#&gt;    "bin"      "p"   "0.95"  "FALSE"   "TRUE"  "FALSE"  "FALSE"</span></span></code></pre></div>
-<p>For a “random effects” analysis, use <code>random = TRUE</code>. This
-is unlikely to give a meaningful estimate of stratum variation if the
-number of strata is small. Quantification of the stratum variability is
-provided in the <code>Qtest</code> output object, regardless of the
-selected <code>random</code> argument.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">crash</span>, package <span class="op">=</span> <span class="st">"ratesci"</span><span class="op">)</span></span>
+<span><span class="va">strat_p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="va">crash</span><span class="op">$</span><span class="va">event.control</span><span class="op">[</span><span class="op">-</span><span class="fl">17</span><span class="op">]</span>, n1 <span class="op">=</span> <span class="va">crash</span><span class="op">$</span><span class="va">n.control</span><span class="op">[</span><span class="op">-</span><span class="fl">17</span><span class="op">]</span>, contrast <span class="op">=</span> <span class="st">"p"</span>, stratified <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">strat_p</span><span class="op">$</span><span class="va">estimates</span></span>
+<span><span class="co">#&gt;      Lower   MLE Upper level p1hat p1mle</span></span>
+<span><span class="co">#&gt; [1,] 0.296 0.325 0.356  0.95 0.325 0.325</span></span></code></pre></div>
+<p>The function also outputs p-values for a 2-sided hypothesis test
+against a default null hypothesis p = 0.5, and one-sided tests against a
+user-specified value of theta0:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span>, n1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">29</span>, <span class="fl">4</span>, <span class="fl">50</span><span class="op">)</span>, contrast <span class="op">=</span> <span class="st">"p"</span>, stratified <span class="op">=</span> <span class="cn">TRUE</span>, random <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; $estimates</span></span>
-<span><span class="co">#&gt;       Lower    MLE  Upper level  p1hat  p1mle</span></span>
-<span><span class="co">#&gt; [1,] 0.0102 0.0361 0.0621  0.95 0.0361 0.0361</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $pval</span></span>
+<code class="sourceCode R"><span><span class="va">strat_p</span><span class="op">$</span><span class="va">pval</span></span>
 <span><span class="co">#&gt;      chisq pval2sided theta0 scorenull pval_left pval_right</span></span>
-<span><span class="co">#&gt; [1,]  5905   0.000169    0.5     -76.8  8.47e-05          1</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $Qtest</span></span>
+<span><span class="co">#&gt; [1,]   113    2.4e-26    0.5     -10.6   1.2e-26          1</span></span></code></pre></div>
+<p>The <code>Qtest</code> output object provides a heterogeneity test
+and related quantities:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">strat_p</span><span class="op">$</span><span class="va">Qtest</span></span>
 <span><span class="co">#&gt;            Q         Q_df     pval_het           I2         tau2           Qc </span></span>
-<span><span class="co">#&gt;        0.173        2.000        0.917        0.000        0.000        0.000 </span></span>
+<span><span class="co">#&gt;     125.4067      15.0000       0.0000      88.0389       0.0293       7.5511 </span></span>
 <span><span class="co">#&gt; pval_qualhet </span></span>
-<span><span class="co">#&gt;        0.750 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $weighting</span></span>
-<span><span class="co">#&gt; [1] "IVS"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $stratdata</span></span>
-<span><span class="co">#&gt;      x1j n1j p1hatj wt_fixed wtpct_fixed wtpct_rand theta_j lower_j upper_j</span></span>
-<span><span class="co">#&gt; [1,]   1  29 0.0345      793       34.94      34.94  0.0398 0.00199   0.155</span></span>
-<span><span class="co">#&gt; [2,]   0   4 0.0000      109        4.82       4.82  0.0385 0.00000   0.487</span></span>
-<span><span class="co">#&gt; [3,]   2  50 0.0400     1368       60.24      60.24  0.0430 0.00721   0.124</span></span>
-<span><span class="co">#&gt;           V_j Stheta_j     Q_j</span></span>
-<span><span class="co">#&gt; [1,] 0.001261 -0.00352 0.00981</span></span>
-<span><span class="co">#&gt; [2,] 0.009139 -0.03800 0.15800</span></span>
-<span><span class="co">#&gt; [3,] 0.000731  0.00200 0.00547</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $call</span></span>
-<span><span class="co">#&gt;  distrib contrast    level      bcf     skew       cc   random </span></span>
-<span><span class="co">#&gt;    "bin"      "p"   "0.95"  "FALSE"   "TRUE"  "FALSE"   "TRUE"</span></span></code></pre></div>
+<span><span class="co">#&gt;       0.4274</span></span></code></pre></div>
+<p>Per-stratum estimates are produced, including stratum weights and
+contributions to the Q-statistic:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">strat_p</span><span class="op">$</span><span class="va">stratdata</span></span>
+<span><span class="co">#&gt;       x1j n1j p1hatj wt_fixed wtpct_fixed wtpct_rand theta_j lower_j upper_j</span></span>
+<span><span class="co">#&gt;  [1,]  13  18 0.7222     82.0       1.946      1.946 0.71818  0.4908  0.8882</span></span>
+<span><span class="co">#&gt;  [2,]  22  55 0.4000    250.5       5.946      5.946 0.40060  0.2778  0.5324</span></span>
+<span><span class="co">#&gt;  [3,]  16  28 0.5714    127.5       3.027      3.027 0.57059  0.3872  0.7417</span></span>
+<span><span class="co">#&gt;  [4,]  13  27 0.4815    123.0       2.919      2.919 0.48171  0.3014  0.6653</span></span>
+<span><span class="co">#&gt;  [5,]  36  83 0.4337    378.1       8.973      8.973 0.43400  0.3306  0.5414</span></span>
+<span><span class="co">#&gt;  [6,]  38  74 0.5135    337.1       8.000      8.000 0.51345  0.4006  0.6254</span></span>
+<span><span class="co">#&gt;  [7,]   9  50 0.1800    227.8       5.405      5.405 0.18212  0.0921  0.3038</span></span>
+<span><span class="co">#&gt;  [8,]  47  80 0.5875    364.4       8.649      8.649 0.58714  0.4778  0.6910</span></span>
+<span><span class="co">#&gt;  [9,]   7  16 0.4375     72.9       1.730      1.730 0.43878  0.2184  0.6771</span></span>
+<span><span class="co">#&gt; [10,]  21  62 0.3387    282.4       6.703      6.703 0.33957  0.2299  0.4622</span></span>
+<span><span class="co">#&gt; [11,]   0   5 0.0000     22.8       0.541      0.541 0.03125  0.0000  0.4162</span></span>
+<span><span class="co">#&gt; [12,]   4  12 0.3333     54.7       1.297      1.297 0.33784  0.1197  0.6176</span></span>
+<span><span class="co">#&gt; [13,]   5  54 0.0926    246.0       5.838      5.838 0.09509  0.0353  0.1923</span></span>
+<span><span class="co">#&gt; [14,]  21 136 0.1544    619.5      14.703     14.703 0.15526  0.1010  0.2224</span></span>
+<span><span class="co">#&gt; [15,]  49 195 0.2513    888.2      21.081     21.081 0.25171  0.1943  0.3156</span></span>
+<span><span class="co">#&gt; [16,]   0  30 0.0000    136.7       3.243      3.243 0.00549  0.0000  0.0888</span></span>
+<span><span class="co">#&gt;           V_j Stheta_j      Q_j</span></span>
+<span><span class="co">#&gt;  [1,] 0.01220  0.39675 12.90636</span></span>
+<span><span class="co">#&gt;  [2,] 0.00399  0.07453  1.39166</span></span>
+<span><span class="co">#&gt;  [3,] 0.00784  0.24596  7.71573</span></span>
+<span><span class="co">#&gt;  [4,] 0.00813  0.15601  2.99347</span></span>
+<span><span class="co">#&gt;  [5,] 0.00265  0.10827  4.43156</span></span>
+<span><span class="co">#&gt;  [6,] 0.00297  0.18805 11.91915</span></span>
+<span><span class="co">#&gt;  [7,] 0.00439 -0.14547  4.81943</span></span>
+<span><span class="co">#&gt;  [8,] 0.00274  0.26203 25.01996</span></span>
+<span><span class="co">#&gt;  [9,] 0.01372  0.11203  0.91473</span></span>
+<span><span class="co">#&gt; [10,] 0.00354  0.01324  0.04952</span></span>
+<span><span class="co">#&gt; [11,] 0.04391 -0.32547  2.41255</span></span>
+<span><span class="co">#&gt; [12,] 0.01829  0.00787  0.00338</span></span>
+<span><span class="co">#&gt; [13,] 0.00407 -0.23288 13.33924</span></span>
+<span><span class="co">#&gt; [14,] 0.00161 -0.17106 18.12622</span></span>
+<span><span class="co">#&gt; [15,] 0.00113 -0.07419  4.88844</span></span>
+<span><span class="co">#&gt; [16,] 0.00732 -0.32547 14.47530</span></span></code></pre></div>
+<p>For a “random effects” analysis, use <code>random = TRUE</code>.
+(This may not give a meaningful estimate of stratum variation if the
+number of strata is small.)</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">strat_p_rand</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="va">crash</span><span class="op">$</span><span class="va">event.control</span><span class="op">[</span><span class="op">-</span><span class="fl">17</span><span class="op">]</span>, n1 <span class="op">=</span> <span class="va">crash</span><span class="op">$</span><span class="va">n.control</span><span class="op">[</span><span class="op">-</span><span class="fl">17</span><span class="op">]</span>, contrast <span class="op">=</span> <span class="st">"p"</span>, stratified <span class="op">=</span> <span class="cn">TRUE</span>, random <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">strat_p_rand</span><span class="op">$</span><span class="va">estimates</span></span>
+<span><span class="co">#&gt;      Lower   MLE Upper level p1hat p1mle</span></span>
+<span><span class="co">#&gt; [1,] 0.239 0.349 0.459  0.95 0.349 0.349</span></span>
+<span><span class="va">strat_p_rand</span><span class="op">$</span><span class="va">pval</span></span>
+<span><span class="co">#&gt;      chisq pval2sided theta0 scorenull pval_left pval_right</span></span>
+<span><span class="co">#&gt; [1,]   8.6     0.0103    0.5     -2.93   0.00514      0.995</span></span></code></pre></div>
 <p>For clustered data, use <code><a href="../reference/clusterpci.html">clusterpci()</a></code>, which applies the
 Wilson-based method proposed by <span class="citation">(<a href="#ref-saha2015">Saha, Miller, and Wang 2015</a>)</span>, and a
 skewness-corrected version:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>  <span class="co"># Data from Liang 1992</span></span>
 <span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">36</span>, <span class="fl">12</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>          <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>, <span class="fl">7</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
