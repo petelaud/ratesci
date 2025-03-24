@@ -7,11 +7,11 @@
 \format{
 A data frame with five variables:
 \describe{
-\item{study},
-\item{event.steroid},
-\item{n.steroid},
-\item{event.control}
-\item{n.control}
+\item{study}{Study author and year}
+\item{event.steroid}{Number of deaths in steroid-treated group}
+\item{n.steroid}{Number of patients in steroid-treated group}
+\item{event.control}{Number of deaths in control group}
+\item{n.control}{Number of patients in control group}
 }
 }
 \source{
