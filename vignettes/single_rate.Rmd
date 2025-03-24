@@ -53,11 +53,11 @@ rateci(x = 1, n = 29, cc = TRUE)
 
 For stratified datasets, use `scoreci()` with `contrast = "p"` and `stratified = TRUE` (again, the skewness correction is recommended, but may be omitted). By default, a "fixed effects" analysis is produced, i.e. one which assumes a common true parameter p across strata. The default stratum weighting uses the inverse variance of the score underlying the SCAS/Wilson method, evaluated at the MLE for the pooled proportion (thus avoiding infinite weights for boundary cases). Alternative weights are sample size (`weighting = "MH"`) or custom user-specified weights supplied via the `wt` argument. For example, population weighting would be applied via a vector (e.g. `wt = Ni`) containing the true population size (or true population proportion `Ni/N`) represented by each stratum. (Note this is not divided by the sample size/proportion per stratum, because the weighting is applied at the group level, not the case level.)
 
-Below is an illustration using the systematic review of the effect on mortality of corticosteroids in traumatic brain injury (MRC CRASH trial):
+Below is an illustration using data from the placebo arm of 13 trials of non-ulcer dyspepsia:
 
 ```{r}
-data(crash, package = "ratesci")
-strat_p <- scoreci(x1 = crash$event.control[-17], n1 = crash$n.control[-17], contrast = "p", stratified = TRUE)
+data(cisapride, package = "ratesci")
+strat_p <- scoreci(x1 = cisapride$event.plac, n1 = cisapride$n.plac, contrast = "p", stratified = TRUE)
 strat_p$estimates
 ```
 
@@ -82,7 +82,7 @@ strat_p$stratdata
 For a "random effects" analysis, use `random = TRUE`. (This may not give a meaningful estimate of stratum variation if the number of strata is small.)
 
 ```{r}
-strat_p_rand <- scoreci(x1 = crash$event.control[-17], n1 = crash$n.control[-17], contrast = "p", stratified = TRUE, random = TRUE)
+strat_p_rand <- scoreci(x1 = cisapride$event.plac, n1 = cisapride$n.plac, contrast = "p", stratified = TRUE, random = TRUE)
 strat_p_rand$estimates
 strat_p_rand$pval
 ```
@@ -112,6 +112,22 @@ options(digits = 4)
 ```
 
 All of the above (except `clusterpci()`) can also handle Poisson exposure-adjusted rates, using `distrib = "poi"`, where `n` represents the exposure time.
+
+## Technical details
+
+The SCAS method is an extension of the Wilson Score method, using the same score function $S(p) = x / n - p$. The variance of $S(p)$ is $V = p(1 - p)/n$, and the 3rd central moment is $\mu_3 = p(1 - p)(1 - 2p)/n^2$. The $100(1 - \alpha)\%$ confidence interval is found as the two solutions of the following equation, where $z$ is the $1 - \alpha / 2$ percentile of the standard normal distribution:
+
+$$
+S(p)/V^{1/2} - (z^2 - 1)\mu_3/6V^{3/2} = \pm z
+$$
+
+For unstratified datasets, this has a closed-form solution. The formula is extended in [@Laud2017] to incorporate stratification using inverse variance weights, $w_i = 1 / V$, or other weighting schemes as required, with the solution being found by iteration over $p \in [0, 1]$.
+
+The Jeffreys interval is obtained as $\alpha / 2$ and $1 - \alpha / 2$ quantiles of the $Beta(x + 0.5, n - x + 0.5)$ distribution, with boundary modifications when $x = 0$ or $x = n$.
+
+A Clopper-Pearson interval may also be obtained as quantiles of a beta distribution, using $Beta(x, n - x + 1)$ for the lower confidence limit, and $Beta(x + 1, n - x)$ for the upper limit.
+
+<!-- The mid-p interval requires iteration to identify limits satisfying the inequalities specified ... -->
 
 <!-- ## Additional details -->
 
