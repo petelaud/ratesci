@@ -33,7 +33,6 @@ scoreci(
   sda = NULL,
   fda = NULL,
   dropzeros = FALSE,
-  tdas = NULL,
   random = FALSE,
   prediction = FALSE,
   warn = TRUE,
@@ -179,8 +178,6 @@ uninformative strata for RR/OR (i.e. strata with x1 = 0 and x2 = 0),
 even when the choice of weights would allow
 them to be retained for a fixed effects analysis.
 Has no effect on estimates, just the heterogeneity test.}
-
-\item{tdas}{(deprecated: parameter renamed to random)}
 
 \item{random}{Logical (default FALSE) indicating whether to perform random
 effects meta-analysis for stratified data, using the t-distribution (TDAS)

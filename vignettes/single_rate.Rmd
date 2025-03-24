@@ -53,14 +53,38 @@ rateci(x = 1, n = 29, cc = TRUE)
 
 For stratified datasets, use `scoreci()` with `contrast = "p"` and `stratified = TRUE` (again, the skewness correction is recommended, but may be omitted). By default, a "fixed effects" analysis is produced, i.e. one which assumes a common true parameter p across strata. The default stratum weighting uses the inverse variance of the score underlying the SCAS/Wilson method, evaluated at the MLE for the pooled proportion (thus avoiding infinite weights for boundary cases). Alternative weights are sample size (`weighting = "MH"`) or custom user-specified weights supplied via the `wt` argument. For example, population weighting would be applied via a vector (e.g. `wt = Ni`) containing the true population size (or true population proportion `Ni/N`) represented by each stratum. (Note this is not divided by the sample size/proportion per stratum, because the weighting is applied at the group level, not the case level.)
 
+Below is an illustration using the systematic review of the effect on mortality of corticosteroids in traumatic brain injury (MRC CRASH trial):
+
 ```{r}
-scoreci(x1 = c(1, 0, 2), n1 = c(29, 4, 50), contrast = "p", stratified = TRUE)
+data(crash)
+strat_p <- scoreci(x1 = event.control[-17], n1 = n.control[-17], contrast = "p", stratified = TRUE)
+strat_p$estimates
 ```
 
-For a "random effects" analysis, use `random = TRUE`. This is unlikely to give a meaningful estimate of stratum variation if the number of strata is small. Quantification of the stratum variability is provided in the `Qtest` output object, regardless of the selected `random` argument.
+The function also outputs p-values for a 2-sided hypothesis test against a default null hypothesis p = 0.5, and one-sided tests against a user-specified value of theta0:
 
 ```{r}
-scoreci(x1 = c(1, 0, 2), n1 = c(29, 4, 50), contrast = "p", stratified = TRUE, random = TRUE)
+strat_p$pval
+```
+
+The `Qtest` output object provides a heterogeneity test and related quantities:
+
+```{r}
+strat_p$Qtest
+```
+
+Per-stratum estimates are produced, including stratum weights and contributions to the Q-statistic:
+
+```{r}
+strat_p$stratdata
+```
+
+For a "random effects" analysis, use `random = TRUE`. (This may not give a meaningful estimate of stratum variation if the number of strata is small.) 
+
+```{r}
+strat_p_rand <- scoreci(x1 = event.control[-17], n1 = n.control[-17], contrast = "p", stratified = TRUE, random = TRUE)
+strat_p_rand$estimates
+strat_p_rand$pval
 ```
 
 For clustered data, use `clusterpci()`, which applies the Wilson-based method proposed by [@saha2015], and a skewness-corrected version:
