@@ -13,3 +13,19 @@
 #'  }
 #' @source <http://www.ncbi.nlm.nih.gov/pubmed/15474134>
 "crash"
+
+#' cisapride.
+#'
+#' Data from systematic review of the effect of cisapride for treatment of
+#' non-ulcer dyspepsia
+#'
+#' @format A data frame with five variables:
+#' \describe{
+#'   \item{study}{Study author}
+#'   \item{event.cisa}{Number of events (successes) in cisapride-treated group}
+#'   \item{n.cisa}{Number of patients in cisapride-treated group}
+#'   \item{event.plac}{Number of events (successes) in placebo group}
+#'   \item{n.plac}{Number of patients in placebo group}
+#'  }
+#' @source <https://onlinelibrary.wiley.com/doi/10.1002/sim.1009>
+"cisapride"

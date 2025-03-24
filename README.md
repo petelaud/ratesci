@@ -15,10 +15,18 @@ Downloads](https://cranlogs.r-pkg.org/badges/grand-total/ratesci)](https://cranl
 <!-- badges: end -->
 
 ratesci is an [R](https://www.r-project.org) package to compute
-confidence intervals for rate (or risk) difference (‘RD’), rate ratio
-(‘RR’, also known as relative risk), or odds ratio (‘OR’). All three
-contrasts apply for binomial proportions, and the first two may also be
-used for the comparison of Poisson ‘exposure-adjusted’ incidence rates.
+confidence intervals for:
+
+- a single binomial proportion
+- a single Poisson ‘exposure-adjusted’ incidence rate
+- binomial risk difference or Poisson rate difference (‘RD’)
+- binomial relative risk or Poisson rate ratio (‘RR’)
+- binomial odds ratio (‘OR’)
+- stratified calculations for any of the above
+- paired binomial contrasts RD and RR
+- paired odds ratio using the conditional model
+- binomial proportion from clustered data
+
 `scoreci()` incorporates ‘skewness-corrected’ asymptotic score (‘SCAS’)
 methods, which ensure equal-tailed coverage (or central location), in
 other words for a nominal 95% confidence interval, the one-sided
