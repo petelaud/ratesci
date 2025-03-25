@@ -29,3 +29,19 @@
 #'  }
 #' @source <https://onlinelibrary.wiley.com/doi/10.1002/sim.1009>
 "cisapride"
+
+#' compress.
+#'
+#' Data from systematic review of the effect of graduated compression stockings
+#' for prevention of DVT
+#'
+#' @format A data frame with five variables:
+#' \describe{
+#'   \item{study}{Study author}
+#'   \item{event.gcs}{Number of events (DVTs) in GCS-treated group}
+#'   \item{n.gcs}{Number of patients in GCS-treated group}
+#'   \item{event.control}{Number of events (DVTs) in control group}
+#'   \item{n.control}{Number of patients in control group}
+#'  }
+#' @source <https://www.journalslibrary.nihr.ac.uk/hta/HTA9490>
+"compress"

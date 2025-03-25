@@ -23,15 +23,15 @@ library(ratesci)
 
 ## Introduction to `rateci()` and related functions for estimation of a single binomial or Poisson rate
 
-For estimation of a confidence interval for a single binomial proportion (`x/n`), the Skewness-Corrected Asymptotic Score (SCAS) method is recommended, as one that succeeds, on average, at containing the true proportion p with the appropriate nominal probability (e.g. 95%), and has evenly distributed tail probabilities[@laud2017, Appendix S3.5]. It is a modified version of the Wilson Score method. The plot below illustrates the interval non-coverage (i.e. 1 minus the actual probability that the interval contains the true value of p) achieved by SCAS compared to some other popular methods, using moving average smoothing:
+For estimation of a confidence interval for a single binomial proportion (`x/n`), the Skewness-Corrected Asymptotic Score (SCAS) method is recommended, as one that succeeds, on average, at containing the true proportion p with the appropriate nominal probability (e.g. 95%), and has evenly distributed tail probabilities [@laud2017, Appendix S3.5]. It is a modified version of the Wilson Score method. The plot below illustrates the interval non-coverage (i.e. 1 minus the actual probability that the interval contains the true value of p) achieved by SCAS compared to some other popular methods, using moving average smoothing:
 
-![](../man/figures/singlepropLNCP50.png)For example, the SCAS 95% interval for the proportion 1/29 is obtained with `scaspci()`, using closed-form calculation[@laud2017, Appendix A.4]:
+![](../man/figures/singlepropLNCP50.png)For example, the SCAS 95% interval for the proportion 1/29 is obtained with `scaspci()`, using closed-form calculation [@laud2017, Appendix A.4]:
 
 ```{r}
 scaspci(x = 1, n = 29)
 ```
 
-`rateci()` also provides two other methods with similar coverage properties (Jeffreys and mid-p) [@laud2018]:
+`rateci()` also provides two other methods (Jeffreys and mid-p) with similar coverage properties [@laud2018]:
 
 ```{r}
 rateci(x = 1, n = 29)
@@ -51,13 +51,18 @@ rateci(x = 1, n = 29, cc = TRUE)
 
 ### Stratified and clustered datasets
 
-For stratified datasets, use `scoreci()` with `contrast = "p"` and `stratified = TRUE` (again, the skewness correction is recommended, but may be omitted). By default, a "fixed effects" analysis is produced, i.e. one which assumes a common true parameter p across strata. The default stratum weighting uses the inverse variance of the score underlying the SCAS/Wilson method, evaluated at the MLE for the pooled proportion (thus avoiding infinite weights for boundary cases). Alternative weights are sample size (`weighting = "MH"`) or custom user-specified weights supplied via the `wt` argument. For example, population weighting would be applied via a vector (e.g. `wt = Ni`) containing the true population size (or true population proportion `Ni/N`) represented by each stratum. (Note this is not divided by the sample size/proportion per stratum, because the weighting is applied at the group level, not the case level.)
+For stratified datasets (e.g. data collected in different subgroups or collated across different studies), use `scoreci()` with `contrast = "p"` and `stratified = TRUE` (again, the skewness correction is recommended, but may be omitted).
 
-Below is an illustration using data from the placebo arm of 13 trials of non-ulcer dyspepsia:
+By default, a "fixed effects" analysis is produced, i.e. one which assumes a common true parameter p across strata. The default stratum weighting uses the inverse variance of the score underlying the SCAS/Wilson method, evaluated at the maximum likelihood estimate for the pooled proportion (thus avoiding infinite weights for boundary cases). Alternative weights are sample size (`weighting = "MH"`) or custom user-specified weights supplied via the `wt` argument. For example, population weighting would be applied via a vector (e.g. `wt = Ni`) containing the true population size (or true population proportion `Ni/N`) represented by each stratum. (Note this is not divided by the sample size/proportion per stratum, because the weighting is applied at the group level, not the case level.)
+
+Below is an illustration using data from the control arm of 9 trials studying postoperative deep vein thrombosis (DVT). This may be a somewhat unrealistic example, as the main focus of such studies is to estimate the effect of a treatment, rather than to estimate the underlying risk of an event, but used here to illustrate the usage of `scoreci()` for a stratified dataset:
 
 ```{r}
-data(cisapride, package = "ratesci")
-strat_p <- scoreci(x1 = cisapride$event.plac, n1 = cisapride$n.plac, contrast = "p", stratified = TRUE)
+data(compress, package = "ratesci")
+strat_p <- scoreci(x1 = compress$event.control, 
+                   n1 = compress$n.control, 
+                   contrast = "p", 
+                   stratified = TRUE)
 strat_p$estimates
 ```
 
@@ -67,13 +72,13 @@ The function also outputs p-values for a 2-sided hypothesis test against a defau
 strat_p$pval
 ```
 
-The `Qtest` output object provides a heterogeneity test and related quantities:
+The `Qtest` output object provides a heterogeneity test and related quantities. In this instance, there appears to be significant variability between studies in the underlying event rate for the control group, which may reflect different characteristics of the populations in each study leading to different underlying risk. (Note this need not prevent the evaluation of stratified treatment comparisons):
 
 ```{r}
 strat_p$Qtest
 ```
 
-Per-stratum estimates are produced, including stratum weights and contributions to the Q-statistic:
+Per-stratum estimates are produced, including stratum weights and contributions to the Q-statistic. Here the studies contributing most are the 3rd and 8th study, with estimated proportions of 0.48 (95% CI: 0.34 to 0.62) and 0.04 (95% CI: 0.01 to 0.10) respectively:
 
 ```{r}
 strat_p$stratdata
@@ -82,7 +87,11 @@ strat_p$stratdata
 For a "random effects" analysis, use `random = TRUE`. (This may not give a meaningful estimate of stratum variation if the number of strata is small.)
 
 ```{r}
-strat_p_rand <- scoreci(x1 = cisapride$event.plac, n1 = cisapride$n.plac, contrast = "p", stratified = TRUE, random = TRUE)
+strat_p_rand <- scoreci(x1 = compress$event.control, 
+                        n1 = compress$n.control, 
+                        contrast = "p", 
+                        stratified = TRUE, 
+                        random = TRUE)
 strat_p_rand$estimates
 strat_p_rand$pval
 ```
@@ -115,13 +124,13 @@ All of the above (except `clusterpci()`) can also handle Poisson exposure-adjust
 
 ## Technical details
 
-The SCAS method is an extension of the Wilson Score method, using the same score function $S(p) = x / n - p$. The variance of $S(p)$ is $V = p(1 - p)/n$, and the 3rd central moment is $\mu_3 = p(1 - p)(1 - 2p)/n^2$. The $100(1 - \alpha)\%$ confidence interval is found as the two solutions of the following equation, where $z$ is the $1 - \alpha / 2$ percentile of the standard normal distribution:
+The SCAS method is an extension of the Wilson Score method, using the same score function $S(p) = x / n - p$, where $x$ is the observed number of events from $n$ trials, and $p$ is the true proportion. The variance of $S(p)$ is $V = p(1 - p)/n$, and the 3rd central moment is $\mu_3 = p(1 - p)(1 - 2p)/n^2$. The $100(1 - \alpha)\%$ confidence interval is found as the two solutions of the following equation, where $z$ is the $1 - \alpha / 2$ percentile of the standard normal distribution:
 
 $$
 S(p)/V^{1/2} - (z^2 - 1)\mu_3/6V^{3/2} = \pm z
 $$
 
-For unstratified datasets, this has a closed-form solution. The formula is extended in [@Laud2017] to incorporate stratification using inverse variance weights, $w_i = 1 / V$, or other weighting schemes as required, with the solution being found by iteration over $p \in [0, 1]$.
+For unstratified datasets, this has a closed-form solution. The formula is extended in [@laud2017] to incorporate stratification using inverse variance weights, $w_i = 1 / V$, or other weighting schemes as required, with the solution being found by iteration over $p \in [0, 1]$.
 
 The Jeffreys interval is obtained as $\alpha / 2$ and $1 - \alpha / 2$ quantiles of the $Beta(x + 0.5, n - x + 0.5)$ distribution, with boundary modifications when $x = 0$ or $x = n$.
 
