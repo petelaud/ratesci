@@ -86,7 +86,7 @@ if (FALSE) {
   } else {
     out <- wilsonci(totx, totn, xihat = xihat, level = level, cc = cc)
   }
-  newout <- cbind(out, totx = totx, totn = totn,  xihat = xihat, ICC = phihat)
+  newout <- cbind(out, totx = totx, totn = totn,  xihat = xihat, icc = phihat)
   return(newout)
 }
 

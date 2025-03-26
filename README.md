@@ -107,7 +107,7 @@ score (“SCAS”) confidence interval. (For Miettinen-Nurminen, use
 library(ratesci)
 scoreci(x1 = 5, n1 = 56, x2 = 0, n2 = 29, precis = 4)
 #> $estimates
-#>            Lower        MLE    Upper level x1 n1 x2 n2      p1hat p2hat
+#>            lower        est    upper level x1 n1 x2 n2      p1hat p2hat
 #> [1,] -0.01861954 0.09168625 0.186718  0.95  5 56  0 29 0.08928571     0
 #>           p1mle p2mle
 #> [1,] 0.09168625     0
@@ -136,7 +136,7 @@ pairbinci(x = c(1, 1, 7, 12), precis = 4)
 #>   1  1  1
 #> 
 #> $estimates
-#>        Lower     MLE   Upper level  p1hat p2hat  p1mle  p2mle phi_hat phi_c
+#>        lower     est   upper level  p1hat p2hat  p1mle  p2mle phi_hat phi_c
 #> [1,] -0.5281 -0.2859 -0.0184  0.95 0.0952 0.381 0.0952 0.3811  0.0795     0
 #>      psi_hat
 #> [1,]  1.7143
