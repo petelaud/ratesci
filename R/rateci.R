@@ -82,9 +82,9 @@ scaspci <- function(x,
   CI <- (cbind(
     #    Lower = Rmpfr::asNumeric((-Bl - sqrt(Rmpfr::pmax(0, Bl^2 - 4 * A * Cl))) / (2 * A)),
     #    MLE = Rmpfr::asNumeric((-B0 - sqrt(Rmpfr::pmax(0, (B0^2 - 4 * A0 * C0)))) / (2 * A0)),
-    Lower = ifelse(x == 0, 0, ((-Bl - sqrt(pmax(0, Bl^2 - 4 * A * Cl))) / (2 * A))),
-    MLE = ((-B0 - sqrt(pmax(0, (B0^2 - 4 * A0 * C0)))) / (2 * A0)),
-    Upper = if (distrib == "bin") {
+    lower = ifelse(x == 0, 0, ((-Bl - sqrt(pmax(0, Bl^2 - 4 * A * Cl))) / (2 * A))),
+    est = ((-B0 - sqrt(pmax(0, (B0^2 - 4 * A0 * C0)))) / (2 * A0)),
+    upper = if (distrib == "bin") {
       #      Rmpfr::asNumeric(1 - (-Bu - sqrt(Rmpfr::pmax(0, Bu^2 - 4 * A * Cu))) / (2 * A))
       ifelse(x == n, 1, (1 - (-Bu - sqrt(pmax(0, Bu^2 - 4 * A * Cu))) / (2 * A)))
     } else {
@@ -229,7 +229,7 @@ exactci <- function(x,
     ftn = uproot, precis = precis, uplow = "up", contrast = "p",
     distrib = distrib
   )
-  return(cbind(Lower = lower, MLE = est, Upper = upper) /
+  return(cbind(lower = lower, est = est, upper = upper) /
            ifelse(distrib == "poi", n, 1))
 }
 

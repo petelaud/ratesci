@@ -276,7 +276,7 @@ moverci <- function(x1,
       lower[(x1 == 0)] <- 0
     }
   }
-  CI <- cbind(Lower = lower, Estimate = est, Upper = upper)
+  CI <- cbind(lower = lower, est = est, upper = upper)
   row.names(CI) <- NULL
   CI
 }
@@ -366,7 +366,7 @@ jeffreysci <- function(x,
     }
     CI_upper <- qgamma(1 - alpha / 2, (x + (ai + cc)), scale = 1 / n)
   }
-  CI <- cbind(Lower = CI_lower, est = est, Upper = CI_upper)
+  CI <- cbind(lower = CI_lower, est = est, upper = CI_upper)
   CI
 }
 

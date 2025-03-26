@@ -727,7 +727,7 @@ scoreci <- function(x1,
       }, contrast = contrast, distrib = distrib,
       precis = precis + 1, uplow = "up"
     )
-    pred <- cbind(round(cbind(Lower = lowpred, Upper = uppred), precis))
+    pred <- cbind(round(cbind(lower = lowpred, upper = uppred), precis))
   } else {
     pred <- NULL
   }
@@ -808,7 +808,7 @@ scoreci <- function(x1,
   }
 
   estimates <- cbind(
-    cbind(Lower = lower, MLE = point, Upper = upper),
+    cbind(lower = lower, est = point, upper = upper),
     level = level, inputs,
       cbind(p1hat = p1hat_w, p2hat = p2hat_w, p1mle = p1d_w, p2mle = p2d_w)
   )

@@ -133,7 +133,7 @@ wilsonci <- function(x,
     lower[x == 0] <- 0
     upper <- ((x + cc) + z^2 / 2 + z * sqrt(x + cc + z^2 / 4)) / n
   }
-  cbind(Lower = lower, MLE = est, Upper = upper)
+  cbind(lower = lower, est = est, upper = upper)
 }
 
 #' Rounding with trailing zeros

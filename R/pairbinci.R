@@ -362,7 +362,7 @@ pairbinci <- function(x,
       if (doublezero && contrast == "RR") {
         outlist <- list(
           data = xi,
-          estimates = cbind(Lower = 0, MLE = NA, Upper = Inf),
+          estimates = cbind(lower = 0, est = NA, upper = Inf),
           pval = NA
         )
       } else if (nodiscord && contrast == "RR") {
@@ -423,7 +423,7 @@ pairbinci <- function(x,
         skew = skew, bcf = bcf
       )
       estimates <- cbind(
-        Lower = lower, MLE = MLE, Upper = upper,
+        lower = lower, est = MLE, upper = upper,
         level = level, p1hat = p1hat, p2hat = p2hat,
         p1mle = at_MLE$p1d, p2mle = at_MLE$p2d,
         phi_hat = phi_hat, phi_c = phi_c, psi_hat = psi_hat
@@ -806,7 +806,7 @@ tangoci <- function(x,
   }
 
   estimates <- cbind(
-    Lower = keep1, MLE = (x12 - x21) / N, Upper = keep2,
+    lower = keep1, est = (x12 - x21) / N, upper = keep2,
     level = level
   )
 
@@ -968,7 +968,7 @@ tangci <- function(x,
     }
   }
 
-  result <- cbind(Lower = lower, Estimate = estimate, Upper = upper)
+  result <- cbind(lower = lower, est = estimate, upper = upper)
   return(result)
 }
 
@@ -1075,7 +1075,7 @@ moverpair <- function(x,
   }
 
   estimates <- cbind(
-    Lower = lower, Estimate = estimate, Upper = upper, level = level,
+    lower = lower, est = estimate, upper = upper, level = level,
     p1hat = p1phat, p2hat = pp1hat, phi_hat = cor_hat
   )
   row.names(estimates) <- NULL
@@ -1144,7 +1144,7 @@ bpci <- function(x,
     }
     ul <- j1[, 3] / j2[, 1]
     ll <- j1[, 1] / j2[, 3]
-    estimates <- cbind(Lower = ll, Estimate = estimate, Upper = ul)
+    estimates <- cbind(lower = ll, est = estimate, upper = ul)
     row.names(estimates) <- NULL
   }
   estimates

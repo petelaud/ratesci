@@ -3,6 +3,8 @@
 ## New features
 * New function `clusterpci()` for estimation of a single binomial proportion 
   from clustered data.
+* Example datasets are now included.
+* Improved documentation with pkgdown website & vignette.
 
 ### In `pairbinci()`:
 * `skew` for skewness correction. 
@@ -32,6 +34,7 @@
 * `bcf` option now implemented for contrast = "p" (default = FALSE).
 * (Note adjusted sample size for bias correction can be achieved by including a 
    non-zero value for n2.)
+* ORbias, RRtang, and MNtol arguments renamed as or_bias, rr_tang and mn_tol.
 
 ## Bug fixes
 ### In `exactci()`:
@@ -41,6 +44,8 @@
 
 ## Other
 * `method_RD`, `method_RR` and `method_OR` are replaced with `method`.
+* Output object column names are updated (lower, est, upper) for consistency 
+  and style conformity.
 * Tests added to confirm consistency of AS methods vs McNemar test.
 * Dependence on polynom package removed.
 * Edition 3 of testthat implemented.
