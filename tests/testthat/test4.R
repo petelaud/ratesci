@@ -88,19 +88,19 @@ for (i in 1:3) {
         RRbin = fround(scoreci(x1 = x1, x2 = x2, n1 = n1, n2 = n2,
                                stratified = F, theta0 = 0.5, skew = T,
                                contrast = "RR",
-                               RRtang = FALSE)$estimates[, c(1, 3)], 3),
+                               rr_tang = FALSE)$estimates[, c(1, 3)], 3),
         RRpoi = fround(scoreci(x1 = x1, x2 = x2, n1 = n1, n2 = n2,
                                stratified = F, theta0 = 0.5, skew = T,
                                contrast = "RR",
                                distrib = "poi")$estimates[, c(1, 3)], 3),
         OR = fround(scoreci(x1 = x1, x2 = x2, n1 = n1, n2 = n2,
                             stratified = F, theta0 = 0.5, skew = T,
-                            ORbias = F,
+                            or_bias = F,
                             contrast = "OR")$estimates[, c(1, 3)], 3)
 # Corrigendum version
 #        OR <- fround(scoreci(x1 = x1, x2 = x2, n1 = n1, n2 = n2,
 #                             stratified = F, theta0 = 0.5, skew = T,
-#                             ORbias = T,
+#                             or_bias = T,
 #                             contrast = "OR")$estimates[, c(1, 3)], 3)
       ),
     MN =
@@ -115,14 +115,14 @@ for (i in 1:3) {
         RRbin = fround(scoreci(x1 = x1, x2 = x2, n1 = n1, n2 = n2,
                                stratified = F, theta0 = 0.5, skew = F,
                                contrast = "RR",
-                               RRtang = FALSE)$estimates[, c(1, 3)], 3),
+                               rr_tang = FALSE)$estimates[, c(1, 3)], 3),
         RRpoi = fround(scoreci(x1 = x1, x2 = x2, n1 = n1, n2 = n2,
                                stratified = F, theta0 = 0.5, skew = F,
                                contrast = "RR",
                                distrib = "poi")$estimates[, c(1, 3)], 3),
         OR = fround(scoreci(x1 = x1, x2 = x2, n1 = n1, n2 = n2,
                             stratified = F, theta0 = 0.5, skew = F,
-                            ORbias = F,
+                            or_bias = F,
                             contrast = "OR")$estimates[, c(1, 3)], 3)
       ),
     MOVERJ =
@@ -164,7 +164,7 @@ load(file = "Table2.Rdata")
 # tab2==tab2check
 test_that("no change to published examples", {
   expect_equal(
-    tab2, tab2check
+    unname(tab2), unname(tab2check)
   )
 })
 
@@ -193,11 +193,11 @@ tab3 <- rbind(
                            fixtau = T)$estimates[, c(2, 1, 3)], 3),
     RRbin = fround(scoreci(x1 = x1hk, x2 = x2hk, n1 = n1hk, n2 = n2hk,
                            contrast = "RR", stratified = T, weighting = "MH",
-                           skew = T, RRtang = FALSE, random = F, hk = T,
+                           skew = T, rr_tang = FALSE, random = F, hk = T,
                            fixtau = T)$estimates[, c(2, 1, 3)], 2),
     OR = fround(scoreci(x1 = x1hk, x2 = x2hk, n1 = n1hk, n2 = n2hk,
                         contrast = "OR", stratified = T, weighting = "MH",
-                        skew = T, ORbias = F, random = F, hk = F,
+                        skew = T, or_bias = F, random = F, hk = F,
                         fixtau = T)$estimates[, c(2, 1, 3)], 2)
   ),
   SCASiv = c(
@@ -207,11 +207,11 @@ tab3 <- rbind(
                            fixtau = T)$estimates[, c(2, 1, 3)], 3),
     RRbin = fround(scoreci(x1 = x1hk, x2 = x2hk, n1 = n1hk, n2 = n2hk,
                            contrast = "RR", stratified = T, weighting = "IVS",
-                           skew = T, RRtang = FALSE, random = F, hk = T,
+                           skew = T, rr_tang = FALSE, random = F, hk = T,
                            fixtau = T)$estimates[, c(2, 1, 3)], 2),
     OR = fround(scoreci(x1 = x1hk, x2 = x2hk, n1 = n1hk, n2 = n2hk,
                         contrast = "OR", stratified = T, weighting = "IVS",
-                        skew = T, ORbias = F, random = F, hk = F,
+                        skew = T, or_bias = F, random = F, hk = F,
                         fixtau = T)$estimates[, c(2, 1, 3)], 2)
   ),
   TDAS = c(
@@ -220,10 +220,10 @@ tab3 <- rbind(
                            random = T)$estimates[, c(2, 1, 3)], 3),
     RRbin = fround(scoreci(x1 = x1hk, x2 = x2hk, n1 = n1hk, n2 = n2hk,
                            contrast = "RR", stratified = T, weighting = "IVS",
-                           RRtang = FALSE,
+                           rr_tang = FALSE,
                            random = T)$estimates[, c(2, 1, 3)], 2),
     OR = fround(scoreci(x1 = x1hk, x2 = x2hk, n1 = n1hk, n2 = n2hk,
-                        contrast = "OR", ORbias = F, stratified = T,
+                        contrast = "OR", or_bias = F, stratified = T,
                         weighting = "IVS",
                         random = T)$estimates[, c(2, 1, 3)], 2)
   )
@@ -270,7 +270,7 @@ if (FALSE) {
                                  distrib = "poi", cc = 0.5)$estimates[, c(1, 3)], 3),
           RRbin = fround(scoreci(x1 = x1, x2 = x2, n1 = n1, n2 = n2,
                                  stratified = F, skew = T, contrast = "RR",
-                                 RRtang = FALSE, cc = 0.5)$estimates[, c(1, 3)], 3),
+                                 rr_tang = FALSE, cc = 0.5)$estimates[, c(1, 3)], 3),
           RRpoi = fround(scoreci(x1 = x1, x2 = x2, n1 = n1, n2 = n2,
                                  stratified = F, skew = T, contrast = "RR",
                                  distrib = "poi", cc = 0.5)$estimates[, c(1, 3)], 3),
@@ -288,7 +288,7 @@ if (FALSE) {
                                  distrib = "poi", cc = 0.25)$estimates[, c(1, 3)], 3),
           RRbin = fround(scoreci(x1 = x1, x2 = x2, n1 = n1, n2 = n2,
                                  stratified = F, skew = T, contrast = "RR",
-                                 RRtang = FALSE, cc = 0.25)$estimates[, c(1, 3)], 3),
+                                 rr_tang = FALSE, cc = 0.25)$estimates[, c(1, 3)], 3),
           RRpoi = fround(scoreci(x1 = x1, x2 = x2, n1 = n1, n2 = n2,
                                  stratified = F, skew = T, contrast = "RR",
                                  distrib = "poi", cc = 0.25)$estimates[, c(1, 3)], 3),

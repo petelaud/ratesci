@@ -23,7 +23,8 @@ scasci(
   plotmax = 100,
   stratified = FALSE,
   weighting = NULL,
-  MNtol = 1e-08,
+  mn_tol = 1e-08,
+  MNtol = NULL,
   wt = NULL,
   warn = TRUE,
   ...
@@ -107,8 +108,10 @@ Weighting = 'MN' also matches the CMH test. \cr
 Note: Alternative user-specified weighting may also be applied, via the
 'wt' argument.}
 
-\item{MNtol}{Numeric value indicating convergence tolerance to be used in
+\item{mn_tol}{Numeric value indicating convergence tolerance to be used in
 iteration with weighting = "MN".}
+
+\item{MNtol}{(deprecated: argument renamed to mn_tol)}
 
 \item{wt}{Numeric vector containing (optional) user-specified weights.}
 

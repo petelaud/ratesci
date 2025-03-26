@@ -15,7 +15,9 @@ scoreci(
   level = 0.95,
   skew = TRUE,
   simpleskew = FALSE,
-  ORbias = TRUE,
+  or_bias = TRUE,
+  ORbias = NULL,
+  rr_tang = NULL,
   RRtang = NULL,
   bcf = ifelse(contrast != "p", TRUE, FALSE),
   cc = FALSE,
@@ -28,7 +30,8 @@ scoreci(
   ylim = NULL,
   stratified = FALSE,
   weighting = NULL,
-  MNtol = 1e-08,
+  mn_tol = 1e-08,
+  MNtol = NULL,
   wt = NULL,
   sda = NULL,
   fda = NULL,
@@ -68,17 +71,21 @@ See Laud 2021 for details. \cr
 NOTE: this version of the score is only suitable for obtaining confidence
 limits, not p-values.}
 
-\item{ORbias}{Logical (default is TRUE for contrast="OR", otherwise
+\item{or_bias}{Logical (default is TRUE for contrast="OR", otherwise
 NULL) indicating whether to apply additional bias correction for OR derived
 from Gart 1985. (Corrigendum to Laud 2017, published May 2018).
 Only applies if contrast is "OR".}
 
-\item{RRtang}{Logical indicating whether to use Tang's score for RR:
+\item{ORbias}{(deprecated: argument renamed to or_bias)}
+
+\item{rr_tang}{Logical indicating whether to use Tang's score for RR:
 Stheta = (p1hat - p2hat * theta) / p2d (see Tang 2020).
 Default TRUE for stratified = TRUE, with weighting = "IVS" or "INV".
 Forced to FALSE for stratified = TRUE, with other weightings.
 Has no effect when stratified = FALSE, as p2d terms cancel out.
 Experimental for distrib = "poi".}
+
+\item{RRtang}{(deprecated: argument renamed to rr_tang)}
 
 \item{bcf}{Logical (default TRUE) indicating whether to apply bias correction
 in the score denominator. Applicable to distrib = "bin" only. \cr
@@ -157,8 +164,10 @@ Weighting = 'MN' also matches the CMH test. \cr
 Note: Alternative user-specified weighting may also be applied, via the
 'wt' argument.}
 
-\item{MNtol}{Numeric value indicating convergence tolerance to be used in
+\item{mn_tol}{Numeric value indicating convergence tolerance to be used in
 iteration with weighting = "MN".}
+
+\item{MNtol}{(deprecated: argument renamed to mn_tol)}
 
 \item{wt}{Numeric vector containing (optional) user-specified weights.}
 

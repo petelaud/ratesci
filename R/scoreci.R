@@ -44,7 +44,8 @@
 #'   See Laud 2021 for details. \cr
 #'   NOTE: this version of the score is only suitable for obtaining confidence
 #'   limits, not p-values.
-#' @param ORbias Logical (default is TRUE for contrast="OR", otherwise
+#' @param ORbias (deprecated: argument renamed to or_bias)
+#' @param or_bias Logical (default is TRUE for contrast="OR", otherwise
 #'   NULL) indicating whether to apply additional bias correction for OR derived
 #'   from Gart 1985. (Corrigendum to Laud 2017, published May 2018).
 #'   Only applies if contrast is "OR".
@@ -123,7 +124,8 @@
 #'   even when the choice of weights would allow
 #'   them to be retained for a fixed effects analysis.
 #'   Has no effect on estimates, just the heterogeneity test.
-#' @param RRtang Logical indicating whether to use Tang's score for RR:
+#' @param RRtang (deprecated: argument renamed to rr_tang)
+#' @param rr_tang Logical indicating whether to use Tang's score for RR:
 #'   Stheta = (p1hat - p2hat * theta) / p2d (see Tang 2020).
 #'   Default TRUE for stratified = TRUE, with weighting = "IVS" or "INV".
 #'   Forced to FALSE for stratified = TRUE, with other weightings.
@@ -131,7 +133,8 @@
 #'   Experimental for distrib = "poi".
 #' @param hetplot Logical (default FALSE) indicating whether to output plots for
 #'   evaluating heterogeneity of stratified datasets.
-#' @param MNtol Numeric value indicating convergence tolerance to be used in
+#' @param MNtol (deprecated: argument renamed to mn_tol)
+#' @param mn_tol Numeric value indicating convergence tolerance to be used in
 #'   iteration with weighting = "MN".
 #' @param random Logical (default FALSE) indicating whether to perform random
 #'   effects meta-analysis for stratified data, using the t-distribution (TDAS)
@@ -258,7 +261,9 @@ scoreci <- function(x1,
                     level = 0.95,
                     skew = TRUE,
                     simpleskew = FALSE,
-                    ORbias = TRUE,
+                    or_bias = TRUE,
+                    ORbias = NULL,
+                    rr_tang = NULL,
                     RRtang = NULL,
                     bcf = ifelse(contrast != "p", TRUE, FALSE),
                     cc = FALSE,
@@ -271,7 +276,8 @@ scoreci <- function(x1,
                     ylim = NULL,
                     stratified = FALSE,
                     weighting = NULL,
-                    MNtol = 1E-8,
+                    mn_tol = 1E-8,
+                    MNtol = NULL,
                     wt = NULL,
                     sda = NULL,
                     fda = NULL,
@@ -280,6 +286,27 @@ scoreci <- function(x1,
                     prediction = FALSE,
                     warn = TRUE,
                     ...) {
+  if (!is.null(ORbias)) {
+    warning(
+      "argument ORbias is deprecated; please use or_bias instead.",
+      call. = FALSE
+    )
+    or_bias <- ORbias
+  }
+  if (!is.null(RRtang)) {
+    warning(
+      "argument RRtang is deprecated; please use rr_tang instead.",
+      call. = FALSE
+    )
+    rr_tang <- RRtang
+  }
+  if (!is.null(MNtol)) {
+    warning(
+      "argument MNtol is deprecated; please use mn_tol instead.",
+      call. = FALSE
+    )
+    mn_tol <- MNtol
+  }
   if (!(tolower(substr(distrib, 1, 3)) %in% c("bin", "poi"))) {
     print("Distrib must be one of 'bin' or 'poi'")
     stop()
@@ -313,7 +340,7 @@ scoreci <- function(x1,
     stop()
   }
   if (contrast != "OR") {
-    ORbias <- NULL
+    or_bias <- NULL
   }
   if (stratified == TRUE && is.null(weighting)) {
     weighting <- switch(contrast,
@@ -362,28 +389,28 @@ scoreci <- function(x1,
   }
   # Tang RR score intended only for IVS/INV weighting -
   # Tang p3431 does not use it for MH weights.
-  if (contrast != "RR" && !is.null(RRtang)) {
-    RRtang <- FALSE
+  if (contrast != "RR" && !is.null(rr_tang)) {
+    rr_tang <- FALSE
     if (warn == TRUE) {
       print(paste(
-        "Warning: RRtang argument has no effect for contrast =", contrast
+        "Warning: rr_tang argument has no effect for contrast =", contrast
       ))
     }
   } else if (contrast == "RR") {
     if (stratified == TRUE && !(weighting %in% c("IVS", "INV"))) {
-      if (!is.null(RRtang)) {
-        if (warn == TRUE && RRtang == TRUE) {
+      if (!is.null(rr_tang)) {
+        if (warn == TRUE && rr_tang == TRUE) {
           print(paste(
-            "Warning: RRtang set to FALSE - option designed for inverse variance weighting only"
+            "Warning: rr_tang set to FALSE - option designed for inverse variance weighting only"
           ))
         }
       }
-      RRtang <- FALSE
-    } else if (is.null(RRtang)) {
-      RRtang <- TRUE
+      rr_tang <- FALSE
+    } else if (is.null(rr_tang)) {
+      rr_tang <- TRUE
     }
   } else {
-    RRtang <- FALSE
+    rr_tang <- FALSE
   }
 
   if (as.character(cc) == "TRUE") cc <- 0.5
@@ -407,17 +434,17 @@ scoreci <- function(x1,
         # (Such strata make no contribution to the CMH statistic.)
         # The next part below also drops uninformative strata for RR & OR.
         # Note for RR & OR with IVS/INV weighting such strata have zero weight
-        # and for RR with fixed weights and RRtang = FALSE they don't contribute
+        # and for RR with fixed weights and rr_tang = FALSE they don't contribute
         # for a fixed effects analysis,
         # so they could be retained in the analysis to avoid ITT concerns
         # - but note this has implications for heterogeneity test and
         # random effects method.
         ((x1 == 0 & x2 == 0) & !(sda > 0) & contrast == "RR" &
-          weighting %in% c("INV", "IVS") & RRtang == FALSE) |
-        #       below not needed because RRtang is forced to FALSE anyway
-        #       (i.e. RRtang option only applies for INV/IVS weighting)
+          weighting %in% c("INV", "IVS") & rr_tang == FALSE) |
+        #       below not needed because rr_tang is forced to FALSE anyway
+        #       (i.e. rr_tang option only applies for INV/IVS weighting)
         #        ((x1 == 0 & x2 == 0) & !(sda > 0) & contrast == "RR" &
-        #          !(weighting %in% c("INV", "IVS")) & RRtang == TRUE) |
+        #          !(weighting %in% c("INV", "IVS")) & rr_tang == TRUE) |
         ((x1 == 0 & x2 == 0) & !(sda > 0) & contrast == "OR" &
           !(weighting %in% c("INV", "IVS", "MN"))) |
         ((x1 == n1 & x2 == n2) & !(fda > 0) & contrast == "OR" &
@@ -428,7 +455,7 @@ scoreci <- function(x1,
         # to prevent them affecting the heterogeneity test.
         # Similarly if applying the TDAS method with 'random' argument.
         # This might be unnecessary for some random effects analyses, such as
-        # RR with RRtang = TRUE and INV/IVS weighting and OR with INV/IVS
+        # RR with rr_tang = TRUE and INV/IVS weighting and OR with INV/IVS
         # weighting, but needs further research.
         empty_strat <- (n1 == 0 | n2 == 0) |
           ((x1 == 0 & x2 == 0) & !(sda > 0) & (contrast %in% c("RR", "OR"))) |
@@ -520,9 +547,9 @@ scoreci <- function(x1,
     scoretheta(
       theta = theta, x1 = x1, x2 = x2, n1 = n1, n2 = n2, bcf = bcf,
       contrast = contrast, distrib = distrib, stratified = stratswitch,
-      wt = wt, weighting = weighting, MNtol = MNtol,
+      wt = wt, weighting = weighting, mn_tol = mn_tol,
       random = randswitch, prediction = predswitch, skew = skewswitch,
-      simpleskew = ssswitch, ORbias = ORbias, RRtang = RRtang,
+      simpleskew = ssswitch, or_bias = or_bias, rr_tang = rr_tang,
       cc = ccswitch, level = lev
     )$score
   }
@@ -537,8 +564,8 @@ scoreci <- function(x1,
       theta = theta, x1 = x1, x2 = x2, n1 = n1, n2 = n2,
       bcf = bcf, contrast = contrast, distrib = distrib,
       stratified = stratswitch, wt = wt, weighting = weighting,
-      MNtol = MNtol, random = randswitch, RRtang = RRtang,
-      prediction = predswitch, skew = skew, ORbias = ORbias,
+      mn_tol = mn_tol, random = randswitch, rr_tang = rr_tang,
+      prediction = predswitch, skew = skew, or_bias = or_bias,
       cc = ccswitch, simpleskew = simpleskew, level = level
     )$dsct
   }
@@ -596,9 +623,9 @@ scoreci <- function(x1,
     n1 = n1, n2 = n2,
     bcf = bcf, contrast = contrast,
     distrib = distrib, stratified = stratified,
-    weighting = weighting, MNtol = MNtol, wt = wt,
-    random = random, skew = skew, ORbias = ORbias,
-    RRtang = RRtang, cc = cc, simpleskew = simpleskew, level = level
+    weighting = weighting, mn_tol = mn_tol, wt = wt,
+    random = random, skew = skew, or_bias = or_bias,
+    rr_tang = rr_tang, cc = cc, simpleskew = simpleskew, level = level
   )
   ##  Stheta_MLE <- at_MLE$Stheta
   p1d_MLE <- at_MLE$p1d
@@ -616,9 +643,9 @@ scoreci <- function(x1,
       theta = point_FE, x1 = x1, x2 = x2, n1 = n1, n2 = n2,
       bcf = bcf, contrast = contrast,
       distrib = distrib, stratified = stratified,
-      weighting = weighting, MNtol = MNtol, wt = wt,
-      random = FALSE, skew = skew, ORbias = ORbias,
-      RRtang = RRtang, cc = cc, simpleskew = simpleskew, level = level
+      weighting = weighting, mn_tol = mn_tol, wt = wt,
+      random = FALSE, skew = skew, or_bias = or_bias,
+      rr_tang = rr_tang, cc = cc, simpleskew = simpleskew, level = level
     )
     Stheta_FE <- at_FE$Stheta
     wt_FE <- at_FE$wt
@@ -711,9 +738,9 @@ scoreci <- function(x1,
       theta = point, x1 = x1, x2 = x2, n1 = n1,
       n2 = n2, bcf = bcf, contrast = contrast,
       distrib = distrib, stratified = FALSE,
-      weighting = weighting, MNtol = MNtol, wt = wt,
-      random = random, skew = skew, ORbias = ORbias,
-      RRtang = RRtang, cc = cc,
+      weighting = weighting, mn_tol = mn_tol, wt = wt,
+      random = random, skew = skew, or_bias = or_bias,
+      rr_tang = rr_tang, cc = cc,
       simpleskew = simpleskew, level = level
     )
     point_FE_unstrat <- bisect(
@@ -801,17 +828,17 @@ scoreci <- function(x1,
   scorezero <- scoretheta(
     theta = theta00, x1 = x1, x2 = x2, n1 = n1, n2 = n2,
     stratified = stratified,
-    wt = wt, weighting = weighting, MNtol = MNtol,
+    wt = wt, weighting = weighting, mn_tol = mn_tol,
     random = random, bcf = bcf, contrast = contrast,
-    distrib = distrib, skew = skew, ORbias = ORbias,
-    RRtang = RRtang, cc = cc, simpleskew = simpleskew, level = level
+    distrib = distrib, skew = skew, or_bias = or_bias,
+    rr_tang = rr_tang, cc = cc, simpleskew = simpleskew, level = level
   )
   scoreth0 <- scoretheta(
     theta = theta0, x1 = x1, x2 = x2, n1 = n1, n2 = n2,
     stratified = stratified, wt = wt,
-    weighting = weighting, MNtol = MNtol, random = random,
+    weighting = weighting, mn_tol = mn_tol, random = random,
     bcf = bcf, contrast = contrast, distrib = distrib,
-    skew = skew, ORbias = ORbias, RRtang = RRtang,
+    skew = skew, or_bias = or_bias, rr_tang = rr_tang,
     cc = cc, simpleskew = simpleskew, level = level
   )
   pval_left <- scoreth0$pval
@@ -1113,11 +1140,11 @@ scoreci <- function(x1,
   }
   # Set unused arguments to null to omit them from call
   if (simpleskew == FALSE) simpleskew <- NULL
-  if (contrast != "RR") RRtang <- NULL
+  if (contrast != "RR") rr_tang <- NULL
   if (stratified == FALSE) random <- NULL
   call <- c(
     distrib = distrib, contrast = contrast, level = level, bcf = bcf,
-    skew = skew, simpleskew = simpleskew, ORbias = ORbias, RRtang = RRtang,
+    skew = skew, simpleskew = simpleskew, or_bias = or_bias, rr_tang = rr_tang,
     cc = cc, random = random
   )
   outlist <- append(outlist, list(call = call))
@@ -1185,10 +1212,18 @@ scasci <- function(x1,
                    plotmax = 100,
                    stratified = FALSE,
                    weighting = NULL,
-                   MNtol = 1E-8,
+                   mn_tol = 1E-8,
+                   MNtol = NULL,
                    wt = NULL,
                    warn = TRUE,
                    ...) {
+  if (!is.null(MNtol)) {
+    warning(
+      "argument MNtol is deprecated; please use mn_tol instead.",
+      call. = FALSE
+    )
+    mn_tol <- MNtol
+  }
   scoreci(
     x1 = x1,
     n1 = n1,
@@ -1199,7 +1234,7 @@ scasci <- function(x1,
     level = level,
     skew = TRUE,
     simpleskew = FALSE,
-    ORbias = TRUE,
+    or_bias = TRUE,
     bcf = TRUE,
     cc = cc,
     theta0 = theta0,
@@ -1211,7 +1246,7 @@ scasci <- function(x1,
     ylim = ylim,
     stratified = stratified,
     weighting = weighting,
-    MNtol = MNtol,
+    mn_tol = mn_tol,
     wt = wt,
     random = FALSE,
     prediction = FALSE,
@@ -1281,12 +1316,20 @@ tdasci <- function(x1,
                    xlim = NULL,
                    ylim = NULL,
                    weighting = NULL,
-                   MNtol = 1E-8,
+                   mn_tol = 1E-8,
+                   MNtol = NULL,
                    wt = NULL,
                    skew = TRUE, # gives SCAS intervals in stratdata by default
                    prediction = FALSE,
                    warn = TRUE,
                    ...) {
+  if (!is.null(MNtol)) {
+    warning(
+      "argument MNtol is deprecated; please use mn_tol instead.",
+      call. = FALSE
+    )
+    mn_tol <- MNtol
+  }
   if (contrast == "RR" && (all(x1 == x2) || all(x1 == 0) || all(x2 == 0))) {
     # If no discordant cells, random effects method gives CI as (1,1)
     # If no cases at all on one treatment, random effects method gives CI as (0,0) or (Inf,Inf)
@@ -1303,7 +1346,7 @@ tdasci <- function(x1,
     distrib = distrib,
     contrast = contrast,
     level = level,
-    ORbias = TRUE,
+    or_bias = TRUE,
     bcf = TRUE,
     cc = cc,
     theta0 = theta0,
@@ -1315,7 +1358,7 @@ tdasci <- function(x1,
     ylim = ylim,
     stratified = TRUE,
     weighting = weighting,
-    MNtol = MNtol,
+    mn_tol = mn_tol,
     wt = wt,
     random = random,
     prediction = prediction,
@@ -1361,13 +1404,13 @@ scoretheta <- function(theta,
                        skew = TRUE,
                        simpleskew = FALSE,
                        level = 0.95,
-                       ORbias = TRUE,
-                       RRtang = TRUE,
+                       or_bias = TRUE,
+                       rr_tang = TRUE,
                        cc = FALSE,
                        stratified = FALSE,
                        wt = NULL,
                        weighting = "IVS",
-                       MNtol = 1E-8,
+                       mn_tol = 1E-8,
                        random = FALSE,
                        prediction = FALSE,
                        ...) {
@@ -1443,7 +1486,7 @@ scoretheta <- function(theta,
         (theta^2) * p2d * (1 - p2d) / n2) * lambda)
       mu3 <- (p1d * (1 - p1d) * (1 - 2 * p1d) / (n1^2) -
         (theta^3) * p2d * (1 - p2d) * (1 - 2 * p2d) / (n2^2))
-      if (RRtang == TRUE) {
+      if (rr_tang == TRUE) {
         Stheta <- (p1hat - p2hat * theta) / p2d
         V <- pmax(0, (p1d * (1 - p1d) / n1 +
           (theta^2) * p2d * (1 - p2d) / n2) * lambda / p2d^2)
@@ -1461,7 +1504,7 @@ scoretheta <- function(theta,
       p2d[p2d < 1E-8] <- 0.00000001
       V <- pmax(0, (p1d / n1 + (theta^2) * p2d / n2))
       mu3 <- (p1d / (n1^2) - (theta^3) * p2d / (n2^2))
-      if (RRtang == TRUE) {
+      if (rr_tang == TRUE) {
         # Apply Tang score for Poisson parameter
         # EXPERIMENTAL - needs to be evaluated
         Stheta <- (p1hat - p2hat * theta) / p2d
@@ -1497,7 +1540,7 @@ scoretheta <- function(theta,
       Stheta[(x1 == 0 & x2 == 0) | (x1 == n1 & x2 == n2)] <- 0
       mu3[(x1 == 0 & x2 == 0) | (x1 == n1 & x2 == n2)] <- 0
 
-      if (ORbias == TRUE) {
+      if (or_bias == TRUE) {
         bias <- (p1d - p2d) / (n1 * p1d * (1 - p1d) + n2 * p2d * (1 - p2d))
         bias[p1d == p2d] <- 0
         Stheta <- Stheta - bias
@@ -1530,7 +1573,7 @@ scoretheta <- function(theta,
       # cc=0.5 gives Cornfield correction. Try cc=0.25 instead
     } else if (contrast == "RR") {
       corr <- cc * (1 / (n1) + theta / (n2)) # try 0.125 or 0.25
-      if (RRtang == TRUE) corr <- corr / p2d
+      if (rr_tang == TRUE) corr <- corr / p2d
     } else if (contrast == "RD") {
       corr <- cc * (1 / pmin(n1, n2)) # cc=0.5 gives Hauck-Anderson. Try 0.25
     } else if (contrast == "p") {
@@ -1571,7 +1614,7 @@ scoretheta <- function(theta,
           } else {
             wtdiff <- 1
             wtx <- (1 / n1 + theta / n2)^(-1)
-            while (wtdiff > MNtol) {
+            while (wtdiff > mn_tol) {
               p2ds <- sum(wtx * p2d) / sum(wtx)
               p1ds <- sum(wtx * p1d) / sum(wtx)
               # Fix for special case resulting in zero weights
@@ -1585,7 +1628,7 @@ scoretheta <- function(theta,
           # M&Ns iterative weights - quite similar to MH: wtx <- n1*n2/(n1+n2)
           wt <- wtx <- (1 / n1 + 1 / n2)^(-1)
           wtdiff <- 1
-          while (wtdiff > MNtol) {
+          while (wtdiff > mn_tol) {
             p2ds <- sum(wtx * p2d) / sum(wtx)
             # Improved fix for special case resulting in zero weights - credit Vincent Jaquet
             if (p2ds == 0) p2ds <- 0.00000001
@@ -1662,7 +1705,7 @@ scoretheta <- function(theta,
         # cc for stratified RR (suggested in Laud 2017, Appendix S2)
         # Confirmed to give p-value matching corrected Mantel-Haenszel test
         corr <- cc * sum(((wt / sum(wt))^2) * (1 / (n1) + theta / (n2)))
-        if (RRtang == TRUE) corr <- cc * sum(((wt / sum(wt))^2) * (1 / (n1) + theta / (n2)) / p2d)
+        if (rr_tang == TRUE) corr <- cc * sum(((wt / sum(wt))^2) * (1 / (n1) + theta / (n2)) / p2d)
       } else if (contrast == "RD") {
         corr <- cc * (sum(n1 * n2 / (n1 + n2)))^(-1)
         # Generalised version of Mehrotra & Railkar (2000) who suggest cc = (3/16)

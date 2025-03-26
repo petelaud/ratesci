@@ -13,11 +13,11 @@ for (skew in c(TRUE, FALSE)) {
       scoreci(
         x1 = x1, n1 = n1, x2 = x2, n2 = n2, skew = skew,
         contrast = "RD", precis = 10
-      )$estimates[, "Lower"] > 0 |
+      )$estimates[, "lower"] > 0 |
         scoreci(
           x1 = x1, n1 = n1, x2 = x2, n2 = n2, skew = skew,
           contrast = "RD", precis = 10
-        )$estimates[, "Upper"] < 0,
+        )$estimates[, "upper"] < 0,
       scoreci(
         x1 = x1, n1 = n1, x2 = x2, n2 = n2, skew = skew,
         contrast = "RD", precis = 10
@@ -27,7 +27,7 @@ for (skew in c(TRUE, FALSE)) {
       scoreci(
         x1 = x1, n1 = n1, x2 = x2, n2 = n2, skew = skew,
         contrast = "RD", precis = 10
-      )$estimates[, "Lower"] > 0,
+      )$estimates[, "lower"] > 0,
       scoreci(
         x1 = x1, n1 = n1, x2 = x2, n2 = n2, skew = skew,
         contrast = "RD", precis = 10
@@ -37,7 +37,7 @@ for (skew in c(TRUE, FALSE)) {
       scoreci(
         x1 = x1, n1 = n1, x2 = x2, n2 = n2, skew = skew,
         contrast = "RD", precis = 10
-      )$estimates[, "Upper"] < 0,
+      )$estimates[, "upper"] < 0,
       scoreci(
         x1 = x1, n1 = n1, x2 = x2, n2 = n2, skew = skew,
         contrast = "RD", precis = 10
@@ -47,11 +47,11 @@ for (skew in c(TRUE, FALSE)) {
       scoreci(
         x1 = x1, n1 = n1, x2 = x2, n2 = n2, skew = skew,
         contrast = "RR", distrib = "poi", precis = 10
-      )$estimates[, "Lower"] > 1 |
+      )$estimates[, "lower"] > 1 |
         scoreci(
           x1 = x1, n1 = n1, x2 = x2, n2 = n2, skew = skew,
           contrast = "RR", distrib = "poi", precis = 10
-        )$estimates[, "Upper"] < 1,
+        )$estimates[, "upper"] < 1,
       scoreci(
         x1 = x1, n1 = n1, x2 = x2, n2 = n2, skew = skew,
         contrast = "RR", distrib = "poi", precis = 10
@@ -61,7 +61,7 @@ for (skew in c(TRUE, FALSE)) {
       scoreci(
         x1 = x1, n1 = n1, x2 = x2, n2 = n2, skew = skew,
         contrast = "RR", distrib = "poi", precis = 10, theta0 = 2
-      )$estimates[, "Lower"] > 2,
+      )$estimates[, "lower"] > 2,
       scoreci(
         x1 = x1, n1 = n1, x2 = x2, n2 = n2, skew = skew,
         contrast = "RR", distrib = "poi", precis = 10, theta0 = 2
@@ -71,7 +71,7 @@ for (skew in c(TRUE, FALSE)) {
       scoreci(
         x1 = x1, n1 = n1, x2 = x2, n2 = n2, skew = skew,
         contrast = "RR", distrib = "poi", precis = 10, theta0 = 2
-      )$estimates[, "Upper"] < 2,
+      )$estimates[, "upper"] < 2,
       scoreci(
         x1 = x1, n1 = n1, x2 = x2, n2 = n2, skew = skew,
         contrast = "RR", distrib = "poi", precis = 10, theta0 = 2
@@ -81,11 +81,11 @@ for (skew in c(TRUE, FALSE)) {
       scoreci(
         x1 = x1, n1 = n1, x2 = x2, n2 = n2, skew = skew,
         contrast = "OR", precis = 10
-      )$estimates[, "Lower"] > 1 |
+      )$estimates[, "lower"] > 1 |
         scoreci(
           x1 = x1, n1 = n1, x2 = x2, n2 = n2, skew = skew,
           contrast = "OR", precis = 10
-        )$estimates[, "Upper"] < 1,
+        )$estimates[, "upper"] < 1,
       scoreci(
         x1 = x1, n1 = n1, x2 = x2, n2 = n2, skew = skew,
         contrast = "OR", precis = 10
@@ -95,7 +95,7 @@ for (skew in c(TRUE, FALSE)) {
       scoreci(
         x1 = x1, n1 = n1, x2 = x2, n2 = n2, skew = skew,
         contrast = "OR", precis = 10
-      )$estimates[, "Lower"] > 1,
+      )$estimates[, "lower"] > 1,
       scoreci(
         x1 = x1, n1 = n1, x2 = x2, n2 = n2, skew = skew,
         contrast = "OR", precis = 10
@@ -105,7 +105,7 @@ for (skew in c(TRUE, FALSE)) {
       scoreci(
         x1 = x1, n1 = n1, x2 = x2, n2 = n2, skew = skew,
         contrast = "OR", precis = 10
-      )$estimates[, "Upper"] < 1,
+      )$estimates[, "upper"] < 1,
       scoreci(
         x1 = x1, n1 = n1, x2 = x2, n2 = n2, skew = skew,
         contrast = "OR", precis = 10
@@ -164,7 +164,7 @@ test_that("OR p-values consistent with paired confidence interval", {
         pairbinci(
           x = combos[i, ], contrast = "OR",
           method = "SCASp"
-        )$estimates[, "Lower", drop = FALSE] > 1
+        )$estimates[, "lower", drop = FALSE] > 1
       }
     )),
     unname(sapply(

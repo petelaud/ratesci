@@ -33,22 +33,22 @@ for (cc in c(FALSE, TRUE)) {
       expect_equal(
         (unname(scoreci(
           x1 = x1, n1 = n1, x2 = x2, n2 = n2, skew = skew, cc = cc,
-          contrast = "RR", RRtang = F, precis = 10
+          contrast = "RR", rr_tang = F, precis = 10
         )$estimates)[, 1]),
         signif(1 / unname(scoreci(
           x1 = x2, n1 = n2, x2 = x1, n2 = n1, skew = skew, cc = cc,
-          contrast = "RR", RRtang = F, precis = 10
+          contrast = "RR", rr_tang = F, precis = 10
         )$estimates)[, 3]),
         tolerance = 1E-5
       )
       expect_equal(
         (unname(scoreci(
           x1 = x1, n1 = n1, x2 = x2, n2 = n2, skew = skew, cc = cc,
-          contrast = "RR", RRtang = T, precis = 10
+          contrast = "RR", rr_tang = T, precis = 10
         )$estimates)[, 1]),
         (1 / unname(scoreci(
           x1 = x2, n1 = n2, x2 = x1, n2 = n1, skew = skew, cc = cc,
-          contrast = "RR", RRtang = T, precis = 10
+          contrast = "RR", rr_tang = T, precis = 10
         )$estimates)[, 3]),
         tolerance = 1E-5
       )
@@ -120,11 +120,11 @@ test_that("Tang score matches IVS", {
   expect_equal(
     signif(unname(scoreci(
       x1 = x1, n1 = n1, x2 = x2, n2 = n2, skew = skew,
-      cc = cc, contrast = "RR", RRtang = F, precis = 100
+      cc = cc, contrast = "RR", rr_tang = F, precis = 100
     )$estimates)[, 1], digits = 5),
     signif(unname(scoreci(
       x1 = x1, n1 = n1, x2 = x2, n2 = n2, skew = skew,
-      cc = cc, contrast = "RR", RRtang = T, precis = 100
+      cc = cc, contrast = "RR", rr_tang = T, precis = 100
     )$estimates)[, 1], digits = 5)
   )
 })

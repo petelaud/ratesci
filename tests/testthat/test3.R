@@ -47,13 +47,13 @@ test_that("legacy & new methods match published examples", {
   expect_equal(
     unname(round(scoreci(x1 = c(8, 6), n1 = c(15, 10),
                          x2 = c(4, 6), n2 = c(15, 20), contrast = "RR",
-                         RRtang = FALSE, bcf = F, skew = F)$estimates[, c(1, 3)], 3)),
+                         rr_tang = FALSE, bcf = F, skew = F)$estimates[, c(1, 3)], 3)),
     matrix(c(0.815, 5.336, 0.844, 4.594), byrow = T, nrow = 2)
   )
   expect_equal(
     unname(round(scoreci(x1 = c(8, 6), n1 = c(15, 10),
                          x2 = c(4, 6), n2 = c(15, 20), contrast = "RR",
-                         RRtang = FALSE, bcf = F, skew = T)$estimates[, c(1, 3)], 3)),
+                         rr_tang = FALSE, bcf = F, skew = T)$estimates[, c(1, 3)], 3)),
     matrix(c(0.806, 6.148, 0.822, 4.954), byrow = T, nrow = 2)
   )
   # Li Tang Wong for Poisson RR (don't quite match!)
@@ -87,7 +87,7 @@ test_that("legacy & new methods match published examples", {
   expect_equal(
     unname(round(scoreci(x1 = c(24, 29, 7), n1 = c(73, 55, 18),
                          x2 = c(53, 11, 1), n2 = c(65, 11, 18),
-                         contrast = "RR", RRtang = FALSE,
+                         contrast = "RR", rr_tang = FALSE,
                          skew = F)$estimates[, c(1, 3)], 3)),
     matrix(c(0.280, 0.560, 0.397, 0.742, 1.296, 42.544), byrow = T, nrow = 3)
   )
@@ -97,7 +97,7 @@ test_that("legacy & new methods match published examples", {
     unname(round(scoreci(
       x2 = c(26, 25, 11), n2 = c(453, 174, 70),
       x1 = c(21, 11, 8), n1 = c(464, 165, 69),
-      contrast = "RR", RRtang = TRUE, skew = FALSE, bcf = FALSE,
+      contrast = "RR", rr_tang = TRUE, skew = FALSE, bcf = FALSE,
       stratified = TRUE, weighting = "IVS"
     )$estimates[, c(1, 3)], 4)),
     c(0.4444, 0.9468)
@@ -106,7 +106,7 @@ test_that("legacy & new methods match published examples", {
     unname(round(scoreci(
       x2 = c(26, 25, 11), n2 = c(453, 174, 70),
       x1 = c(21, 11, 8), n1 = c(464, 165, 69),
-      contrast = "RR", RRtang = TRUE, skew = TRUE, bcf = FALSE,
+      contrast = "RR", rr_tang = TRUE, skew = TRUE, bcf = FALSE,
       stratified = TRUE, weighting = "IVS"
     )$estimates[, c(1, 3)], 4)),
     c(0.4410, 0.9462)
@@ -117,7 +117,7 @@ test_that("legacy & new methods match published examples", {
     unname(round(scoreci(
       x2 = c(26, 25, 11), n2 = c(453, 174, 70),
       x1 = c(21, 11, 8), n1 = c(464, 165, 69),
-      contrast = "OR", skew = FALSE, bcf = FALSE, ORbias = TRUE,
+      contrast = "OR", skew = FALSE, bcf = FALSE, or_bias = TRUE,
       stratified = TRUE
     )$estimates[, c(1, 3)], 4)),
     c(0.4155, 0.9466)
@@ -185,7 +185,7 @@ test_that("legacy & new methods match published examples", {
     unname(round(scoreci(
       x1 = c(24, 29, 7), n1 = c(73, 55, 18),
       x2 = c(53, 11, 1), n2 = c(65, 11, 18),
-      contrast = "OR", skew = FALSE, ORbias = FALSE
+      contrast = "OR", skew = FALSE, or_bias = FALSE
     )$estimates[, c(1, 3)], 3)),
     matrix(c(0.050, 0.245, 0, 0.417, 1.416, 76.428), byrow = T, nrow = 3)
   )
@@ -202,7 +202,7 @@ test_that("legacy & new methods match published examples", {
   expect_equal(
     unname(round(scoreci(
       x1 = 28, n1 = 99, x2 = 23, n2 = 182, contrast = "OR",
-      ORbias = F, bcf = F, skew = F, cc = T
+      or_bias = F, bcf = F, skew = F, cc = T
     )$estimates[, c(1, 3)], 2)),
     c(1.41, 5.30)
   )
@@ -220,21 +220,21 @@ test_that("legacy & new methods match published examples", {
     unname(round(scoreci(
       x1 = c(4, 2, 4, 1), n1 = c(16, 16, 18, 15),
       x2 = c(5, 3, 10, 3), n2 = c(79, 87, 90, 82),
-      contrast = "OR", ORbias = F, bcf = F, skew = F, cc = T, stratified = T
+      contrast = "OR", or_bias = F, bcf = F, skew = F, cc = T, stratified = T
     )$estimates[, c(1, 3)], 2)),
     c(1.29, 7.31)
   )
   # Cornfield examples - very close
   expect_equal(
     unname(round(scoreci(
-      x1 = 3, n1 = 14, x2 = 60, n2 = 92, contrast = "OR", ORbias = F,
+      x1 = 3, n1 = 14, x2 = 60, n2 = 92, contrast = "OR", or_bias = F,
       bcf = F, skew = F, cc = T, level = pchisq(3.841, 1)
     )$estimates[, c(1, 3)], 4)),
     c(0.0296, 0.6228)
   )
   expect_equal(
     unname(round(scoreci(
-      x1 = 3, n1 = 14, x2 = 60, n2 = 92, contrast = "OR", ORbias = F,
+      x1 = 3, n1 = 14, x2 = 60, n2 = 92, contrast = "OR", or_bias = F,
       bcf = F, skew = F, cc = T, level = 0.99
     )$estimates[, c(1, 3)], 4)),
     c(0.0209, 0.8797)
@@ -243,7 +243,7 @@ test_that("legacy & new methods match published examples", {
   # Gart & Thomas 1982 Cornfield example
   expect_equal(
     unname(round(scoreci(
-      x1 = 28, n1 = 51, x2 = 71, n2 = 230, contrast = "OR", ORbias = F,
+      x1 = 28, n1 = 51, x2 = 71, n2 = 230, contrast = "OR", or_bias = F,
       bcf = F, skew = F, cc = F
     )$estimates[, c(1, 3)], 3)),
     c(1.476, 5.035)
