@@ -247,11 +247,11 @@ skewness-corrected version:</p>
 <span>          <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="co"># Wilson-based interval as per Saha et al.</span></span>
 <span>  <span class="fu"><a href="../reference/clusterpci.html">clusterpci</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">n</span>, skew <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;       lower    est  upper totx totn xihat    ICC</span></span>
+<span><span class="co">#&gt;       lower    est  upper totx totn xihat    icc</span></span>
 <span><span class="co">#&gt; [1,] 0.2285 0.2956 0.3728   60  203 1.349 0.1855</span></span>
 <span>  <span class="co"># Skewness-corrected version</span></span>
 <span>  <span class="fu"><a href="../reference/clusterpci.html">clusterpci</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">n</span>, skew <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;       lower    est  upper totx totn xihat    ICC</span></span>
+<span><span class="co">#&gt;       lower    est  upper totx totn xihat    icc</span></span>
 <span><span class="co">#&gt; [1,] 0.2276 0.2958 0.3724   60  203 1.349 0.1855</span></span></code></pre></div>
 <p>All of the above (except <code><a href="../reference/clusterpci.html">clusterpci()</a></code>) can also handle
 Poisson exposure-adjusted rates, using <code>distrib = "poi"</code>,
