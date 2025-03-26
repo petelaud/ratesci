@@ -87,7 +87,8 @@ random = TRUE).</p>
 <span>  plotmax <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>  stratified <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  weighting <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  MNtol <span class="op">=</span> <span class="fl">1e-08</span>,</span>
+<span>  mn_tol <span class="op">=</span> <span class="fl">1e-08</span>,</span>
+<span>  MNtol <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  wt <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  warn <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -203,9 +204,13 @@ Note: Alternative user-specified weighting may also be applied, via the
 'wt' argument.</p></dd>
 
 
-<dt id="arg-mntol">MNtol<a class="anchor" aria-label="anchor" href="#arg-mntol"></a></dt>
+<dt id="arg-mn-tol">mn_tol<a class="anchor" aria-label="anchor" href="#arg-mn-tol"></a></dt>
 <dd><p>Numeric value indicating convergence tolerance to be used in
 iteration with weighting = "MN".</p></dd>
+
+
+<dt id="arg-mntol">MNtol<a class="anchor" aria-label="anchor" href="#arg-mntol"></a></dt>
+<dd><p>(deprecated: argument renamed to mn_tol)</p></dd>
 
 
 <dt id="arg-wt">wt<a class="anchor" aria-label="anchor" href="#arg-wt"></a></dt>

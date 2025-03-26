@@ -92,29 +92,29 @@ SCAS 95% interval for the proportion 1/29 is obtained with
 A.4)</span>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/scaspci.html">scaspci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">29</span><span class="op">)</span></span>
-<span><span class="co">#&gt;        Lower    MLE Upper</span></span>
+<span><span class="co">#&gt;        lower    est upper</span></span>
 <span><span class="co">#&gt; [1,] 0.00199 0.0398 0.155</span></span></code></pre></div>
 <p><code><a href="../reference/rateci.html">rateci()</a></code> also provides two other methods (Jeffreys and
 mid-p) with similar coverage properties <span class="citation">(<a href="#ref-laud2018">Laud 2018</a>)</span>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/rateci.html">rateci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">29</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $scas</span></span>
-<span><span class="co">#&gt;        Lower    MLE Upper</span></span>
+<span><span class="co">#&gt;        lower    est upper</span></span>
 <span><span class="co">#&gt; [1,] 0.00199 0.0398 0.155</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $jeff</span></span>
-<span><span class="co">#&gt;        Lower    est Upper</span></span>
+<span><span class="co">#&gt;        lower    est upper</span></span>
 <span><span class="co">#&gt; [1,] 0.00375 0.0403  0.15</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $midp</span></span>
-<span><span class="co">#&gt;        Lower    MLE Upper</span></span>
+<span><span class="co">#&gt;        lower    est upper</span></span>
 <span><span class="co">#&gt; [1,] 0.00172 0.0391 0.159</span></span></code></pre></div>
 <p>The Jeffreys interval can also incorporate prior information about p
 for an approximate Bayesian confidence interval. For example, a pilot
 study estimate of 1/10 would suggest a Beta(1,9) prior for p:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/jeffreysci.html">jeffreysci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">29</span>, ai <span class="op">=</span> <span class="fl">1</span>, bi <span class="op">=</span> <span class="fl">9</span><span class="op">)</span></span>
-<span><span class="co">#&gt;        Lower    est Upper</span></span>
+<span><span class="co">#&gt;        lower    est upper</span></span>
 <span><span class="co">#&gt; [1,] 0.00644 0.0438 0.138</span></span></code></pre></div>
 <p>If more conservative coverage is required, a “continuity adjustment”
 may be deployed with <code>cc</code>, as follows, giving
@@ -124,15 +124,15 @@ than 0.5 give a more refined adjustment<span class="citation">(<a href="#ref-lau
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/rateci.html">rateci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">29</span>, cc <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $scas_cc</span></span>
-<span><span class="co">#&gt;         Lower    MLE Upper</span></span>
+<span><span class="co">#&gt;         lower    est upper</span></span>
 <span><span class="co">#&gt; [1,] 6.19e-06 0.0398 0.182</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $jeff_cc</span></span>
-<span><span class="co">#&gt;         Lower    est Upper</span></span>
+<span><span class="co">#&gt;         lower    est upper</span></span>
 <span><span class="co">#&gt; [1,] 0.000873 0.0403 0.178</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $cp</span></span>
-<span><span class="co">#&gt;         Lower    MLE Upper</span></span>
+<span><span class="co">#&gt;         lower    est upper</span></span>
 <span><span class="co">#&gt; [1,] 0.000873 0.0391 0.178</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="stratified-and-clustered-datasets">Stratified and clustered datasets<a class="anchor" aria-label="anchor" href="#stratified-and-clustered-datasets"></a>
@@ -167,7 +167,7 @@ underlying risk of an event, but used here to illustrate the usage of
 <span>                   contrast <span class="op">=</span> <span class="st">"p"</span>, </span>
 <span>                   stratified <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">strat_p</span><span class="op">$</span><span class="va">estimates</span></span>
-<span><span class="co">#&gt;      Lower   MLE Upper level p1hat p1mle</span></span>
+<span><span class="co">#&gt;      lower   est upper level p1hat p1mle</span></span>
 <span><span class="co">#&gt; [1,] 0.181 0.212 0.245  0.95 0.212 0.212</span></span></code></pre></div>
 <p>The function also outputs p-values for a 2-sided hypothesis test
 against a default null hypothesis p = 0.5, and one-sided tests against a
@@ -225,7 +225,7 @@ number of strata is small.)</p>
 <span>                        stratified <span class="op">=</span> <span class="cn">TRUE</span>, </span>
 <span>                        random <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">strat_p_rand</span><span class="op">$</span><span class="va">estimates</span></span>
-<span><span class="co">#&gt;      Lower  MLE Upper level p1hat p1mle</span></span>
+<span><span class="co">#&gt;      lower  est upper level p1hat p1mle</span></span>
 <span><span class="co">#&gt; [1,] 0.136 0.25 0.364  0.95  0.25  0.25</span></span>
 <span><span class="va">strat_p_rand</span><span class="op">$</span><span class="va">pval</span></span>
 <span><span class="co">#&gt;      chisq pval2sided theta0 scorenull pval_left pval_right</span></span>
@@ -247,11 +247,11 @@ skewness-corrected version:</p>
 <span>          <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="co"># Wilson-based interval as per Saha et al.</span></span>
 <span>  <span class="fu"><a href="../reference/clusterpci.html">clusterpci</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">n</span>, skew <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;       Lower    MLE  Upper totx totn xihat    ICC</span></span>
+<span><span class="co">#&gt;       lower    est  upper totx totn xihat    ICC</span></span>
 <span><span class="co">#&gt; [1,] 0.2285 0.2956 0.3728   60  203 1.349 0.1855</span></span>
 <span>  <span class="co"># Skewness-corrected version</span></span>
 <span>  <span class="fu"><a href="../reference/clusterpci.html">clusterpci</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">n</span>, skew <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;       Lower    MLE  Upper totx totn xihat    ICC</span></span>
+<span><span class="co">#&gt;       lower    est  upper totx totn xihat    ICC</span></span>
 <span><span class="co">#&gt; [1,] 0.2276 0.2958 0.3724   60  203 1.349 0.1855</span></span></code></pre></div>
 <p>All of the above (except <code><a href="../reference/clusterpci.html">clusterpci()</a></code>) can also handle
 Poisson exposure-adjusted rates, using <code>distrib = "poi"</code>,

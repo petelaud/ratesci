@@ -133,15 +133,15 @@ Stat Meth Med Res 2020; 29(1):111–121</p>
 <span class="r-in"><span>         <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="co"># Wilson-based interval</span></span></span>
 <span class="r-in"><span>  <span class="fu">clusterpci</span><span class="op">(</span><span class="va">x</span>, <span class="va">n</span>, skew <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          Lower       MLE     Upper totx totn    xihat       ICC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          lower       est     upper totx totn    xihat       ICC</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.2284814 0.2955665 0.3728302   60  203 1.349133 0.1855342</span>
 <span class="r-in"><span>  <span class="co"># Skewness-corrected version</span></span></span>
 <span class="r-in"><span>  <span class="fu">clusterpci</span><span class="op">(</span><span class="va">x</span>, <span class="va">n</span>, skew <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          Lower      MLE     Upper totx totn    xihat       ICC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          lower      est     upper totx totn    xihat       ICC</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.2276278 0.295815 0.3723694   60  203 1.349133 0.1855342</span>
 <span class="r-in"><span>  <span class="co"># With continuity adjustment</span></span></span>
 <span class="r-in"><span>  <span class="fu">clusterpci</span><span class="op">(</span><span class="va">x</span>, <span class="va">n</span>, skew <span class="op">=</span> <span class="cn">FALSE</span>, cc <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          Lower       MLE     Upper totx totn    xihat       ICC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          lower       est     upper totx totn    xihat       ICC</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.2262502 0.2955665 0.3754001   60  203 1.349133 0.1855342</span>
 </code></pre></div>
     </div>

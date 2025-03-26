@@ -112,7 +112,9 @@ required contrast.</p>
 <span>  level <span class="op">=</span> <span class="fl">0.95</span>,</span>
 <span>  skew <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  simpleskew <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  ORbias <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  or_bias <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  ORbias <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  rr_tang <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  RRtang <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bcf <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">contrast</span> <span class="op">!=</span> <span class="st">"p"</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
 <span>  cc <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -125,7 +127,8 @@ required contrast.</p>
 <span>  ylim <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  stratified <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  weighting <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  MNtol <span class="op">=</span> <span class="fl">1e-08</span>,</span>
+<span>  mn_tol <span class="op">=</span> <span class="fl">1e-08</span>,</span>
+<span>  MNtol <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  wt <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  sda <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  fda <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -183,20 +186,28 @@ NOTE: this version of the score is only suitable for obtaining confidence
 limits, not p-values.</p></dd>
 
 
-<dt id="arg-orbias">ORbias<a class="anchor" aria-label="anchor" href="#arg-orbias"></a></dt>
+<dt id="arg-or-bias">or_bias<a class="anchor" aria-label="anchor" href="#arg-or-bias"></a></dt>
 <dd><p>Logical (default is TRUE for contrast="OR", otherwise
 NULL) indicating whether to apply additional bias correction for OR derived
 from Gart 1985. (Corrigendum to Laud 2017, published May 2018).
 Only applies if contrast is "OR".</p></dd>
 
 
-<dt id="arg-rrtang">RRtang<a class="anchor" aria-label="anchor" href="#arg-rrtang"></a></dt>
+<dt id="arg-orbias">ORbias<a class="anchor" aria-label="anchor" href="#arg-orbias"></a></dt>
+<dd><p>(deprecated: argument renamed to or_bias)</p></dd>
+
+
+<dt id="arg-rr-tang">rr_tang<a class="anchor" aria-label="anchor" href="#arg-rr-tang"></a></dt>
 <dd><p>Logical indicating whether to use Tang's score for RR:
 Stheta = (p1hat - p2hat * theta) / p2d (see Tang 2020).
 Default TRUE for stratified = TRUE, with weighting = "IVS" or "INV".
 Forced to FALSE for stratified = TRUE, with other weightings.
 Has no effect when stratified = FALSE, as p2d terms cancel out.
 Experimental for distrib = "poi".</p></dd>
+
+
+<dt id="arg-rrtang">RRtang<a class="anchor" aria-label="anchor" href="#arg-rrtang"></a></dt>
+<dd><p>(deprecated: argument renamed to rr_tang)</p></dd>
 
 
 <dt id="arg-bcf">bcf<a class="anchor" aria-label="anchor" href="#arg-bcf"></a></dt>
@@ -294,9 +305,13 @@ Note: Alternative user-specified weighting may also be applied, via the
 'wt' argument.</p></dd>
 
 
-<dt id="arg-mntol">MNtol<a class="anchor" aria-label="anchor" href="#arg-mntol"></a></dt>
+<dt id="arg-mn-tol">mn_tol<a class="anchor" aria-label="anchor" href="#arg-mn-tol"></a></dt>
 <dd><p>Numeric value indicating convergence tolerance to be used in
 iteration with weighting = "MN".</p></dd>
+
+
+<dt id="arg-mntol">MNtol<a class="anchor" aria-label="anchor" href="#arg-mntol"></a></dt>
+<dd><p>(deprecated: argument renamed to mn_tol)</p></dd>
 
 
 <dt id="arg-wt">wt<a class="anchor" aria-label="anchor" href="#arg-wt"></a></dt>
@@ -414,7 +429,7 @@ comparisons of binomial proportions. Statistics in Medicine 2020;
 <span class="r-in"><span>  x2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">22</span>, <span class="fl">0</span><span class="op">)</span>, n2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">16</span>, <span class="fl">30</span>, <span class="fl">29</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            Lower         MLE     Upper level x1 n1 x2 n2      p1hat     p2hat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            lower         est     upper level x1 n1 x2 n2      p1hat     p2hat</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  0.38567597  0.68162256 0.8778839  0.95 12 16  1 16 0.75000000 0.0625000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,] -0.31189939 -0.07795525 0.1600794  0.95 19 29 22 30 0.65517241 0.7333333</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [3,] -0.01861751  0.09168753 0.1867180  0.95  5 56  0 29 0.08928571 0.0000000</span>
@@ -440,7 +455,7 @@ comparisons of binomial proportions. Statistics in Medicine 2020;
 <span class="r-in"><span>  x2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">22</span>, <span class="fl">0</span><span class="op">)</span>, n2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">16</span>, <span class="fl">30</span>, <span class="fl">29</span><span class="op">)</span>, skew <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            Lower         MLE     Upper level x1 n1 x2 n2      p1hat     p2hat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            lower         est     upper level x1 n1 x2 n2      p1hat     p2hat</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  0.37497827  0.68749997 0.8628989  0.95 12 16  1 16 0.75000000 0.0625000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,] -0.30859360 -0.07816094 0.1581720  0.95 19 29 22 30 0.65517241 0.7333333</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [3,] -0.03259659  0.08928570 0.1933310  0.95  5 56  0 29 0.08928571 0.0000000</span>
@@ -463,7 +478,7 @@ comparisons of binomial proportions. Statistics in Medicine 2020;
 <span class="r-in"><span><span class="co"># Poisson RR, SCAS method:</span></span></span>
 <span class="r-in"><span><span class="fu">scoreci</span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">5</span>, n1 <span class="op">=</span> <span class="fl">56</span>, x2 <span class="op">=</span> <span class="fl">0</span>, n2 <span class="op">=</span> <span class="fl">29</span>, distrib <span class="op">=</span> <span class="st">"poi"</span>, contrast <span class="op">=</span> <span class="st">"RR"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          Lower      MLE Upper level x1 n1 x2 n2      p1hat p2hat      p1mle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          lower      est upper level x1 n1 x2 n2      p1hat p2hat      p1mle</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.7264486 16.05357   Inf  0.95  5 56  0 29 0.08928571     0 0.08649553</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            p2mle</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.005387933</span>
@@ -473,7 +488,7 @@ comparisons of binomial proportions. Statistics in Medicine 2020;
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 2.904393 0.08833848      1  1.704228 0.9558308 0.04416924</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $call</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  distrib contrast    level      bcf     skew   RRtang       cc </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  distrib contrast    level      bcf     skew  rr_tang       cc </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    "poi"     "RR"   "0.95"   "TRUE"   "TRUE"   "TRUE"  "FALSE" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
@@ -483,7 +498,7 @@ comparisons of binomial proportions. Statistics in Medicine 2020;
 <span class="r-in"><span>  contrast <span class="op">=</span> <span class="st">"RR"</span>, skew <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          Lower MLE Upper level x1 n1 x2 n2      p1hat p2hat p1mle p2mle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          lower est upper level x1 n1 x2 n2      p1hat p2hat p1mle p2mle</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.6740371 Inf   Inf  0.95  5 56  0 29 0.08928571     0   NaN 1e-08</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $pval</span>
@@ -491,14 +506,14 @@ comparisons of binomial proportions. Statistics in Medicine 2020;
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 2.589286  0.1075888      1  1.609126 0.9462056 0.05379442</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $call</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  distrib contrast    level      bcf     skew   RRtang       cc </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  distrib contrast    level      bcf     skew  rr_tang       cc </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    "poi"     "RR"   "0.95"   "TRUE"  "FALSE"   "TRUE"  "FALSE" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Binomial rate, SCAS method:</span></span></span>
 <span class="r-in"><span><span class="fu">scoreci</span><span class="op">(</span>x1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">0</span><span class="op">)</span>, n1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">56</span>, <span class="fl">29</span><span class="op">)</span>, contrast <span class="op">=</span> <span class="st">"p"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           Lower         MLE      Upper level x1 n1      p1hat       p1mle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           lower         est      upper level x1 n1      p1hat       p1mle</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.03396264 0.091715962 0.18585265  0.95  5 56 0.08928571 0.091715962</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.00000000 0.005681813 0.09170711  0.95  0 29 0.00000000 0.005681813</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -515,7 +530,7 @@ comparisons of binomial proportions. Statistics in Medicine 2020;
 <span class="r-in"><span><span class="co"># Binomial rate, Wilson score method:</span></span></span>
 <span class="r-in"><span><span class="fu">scoreci</span><span class="op">(</span>x1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">0</span><span class="op">)</span>, n1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">56</span>, <span class="fl">29</span><span class="op">)</span>, contrast <span class="op">=</span> <span class="st">"p"</span>, skew <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           Lower       MLE     Upper level x1 n1      p1hat     p1mle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           lower       est     upper level x1 n1      p1hat     p1mle</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.03874214 0.0892857 0.1925600  0.95  5 56 0.08928571 0.0892857</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.00000000 0.0000000 0.1169698  0.95  0 29 0.00000000 0.0000000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -532,7 +547,7 @@ comparisons of binomial proportions. Statistics in Medicine 2020;
 <span class="r-in"><span><span class="co"># Poisson rate, SCAS method:</span></span></span>
 <span class="r-in"><span><span class="fu">scoreci</span><span class="op">(</span>x1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">0</span><span class="op">)</span>, n1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">56</span>, <span class="fl">29</span><span class="op">)</span>, distrib <span class="op">=</span> <span class="st">"poi"</span>, contrast <span class="op">=</span> <span class="st">"p"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           Lower         MLE      Upper level x1 n1      p1hat       p1mle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           lower         est      upper level x1 n1      p1hat       p1mle</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.03314559 0.092261900 0.19710988  0.95  5 56 0.08928571 0.092261900</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.00000000 0.005747108 0.09705602  0.95  0 29 0.00000000 0.005747108</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -555,7 +570,7 @@ comparisons of binomial proportions. Statistics in Medicine 2020;
 <span class="r-in"><span>  stratified <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          Lower       MLE     Upper level     p1hat     p2hat     p1mle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          lower       est     upper level     p1hat     p2hat     p1mle</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.2455228 0.3087549 0.3703304  0.95 0.7168521 0.4079934 0.7143654</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          p2mle</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.4056105</span>
@@ -617,7 +632,7 @@ comparisons of binomial proportions. Statistics in Medicine 2020;
 <span class="r-in"><span>  stratified <span class="op">=</span> <span class="cn">TRUE</span>, random <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          Lower       MLE     Upper level     p1hat     p2hat    p1mle     p2mle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          lower       est     upper level     p1hat     p2hat    p1mle     p2mle</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.1746892 0.3088587 0.4430283  0.95 0.7168521 0.4079934 0.714412 0.4055533</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $pval</span>
@@ -678,7 +693,7 @@ comparisons of binomial proportions. Statistics in Medicine 2020;
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Negative discriminant (min: -0.4332) in quadratic skewness corrected score between (0.01754,0.07268). Simplified skewness correction used in this range.</span>
 <span class="r-plt img"><img src="scoreci-1.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           Lower       MLE      Upper level      p1hat      p2hat      p1mle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           lower       est      upper level      p1hat      p2hat      p1mle</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] -0.1624605 0.0105668 0.01655012  0.95 0.08111908 0.07724199 0.07905492</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           p2mle</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.06848812</span>

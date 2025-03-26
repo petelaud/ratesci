@@ -40,6 +40,8 @@
 <div class="section level3">
 <h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
 <ul><li>New function <code><a href="../reference/clusterpci.html">clusterpci()</a></code> for estimation of a single binomial proportion from clustered data.</li>
+<li>Example datasets are now included.</li>
+<li>Improved documentation with pkgdown website &amp; vignette.</li>
 </ul><div class="section level4">
 <h4 id="in-pairbinci-development-version">In <code>pairbinci()</code>:<a class="anchor" aria-label="anchor" href="#in-pairbinci-development-version"></a></h4>
 <ul><li>
@@ -68,6 +70,7 @@
 <ul><li>
 <code>bcf</code> option now implemented for contrast = “p” (default = FALSE).</li>
 <li>(Note adjusted sample size for bias correction can be achieved by including a non-zero value for n2.)</li>
+<li>ORbias, RRtang, and MNtol arguments renamed as or_bias, rr_tang and mn_tol.</li>
 </ul></div>
 </div>
 <div class="section level3">
@@ -83,6 +86,7 @@
 <h3 id="other-development-version">Other<a class="anchor" aria-label="anchor" href="#other-development-version"></a></h3>
 <ul><li>
 <code>method_RD</code>, <code>method_RR</code> and <code>method_OR</code> are replaced with <code>method</code>.</li>
+<li>Output object column names are updated (lower, est, upper) for consistency and style conformity.</li>
 <li>Tests added to confirm consistency of AS methods vs McNemar test.</li>
 <li>Dependence on polynom package removed.</li>
 <li>Edition 3 of testthat implemented.</li>
