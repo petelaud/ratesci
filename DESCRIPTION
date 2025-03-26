@@ -5,17 +5,18 @@ Version: 0.5.0.9000
 Authors@R: 
     person("Pete", "Laud", , "p.j.laud@sheffield.ac.uk", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-3766-7090"))
-Description: Computes confidence intervals for the rate (or risk)
+Description: Computes confidence intervals for binomial or Poisson rates and
+    their differences or ratios. Including the rate (or risk)
     difference ('RD') or rate ratio (or relative risk, 'RR') for binomial
-    proportions or Poisson rates, or for odds ratio ('OR', binomial only).
-    Also confidence intervals for a single binomial or Poisson rate (with 
-    adjustment for clustered binomial data), and
-    intervals for matched pairs.  Includes skewness-corrected asymptotic
-    score ('SCAS') methods, which have been developed in Laud (2017)
-    <doi:10.1002/pst.1813> from Miettinen & Nurminen (1985)
-    <doi:10.1002/sim.4780040211> and Gart & Nam (1988)
-    <doi:10.2307/2531848>, and in Laud (2025, under review) for paired 
-    proportions. The same score produces hypothesis tests
+    proportions or Poisson rates, and odds ratio ('OR', binomial only).
+    Also confidence intervals for RD, RR or OR for paired binomial data, 
+    and estimation of a proportion from clustered binomial data.  
+    Includes skewness-corrected asymptotic score ('SCAS') methods, 
+    which have been developed in Laud (2017) <doi:10.1002/pst.1813> 
+    from Miettinen & Nurminen (1985) <doi:10.1002/sim.4780040211> 
+    and Gart & Nam (1988) <doi:10.2307/2531848>, and in 
+    Laud (2025, under review) for paired proportions. 
+    The same score produces hypothesis tests
     analogous to the test for binomial RD and RR by Farrington & Manning
     (1990) <doi:10.1002/sim.4780091208>, or the McNemar test for paired
     data. The package also includes MOVER methods (Method Of Variance
