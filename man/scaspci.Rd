@@ -34,7 +34,8 @@ data: "bin" = binomial (default), "poi" = Poisson.}
 in the score denominator. Applicable to distrib = "bin" only.}
 
 \item{bign}{Sample size N to be used in the calculation of bcf, if different
-from n.}
+from n. (Used by transformed SCASp method for paired conditional OR in
+\code{pairbinci()})}
 
 \item{xihat}{Number specifying estimated variance inflation factor for a
 skewness corrected version of the Saha Wilson Score interval for clustered

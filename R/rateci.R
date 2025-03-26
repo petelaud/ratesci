@@ -12,7 +12,8 @@
 #' @param bcf Logical (default TRUE) indicating whether to apply bias correction
 #'   in the score denominator. Applicable to distrib = "bin" only.
 #' @param bign Sample size N to be used in the calculation of bcf, if different
-#'   from n.
+#'   from n. (Used by transformed SCASp method for paired conditional OR in
+#'   `pairbinci()`)
 #' @param xihat Number specifying estimated variance inflation factor for a
 #'   skewness corrected version of the Saha Wilson Score interval for clustered
 #'   binomial proportions. Need to calculate using BMS and WMS as per Saha 2016.
@@ -28,7 +29,7 @@ scaspci <- function(x,
                     distrib = "bin",
                     level = 0.95,
                     bcf = FALSE,
-                    bign = n, # extra argument could be needed for bcf for transformed OR interval
+                    bign = n,
                     xihat = 1,
                     cc = FALSE,
                     ...) {
@@ -121,7 +122,8 @@ rateci <- function(x,
                    n,
                    distrib = "bin",
                    level = 0.95,
-                   cc = FALSE) {
+                   cc = FALSE
+                   ) {
   # in case x is input as a vector but n is not
   if (length(n) < length(x) && length(x) > 1) {
     n <- rep(n, length.out = length(x))
@@ -185,21 +187,19 @@ rateci <- function(x,
 #' Clopper-Pearson/Garwood and mid-p intervals for single binomial or
 #' Poisson rate
 #'
+#' to calculate exact 'exact' confidence interval for a single binomial or Poisson rate x/n
+#'
 #' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
 #'
 #' @noRd
-exactci <- function( # function to calculate exact 'exact' confidence interval
-  # for a single binomial or Poisson rate x/n
-  x,
-  n,
-  level = 0.95,
-  midp = TRUE,
-  distrib = "bin",
-  precis = 8) {
+exactci <- function(x,
+                    n,
+                    level = 0.95,
+                    midp = TRUE,
+                    distrib = "bin",
+                    precis = 8
+                    ) {
   alpha <- 1 - level
-#  if (distrib == "poi") {
-#    est <- x
-#    } else est <- x / n
   if (as.character(midp) == "TRUE") midp <- 0.5
   if (distrib == "bin") {
     lowroot <- function(p) {
@@ -211,7 +211,7 @@ exactci <- function( # function to calculate exact 'exact' confidence interval
     }
     uproot <- function(p) {
       pbinom(x, n, p) - midp * dbinom(x, n, p) - alpha / 2
-      }
+    }
   } else if (distrib == "poi") {
     lowroot <- function(p) ppois(x - 1, p) + midp * dpois(x, p) - (1 - alpha / 2)
     midroot <- function(p) ppois(x - 1, p) + 0.5 * dpois(x, p) - 0.5
