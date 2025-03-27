@@ -17,8 +17,8 @@ Downloads](https://cranlogs.r-pkg.org/badges/grand-total/ratesci)](https://cranl
 ratesci is an [R](https://www.r-project.org) package to compute
 confidence intervals for:
 
-- a single binomial proportion
-- a single Poisson ‘exposure-adjusted’ incidence rate
+- a single binomial proportion, or Poisson ‘exposure-adjusted’ incidence
+  rate (‘p’)
 - binomial risk difference or Poisson rate difference (‘RD’)
 - binomial relative risk or Poisson rate ratio (‘RR’)
 - binomial odds ratio (‘OR’)
