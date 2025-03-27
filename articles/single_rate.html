@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Single rate • ratesci</title>
+<title>1: Single rate • ratesci</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
 <link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
@@ -15,7 +15,7 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Single rate">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="1: Single rate">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -38,7 +38,8 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/single_rate.html">Single rate</a></li>
+<li><a class="dropdown-item" href="../articles/single_rate.html">1: Single rate</a></li>
+    <li><a class="dropdown-item" href="../articles/basic_contrasts.html">2: Basic contrasts (single stratum)</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -60,7 +61,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>Single rate</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>1: Single rate</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/petelaud/ratesci/blob/master/vignettes/single_rate.Rmd" class="external-link"><code>vignettes/single_rate.Rmd</code></a></small>
@@ -75,20 +76,21 @@
 <h2 id="introduction-to-rateci-and-related-functions-for-estimation-of-a-single-binomial-or-poisson-rate">Introduction to <code>rateci()</code> and related functions for
 estimation of a single binomial or Poisson rate<a class="anchor" aria-label="anchor" href="#introduction-to-rateci-and-related-functions-for-estimation-of-a-single-binomial-or-poisson-rate"></a>
 </h2>
-<p>For estimation of a confidence interval for a single binomial
-proportion (<code>x/n</code>), the Skewness-Corrected Asymptotic Score
-(SCAS) method is recommended, as one that succeeds, on average, at
-containing the true proportion p with the appropriate nominal
-probability (e.g. 95%), and has evenly distributed tail probabilities
+<p>To calculate a confidence interval for a single binomial proportion
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>p</mi><mo accent="true">̂</mo></mover><mo>=</mo><mi>x</mi><mi>/</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">\hat p = x/n</annotation></semantics></math>),
+the Skewness-Corrected Asymptotic Score (SCAS) method is recommended, as
+one that succeeds, on average, at containing the true proportion p with
+the appropriate nominal probability (e.g. 95%), and has evenly
+distributed tail probabilities <span class="citation">(<a href="#ref-laud2017">Laud 2017</a>, Appendix S3.5)</span>. It is a
+modified version of the Wilson Score method. The plot below illustrates
+the interval non-coverage probability (i.e. 1 minus the actual
+probability that the interval contains the true value of p) achieved by
+SCAS compared to some other popular methods, using moving average
+smoothing:</p>
+<p><img src="images/singlepropLNCP50.png"></p>
+<p>For a worked example, the SCAS 95% interval for the proportion 1/29
+is obtained with <code><a href="../reference/scaspci.html">scaspci()</a></code>, using closed-form calculation
 <span class="citation">(<a href="#ref-laud2017">Laud 2017</a>, Appendix
-S3.5)</span>. It is a modified version of the Wilson Score method. The
-plot below illustrates the interval non-coverage (i.e. 1 minus the
-actual probability that the interval contains the true value of p)
-achieved by SCAS compared to some other popular methods, using moving
-average smoothing:</p>
-<p><img src="../reference/figures/singlepropLNCP50.png">For example, the
-SCAS 95% interval for the proportion 1/29 is obtained with
-<code><a href="../reference/scaspci.html">scaspci()</a></code>, using closed-form calculation <span class="citation">(<a href="#ref-laud2017">Laud 2017</a>, Appendix
 A.4)</span>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/scaspci.html">scaspci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">29</span><span class="op">)</span></span>
