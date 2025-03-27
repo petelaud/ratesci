@@ -39,18 +39,20 @@ Corresponding hypothesis tests against any specified null parameter
 value are provided in each case. Omission of the skewness correction is
 also allowed, resulting in the often-recommended ‘Miettinen-Nurminen’
 asymptotic score methods for RD, RR and OR, and the Wilson Score method
-for p, all of which can have inferior one-sided coverage. The hypothesis
-test for binomial RD or RR when the skewness correction is omitted
-corresponds to the Farrington-Manning test.
+for p, all of which can have inferior one-sided coverage.
 
 The stratified (fixed effects) version without skewness correction
 produces a hypothesis test which is equivalent to the
 Cochran-Mantel-Haenszel (CMH) test, when MH weighting is used for RD or
 RR, or IVS weighting for OR, and the corresponding confidence intervals
 are guaranteed to be coherent with the test. In the single-stratum case,
-the hypothesis tests are equivalent to a Chi-squared test, and for
-paired proportions, a McNemar test (in both cases with extension to null
-hypotheses for equivalence/non-inferiority tests).
+the hypothesis tests are equivalent to an Egon Pearson ‘N-1’ Chi-squared
+test. The same equivalence holds when the skewness correction is
+included, if group sizes are equal. For paired proportions, the tests
+mirror an ‘N-1’ adjusted variant of the McNemar test. All such tests are
+expanded in scope to cater for null hypotheses for
+equivalence/non-inferiority tests, analogous to the Farrington-Manning
+test.
 
 For large (single-stratum) sample sizes, the ‘MOVER’ methods
 (`moverci()`) improve on traditional approximate methods with respect to

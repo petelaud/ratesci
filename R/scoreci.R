@@ -81,7 +81,8 @@
 #'     and (with default weighting and random = FALSE) the CMH test for stratified
 #'      tables.
 #'   - Default bcf = TRUE and skew = TRUE produces a skewness-corrected version
-#'     of the 'N-1' Chi-squared test or CMH.
+#'     of the 'N-1' Chi-squared test or CMH. This correction will only change the
+#'     p-value if group sizes are unequal.
 #' @param precis Number (default 6) specifying precision (i.e. number of decimal
 #'   places) to be used in optimisation subroutine for the confidence interval.
 #' @param plot Logical (default FALSE) indicating whether to output plot of the
