@@ -38,10 +38,10 @@ single binomial or Poisson rate, and for clustered binomial proportion
 Corresponding hypothesis tests against any specified null parameter
 value are provided in each case. Omission of the skewness correction is
 also allowed, resulting in the often-recommended ‘Miettinen-Nurminen’
-asymptotic score methods, which can have inferior one-sided coverage,
-especially for RR. The hypothesis test for binomial RD or RR when the
-skewness correction is omitted corresponds to the Farrington-Manning
-test.
+asymptotic score methods for RD, RR and OR, and the Wilson Score method
+for p, all of which can have inferior one-sided coverage. The hypothesis
+test for binomial RD or RR when the skewness correction is omitted
+corresponds to the Farrington-Manning test.
 
 The stratified (fixed effects) version without skewness correction
 produces a hypothesis test which is equivalent to the
