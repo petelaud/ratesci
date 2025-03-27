@@ -1,10 +1,10 @@
 ---
-title: "Single rate"
+title: "1: Single rate"
 output: rmarkdown::html_vignette
 bibliography: REFERENCES.bib
 link-citations: true
 vignette: >
-  %\VignetteIndexEntry{Single rate}
+  %\VignetteIndexEntry{1: Single rate}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -23,9 +23,11 @@ library(ratesci)
 
 ## Introduction to `rateci()` and related functions for estimation of a single binomial or Poisson rate
 
-For estimation of a confidence interval for a single binomial proportion (`x/n`), the Skewness-Corrected Asymptotic Score (SCAS) method is recommended, as one that succeeds, on average, at containing the true proportion p with the appropriate nominal probability (e.g. 95%), and has evenly distributed tail probabilities [@laud2017, Appendix S3.5]. It is a modified version of the Wilson Score method. The plot below illustrates the interval non-coverage (i.e. 1 minus the actual probability that the interval contains the true value of p) achieved by SCAS compared to some other popular methods, using moving average smoothing:
+To calculate a confidence interval for a single binomial proportion ($\hat p = x/n$), the Skewness-Corrected Asymptotic Score (SCAS) method is recommended, as one that succeeds, on average, at containing the true proportion p with the appropriate nominal probability (e.g. 95%), and has evenly distributed tail probabilities [@laud2017, Appendix S3.5]. It is a modified version of the Wilson Score method. The plot below illustrates the interval non-coverage probability (i.e. 1 minus the actual probability that the interval contains the true value of p) achieved by SCAS compared to some other popular methods, using moving average smoothing:
 
-![](../man/figures/singlepropLNCP50.png)For example, the SCAS 95% interval for the proportion 1/29 is obtained with `scaspci()`, using closed-form calculation [@laud2017, Appendix A.4]:
+![](images/singlepropLNCP50.png)
+
+For a worked example, the SCAS 95% interval for the proportion 1/29 is obtained with `scaspci()`, using closed-form calculation [@laud2017, Appendix A.4]:
 
 ```{r}
 scaspci(x = 1, n = 29)

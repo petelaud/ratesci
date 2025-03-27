@@ -33,3 +33,10 @@ reference:
   - crash
   - cisapride
   - compress
+
+articles:
+- title: Articles
+  navbar: ~
+  contents:
+  - single_rate
+  - basic_contrasts

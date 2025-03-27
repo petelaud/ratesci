@@ -119,15 +119,15 @@ wilsonci <- function(x,
                     (2 * (x - cc) + za^2 -
                        za * sqrt(za^2 - 2 * (2 * cc + cc / n) +
                                    4 * ((x / n) * (n * (1 - x / n) + 2 * cc)))
-                    ) / (2 * (n + za^2))
-    )
+                     ) / (2 * (n + za^2))
+                    )
     upper <- ifelse(x == n,
                     1,
                     (2 * (x + cc) + za^2 +
                        za * sqrt(za^2 + 2 * (2 * cc - cc / n) +
                                    4 * ((x / n) * (n * (1 - x / n) - 2 * cc)))
-                    ) / (2 * (n + za^2))
-    )
+                     ) / (2 * (n + za^2))
+                    )
   } else if (distrib == "poi") {
     lower <- ((x - cc) + z^2 / 2 - z * sqrt(x - cc + z^2 / 4)) / n
     lower[x == 0] <- 0
@@ -146,3 +146,43 @@ myround <- function(x,
   format(round(x, dp), nsmall = dp)
 }
 
+#' Egon Pearson Chi-squared test
+#' https://rpubs.com/seriousstats/epcs_test
+#'
+#' For reference against tests produced by scoreci(..., skew = FALSE),
+#' i.e. MN method
+#'
+#' @noRd
+epcs.test <- function(data.cells,
+                      z.adjust.method = c("none", "hommel")) {
+  ucs.test <- suppressWarnings(stats::chisq.test(data.cells,
+    simulate.p.value = FALSE,
+    correct = FALSE
+  ))
+  N <- sum(data.cells)
+  nrows <- dim(data.cells)[1]
+  ncols <- dim(data.cells)[2]
+  corrected.stat <- ucs.test$stat[[1]] * (N - 1) / N
+  pval <- pchisq(corrected.stat, ucs.test$par, lower.tail = FALSE)
+  p.resids <- ucs.test$resid
+  as.resids <- ucs.test$stdres
+  pr.pv <- pchisq(ucs.test$resid^2, 1, lower.tail = F)
+  pr.apv <- matrix(as.matrix(p.adjust(pchisq(p.resids^2, 1, lower.tail = F),
+                                      z.adjust.method[1])), nrows, ncols, byrow = F)
+  asr.apv <- matrix(as.matrix(p.adjust(pchisq(as.resids^2, 1, lower.tail = F),
+                                       z.adjust.method[2])), nrows, ncols, byrow = F)
+  output.list <- list(
+    "Uncorrected Pearson Chi-Square" = ucs.test$stat,
+    "Egon Pearson Chi-Square" = corrected.stat,
+    "df" = prod(dim(data.cells) - 1), "p" = pval,
+    "Smallest expected value (should be greater than 1)" = min(ucs.test$expected),
+    "Raw data" = data.cells,
+    "Pearson (standardized) residuals (z)" = p.resids,
+    "two-sided p (for z)" = pr.pv, "adjusted p (for z)" = pr.apv,
+    "Chi-square contribution per cell" = p.resids^2,
+    "Adjusted standardized residuals" = as.resids,
+    "adjusted p (for ASRs)" = asr.apv,
+    "Pearson / ASR p adjustment" = z.adjust.method
+  )
+  return(output.list)
+}
