@@ -1,11 +1,12 @@
 ---
 title: "2: Basic contrasts (single stratum)"
 output: rmarkdown::html_vignette
+bibliography: REFERENCES.bib
+link-citations: true
 vignette: >
   %\VignetteIndexEntry{2: Basic contrasts (single stratum)}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-bibliography: references.bib
 ---
 
 ```{r, include = FALSE}
