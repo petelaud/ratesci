@@ -43,7 +43,7 @@ binomial proportions. Need to calculate using BMS and WMS as per Saha 2016.
 Used by new clusterpci() function for data entered per cluster.}
 
 \item{cc}{Number or logical (default FALSE) specifying (amount of) continuity
-correction. Numeric value is taken as the gamma parameter in Laud 2017,
+adjustment. Numeric value is taken as the gamma parameter in Laud 2017,
 Appendix S2 (default 0.5 for 'conventional' correction if cc = TRUE).}
 
 \item{...}{Other arguments.}

@@ -94,19 +94,22 @@ against previous published methods (i.e. Gart & Nam, Mee, or standard
 Chi-squared test) and for contrast = "p".}
 
 \item{cc}{Number or logical (default FALSE) specifying (amount of) continuity
-correction. Numeric value is taken as the gamma parameter in Laud 2017,
-Appendix S2 (default 0.5 for 'conventional' correction if cc = TRUE). \cr
+adjustment. Numeric value is taken as the gamma parameter in Laud 2017,
+Appendix S2 (default 0.5 for 'conventional' Yates adjustment if
+cc = TRUE). \cr
 IMPORTANT NOTES:
 \enumerate{
-\item This is a 'continuity correction' aimed at approximating strictly
+\item This adjustment (conventionally but controversially termed
+'continuity correction') is aimed at approximating strictly
 conservative coverage, NOT for dealing with zero cell counts. Such
 'sparse data adjustments' are not needed in the score method,
-except to deal with double-zero cells for RD (& double-100\% cells for
-binomial RD & RR) with IVS/INV weights.
-\item The continuity corrections provided here have not been fully tested for
-stratified methods, but are found to match the Mantel-Haenszel corrected test,
+except to deal with double-zero cells for stratified  RD (& double-100\%
+cells for binomial RD & RR) with IVS/INV weights.
+\item The continuity adjustments provided here have not been fully tested for
+stratified methods, but are found to match the continuity-adjusted version
+of the Mantel-Haenszel test,
 when cc = 0.5 for any of the binomial contrasts. Flexibility is included for
-a less conservative correction, such as cc = 0.25 suggested in Laud 2017
+a less conservative adjustment, such as cc = 0.25 suggested in Laud 2017
 (see Appendix S3.4), or cc = 3/16 = 0.1875 in Mehrotra & Railkar (2000)
 }}
 
@@ -124,7 +127,8 @@ test in the single stratum case.
 and (with default weighting and random = FALSE) the CMH test for stratified
 tables.
 \item Default bcf = TRUE and skew = TRUE produces a skewness-corrected version
-of the 'N-1' Chi-squared test or CMH.
+of the 'N-1' Chi-squared test or CMH. This correction will only change the
+p-value if group sizes are unequal.
 }}
 
 \item{precis}{Number (default 6) specifying precision (i.e. number of decimal
@@ -220,11 +224,11 @@ ratio ("RR") for independent binomial or Poisson rates, or for odds ratio
 ("OR", binomial only). Including options for bias correction (from Miettinen
 & Nurminen), skewness correction ("GNbc" method from Laud & Dane, developed
 from Gart & Nam, and generalised as "SCAS" in Laud 2017) and continuity
-correction (for strictly conservative coverage).
+adjustment (for strictly conservative coverage).
 Also includes score intervals for a single binomial proportion or Poisson
 rate. Based on the Wilson score interval, when corrected for skewness,
 coverage is almost identical to the mid-p method, or Clopper-Pearson
-when also continuity-corrected.
+when also continuity-adjusted.
 Hypothesis tests for superiority or non-inferiority are provided using the
 same score, to ensure consistency between test and CI.
 This function is vectorised in x1, x2, n1, and n2.  Vector inputs may also be

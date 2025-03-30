@@ -82,7 +82,7 @@ quadroot <- function(a, b, c_) {
 
 #' Wilson score interval, and equivalent Rao score for Poisson data
 #'
-#' with optional continuity correction
+#' with optional continuity adjustment
 #'
 #' @param xihat Number specifying estimated variance inflation factor for the
 #'   Saha Wilson Score interval for clustered binomial proportions
@@ -95,7 +95,7 @@ quadroot <- function(a, b, c_) {
 #'
 #' Labelled as "Second Normal" in REVSTAT – Statistical Journal
 #' Volume 10, Number 2, June 2012, 211–227
-#' (which provides the continuity correction formula)
+#' (which provides the continuity adjustment formula)
 #'
 #' Schwertman, N.C. and Martinez, R.A. (1994). Approximate Poisson confidence
 #' limits, Communication in Statistics — Theory and Methods, 23(5), 1507-1529.

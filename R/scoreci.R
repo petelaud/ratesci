@@ -6,11 +6,11 @@
 #' ("OR", binomial only). Including options for bias correction (from Miettinen
 #' & Nurminen), skewness correction ("GNbc" method from Laud & Dane, developed
 #' from Gart & Nam, and generalised as "SCAS" in Laud 2017) and continuity
-#' correction (for strictly conservative coverage).
+#' adjustment (for strictly conservative coverage).
 #' Also includes score intervals for a single binomial proportion or Poisson
 #' rate. Based on the Wilson score interval, when corrected for skewness,
 #' coverage is almost identical to the mid-p method, or Clopper-Pearson
-#' when also continuity-corrected.
+#' when also continuity-adjusted.
 #' Hypothesis tests for superiority or non-inferiority are provided using the
 #' same score, to ensure consistency between test and CI.
 #' This function is vectorised in x1, x2, n1, and n2.  Vector inputs may also be
@@ -55,18 +55,21 @@
 #'   against previous published methods (i.e. Gart & Nam, Mee, or standard
 #'   Chi-squared test) and for contrast = "p".
 #' @param cc Number or logical (default FALSE) specifying (amount of) continuity
-#'   correction. Numeric value is taken as the gamma parameter in Laud 2017,
-#'   Appendix S2 (default 0.5 for 'conventional' correction if cc = TRUE). \cr
+#'   adjustment. Numeric value is taken as the gamma parameter in Laud 2017,
+#'   Appendix S2 (default 0.5 for 'conventional' Yates adjustment if
+#'   cc = TRUE). \cr
 #'   IMPORTANT NOTES:
-#'   1) This is a 'continuity correction' aimed at approximating strictly
+#'   1) This adjustment (conventionally but controversially termed
+#'   'continuity correction') is aimed at approximating strictly
 #'   conservative coverage, NOT for dealing with zero cell counts. Such
 #'   'sparse data adjustments' are not needed in the score method,
-#'   except to deal with double-zero cells for RD (& double-100% cells for
-#'   binomial RD & RR) with IVS/INV weights.
-#'   2) The continuity corrections provided here have not been fully tested for
-#'   stratified methods, but are found to match the Mantel-Haenszel corrected test,
+#'   except to deal with double-zero cells for stratified  RD (& double-100%
+#'   cells for binomial RD & RR) with IVS/INV weights.
+#'   2) The continuity adjustments provided here have not been fully tested for
+#'   stratified methods, but are found to match the continuity-adjusted version
+#'   of the Mantel-Haenszel test,
 #'   when cc = 0.5 for any of the binomial contrasts. Flexibility is included for
-#'   a less conservative correction, such as cc = 0.25 suggested in Laud 2017
+#'   a less conservative adjustment, such as cc = 0.25 suggested in Laud 2017
 #'   (see Appendix S3.4), or cc = 3/16 = 0.1875 in Mehrotra & Railkar (2000)
 #' @param theta0 Number to be used in a one-sided significance test (e.g.
 #'   non-inferiority margin). 1-sided p-value will be <0.025 iff 2-sided 95\% CI
@@ -1160,7 +1163,7 @@ scoreci <- function(x1,
 #' or Poisson rates, or for odds ratio ("OR", binomial only), or the single rate
 #' ("p"). (This is the "GNbc" method from Laud & Dane, developed from Gart &
 #' Nam, and generalised as "SCAS" in Laud 2017) including optional
-#' continuity correction.  This function is vectorised in x1, x2, n1, and n2.
+#' continuity adjustment  This function is vectorised in x1, x2, n1, and n2.
 #' Vector inputs may also be combined into a single stratified analysis (e.g.
 #' meta-analysis). This method assumes the contrast is constant across strata
 #' (fixed effects).  For a 'random-effects' method use tdasci (or scoreci with
@@ -1566,7 +1569,7 @@ scoretheta <- function(theta,
     p2d <- NA
   }
 
-  # continuity corrections
+  # continuity adjustments
   corr <- 0
   if (cc > 0) {
     if (contrast == "OR") {
@@ -1693,7 +1696,7 @@ scoretheta <- function(theta,
     if (weighting %in% c("IVS")) Vdot <- sum(wt / (sum(wt))^2)
     if (weighting %in% c("INV")) Vdot <- sum(lambda * wt / (sum(wt))^2)
 
-    # stratified continuity corrections
+    # stratified continuity adjustments
     corr <- 0
     if (cc > 0) {
       if (contrast == "OR") {
@@ -1711,8 +1714,8 @@ scoretheta <- function(theta,
         corr <- cc * (sum(n1 * n2 / (n1 + n2)))^(-1)
         # Generalised version of Mehrotra & Railkar (2000) who suggest cc = (3/16)
         # "our suggested correction is approximately 3/8 times the
-        # continuity correction used in the Mantel-Haenszel statistic; we found the latter to be
-        # overly conservative in extensive simulations."
+        # continuity correction used in the Mantel-Haenszel statistic; we found
+        # the latter to be overly conservative in extensive simulations."
       }
     }
     corr <- corr * sign(Sdot)

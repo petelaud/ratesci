@@ -44,7 +44,7 @@ data: "bin" = binomial (default), "poi" = Poisson.}
 \item{level}{Number specifying confidence level (between 0 and 1, default
 0.95).}
 
-\item{cc}{Number or logical specifying (amount of) continuity correction
+\item{cc}{Number or logical specifying (amount of) continuity adjustment
 (default FALSE). Numeric value is taken as the gamma parameter in Laud 2017,
 Appendix S2 (default 0.5 if cc = TRUE). Forced equal to 0.5 if type = "exact".}
 
@@ -57,7 +57,7 @@ independent binomial or Poisson rates, or for odds ratio ("OR", binomial
 only). (developed from Newcombe, Donner & Zou, Li et al, and Fagerland &
 Newcombe, and generalised as "MOVER-B" in forthcoming publication) including
 special case "MOVER-J" using non-informative priors with optional continuity
-correction.  This function is vectorised in x1, x2, n1, and n2.
+adjustment.  This function is vectorised in x1, x2, n1, and n2.
 }
 \author{
 Pete Laud, \email{p.j.laud@sheffield.ac.uk}

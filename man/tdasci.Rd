@@ -52,19 +52,22 @@ data: "bin" = binomial (default), "poi" = Poisson.}
 0.95).}
 
 \item{cc}{Number or logical (default FALSE) specifying (amount of) continuity
-correction. Numeric value is taken as the gamma parameter in Laud 2017,
-Appendix S2 (default 0.5 for 'conventional' correction if cc = TRUE). \cr
+adjustment. Numeric value is taken as the gamma parameter in Laud 2017,
+Appendix S2 (default 0.5 for 'conventional' Yates adjustment if
+cc = TRUE). \cr
 IMPORTANT NOTES:
 \enumerate{
-\item This is a 'continuity correction' aimed at approximating strictly
+\item This adjustment (conventionally but controversially termed
+'continuity correction') is aimed at approximating strictly
 conservative coverage, NOT for dealing with zero cell counts. Such
 'sparse data adjustments' are not needed in the score method,
-except to deal with double-zero cells for RD (& double-100\% cells for
-binomial RD & RR) with IVS/INV weights.
-\item The continuity corrections provided here have not been fully tested for
-stratified methods, but are found to match the Mantel-Haenszel corrected test,
+except to deal with double-zero cells for stratified  RD (& double-100\%
+cells for binomial RD & RR) with IVS/INV weights.
+\item The continuity adjustments provided here have not been fully tested for
+stratified methods, but are found to match the continuity-adjusted version
+of the Mantel-Haenszel test,
 when cc = 0.5 for any of the binomial contrasts. Flexibility is included for
-a less conservative correction, such as cc = 0.25 suggested in Laud 2017
+a less conservative adjustment, such as cc = 0.25 suggested in Laud 2017
 (see Appendix S3.4), or cc = 3/16 = 0.1875 in Mehrotra & Railkar (2000)
 }}
 

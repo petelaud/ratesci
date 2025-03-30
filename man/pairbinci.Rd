@@ -80,7 +80,7 @@ correction or not. (Under evaluation, manuscript under review.)
 }}
 
 \item{cc}{Number or logical (default FALSE) specifying (amount of) continuity
-correction. When a score-based method is used, cc = 0.5 corresponds to the
+adjustment. When a score-based method is used, cc = 0.5 corresponds to the
 continuity-corrected McNemar test.}
 
 \item{theta0}{Number to be used in a one-sided significance test (e.g.
@@ -131,8 +131,8 @@ Also includes an experimental method using the stratified TDAS method
 with pairs as strata (to be deprecated?).
 For OR, intervals are produced based on transforming various intervals for
 the single proportion, including SCASp, mid-p and Jeffreys.
-All methods have options for continuity correction, and the magnitude of
-correction can be customised.
+All methods have options for continuity adjustment, and the magnitude of
+adjustment can be customised.
 }
 \examples{
 # Example from Fagerland et al 2014

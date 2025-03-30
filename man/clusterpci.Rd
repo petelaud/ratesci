@@ -18,7 +18,7 @@ clusterpci(x, n, level = 0.95, skew = TRUE, cc = FALSE)
 correction or not. (To be evaluated)}
 
 \item{cc}{Number or logical (default FALSE) specifying (amount of) continuity
-correction. Numeric value is taken as the gamma parameter in Laud 2017,
+adjustment. Numeric value is taken as the gamma parameter in Laud 2017,
 Appendix S2 (default 0.5 for 'conventional' correction if cc = TRUE).}
 }
 \value{

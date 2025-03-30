@@ -14,8 +14,8 @@
 #' with pairs as strata (to be deprecated?).
 #' For OR, intervals are produced based on transforming various intervals for
 #' the single proportion, including SCASp, mid-p and Jeffreys.
-#' All methods have options for continuity correction, and the magnitude of
-#' correction can be customised.
+#' All methods have options for continuity adjustment, and the magnitude of
+#' adjustment can be customised.
 #'
 #' @param x A numeric vector object specified as c(a, b, c, d)
 #'   where: \cr
@@ -64,7 +64,7 @@
 #'   correction or not. (Under evaluation, manuscript under review.)
 #'   - Only applies for the iterative method = "Score"
 #' @param cc Number or logical (default FALSE) specifying (amount of) continuity
-#'   correction. When a score-based method is used, cc = 0.5 corresponds to the
+#'   adjustment. When a score-based method is used, cc = 0.5 corresponds to the
 #'   continuity-corrected McNemar test.
 #' @param cctype (deprecated: new equivariant cc method implemented instead)
 #' @param theta0 Number to be used in a one-sided significance test (e.g.
@@ -274,7 +274,7 @@ pairbinci <- function(x,
   if (method == "BP" && contrast == "RD" && cc != FALSE) {
     cc <- FALSE
     if (warn == TRUE) {
-      print(paste("Continuity correction not available for
+      print(paste("Continuity adjustment not available for
          Wald with Bonett-Price adjustment for RD -
          cc is set to FALSE"))
     }
@@ -559,7 +559,7 @@ scorepair <- function(theta,
     # notation per Tango 1999 letter, divided by N
     # (to get numerator on the right scale for skewness correction)
     # Variance is divided by N^2 accordingly
-    # and continuity correction term also divided by N
+    # and continuity adjustment term also divided by N
     Stheta <- ((x[2] - x[3]) - N * theta) / N
     A <- 2 * N
     B <- -x[2] - x[3] + (2 * N - x[2] + x[3]) * theta
@@ -596,7 +596,7 @@ scorepair <- function(theta,
     num <- (-B + Re(sqrt(as.complex(B^2 - 4 * A * C_))))
     q21 <- ifelse(num == 0, 0, num / (2 * A))
 
-    # Equivariant continuity correction for RR, aligned with McNemar cc.
+    # Equivariant continuity adjustment for RR, aligned with McNemar cc.
     # replaces previous 'delrocco' and 'constant' cctype options
       corr <- cc * (1 + theta) * sign(Stheta) / N
 
@@ -647,7 +647,7 @@ scorepair <- function(theta,
 #' R code to calculate Tango's score-based CI using a non-iterative method.
 #' For contrast = "RD" only.
 #' Code originates from Appendix B of Yang 2013,
-#' with updates to include continuity correction from Chang 2024.
+#' with updates to include continuity adjustment from Chang 2024.
 #'
 #' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
 #' @references
@@ -687,7 +687,7 @@ tangoci <- function(x,
   alpha <- 1 - level
   g <- qnorm(1 - alpha / 2)^2 * lambda
 
-  # Updated to include continuity correction from Chang 2024
+  # Updated to include continuity adjustment from Chang 2024
   keep1 <- keep2 <- NULL
   for (uplow in c(-1, 1)) {
     corr <- 2 * cc * uplow
@@ -822,7 +822,7 @@ tangoci <- function(x,
 #' This could be combined with tangoci to avoid code repetition.
 #' Adapted from code kindly provided by Guogen Shan for the closed-form
 #' ASCC method proposed in DelRocco et al. 2023.
-#' with modified form of continuity correction (Laud 2025)
+#' with modified form of continuity adjustment (Laud 2025)
 #' for consistency with McNemar test, and unified code with/without cc.
 #'
 #' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
@@ -976,7 +976,7 @@ tangci <- function(x,
 #'
 #' Method of Variance Estimates Recovery, applied to paired RD and RR.
 #' With various options for the marginal rates, and with optional continuity
-#' correction, and Newcombe's correction to the Pearson correlation estimate,
+#' adjustment, and Newcombe's correction to the Pearson correlation estimate,
 #' applied to both contrasts.
 #'
 #' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}

@@ -25,7 +25,7 @@ Description: Computes confidence intervals for binomial or Poisson rates and
     Wilson score method, and generalised for Bayesian applications
     incorporating prior information. So-called 'exact' methods for
     strictly conservative coverage are approximated using continuity
-    corrections, and the amount of correction can be selected to avoid
+    adjustments, and the amount of correction can be selected to avoid
     over-conservative coverage.  Also includes methods for stratified
     calculations (e.g. meta-analysis), either assuming fixed effects
     (matching the CMH test) or incorporating stratum heterogeneity.

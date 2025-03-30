@@ -19,7 +19,7 @@
 #'   binomial proportions. Need to calculate using BMS and WMS as per Saha 2016.
 #'   Used by new clusterpci() function for data entered per cluster.
 #' @param cc Number or logical (default FALSE) specifying (amount of) continuity
-#'   correction. Numeric value is taken as the gamma parameter in Laud 2017,
+#'   adjustment. Numeric value is taken as the gamma parameter in Laud 2017,
 #'   Appendix S2 (default 0.5 for 'conventional' correction if cc = TRUE).
 #' @param ... Other arguments.
 #' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
@@ -98,7 +98,7 @@ scaspci <- function(x,
 #' Selected confidence intervals for the single binomial or Poisson rate.
 #'
 #' Confidence intervals for the single binomial or Poisson rate. Including
-#' SCAS or Jeffreys intervals, with or without continuity correction, and
+#' SCAS or Jeffreys intervals, with or without continuity adjustment, and
 #' 'exact' Clopper-Pearson/Garwood or mid-p intervals.
 #' This function is vectorised in x, n.
 #'
@@ -110,10 +110,10 @@ scaspci <- function(x,
 #' @param level Number specifying confidence level (between 0 and 1, default
 #'   0.95).
 #' @param cc Number or logical (default FALSE) specifying continuity
-#'   correction.
+#'   adjustment.
 #' @return A list containing, for each method, a matrix containing lower and upper
 #'   confidence limits for each value of x and n. Methods shown depend on the cc
-#'   parameter, which specifies whether the continuity correction is applied to
+#'   parameter, which specifies whether the continuity adjustment is applied to
 #'   the SCAS and Jeffreys methods. The corresponding 'exact' method is
 #'   Clopper-Pearson/Garwood if cc == TRUE and mid-p if cc == FALSE.
 #' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}

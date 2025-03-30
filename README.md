@@ -63,12 +63,12 @@ prior beliefs about the rates in each group - by default, the
 from the Newcombe ‘square-and-add’ method, which is also included for
 reference.
 
-For those wishing to achieve strictly conservative coverage, so-called
-‘continuity corrections’ are provided as approximations to ‘exact’
-methods, with the option to adjust the strength of the correction. The
-performance of these adjustments has not been extensively evaluated, but
-they appear to be more successful for SCAS than for MOVER, in terms of
-achieving conservative coverage.
+For those wishing to achieve strictly conservative coverage, continuity
+adjustments are provided as approximations to ‘exact’ methods, with the
+option to adjust the strength of the correction. The performance of
+these adjustments has not been extensively evaluated, but they appear to
+be more successful for SCAS than for MOVER, in terms of achieving
+conservative coverage.
 
 An online calculator based on this package is available
 [here](https://ssu.shef.ac.uk/ratesci/calc.php)
@@ -101,7 +101,7 @@ output element shows that the default settings give an interval for the
 risk difference (`contrast = "RD"`), for binomial proportions
 (`distrib = "bin"`), at a 95% confidence level. Variance bias correction
 (`bcf`) and skewness correction (`skew`) are applied, continuity
-correction (`cc`) is not. This is the skewness-corrected asymptotic
+adjustment (`cc`) is not. This is the skewness-corrected asymptotic
 score (“SCAS”) confidence interval. (For Miettinen-Nurminen, use
 `skew = FALSE`, for Gart-Nam, use `bcf = FALSE`.)
 

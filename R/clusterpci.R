@@ -15,7 +15,7 @@
 #' @param skew Logical (default TRUE) indicating whether to apply skewness
 #'   correction or not. (To be evaluated)
 #' @param cc Number or logical (default FALSE) specifying (amount of) continuity
-#'   correction. Numeric value is taken as the gamma parameter in Laud 2017,
+#'   adjustment. Numeric value is taken as the gamma parameter in Laud 2017,
 #'   Appendix S2 (default 0.5 for 'conventional' correction if cc = TRUE).
 #' @return A list containing the following components: \describe{
 #'   \item{estimates}{the estimate and confidence interval for p and

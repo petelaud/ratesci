@@ -26,7 +26,7 @@ times (for Poisson rates).}
 \item{ai, bi}{Numbers defining the Beta prior distribution (default ai = bi =
 0.5 for Jeffreys interval). Gamma prior for Poisson rates requires only ai.}
 
-\item{cc}{Number or logical specifying (amount of) "continuity correction".
+\item{cc}{Number or logical specifying (amount of) "continuity adjustment".
 cc = 0 (default) gives Jeffreys interval, cc = 0.5 gives the
 Clopper-Pearson interval (or Garwood for Poisson). A value between 0 and
 0.5 allows a compromise between proximate and conservative coverage.}
@@ -49,7 +49,7 @@ binomial rates) or Gamma (for Poisson rates) conjugate priors. Encompassing
 the Jeffreys method (with Beta(0.5, 0.5) or Gamma(0.5) respectively), as well
 as any user-specified prior distribution. Clopper-Pearson method (as
 quantiles of a Beta distribution as described in Brown et al. 2001) also
-included by way of a "continuity correction" parameter.
+included by way of a "continuity adjustment" parameter.
 }
 \examples{
 # Jeffreys method:

@@ -17,7 +17,7 @@
 #' @param a1,b1,a2,b2 Numbers defining the Beta(ai,bi) prior distributions for
 #'   each group (default ai = bi = 0.5 for Jeffreys method). Gamma priors for
 #'   Poisson rates require only a1, a2.
-#' @param cc Number or logical specifying (amount of) continuity correction
+#' @param cc Number or logical specifying (amount of) continuity adjustment
 #'   (default FALSE). Numeric value is taken as the gamma parameter in Laud 2017,
 #'   Appendix S2 (default 0.5 if cc = TRUE). Forced equal to 0.5 if type = "exact".
 #' @param contrast Character string indicating the contrast of interest: \cr
@@ -157,7 +157,7 @@ moverci <- function(x1,
 
   if (type %in% c("jeff", "exact")) {
     if (type == "exact") cc <- 0.5
-    # MOVER-J, including optional 'continuity correction'
+    # MOVER-J, including optional continuity adjustment
     j1 <- jeffreysci(x1, n1,
       ai = a1, bi = b1, cc = cc, level = level,
       distrib = distrib, adj = adj
@@ -289,14 +289,14 @@ moverci <- function(x1,
 #' the Jeffreys method (with Beta(0.5, 0.5) or Gamma(0.5) respectively), as well
 #' as any user-specified prior distribution. Clopper-Pearson method (as
 #' quantiles of a Beta distribution as described in Brown et al. 2001) also
-#' included by way of a "continuity correction" parameter.
+#' included by way of a "continuity adjustment" parameter.
 #'
 #' @param x Numeric vector of number of events.
 #' @param n Numeric vector of sample sizes (for binomial rates) or exposure
 #'   times (for Poisson rates).
 #' @param ai,bi Numbers defining the Beta prior distribution (default ai = bi =
 #'   0.5 for Jeffreys interval). Gamma prior for Poisson rates requires only ai.
-#' @param cc Number or logical specifying (amount of) "continuity correction".
+#' @param cc Number or logical specifying (amount of) "continuity adjustment".
 #'   cc = 0 (default) gives Jeffreys interval, cc = 0.5 gives the
 #'   Clopper-Pearson interval (or Garwood for Poisson). A value between 0 and
 #'   0.5 allows a compromise between proximate and conservative coverage.
@@ -357,7 +357,7 @@ jeffreysci <- function(x,
     }
   } else if (distrib == "poi") {
     # Jeffreys prior for Poisson rate uses gamma distribution,
-    # as defined in Li et al. with "continuity correction" from Laud 2017.
+    # as defined in Li et al. with continuity adjustment from Laud 2017.
     CI_lower <- qgamma(alpha / 2, x + (ai - cc), scale = 1 / n)
     est <- qgamma(0.5, x + (ai), scale = 1 / n)
     if (adj == TRUE) {
@@ -379,7 +379,7 @@ jeffreysci <- function(x,
 #' only). (developed from Newcombe, Donner & Zou, Li et al, and Fagerland &
 #' Newcombe, and generalised as "MOVER-B" in forthcoming publication) including
 #' special case "MOVER-J" using non-informative priors with optional continuity
-#' correction.  This function is vectorised in x1, x2, n1, and n2.
+#' adjustment.  This function is vectorised in x1, x2, n1, and n2.
 #'
 #' @param x1,x2 Numeric vectors of numbers of events in group 1 & group 2
 #'   respectively.

@@ -34,7 +34,7 @@ times (for Poisson rates) in each group.}
 each group (default ai = bi = 0.5 for Jeffreys method). Gamma priors for
 Poisson rates require only a1, a2.}
 
-\item{cc}{Number or logical specifying (amount of) continuity correction
+\item{cc}{Number or logical specifying (amount of) continuity adjustment
 (default FALSE). Numeric value is taken as the gamma parameter in Laud 2017,
 Appendix S2 (default 0.5 if cc = TRUE). Forced equal to 0.5 if type = "exact".}
 
