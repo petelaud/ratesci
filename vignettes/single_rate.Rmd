@@ -39,10 +39,10 @@ scaspci(x = 1, n = 29)
 rateci(x = 1, n = 29)
 ```
 
-The Jeffreys interval can also incorporate prior information about p for an approximate Bayesian confidence interval. For example, a pilot study estimate of 1/10 would suggest a Beta(1,9) prior for p:
+The Jeffreys interval can also incorporate prior information about $p$ for an approximate Bayesian confidence interval. For example, a pilot study estimate of 1/10 could be used to update the non-informative $Beta(0.5, 0.5)$ prior for $p$ to a $Beta(1.5, 9.5)$ distribution:
 
 ```{r}
-jeffreysci(x = 1, n = 29, ai = 1, bi = 9)
+jeffreysci(x = 1, n = 29, ai = 1.5, bi = 9.5)
 ```
 
 If more conservative coverage is required, a "continuity adjustment" may be deployed with `cc`, as follows, giving continuity-adjusted SCAS or Jeffreys, and (if `cc` is TRUE or 0.5), the Clopper-Pearson method. Note intermediate adjustments smaller than 0.5 give a more refined adjustment[@laud2017, Appendix S2].
