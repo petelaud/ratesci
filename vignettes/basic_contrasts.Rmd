@@ -26,9 +26,9 @@ library(ratesci)
 
 ### SCAS and other asymptotic score methods
 
-To calculate a confidence interval (CI) for a risk difference ($\hat \theta_{RD} = \hat p_1 - \hat p_2$, where $\hat p_i = x_i/n_i$), or relative risk ($\hat \theta_{RR} = \hat p_1 / \hat p_2$) or odds ratio ($\hat \theta_{OR} = \hat p_1 (1 - \hat p_2) / \hat p_2(1 - \hat p_1)$, the Skewness-Corrected Asymptotic Score (SCAS) method is recommended, as one that succeeds, on average, at containing the true parameter $\theta$ with the appropriate nominal probability (e.g. 95%), and has evenly distributed tail probabilities [@laud2017]. It is a modified version of the Miettinen-Nurminen (MN) Asymptotic Score method[@miettinen1985]. MN and SCAS each represent a family of methods encompassing analysis of RD and RR for binomial proportions or Poisson 'exposure-adjusted' rates, and binomial OR.
+To calculate a confidence interval (CI) for a risk difference ($\hat \theta_{RD} = \hat p_1 - \hat p_2$, where $\hat p_i = x_i/n_i$), or relative risk ($\hat \theta_{RR} = \hat p_1 / \hat p_2$) or odds ratio ($\hat \theta_{OR} = \hat p_1 (1 - \hat p_2) / \hat p_2(1 - \hat p_1)$, the Skewness-Corrected Asymptotic Score (SCAS) method is recommended, as one that succeeds, on average, at containing the true parameter $\theta$ with the appropriate nominal probability (e.g. 95%), and has evenly distributed tail probabilities [@laud2017]. It is a modified version of the Miettinen-Nurminen (MN) Asymptotic Score method [@miettinen1985]. MN and SCAS each represent a family of methods encompassing analysis of RD and RR for binomial proportions or Poisson 'exposure-adjusted' rates, and binomial OR.
 
-The plots below illustrate the one-sided and two-sided interval coverage probabilities[^1] (i.e. 1 minus the actual probability that the confidence interval contains the true value of $\theta$) achieved by SCAS compared to some other popular methods[^2] with $(n_1, n_2) = (45, 15)$, using moving average smoothing:
+The plots below illustrate the one-sided and two-sided interval coverage probabilities[^1] achieved by SCAS compared to some other popular methods[^2] with $(n_1, n_2) = (45, 15)$, with the second row of each plot using moving average smoothing:
 
 [^1]: RNCP = the probability that the true value of $\theta$ falls outside to the right of the confidence interval. CP = the probability that the confidence interval contains the true value of $\theta$. Both calculated by precise enumeration of bivariate binomial probabilities.
 
@@ -40,9 +40,9 @@ Differences in two-sided coverage can be more subtle:
 
 ![](images/summaryRD95_45,15.png)
 
-The skewness correction, introduced by Gart and Nam in 1988[@gart1988] should be considered essential for analysis of ratio contrasts, but can also have a substantial effect for RD as seen here.
+The skewness correction, introduced by [@gart1988] should be considered essential for analysis of ratio contrasts, but can also have a substantial effect for RD as seen here.
 
-The 'scoreci()' function is used as follows, for example to obtain a SCAS 95% CI for the difference 5/56 minus 0/29:
+The 'scoreci()' function is used as follows, for example to obtain a SCAS 95% CI for the difference `5/56 - 0/29`:
 
 ```{r}
 out <- scoreci(x1 = 5, n1 = 56, x2 = 0, n = 29)
@@ -60,7 +60,7 @@ scoreci(x1 = 5, n1 = 56, x2 = 0, n = 29, skew = FALSE, bcf = FALSE)$estimates
 --->
 ````
 
-The underlying z-statistic is used to obtain a two-sided hypothesis test against the null hypothesis of no difference (`pval2sided`). Note that under certain conditions (i.e. n1 = n2) this is equivalent to the Egon Pearson 'N-1' chi-squared test (<https://rpubs.com/seriousstats/epcs_test>). The facility is also provided for a custom one-sided test against any specified null hypothesis value $\theta_0$, e.g. for non-inferiority testing (`pval_left` and `pval_right`)
+The underlying z-statistic is used to obtain a two-sided hypothesis test against the null hypothesis of no difference (`pval2sided`). Note that under certain conditions (i.e. $n_1 = n_2$) this is equivalent to the Egon Pearson 'N-1' chi-squared test [@campbell2007]. The facility is also provided for a custom one-sided test against any specified null hypothesis value $\theta_0$, e.g. for non-inferiority testing (`pval_left` and `pval_right`)
 
 ```{r}
 out$pval
@@ -84,7 +84,7 @@ And for odds ratio:
 scasci(x1 = 5, n1 = 56, x2 = 0, n = 29, contrast = "OR")$estimates
 ```
 
-For analysis of Poisson incidence rates, for example exposure-adjusted adverse event rates, the same methodology is adapted for the Poisson distribution, with the `distrib` argument. So, for example if the denominators 56 and 29 represent number of patient-years at risk, instead of number of patients:
+For analysis of Poisson incidence rates, for example exposure-adjusted adverse event rates, the same methodology is adapted for the Poisson distribution, with the `distrib` argument. So, for example if the denominators 56 and 29 represent the number of patient-years at risk in each group, instead of the number of patients:
 
 ```{r}
 scasci(x1 = 5, n1 = 56, x2 = 0, n = 29, contrast = "RR", distrib = "poi")$estimates
@@ -92,7 +92,7 @@ scasci(x1 = 5, n1 = 56, x2 = 0, n = 29, contrast = "RR", distrib = "poi")$estima
 
 ### MOVER methods
 
-An alternative family of methods to produce confidence intervals for the same set of binomial and Poisson contrasts is the "Method of Variance Estimates Recovery" (MOVER), also known as "Square-and-add"[@newcombe2012]. Originally labelled as a "Score" method[@newcombe1998] due to the involvement of the Wilson Score interval, this involves a combination of intervals calculated separately for $p_1$ and $p_2$. Newcombe based his method on Wilson intervals, but coverage can be improved by using equal-tailed Jeffreys intervals instead ("MOVER-J"). Coverage properties remain generally inferior to SCAS - with larger sample size, MOVER-J has two sided coverage close to (but slightly below) the nominal level, but central location is not achieved, even with Jeffreys intervals.
+An alternative family of methods to produce confidence intervals for the same set of binomial and Poisson contrasts is the "Method of Variance Estimates Recovery" (MOVER), also known as "Square-and-add" [@newcombe2012]. Originally labelled as a "Score" method [@newcombe1998] due to the involvement of the Wilson Score interval, this involves a combination of intervals calculated separately for $p_1$ and $p_2$. Newcombe based his method on Wilson intervals, but coverage can be improved by using equal-tailed Jeffreys intervals instead ("MOVER-J"). Coverage properties remain generally inferior to SCAS - with larger sample size, MOVER-J has two sided coverage close to (but slightly below) the nominal level, but central location is not achieved, even with Jeffreys intervals.
 
 A MOVER-J interval for binomial RD from the same observed data as above would be obtained using:
 
