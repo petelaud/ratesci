@@ -5,13 +5,13 @@ independent binomial or Poisson rates, or for odds ratio ("OR", binomial
 only). (developed from Newcombe, Donner &amp;amp; Zou, Li et al, and Fagerland &amp;amp;
 Newcombe, and generalised as "MOVER-B" in forthcoming publication) including
 special case "MOVER-J" using non-informative priors with optional continuity
-correction.  This function is vectorised in x1, x2, n1, and n2.'><meta property="og:description" content='Wrapper function for the MOVER-B methods.  Approximate Bayesian confidence
+adjustment.  This function is vectorised in x1, x2, n1, and n2.'><meta property="og:description" content='Wrapper function for the MOVER-B methods.  Approximate Bayesian confidence
 intervals for the rate (or risk) difference ("RD") or ratio ("RR") for
 independent binomial or Poisson rates, or for odds ratio ("OR", binomial
 only). (developed from Newcombe, Donner &amp;amp; Zou, Li et al, and Fagerland &amp;amp;
 Newcombe, and generalised as "MOVER-B" in forthcoming publication) including
 special case "MOVER-J" using non-informative priors with optional continuity
-correction.  This function is vectorised in x1, x2, n1, and n2.'><meta property="og:image" content="https://petelaud.github.io/ratesci/logo.png"></head><body>
+adjustment.  This function is vectorised in x1, x2, n1, and n2.'><meta property="og:image" content="https://petelaud.github.io/ratesci/logo.png"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -56,7 +56,7 @@ independent binomial or Poisson rates, or for odds ratio ("OR", binomial
 only). (developed from Newcombe, Donner &amp; Zou, Li et al, and Fagerland &amp;
 Newcombe, and generalised as "MOVER-B" in forthcoming publication) including
 special case "MOVER-J" using non-informative priors with optional continuity
-correction.  This function is vectorised in x1, x2, n1, and n2.</p>
+adjustment.  This function is vectorised in x1, x2, n1, and n2.</p>
     </div>
 
     <div class="section level2">
@@ -117,7 +117,7 @@ data: "bin" = binomial (default), "poi" = Poisson.</p></dd>
 
 
 <dt id="arg-cc">cc<a class="anchor" aria-label="anchor" href="#arg-cc"></a></dt>
-<dd><p>Number or logical specifying (amount of) continuity correction
+<dd><p>Number or logical specifying (amount of) continuity adjustment
 (default FALSE). Numeric value is taken as the gamma parameter in Laud 2017,
 Appendix S2 (default 0.5 if cc = TRUE). Forced equal to 0.5 if type = "exact".</p></dd>
 
