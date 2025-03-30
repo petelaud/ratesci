@@ -93,7 +93,7 @@ one that succeeds, on average, at containing the true parameter
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math>
 with the appropriate nominal probability (e.g. 95%), and has evenly
 distributed tail probabilities <span class="citation">(<a href="#ref-laud2017">Laud 2017</a>)</span>. It is a modified version of
-the Miettinen-Nurminen (MN) Asymptotic Score method<span class="citation">(<a href="#ref-miettinen1985">Miettinen and Nurminen
+the Miettinen-Nurminen (MN) Asymptotic Score method <span class="citation">(<a href="#ref-miettinen1985">Miettinen and Nurminen
 1985</a>)</span>. MN and SCAS each represent a family of methods
 encompassing analysis of RD and RR for binomial proportions or Poisson
 ‘exposure-adjusted’ rates, and binomial OR.</p>
@@ -104,22 +104,20 @@ falls outside to the right of the confidence interval. CP = the
 probability that the confidence interval contains the true value of
 &lt;math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"&gt;&lt;semantics&gt;&lt;mi&gt;θ&lt;/mi&gt;&lt;annotation encoding="application/x-tex"&gt;\theta&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;.
 Both calculated by precise enumeration of bivariate binomial
-probabilities.&lt;/p&gt;'><sup>1</sup></a> (i.e. 1 minus the actual probability that
-the confidence interval contains the true value of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math>)
-achieved by SCAS compared to some other popular methods<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;AN = “Wald” Approximate Normal, MOVER-J = Method of
+probabilities.&lt;/p&gt;'><sup>1</sup></a> achieved by SCAS compared to some other
+popular methods<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;AN = “Wald” Approximate Normal, MOVER-J = Method of
 Variance Estimates Recovery, based on Newcombe’s method but using
 Jeffreys equal-tailed intervals instead of Wilson&lt;/p&gt;"><sup>2</sup></a> with
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>n</mi><mn>1</mn></msub><mo>,</mo><msub><mi>n</mi><mn>2</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>45</mn><mo>,</mo><mn>15</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">(n_1, n_2) = (45, 15)</annotation></semantics></math>,
-using moving average smoothing:</p>
+with the second row of each plot using moving average smoothing:</p>
 <p><img src="images/summaryRD95_45%2C15os.png"></p>
 <p>Differences in two-sided coverage can be more subtle:</p>
 <p><img src="images/summaryRD95_45%2C15.png"></p>
-<p>The skewness correction, introduced by Gart and Nam in 1988<span class="citation">(<a href="#ref-gart1988">Gart and Nam 1988</a>)</span>
-should be considered essential for analysis of ratio contrasts, but can
-also have a substantial effect for RD as seen here.</p>
+<p>The skewness correction, introduced by <span class="citation">(<a href="#ref-gart1988">Gart and Nam 1988</a>)</span> should be considered
+essential for analysis of ratio contrasts, but can also have a
+substantial effect for RD as seen here.</p>
 <p>The ‘scoreci()’ function is used as follows, for example to obtain a
-SCAS 95% CI for the difference 5/56 minus 0/29:</p>
+SCAS 95% CI for the difference <code>5/56 - 0/29</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">5</span>, n1 <span class="op">=</span> <span class="fl">56</span>, x2 <span class="op">=</span> <span class="fl">0</span>, n <span class="op">=</span> <span class="fl">29</span><span class="op">)</span></span>
 <span><span class="va">out</span><span class="op">$</span><span class="va">estimates</span></span>
@@ -140,10 +138,11 @@ scoreci(x1 = 5, n1 = 56, x2 = 0, n = 29, skew = FALSE, bcf = FALSE)$estimates
 --->
 <p>The underlying z-statistic is used to obtain a two-sided hypothesis
 test against the null hypothesis of no difference
-(<code>pval2sided</code>). Note that under certain conditions (i.e. n1 =
-n2) this is equivalent to the Egon Pearson ‘N-1’ chi-squared test (<a href="https://rpubs.com/seriousstats/epcs_test" class="external-link uri">https://rpubs.com/seriousstats/epcs_test</a>). The facility
-is also provided for a custom one-sided test against any specified null
-hypothesis value
+(<code>pval2sided</code>). Note that under certain conditions
+(i.e. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mn>1</mn></msub><mo>=</mo><msub><mi>n</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">n_1 = n_2</annotation></semantics></math>)
+this is equivalent to the Egon Pearson ‘N-1’ chi-squared test <span class="citation">(<a href="#ref-campbell2007">Campbell 2007</a>)</span>.
+The facility is also provided for a custom one-sided test against any
+specified null hypothesis value
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>θ</mi><mn>0</mn></msub><annotation encoding="application/x-tex">\theta_0</annotation></semantics></math>,
 e.g. for non-inferiority testing (<code>pval_left</code> and
 <code>pval_right</code>)</p>
@@ -173,8 +172,9 @@ use the <code><a href="../reference/scasci.html">scasci()</a></code> wrapper fun
 <p>For analysis of Poisson incidence rates, for example
 exposure-adjusted adverse event rates, the same methodology is adapted
 for the Poisson distribution, with the <code>distrib</code> argument.
-So, for example if the denominators 56 and 29 represent number of
-patient-years at risk, instead of number of patients:</p>
+So, for example if the denominators 56 and 29 represent the number of
+patient-years at risk in each group, instead of the number of
+patients:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/scasci.html">scasci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">5</span>, n1 <span class="op">=</span> <span class="fl">56</span>, x2 <span class="op">=</span> <span class="fl">0</span>, n <span class="op">=</span> <span class="fl">29</span>, contrast <span class="op">=</span> <span class="st">"RR"</span>, distrib <span class="op">=</span> <span class="st">"poi"</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
 <span><span class="co">#&gt;      lower  est upper level x1 n1 x2 n2  p1hat p2hat  p1mle   p2mle</span></span>
@@ -185,11 +185,11 @@ patient-years at risk, instead of number of patients:</p>
 </h3>
 <p>An alternative family of methods to produce confidence intervals for
 the same set of binomial and Poisson contrasts is the “Method of
-Variance Estimates Recovery” (MOVER), also known as
-“Square-and-add”<span class="citation">(<a href="#ref-newcombe2012">Robert Gordon Newcombe 2012</a>)</span>.
-Originally labelled as a “Score” method<span class="citation">(<a href="#ref-newcombe1998">Robert G. Newcombe 1998</a>)</span> due to the
-involvement of the Wilson Score interval, this involves a combination of
-intervals calculated separately for
+Variance Estimates Recovery” (MOVER), also known as “Square-and-add”
+<span class="citation">(<a href="#ref-newcombe2012">Newcombe
+2012</a>)</span>. Originally labelled as a “Score” method <span class="citation">(<a href="#ref-newcombe1998">Newcombe 1998</a>)</span>
+due to the involvement of the Wilson Score interval, this involves a
+combination of intervals calculated separately for
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mn>1</mn></msub><annotation encoding="application/x-tex">p_1</annotation></semantics></math>
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mn>2</mn></msub><annotation encoding="application/x-tex">p_2</annotation></semantics></math>.
@@ -231,6 +231,12 @@ might be updated as follows:</p>
 <span><span class="co">#&gt;        lower    est upper</span></span>
 <span><span class="co">#&gt; [1,] 0.00917 0.0872 0.172</span></span></code></pre></div>
 <div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-campbell2007" class="csl-entry">
+Campbell, Ian. 2007. <span>“Chi<span>-</span>Squared and
+Fisher<span></span>Irwin Tests of Two<span>-</span>by<span>-</span>Two
+Tables with Small Sample Recommendations.”</span> <em>Statistics in
+Medicine</em> 26 (19): 3661–75. <a href="https://doi.org/10.1002/sim.2832" class="external-link">https://doi.org/10.1002/sim.2832</a>.
+</div>
 <div id="ref-gart1988" class="csl-entry">
 Gart, John J., and Jun-mo Nam. 1988. <span>“Approximate Interval
 Estimation of the Ratio of Binomial Parameters: A Review and Corrections
@@ -251,8 +257,8 @@ Between Independent Proportions: Comparison of Eleven Methods.”</span>
 <em>Statistics in Medicine</em> 17 (8): 873–90. <a href="https://doi.org/10.1002/(sici)1097-0258(19980430)17:8&lt;873::aid-sim779&gt;3.0.co;2-i" class="external-link">https://doi.org/10.1002/(sici)1097-0258(19980430)17:8&lt;873::aid-sim779&gt;3.0.co;2-i</a>.
 </div>
 <div id="ref-newcombe2012" class="csl-entry">
-Newcombe, Robert Gordon. 2012. <em>Confidence Intervals for Proportions
-and Related Measures of Effect Size</em>. CRC Press. <a href="https://doi.org/10.1201/b12670" class="external-link">https://doi.org/10.1201/b12670</a>.
+———. 2012. <em>Confidence Intervals for Proportions and Related Measures
+of Effect Size</em>. CRC Press. <a href="https://doi.org/10.1201/b12670" class="external-link">https://doi.org/10.1201/b12670</a>.
 </div>
 </div>
 </div>
