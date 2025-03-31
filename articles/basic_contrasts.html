@@ -40,6 +40,7 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/single_rate.html">1: Single rate</a></li>
     <li><a class="dropdown-item" href="../articles/basic_contrasts.html">2: Basic contrasts (single stratum)</a></li>
+    <li><a class="dropdown-item" href="../articles/paired_contrasts.html">3: Paired contrasts</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -197,11 +198,24 @@ intervals calculated separately for
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mn>2</mn></msub><annotation encoding="application/x-tex">p_2</annotation></semantics></math>.
 Newcombe based his method on Wilson intervals, but coverage can be
-improved by using equal-tailed Jeffreys intervals instead (“MOVER-J”).
-Coverage properties remain generally inferior to SCAS - with larger
-sample size, MOVER-J has two sided coverage close to (but slightly
-below) the nominal level, but central location is not achieved, even
-with Jeffreys intervals.</p>
+improved by using equal-tailed Jeffreys intervals instead (“MOVER-J”)
+<span class="citation">(<a href="#ref-laud2017">Laud 2017</a>)</span><a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;Newcombe considered a MOVER method based on equal-tailed
+Jeffreys intervals (“MOVER-R Jeffreys”) in chapter 11 of &lt;span class="citation"&gt;(&lt;a href="#ref-newcombe2012"&gt;Newcombe 2012&lt;/a&gt;)&lt;/span&gt;.
+However, the example intervals shown in his Table 11.6 do not match the
+output of
+&lt;code&gt;moverci(2, 14, 1, 11, contrast = "RR", type = "jeff")&lt;/code&gt;. The
+results for “MOVER-R Wilson” are matched by
+&lt;code&gt;moverci(2, 14, 1, 11, contrast = "RR", type = "wilson")&lt;/code&gt;,
+suggesting that the discrepancy is in the calculation of the Jeffreys
+intervals themselves rather than the MOVER formula. However, Jeffreys
+intervals for a single proportion (“method 12”) in Newcombe’s Table 3.2
+(chapter 3), are matched by &lt;code&gt;jeffreysci(1, 10)&lt;/code&gt;, so the
+source of the discrepancy remains a mystery. Similar discrepancies are
+observed for contrast = “OR”.&lt;/p&gt;'><sup>3</sup></a>. Coverage
+properties remain generally inferior to SCAS - with larger sample size,
+MOVER-J has two-sided coverage close to (but slightly below) the nominal
+level, but central location is not achieved. There is no corresponding
+hypothesis test for the MOVER methods.</p>
 <p>A MOVER-J interval for binomial RD from the same observed data as
 above would be obtained using:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
