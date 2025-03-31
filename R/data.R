@@ -1,7 +1,5 @@
-#' crash.
-#'
-#' Data from systematic review of the effect on mortality of corticosteroids
-#' in traumatic brain injury
+#' Data from systematic review of the effect on mortality of
+#' corticosteroids in traumatic brain injury
 #'
 #' @format A data frame with five variables:
 #' \describe{
@@ -14,10 +12,8 @@
 #' @source <http://www.ncbi.nlm.nih.gov/pubmed/15474134>
 "crash"
 
-#' cisapride.
-#'
-#' Data from systematic review of the effect of cisapride for treatment of
-#' non-ulcer dyspepsia
+#' Data from systematic review of the effect of cisapride for
+#' treatment of non-ulcer dyspepsia
 #'
 #' @format A data frame with five variables:
 #' \describe{
@@ -30,10 +26,8 @@
 #' @source <https://onlinelibrary.wiley.com/doi/10.1002/sim.1009>
 "cisapride"
 
-#' compress.
-#'
-#' Data from systematic review of the effect of graduated compression stockings
-#' for prevention of DVT
+#' Data from systematic review of the effect of graduated compression
+#' stockings for prevention of DVT
 #'
 #' @format A data frame with five variables:
 #' \describe{

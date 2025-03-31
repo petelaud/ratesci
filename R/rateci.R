@@ -1,5 +1,6 @@
 #' Skewness-corrected asymptotic score ("SCAS") confidence intervals for
 #' single binomial or Poisson rate using closed-form calculations.
+#'
 #' This function is vectorised in x, n.
 #'
 #' @param x Numeric vector of number of events.

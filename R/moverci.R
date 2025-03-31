@@ -1,5 +1,5 @@
-#' MOVER confidence intervals for comparisons of independent binomial or Poisson
-#' rates.
+#' Method of Variance Estimates Recovery ("MOVER") confidence intervals
+#' for comparisons of independent binomial or Poisson rates.
 #'
 #' Confidence intervals applying the MOVER method ("Method of Variance Estimates
 #' Recovery", developed from the Newcombe method for binomial RD) across
@@ -60,11 +60,11 @@
 #'
 #'   Newcombe RG. Interval estimation for the difference between independent
 #'   proportions: comparison of eleven methods. Statistics in Medicine 1998;
-# ;   17(8):873-890.
+#'   17(8):873-890.
 #'
 #'   Donner A, Zou G. Closed-form confidence intervals for functions of the
 #'   normal mean and standard deviation. Statistical Methods in Medical Research
-# ;   2012; 21(4):347-359.
+#'   2012; 21(4):347-359.
 #'
 #'   Fagerland MW, Newcombe RG. Confidence intervals for odds ratio and relative
 #'   risk based on the inverse hyperbolic sine transformation. Statistics in

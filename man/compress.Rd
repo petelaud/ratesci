@@ -3,7 +3,8 @@
 \docType{data}
 \name{compress}
 \alias{compress}
-\title{compress.}
+\title{Data from systematic review of the effect of graduated compression
+stockings for prevention of DVT}
 \format{
 A data frame with five variables:
 \describe{
@@ -21,7 +22,7 @@ A data frame with five variables:
 compress
 }
 \description{
-Data from systematic review of the effect of graduated compression stockings
-for prevention of DVT
+Data from systematic review of the effect of graduated compression
+stockings for prevention of DVT
 }
 \keyword{datasets}

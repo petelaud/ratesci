@@ -2,8 +2,8 @@
 % Please edit documentation in R/moverci.R
 \name{moverci}
 \alias{moverci}
-\title{MOVER confidence intervals for comparisons of independent binomial or Poisson
-rates.}
+\title{Method of Variance Estimates Recovery ("MOVER") confidence intervals
+for comparisons of independent binomial or Poisson rates.}
 \usage{
 moverci(
   x1,
@@ -97,9 +97,11 @@ rates. Pharmaceutical Statistics 2017; 16:334-348.
 
 Newcombe RG. Interval estimation for the difference between independent
 proportions: comparison of eleven methods. Statistics in Medicine 1998;
+17(8):873-890.
 
 Donner A, Zou G. Closed-form confidence intervals for functions of the
 normal mean and standard deviation. Statistical Methods in Medical Research
+2012; 21(4):347-359.
 
 Fagerland MW, Newcombe RG. Confidence intervals for odds ratio and relative
 risk based on the inverse hyperbolic sine transformation. Statistics in

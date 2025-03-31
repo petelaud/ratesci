@@ -3,8 +3,7 @@
 \name{scaspci}
 \alias{scaspci}
 \title{Skewness-corrected asymptotic score ("SCAS") confidence intervals for
-single binomial or Poisson rate using closed-form calculations.
-This function is vectorised in x, n.}
+single binomial or Poisson rate using closed-form calculations.}
 \usage{
 scaspci(
   x,
@@ -49,8 +48,6 @@ Appendix S2 (default 0.5 for 'conventional' correction if cc = TRUE).}
 \item{...}{Other arguments.}
 }
 \description{
-Skewness-corrected asymptotic score ("SCAS") confidence intervals for
-single binomial or Poisson rate using closed-form calculations.
 This function is vectorised in x, n.
 }
 \author{

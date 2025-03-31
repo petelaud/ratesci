@@ -3,7 +3,8 @@
 \docType{data}
 \name{crash}
 \alias{crash}
-\title{crash.}
+\title{Data from systematic review of the effect on mortality of
+corticosteroids in traumatic brain injury}
 \format{
 A data frame with five variables:
 \describe{
@@ -21,7 +22,7 @@ A data frame with five variables:
 crash
 }
 \description{
-Data from systematic review of the effect on mortality of corticosteroids
-in traumatic brain injury
+Data from systematic review of the effect on mortality of
+corticosteroids in traumatic brain injury
 }
 \keyword{datasets}
