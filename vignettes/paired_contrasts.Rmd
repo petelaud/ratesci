@@ -41,7 +41,7 @@ The plots below illustrate the one-sided and two-sided interval coverage probabi
 
 [^1]: SCASu = SCAS omitting variance bias correction; AS = Tang; MOVER-NJ = Method of Variance Estimates Recovery, based on Newcombe's correlation adjustment but using Jeffreys equal-tailed intervals instead of Wilson; MOVER-W = MOVER using Wilson intervals, and omitting Newcombe's correlation correction; BP = Bonett-Price
 
-![](images/RRpair40_95_0.25.png)
+![](images/RRpair40_95_0.25_small.jpg)
 
 `pairbinci()` takes input in the form of a vector of length 4, comprising the four values `c(a, b, c, d)` from the above table, which are the number of paired observations having each of the four possible pairs of outcomes.
 
@@ -70,7 +70,7 @@ To obtain the legacy Tango and Tang intervals for RD and RR respectively, you ma
 
 ### MOVER methods
 
-For application of the MOVER method to paired RD or RR, an estimate of the correlation coefficient is included in the formula. A correction to the correlation estimate, introduced by Newcombe, is recommended, obtained with `method = "MOVER_newc"`. As for unpaired MOVER methods, the default base method used for the individual (marginal) proportions is the equal-tailed Jeffreys interval, rather than the Wilson Score as originally proposed by Newcombe (obtained using `moverbase = "wilson"`). The combination of the Newcombe adjustment to the correlation and the Jeffreys intervals gives the designation "MOVER-NJ". This method is less computationally intensive than SCAS, but coverage properties are inferior, and there is no corresponding hypothesis test.
+For application of the MOVER method to paired RD or RR, an estimate of the correlation coefficient is included in the formula. A correction to the correlation estimate, introduced by Newcombe, is recommended, obtained with `method = "MOVER_newc"`. As for unpaired MOVER methods, the default base method used for the individual (marginal) proportions is the equal-tailed Jeffreys interval, rather than the Wilson Score as originally proposed by Newcombe (obtained using `moverbase = "wilson"`). The combination of the Newcombe correlation estimate and the Jeffreys intervals gives the designation "MOVER-NJ". This method is less computationally intensive than SCAS, but coverage properties are inferior, and there is no corresponding hypothesis test.
 
 ```{r}
 pairbinci(x = c(1, 1, 7, 12), contrast = "RD", method = "MOVER_newc")$estimates

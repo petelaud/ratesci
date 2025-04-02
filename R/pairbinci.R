@@ -666,7 +666,6 @@ tangoci <- function(x,
                     level = 0.95,
                     bcf = TRUE,
                     cc = FALSE) {
-  #  options(digits = 12)
   if (as.character(cc) == "TRUE") {
     cc <- 0.5 # Default correction for paired RD aligned with cc'd McNemar test
   }
