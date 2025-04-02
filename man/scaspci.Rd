@@ -43,12 +43,16 @@ Used by new clusterpci() function for data entered per cluster.}
 
 \item{cc}{Number or logical (default FALSE) specifying (amount of) continuity
 adjustment. Numeric value is taken as the gamma parameter in Laud 2017,
-Appendix S2 (default 0.5 for 'conventional' correction if cc = TRUE).}
+Appendix S2 (default 0.5 for 'conventional' adjustment if cc = TRUE).}
 
 \item{...}{Other arguments.}
 }
 \description{
 This function is vectorised in x, n.
+}
+\references{
+Laud PJ. Equal-tailed confidence intervals for comparison of
+rates. Pharmaceutical Statistics 2017; 16:334-348. (Appendix A.4)
 }
 \author{
 Pete Laud, \email{p.j.laud@sheffield.ac.uk}

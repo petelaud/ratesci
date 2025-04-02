@@ -19,7 +19,7 @@ correction or not. (To be evaluated)}
 
 \item{cc}{Number or logical (default FALSE) specifying (amount of) continuity
 adjustment. Numeric value is taken as the gamma parameter in Laud 2017,
-Appendix S2 (default 0.5 for 'conventional' correction if cc = TRUE).}
+Appendix S2 (default 0.5 for 'conventional' adjustment if cc = TRUE).}
 }
 \value{
 A list containing the following components: \describe{

@@ -21,9 +21,13 @@
 #'   Used by new clusterpci() function for data entered per cluster.
 #' @param cc Number or logical (default FALSE) specifying (amount of) continuity
 #'   adjustment. Numeric value is taken as the gamma parameter in Laud 2017,
-#'   Appendix S2 (default 0.5 for 'conventional' correction if cc = TRUE).
+#'   Appendix S2 (default 0.5 for 'conventional' adjustment if cc = TRUE).
 #' @param ... Other arguments.
 #' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @references
+#'   Laud PJ. Equal-tailed confidence intervals for comparison of
+#'   rates. Pharmaceutical Statistics 2017; 16:334-348. (Appendix A.4)
+#'
 #' @export
 scaspci <- function(x,
                     n,
@@ -118,6 +122,13 @@ scaspci <- function(x,
 #'   the SCAS and Jeffreys methods. The corresponding 'exact' method is
 #'   Clopper-Pearson/Garwood if cc == TRUE and mid-p if cc == FALSE.
 #' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @references
+#'   Laud PJ. Equal-tailed confidence intervals for comparison of
+#'   rates. Pharmaceutical Statistics 2017; 16:334-348. (Appendix A.4)
+#'
+#'   Brown LD, Cai TT and DasGupta A. Interval estimation for a binomial
+#'   proportion. Statistical Science 2001; 16(2):101-133.
+#'
 #' @export
 rateci <- function(x,
                    n,

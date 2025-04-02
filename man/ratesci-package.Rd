@@ -43,13 +43,11 @@ comparisons of binomial proportions. Statistics in Medicine 2020;
 39:3427–3457.
 
 Tang Y. Comments on “Equal-tailed confidence intervals for
-comparison of rates”. Pharmaceutical Statistics 2021;
-online ahead of print.
+comparison of rates”. Pharmaceutical Statistics 2021;20:1288-1292.
 
 Laud PJ. Author's reply to the letter to the editor by Yongqiang Tang:
 Comments on “Equal-tailed confidence intervals for
-comparison of rates”. Pharmaceutical Statistics 2021;
-online ahead of print.
+comparison of rates”. Pharmaceutical Statistics 2021; 20:1293-1297
 
 Miettinen OS, Nurminen M. Comparative analysis of two rates. Statistics in
 Medicine 1985; 4:213-226.
@@ -79,9 +77,20 @@ Donner A, Zou G. Closed-form confidence intervals for functions of the
 normal mean and standard deviation. Statistical Methods in Medical Research
 2012; 21(4):347-359.
 
+Tango T. Equivalence test and confidence interval for the difference
+in proportions for the paired-sample design.
+Statistics in Medicine 1998; 17:891-908
+
+Tang N-S, Tang M-L, Chan ISF. On tests of equivalence via non-unity
+relative risk for matched-pair design.
+Statistics in Medicine 2003; 22:1217-1233
+
+Laud PJ. Improved confidence intervals and tests for paired binomial
+proportions. (2025, Under review)
+
 Saha K, Miller D and Wang S. A comparison of some approximate confidence
 intervals for a single proportion for clustered binary outcome data.
-Int J Biostat 2016; 12:1–18
+Int J Biostat 2016; 12:1–18.
 }
 \seealso{
 Useful links:

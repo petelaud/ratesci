@@ -16,7 +16,7 @@
 #'   correction or not. (To be evaluated)
 #' @param cc Number or logical (default FALSE) specifying (amount of) continuity
 #'   adjustment. Numeric value is taken as the gamma parameter in Laud 2017,
-#'   Appendix S2 (default 0.5 for 'conventional' correction if cc = TRUE).
+#'   Appendix S2 (default 0.5 for 'conventional' adjustment if cc = TRUE).
 #' @return A list containing the following components: \describe{
 #'   \item{estimates}{the estimate and confidence interval for p and
 #'   the specified confidence level, along with estimates of the ICC and
@@ -58,19 +58,6 @@ clusterpci <- function(x,
                        cc = FALSE) {
 
   totx <- sum(x)
-
-if (FALSE) {
-  # Check using Notation as per Short et al.
-  M1 <- sum(n)
-  M2 <- sum(n^2)
-  nn <- length(n)
-  BMS <- (sum(x^2/n) - sum(x)^2 / M1) / (nn - 1)
-  WMS <- (sum(x) - sum(x^2/n)) / sum(n-1)
-  nstar <- (M1^2 - sum(n^2)) / ((nn - 1) * M1)
-  phihat <- (BMS - WMS) / (BMS + (nstar - 1) * WMS) # ICC
-#  phihat <- 0.1871 # Force phihat estimate to match Saha's CI result
-  xihat <- 1 + phihat * (M2 - M1) / M1 # Variance inflation factor
-}
 
   # Notation as per Saha et al.
   totn <- sum(n)

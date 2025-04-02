@@ -213,10 +213,10 @@ Journal of Applied Statistics 2024; 51-1:139-152
 
 Laud PJ. Comments on "New Confidence Intervals for Relative Risk of Two
 Correlated Proportions" (2023).
-Statistics in Biosciences 2025;
+Statistics in Biosciences 2025; https://doi.org/10.1007/s12561-025-09479-4
 
 Laud PJ. Improved confidence intervals and tests for paired binomial
-proportions. (Under review)
+proportions. (2025, Under review)
 }
 \author{
 Pete Laud, \email{p.j.laud@sheffield.ac.uk}

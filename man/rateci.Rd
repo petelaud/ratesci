@@ -34,6 +34,13 @@ SCAS or Jeffreys intervals, with or without continuity adjustment, and
 'exact' Clopper-Pearson/Garwood or mid-p intervals.
 This function is vectorised in x, n.
 }
+\references{
+Laud PJ. Equal-tailed confidence intervals for comparison of
+rates. Pharmaceutical Statistics 2017; 16:334-348. (Appendix A.4)
+
+Brown LD, Cai TT and DasGupta A. Interval estimation for a binomial
+proportion. Statistical Science 2001; 16(2):101-133.
+}
 \author{
 Pete Laud, \email{p.j.laud@sheffield.ac.uk}
 }
