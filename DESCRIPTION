@@ -1,6 +1,6 @@
 Type: Package
 Package: ratesci
-Title: Confidence Intervals for Comparisons of Binomial or Poisson Rates
+Title: Confidence Intervals and Tests for Comparisons of Binomial Proportions or Poisson Rates
 Version: 0.5.0.9000
 Authors@R: 
     person("Pete", "Laud", , "p.j.laud@sheffield.ac.uk", role = c("aut", "cre"),
@@ -27,7 +27,7 @@ Description: Computes confidence intervals for binomial or Poisson rates and
     strictly conservative coverage are approximated using continuity
     adjustments, and the amount of adjustment can be selected to avoid
     over-conservative coverage.  Also includes methods for stratified
-    calculations (e.g. meta-analysis), either assuming fixed effects
+    calculations (e.g. meta-analysis), either with fixed effect assumption
     (matching the CMH test) or incorporating stratum heterogeneity.
 License: GPL (>= 3)
 URL: https://github.com/petelaud/ratesci, https://petelaud.github.io/ratesci/
