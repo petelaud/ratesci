@@ -11,14 +11,15 @@ v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/li
 [![CRAN_Version](https://www.r-pkg.org/badges/version/ratesci)](https://cran.r-project.org/package=ratesci)
 [![Total
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/ratesci)](https://cranlogs.r-pkg.org/badges/grand-total/ratesci)
+[![Monthly
+Downloads](https://cranlogs.r-pkg.org/badges/ratesci)](https://cranlogs.r-pkg.org/badges/ratesci)
 
 <!-- badges: end -->
 
 ratesci is an [R](https://www.r-project.org) package to compute
 confidence intervals for:
 
-- a single binomial proportion, or Poisson ‘exposure-adjusted’ incidence
-  rate (‘p’)
+- a single binomial proportion, or Poisson rate (‘p’)
 - binomial risk difference or Poisson rate difference (‘RD’)
 - binomial relative risk or Poisson rate ratio (‘RR’)
 - binomial odds ratio (‘OR’)
@@ -27,51 +28,65 @@ confidence intervals for:
 - paired odds ratio using the conditional model
 - binomial proportion from clustered data
 
-`scoreci()` incorporates ‘skewness-corrected’ asymptotic score (‘SCAS’)
-methods, which ensure equal-tailed coverage (or central location), in
-other words for a nominal 95% confidence interval, the one-sided
-non-coverage probability is (on average) close to 2.5% on each side.
-Stratified calculations are also catered for (e.g. meta-analysis,
-including random effects), as well as confidence intervals for the
-single binomial or Poisson rate, and for clustered binomial proportion
-(with `clusterpci()`) and binomial matched pairs (with `pairbinci()`).
-Corresponding hypothesis tests against any specified null parameter
-value are provided in each case. Omission of the skewness correction is
-also allowed, resulting in the often-recommended ‘Miettinen-Nurminen’
-asymptotic score methods for RD, RR and OR, and the Wilson Score method
-for p, all of which can have inferior one-sided coverage.
+A number of different methods are offered, but in each case, the
+recommended default is based on asymptotic score methodology (from
+([Wilson 1927](#ref-wilson1927)) and ([Miettinen and Nurminen
+1985](#ref-miettinen1985))), but including a skewness correction
+following the principles of ([Gart and Nam 1988](#ref-gart1988)). The
+resulting family of skewness-corrected asymptotic score (“SCAS”) methods
+([Laud 2017](#ref-laud2017)) ensures equal-tailed coverage (or central
+location), in other words for a nominal 95% confidence interval, the
+one-sided non-coverage probability is (on average) close to 2.5% on each
+side. Stratified calculations are also catered for (e.g. meta-analysis,
+including random effects). Corresponding hypothesis tests against any
+specified null parameter value are provided in each case, with
+guaranteed coherence between the test and interval. Most of the above
+list is covered by `scoreci()`, with the exception of clustered
+proportions (which uses `clusterpci()`) and paired contrasts
+(`pairbinci()`).
 
-The stratified (fixed effects) version without skewness correction
-produces a hypothesis test which is equivalent to the
+The stratified (fixed effect) asymptotic score methods without skewness
+correction produce a hypothesis test which is equivalent to the
 Cochran-Mantel-Haenszel (CMH) test, when MH weighting is used for RD or
-RR, or IVS weighting for OR, and the corresponding confidence intervals
-are guaranteed to be coherent with the test. In the single-stratum case,
-the hypothesis tests are equivalent to an Egon Pearson ‘N-1’ Chi-squared
-test. The same equivalence holds when the skewness correction is
-included, if group sizes are equal. For paired proportions, the tests
-mirror an ‘N-1’ adjusted variant of the McNemar test. All such tests are
-expanded in scope to cater for null hypotheses for
-equivalence/non-inferiority tests, analogous to the Farrington-Manning
-test.
+RR, or IVS weighting for OR. In the single-stratum case, the hypothesis
+tests are equivalent to an Egon Pearson ‘N-1’ Chi-squared test. The same
+equivalence holds when the skewness correction is included, if group
+sizes are equal. For paired proportions, the tests mirror an ‘N-1’
+adjusted variant of the McNemar test. All such tests are expanded in
+scope to cater for null hypotheses for equivalence/non-inferiority
+tests, analogous to the Farrington-Manning test.
 
-For large (single-stratum) sample sizes, the ‘MOVER’ methods
-(`moverci()`) improve on traditional approximate methods with respect to
-one-sided and two-sided coverage, particularly in the case of RR. Being
-based on Bayesian methods, these also allow the option to incorporate
-prior beliefs about the rates in each group - by default, the
-‘non-informative’ Jeffreys priors are used. These methods are adapted
-from the Newcombe ‘square-and-add’ method, which is also included for
-reference.
+Another family of methods offered by the package, with reasonable
+performance for large (single-stratum) sample sizes (but without a
+corresponding hypothesis test), uses the Method of Variance Estimates
+Recovery (MOVER), also known as Square-and-Add ([Newcombe 2012, chap.
+7](#ref-newcombe2012)). These methods combine intervals calculated
+separately for each proportion. The recommended default gives the
+MOVER-J method, using Jeffreys equal-tailed intervals instead of the
+Wilson method preferred by Newcombe, in order to improve one-sided
+coverage. This improves on traditional approximate methods with respect
+to one-sided and two-sided coverage, particularly in the case of RR, but
+does not match the performance of the SCAS method. As the Jeffreys
+interval is based on a Bayesian conjugate prior, the MOVER approach
+allows the option to incorporate prior beliefs about the rates in each
+group - by default, the non-informative Jeffreys $Beta(0.5, 0.5)$ priors
+are used. MOVER intervals are available in `moverci()` for all contrasts
+of independent binomial and Poisson rates, and in `pairbinci()` for the
+paired binomial contrasts.
 
 For those wishing to achieve strictly conservative coverage, continuity
-adjustments are provided as approximations to ‘exact’ methods, with the
-option to adjust the strength of the correction. The performance of
+adjustments are provided as approximations to “exact” methods, with the
+option to adjust the strength of the adjustment. The performance of
 these adjustments has not been extensively evaluated, but they appear to
 be more successful for SCAS than for MOVER, in terms of achieving
 conservative coverage.
 
 An online calculator based on this package is available
-[here](https://ssu.shef.ac.uk/ratesci/calc.php)
+[here](https://ssu.shef.ac.uk/ratesci/calc.php). Plots illustrating the
+coverage properties of selected methods can be found
+[here](https://github.com/petelaud/ratesci/tree/master/plots), and
+[here](https://github.com/petelaud/cpplot/tree/master/plots).
+<!--and [here](https://ssu.shef.ac.uk/diffbinconf/) with SCAS labelled as GNbc -->
 
 ## Installation
 
@@ -107,16 +122,14 @@ score (“SCAS”) confidence interval. (For Miettinen-Nurminen, use
 
 ``` r
 library(ratesci)
-scoreci(x1 = 5, n1 = 56, x2 = 0, n2 = 29, precis = 4)
+scoreci(x1 = 5, n1 = 56, x2 = 0, n2 = 29)
 #> $estimates
-#>            lower        est    upper level x1 n1 x2 n2      p1hat p2hat
-#> [1,] -0.01861954 0.09168625 0.186718  0.95  5 56  0 29 0.08928571     0
-#>           p1mle p2mle
-#> [1,] 0.09168625     0
+#>         lower     est  upper level x1 n1 x2 n2   p1hat p2hat   p1mle p2mle
+#> [1,] -0.01862 0.09169 0.1867  0.95  5 56  0 29 0.08929     0 0.09169     0
 #> 
 #> $pval
-#>         chisq pval2sided theta0 scorenull pval_left pval_right
-#> [1,] 3.024862 0.08199729      0  1.739213 0.9590014 0.04099865
+#>      chisq pval2sided theta0 scorenull pval_left pval_right
+#> [1,] 3.025      0.082      0     1.739     0.959      0.041
 #> 
 #> $call
 #>  distrib contrast    level      bcf     skew       cc 
@@ -124,13 +137,13 @@ scoreci(x1 = 5, n1 = 56, x2 = 0, n2 = 29, precis = 4)
 ```
 
 An example of a paired analysis follows, using the data from Table II of
-Fagerland et al. Here the bias and skewness corrections are again
-applied by default. Omitting both would produce the Tango asymptotic
-score interval for `contrast = "RD"`, or the Tang method for
-`contrast = "RR"`.
+([Fagerland, Lydersen, and Laake 2014](#ref-fagerland2014)). Here the
+bias and skewness corrections are again applied by default. Omitting
+both would produce the Tango asymptotic score interval for
+`contrast = "RD"`, or the Tang method for `contrast = "RR"`.
 
 ``` r
-pairbinci(x = c(1, 1, 7, 12), precis = 4)
+pairbinci(x = c(1, 1, 7, 12))
 #> $data
 #>    x2i
 #> x1i  0  1
@@ -138,14 +151,14 @@ pairbinci(x = c(1, 1, 7, 12), precis = 4)
 #>   1  1  1
 #> 
 #> $estimates
-#>        lower     est   upper level  p1hat p2hat  p1mle  p2mle phi_hat phi_c
-#> [1,] -0.5281 -0.2859 -0.0184  0.95 0.0952 0.381 0.0952 0.3811  0.0795     0
+#>        lower     est    upper level   p1hat p2hat  p1mle  p2mle phi_hat phi_c
+#> [1,] -0.5281 -0.2859 -0.01842  0.95 0.09524 0.381 0.0952 0.3811 0.07954     0
 #>      psi_hat
-#> [1,]  1.7143
+#> [1,]   1.714
 #> 
 #> $pval
-#>         chisq pval2sided theta0 scorenull  pval_left pval_right
-#> [1,] 4.285714 0.03843393      0 -2.070197 0.01921697   0.980783
+#>      chisq pval2sided theta0 scorenull pval_left pval_right
+#> [1,] 4.286    0.03843      0     -2.07   0.01922     0.9808
 #> 
 #> $call
 #> contrast   method    level      bcf     skew       cc 
@@ -172,10 +185,65 @@ For comparisons of rates (contrasts RD, RR and OR):
 For single binomial or Poisson rates:
 
 - `scaspci()`: non-iterative SCAS method for a single rate. For
-  stratified calculations use `scoreci()` with contrast = “p”.
+  stratified calculations use `scoreci()` with `contrast = "p"`.
 - `jeffreysci()`: wrapper function to compute Jeffreys interval for a
   single rate (with option to incorporate prior information).
 - `rateci()`: wrapper function for selected methods for a single rate,
   including SCAS, Jeffreys, midp and Clopper-Pearson/Garwood.
 - `clusterpci()`: Saha’s Wilson-based interval for a single proportion
   based on clustered data, with a skewness-corrected version.
+
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0">
+
+<div id="ref-fagerland2014" class="csl-entry">
+
+Fagerland, Morten W., Stian Lydersen, and Petter Laake. 2014.
+“Recommended Tests and Confidence Intervals for Paired Binomial
+Proportions.” *Statistics in Medicine* 33 (16): 2850–75.
+<https://doi.org/10.1002/sim.6148>.
+
+</div>
+
+<div id="ref-gart1988" class="csl-entry">
+
+Gart, John J., and Jun-mo Nam. 1988. “Approximate Interval Estimation of
+the Ratio of Binomial Parameters: A Review and Corrections for
+Skewness.” *Biometrics* 44 (2): 323. <https://doi.org/10.2307/2531848>.
+
+</div>
+
+<div id="ref-laud2017" class="csl-entry">
+
+Laud, Peter J. 2017. “Equal-Tailed Confidence Intervals for Comparison
+of Rates.” *Pharmaceutical Statistics* 16 (5): 334–48.
+<https://doi.org/10.1002/pst.1813>.
+
+</div>
+
+<div id="ref-miettinen1985" class="csl-entry">
+
+Miettinen, Olli, and Markku Nurminen. 1985. “Comparative Analysis of Two
+Rates.” *Statistics in Medicine* 4 (2): 213–26.
+<https://doi.org/10.1002/sim.4780040211>.
+
+</div>
+
+<div id="ref-newcombe2012" class="csl-entry">
+
+Newcombe, Robert G. 2012. *Confidence Intervals for Proportions and
+Related Measures of Effect Size*. CRC Press.
+<https://doi.org/10.1201/b12670>.
+
+</div>
+
+<div id="ref-wilson1927" class="csl-entry">
+
+Wilson, Edwin B. 1927. “Probable Inference, the Law of Succession, and
+Statistical Inference.” *Journal of the American Statistical
+Association* 22 (158): 209–12.
+<https://doi.org/10.1080/01621459.1927.10502953>.
+
+</div>
+
+</div>
