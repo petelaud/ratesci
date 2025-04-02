@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
-<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
@@ -21,7 +21,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top " aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="../index.html">ratesci</a>
 
@@ -50,6 +50,14 @@
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
 </form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/petelaud/ratesci/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch">
+<li><button class="dropdown-item" data-bs-theme-value="light"><span class="fa fa-sun"></span> Light</button></li>
+    <li><button class="dropdown-item" data-bs-theme-value="dark"><span class="fa fa-moon"></span> Dark</button></li>
+    <li><button class="dropdown-item" data-bs-theme-value="auto"><span class="fa fa-adjust"></span> Auto</button></li>
+  </ul>
+</li>
       </ul>
 </div>
 
@@ -87,8 +95,11 @@ modified version of the Wilson Score method. The plot below illustrates
 the interval non-coverage probability (i.e. 1 minus the actual
 probability that the interval contains the true value of p) achieved by
 SCAS compared to some other popular methods, using moving average
-smoothing:</p>
-<p><img src="images/singlepropLNCP50.png"></p>
+smoothing (solid lines):</p>
+<p><img src="images/singlepropLNCP50_small.jpg"></p>
+<p>Similar patterns of coverage are seen for the corresponding methods
+for a Poisson rate <span class="citation">(<a href="#ref-laud2017">Laud
+2017</a>)</span>.</p>
 <p>For a worked example, the SCAS 95% interval for the proportion 1/29
 is obtained with <code><a href="../reference/scaspci.html">scaspci()</a></code>, using closed-form calculation
 <span class="citation">(<a href="#ref-laud2017">Laud 2017</a>, Appendix
@@ -126,7 +137,7 @@ distribution:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/jeffreysci.html">jeffreysci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">29</span>, ai <span class="op">=</span> <span class="fl">1.5</span>, bi <span class="op">=</span> <span class="fl">9.5</span><span class="op">)</span></span>
 <span><span class="co">#&gt;       lower    est upper</span></span>
 <span><span class="co">#&gt; [1,] 0.0108 0.0553 0.154</span></span></code></pre></div>
-<p>If more conservative coverage is required, a “continuity adjustment”
+<p>If more conservative coverage is required, a continuity adjustment
 may be deployed with <code>cc</code>, as follows, giving
 continuity-adjusted SCAS or Jeffreys, and (if <code>cc</code> is TRUE or
 0.5), the Clopper-Pearson method. Note intermediate adjustments smaller
@@ -151,7 +162,7 @@ than 0.5 give a more refined adjustment<span class="citation">(<a href="#ref-lau
 or collated across different studies), use <code><a href="../reference/scoreci.html">scoreci()</a></code> with
 <code>contrast = "p"</code> and <code>stratified = TRUE</code> (again,
 the skewness correction is recommended, but may be omitted).</p>
-<p>By default, a “fixed effects” analysis is produced, i.e. one which
+<p>By default, a fixed effect analysis is produced, i.e. one which
 assumes a common true parameter p across strata. The default stratum
 weighting uses the inverse variance of the score underlying the
 SCAS/Wilson method, evaluated at the maximum likelihood estimate for the
@@ -225,9 +236,9 @@ to 0.62) and 0.04 (95% CI: 0.01 to 0.10) respectively:</p>
 <span><span class="co">#&gt;  [7,] 0.00133 -0.07735  4.50878</span></span>
 <span><span class="co">#&gt;  [8,] 0.00182 -0.16880 15.67615</span></span>
 <span><span class="co">#&gt;  [9,] 0.00206 -0.01474  0.10529</span></span></code></pre></div>
-<p>For a “random effects” analysis, use <code>random = TRUE</code>.
-(This may not give a meaningful estimate of stratum variation if the
-number of strata is small.)</p>
+<p>For a random effects analysis, use <code>random = TRUE</code>. (This
+may not give a meaningful estimate of stratum variation if the number of
+strata is small.)</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">strat_p_rand</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="va">compress</span><span class="op">$</span><span class="va">event.control</span>, </span>
 <span>                        n1 <span class="op">=</span> <span class="va">compress</span><span class="op">$</span><span class="va">n.control</span>, </span>
@@ -313,9 +324,10 @@ quantiles of the
 distribution, with boundary modifications when
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">x = 0</annotation></semantics></math>
 or
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>=</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">x = n</annotation></semantics></math>.</p>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>=</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">x = n</annotation></semantics></math><span class="citation">(<a href="#ref-brown2001">Brown, Cai, and
+DasGupta 2001</a>)</span>.</p>
 <p>A Clopper-Pearson interval may also be obtained as quantiles of a
-beta distribution, using
+beta distribution <span class="citation">(<a href="#ref-brown2001">Brown, Cai, and DasGupta 2001</a>)</span>, using
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mi>e</mi><mi>t</mi><mi>a</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo>,</mo><mi>n</mi><mo>−</mo><mi>x</mi><mo>+</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Beta(x, n - x + 1)</annotation></semantics></math>
 for the lower confidence limit, and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mi>e</mi><mi>t</mi><mi>a</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo>+</mo><mn>1</mn><mo>,</mo><mi>n</mi><mo>−</mo><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Beta(x + 1, n - x)</annotation></semantics></math>
@@ -324,6 +336,11 @@ for the upper limit.</p>
 <!-- ## Additional details -->
 <!-- Confidence intervals for a single binomial proportion, x/n, have a long history. The 'classic' ('conventional' / 'textbook') method everyone learns about in school is known as the Wald method, based on a large-sample "simple asymptotic" Normal approximation. It is easily demonstrated that this method generally fails to achieve the nominal confidence level, even when n is quite large. In other words, a 95% Wald confidence interval will contain the true value of p less than 95% of the time. For small proportions, the actual coverage can be alarmingly low. the Wald method can also produce intervals that contain impossible negative values of p, and an extremely unrealistic interval of [0, 0] when x = 0. -->
 <div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-brown2001" class="csl-entry">
+Brown, Lawrence D., T. Tony Cai, and Anirban DasGupta. 2001.
+<span>“Interval Estimation for a Binomial Proportion.”</span>
+<em>Statistical Science</em> 16 (2). <a href="https://doi.org/10.1214/ss/1009213286" class="external-link">https://doi.org/10.1214/ss/1009213286</a>.
+</div>
 <div id="ref-laud2017" class="csl-entry">
 Laud, Peter J. 2017. <span>“Equal<span>-</span>Tailed Confidence
 Intervals for Comparison of Rates.”</span> <em>Pharmaceutical
