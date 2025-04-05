@@ -17,7 +17,7 @@ Downloads](https://cranlogs.r-pkg.org/badges/ratesci)](https://cranlogs.r-pkg.or
 <!-- badges: end -->
 
 ratesci is an [R](https://www.r-project.org) package to compute
-confidence intervals for:
+confidence intervals and tests for:
 
 - a single binomial proportion, or Poisson rate (‘p’)
 - binomial risk difference or Poisson rate difference (‘RD’)
@@ -30,31 +30,31 @@ confidence intervals for:
 
 A number of different methods are offered, but in each case, the
 recommended default is based on asymptotic score methodology (from
-([Wilson 1927](#ref-wilson1927)) and ([Miettinen and Nurminen
-1985](#ref-miettinen1985))), but including a skewness correction
-following the principles of ([Gart and Nam 1988](#ref-gart1988)). The
-resulting family of skewness-corrected asymptotic score (“SCAS”) methods
-([Laud 2017](#ref-laud2017)) ensures equal-tailed coverage (or central
-location), in other words for a nominal 95% confidence interval, the
-one-sided non-coverage probability is (on average) close to 2.5% on each
-side. Stratified calculations are also catered for (e.g. meta-analysis,
-including random effects). Corresponding hypothesis tests against any
-specified null parameter value are provided in each case, with
-guaranteed coherence between the test and interval. Most of the above
-list is covered by `scoreci()`, with the exception of clustered
-proportions (which uses `clusterpci()`) and paired contrasts
-(`pairbinci()`).
+([Wilson 1927](#ref-wilson1927)), ([Miettinen and Nurminen
+1985](#ref-miettinen1985)) and ([Tango 1998](#ref-tango1998a))), but
+including a skewness correction following the principles of ([Gart and
+Nam 1988](#ref-gart1988)). The resulting family of skewness-corrected
+asymptotic score (“SCAS”) methods ([Laud 2017](#ref-laud2017)) ensures
+equal-tailed coverage (or central location), in other words for a
+nominal 95% confidence interval, the one-sided non-coverage probability
+is (on average) close to 2.5% on each side. Stratified calculations are
+also catered for (e.g. meta-analysis, including random effects).
+Corresponding hypothesis tests against any specified null parameter
+value are provided in each case, with guaranteed coherence between the
+test and interval. Most of the above list is covered by `scoreci()`,
+with the exception of clustered proportions (which uses `clusterpci()`)
+and paired contrasts (`pairbinci()`).
 
-The stratified (fixed effect) asymptotic score methods without skewness
-correction produce a hypothesis test which is equivalent to the
+The stratified asymptotic score methods without skewness correction
+produce a hypothesis test which is equivalent to the
 Cochran-Mantel-Haenszel (CMH) test, when MH weighting is used for RD or
 RR, or IVS weighting for OR. In the single-stratum case, the hypothesis
-tests are equivalent to an Egon Pearson ‘N-1’ Chi-squared test. The same
+test is equivalent to an Egon Pearson ‘N-1’ Chi-squared test. The same
 equivalence holds when the skewness correction is included, if group
-sizes are equal. For paired proportions, the tests mirror an ‘N-1’
-adjusted variant of the McNemar test. All such tests are expanded in
-scope to cater for null hypotheses for equivalence/non-inferiority
-tests, analogous to the Farrington-Manning test.
+sizes are equal. For paired proportions, the test is an ‘N-1’ adjusted
+variant of the McNemar test. All such tests are expanded in scope to
+cater for null hypotheses for equivalence/non-inferiority tests,
+analogous to the Farrington-Manning test.
 
 Another family of methods offered by the package, with reasonable
 performance for large (single-stratum) sample sizes (but without a
@@ -234,6 +234,15 @@ Rates.” *Statistics in Medicine* 4 (2): 213–26.
 Newcombe, Robert G. 2012. *Confidence Intervals for Proportions and
 Related Measures of Effect Size*. CRC Press.
 <https://doi.org/10.1201/b12670>.
+
+</div>
+
+<div id="ref-tango1998a" class="csl-entry">
+
+Tango, Toshiro. 1998. “Equivalence Test and Confidence Interval for the
+Difference in Proportions for the Paired-Sample Design.” *Statistics in
+Medicine* 17 (8): 891–908.
+[https://doi.org/10.1002/(sici)1097-0258(19980430)17:8\<891::aid-sim780\>3.0.co;2-b](https://doi.org/10.1002/(sici)1097-0258(19980430)17:8<891::aid-sim780>3.0.co;2-b).
 
 </div>
 
