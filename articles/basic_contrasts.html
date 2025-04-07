@@ -41,6 +41,7 @@
 <li><a class="dropdown-item" href="../articles/single_rate.html">1: Single rate</a></li>
     <li><a class="dropdown-item" href="../articles/basic_contrasts.html">2: Basic contrasts (single stratum)</a></li>
     <li><a class="dropdown-item" href="../articles/paired_contrasts.html">3: Paired contrasts</a></li>
+    <li><a class="dropdown-item" href="../articles/tests.html">4: Tests</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -128,6 +129,23 @@ repository</a>.</p>
 <p>The skewness correction, introduced by <span class="citation">(<a href="#ref-gart1988">Gart and Nam 1988</a>)</span> should be considered
 essential for analysis of ratio contrasts, but can also have a
 substantial effect for RD as seen here.</p>
+<p>[Note: <span class="citation">(<a href="#ref-fagerland2011">Morten W.
+Fagerland, Lydersen, and Laake 2011</a>)</span> dismissed the MN method,
+saying that it can be somewhat liberal. In fact, based on reconstruction
+of their results, it appears that their evaluation was of the
+closely-related but inferior Mee method, which omits the N/(N-1)
+variance bias correction. I do not have access to their 2017 book to see
+if the error persists there. Essentially, it seems they reject the MN
+method on the basis of some very small regions of the parameter space
+where coverage is slightly below nominal. These dips in coverage do
+occur, but fluctuate above and below the nominal level in a pattern of
+ridges and furrows aligned along the diagonal of a fixed value of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>θ</mi><mrow><mi>R</mi><mi>D</mi></mrow></msub><annotation encoding="application/x-tex">\theta_{RD}</annotation></semantics></math>.
+The moving average smoothing in the above surface plots is designed to
+even out these fluctuations in coverage. The ‘N-1’ adjustment in the MN
+method elevates coverage probabilities slightly, and the skewness
+correction gives a further improvement overall, as well as substantially
+improving one-sided coverage when group sizes are unequal.]</p>
 <p><code><a href="../reference/scoreci.html">scoreci()</a></code> is used as follows, for example to obtain a
 SCAS 95% CI for the difference <code>5/56 - 0/29</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -280,8 +298,8 @@ vs
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>2</mn></msub><mi>/</mi><msub><mi>n</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">x_2/n_2</annotation></semantics></math>.</li>
 </ol>
 <p>Unfortunately, the MOVER method for contrast = “OR”, as described in
-<span class="citation">(<a href="#ref-fagerland2012">Fagerland and
-Newcombe 2012</a>)</span>, does not satisfy the second of these
+<span class="citation">(<a href="#ref-fagerland2012">Morten W. Fagerland
+and Newcombe 2012</a>)</span>, does not satisfy the second of these
 requirements.</p>
 <div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
 <div id="ref-campbell2007" class="csl-entry">
@@ -289,6 +307,12 @@ Campbell, Ian. 2007. <span>“Chi<span>-</span>Squared and
 Fisher<span></span>Irwin Tests of Two<span>-</span>by<span>-</span>Two
 Tables with Small Sample Recommendations.”</span> <em>Statistics in
 Medicine</em> 26 (19): 3661–75. <a href="https://doi.org/10.1002/sim.2832" class="external-link">https://doi.org/10.1002/sim.2832</a>.
+</div>
+<div id="ref-fagerland2011" class="csl-entry">
+Fagerland, Morten W, Stian Lydersen, and Petter Laake. 2011.
+<span>“Recommended Confidence Intervals for Two Independent Binomial
+Proportions.”</span> <em>Statistical Methods in Medical Research</em> 24
+(2): 224–54. <a href="https://doi.org/10.1177/0962280211415469" class="external-link">https://doi.org/10.1177/0962280211415469</a>.
 </div>
 <div id="ref-fagerland2012" class="csl-entry">
 Fagerland, Morten W., and Robert G. Newcombe. 2012. <span>“Confidence
