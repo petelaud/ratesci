@@ -1,0 +1,79 @@
+---
+title: "4: Tests"
+output: rmarkdown::html_vignette
+bibliography: REFERENCES.bib
+link-citations: true
+vignette: >
+  %\VignetteIndexEntry{4: Tests}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+options(digits = 4)
+```
+
+```{r setup}
+library(ratesci)
+```
+
+## Introduction to hypothesis tests produced by scoreci() and pairbinci()
+
+### Unstratified superiority test
+
+For a single-stratum dataset, comparisons of binomial proportions are supplemented by a two-sided p-value for a test of superiority, i.e. against the null hypothesis that $p_1 = p_2$ ($\theta_{RD} = 0$, $\theta_{RR} = 1$, or $\theta_{OR} = 1$), and the results are consistent across the three contrasts. When the skewness correction is omitted, these tests are equivalent to the Egon Pearson 'N-1' Chi-squared test, which has been recommended over the conventional Karl Pearson test [@campbell2007]:
+
+```{r}
+scoreci(x1 = 5, n1 = 56, x2 = 0, n = 29, skew = FALSE)$pval[, 1:2]
+scoreci(x1 = 5, n1 = 56, x2 = 0, n = 29, skew = FALSE, contrast = "RR")$pval[, 1:2]
+scoreci(x1 = 5, n1 = 56, x2 = 0, n = 29, skew = FALSE, contrast = "OR")$pval[, 1:2]
+k_pearson <- chisq.test(x = matrix(c(5, 51, 0, 29), nrow = 2), correct = FALSE)$statistic
+pchisq(k_pearson * ((56+29-1)/(56+29)), df = 1, lower.tail = FALSE)
+```
+
+The direct equivalence with the Chi-squared test also holds when the skewness correction is included, if group sizes are equal (see below). If group sizes are unequal, then the SCAS 2-sided test is an improved variant of the Chi-squared test.
+
+```{r}
+scoreci(x1 = 5, n1 = 56, x2 = 0, n = 56, skew = FALSE)$pval[, 1:2]
+scoreci(x1 = 5, n1 = 56, x2 = 0, n = 56, skew = TRUE)$pval[, 1:2]
+```
+
+### Unstratified non-inferiority test
+
+In addition, a pair of 1-sided tests are conducted against a user-specified value of the contrast parameter, $\theta_0$, to cater for non-zero or non-unity null hypotheses for equivalence or non-inferiority tests. The 1-sided test is analogous to the Farrington-Manning test, but not identical to it, due to the 'N-1' variance bias correction and skewness correction, both of which provide improved control of Type 1 error [@laud2017], also [@laud2014], which used the label GNbc for SCAS (Note the Type 1 error for the Farrington-Manning test is the same as 1-sided coverage of the Mee method).
+
+### Stratified tests
+
+For stratified datasets, the "conventional" hypothesis test is the Cochran-Mantel-Haenszel (CMH) test. Unlike in the single stratum case, the CMH test already incorporates the 'N-1' variance bias correction.
+
+Different weighting schemes are permitted for stratified analysis - when Mantel-Haenszel weighting is used for `contrast = "RD"` or `contrast = "RR"` or IVS weighting for `contrast = "OR"`, the stratified SCAS 2-sided test is a skewness-corrected version of the CMH test. As for the unstratified case, if group sizes are equal, the skewness correction term is zero. The 1-sided test is analogous to a stratified version of an 'N-1' adjusted and skewness-corrected Farrington-Manning test. This is achieved by reframing Miettinen-Nurminen's score statistic as a normally distributed z-statistic instead of a chi-squared statistic.
+
+### Tests for paired binomial proportions
+
+The superiority test given by `pairbinci()` (for any contrast) is an 'N-1' adjusted version of the McNemar test (the skewness correction term is zero at the null hypothesis value of $\theta$). In an extensive evaluation of many thousands of sample sizes and correlations, the paired SCAS 2-sided test did not violate the nominal significance level at any point, suggesting that the over-conservative "continuity corrected" version given by default in `mcnemar.test()` is superfluous.
+
+```{r}
+pairbinci(x = c(1, 1, 7, 12), skew = TRUE)$pval
+pairbinci(x = c(1, 1, 7, 12), skew = FALSE)$pval
+pairbinci(x = c(1, 1, 7, 12), skew = FALSE, contrast = "RR")$pval
+mcnem <- mcnemar.test(x = matrix(c(1, 1, 7, 12), nrow = 2), correct = FALSE)$statistic
+names(mcnem) <- NULL
+pchisq(mcnem * (21-1)/21, df = 1, lower.tail = FALSE)
+```
+
+The 1-sided tests are a skewness-corrected and 'N-1' adjusted version of Nam's score test [@nam1997], the coverage properties of which are examined in [Laud2025, under evaluation].
+
+
+
+
+```{=html}
+<!-- In each case, the asymptotic score methods provide corresponding hypothesis tests against any specified null parameter value, for a superiority test (analogous to a Chi-squared test) or non-inferiority test (analogous to the Farrington-Manning test). Both having guaranteed coherence between the test and interval. The superiority test is a variant of () Chi-squared test, which are either identical to, or an improved variant of, an E. Pearson 'N-1' Chi-squared test (for unstratified data) or CMH test (for stratified data).
+
+For paired proportions, the test is an 'N-1' adjusted variant of the McNemar test. All such tests are expanded in scope to cater for null hypotheses for equivalence/non-inferiority tests, analogous to the Farrington-Manning test. [A planned vignette will explain further.] 
+
+when the skewness correction is omitted. The direct equivalence also holds when the skewness correction is included, if group sizes are equal. If group sizes are unequal, then the skewness-corrected test is an improved variant of the Chi-squared test[\^1]. The stratified asymptotic score methods without skewness correction produce a hypothesis test which is equivalent to the Cochran-Mantel-Haenszel (CMH) test, when MH weighting is used for RD or RR, or IVS weighting for OR. In the single-stratum case, the hypothesis test is equivalent to an Egon Pearson 'N-1' Chi-squared test. The same equivalence holds when the skewness correction is included, if group sizes are equal.-->
+```
