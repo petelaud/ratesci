@@ -6,7 +6,7 @@ articles:
   paired_contrasts: paired_contrasts.html
   single_rate: single_rate.html
   tests: tests.html
-last_built: 2025-04-07T00:07Z
+last_built: 2025-04-07T00:33Z
 urls:
   reference: https://petelaud.github.io/ratesci/reference
   article: https://petelaud.github.io/ratesci/articles
