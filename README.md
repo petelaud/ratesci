@@ -41,13 +41,17 @@ one-sided non-coverage probability is (on average) close to 2.5% on each
 side. Stratified calculations are also catered for (e.g. meta-analysis,
 including random effects). Most of the above list is covered by
 `scoreci()`, with the exception of clustered proportions (which uses
-`clusterpci()`) and paired contrasts (`pairbinci()`).
+`clusterpci()`) and paired contrasts (`pairbinci()`). Options are
+included for omitting the skewness correction to obtain legacy methods
+such as Miettinen-Nurminen, Wilson and Tango.
 
-- See the vignettes for further details and examples of the SCAS methods
-  for the [single
+- See the vignettes for further details and examples of the SCAS and
+  other intervals for the [single
   rate](https://petelaud.github.io/ratesci/articles/single_rate.html),
   [basic
   contrasts](https://petelaud.github.io/ratesci/articles/basic_contrasts.html),
+  [stratified
+  contrasts](https://petelaud.github.io/ratesci/articles/stratified.html),
   and [paired
   contrasts](https://petelaud.github.io/ratesci/articles/paired_contrasts.html).
 
@@ -55,7 +59,7 @@ In each case, the asymptotic score methods provide a corresponding
 hypothesis test against any specified null parameter value, for a
 superiority test or non-inferiority test, with guaranteed coherence
 between the test and interval. The superiority test is a variant of (and
-in many cases identical to) a Chi-squared test or CMH test, and the
+in many cases identical to) a chi-squared test or CMH test, and the
 non-inferiority test is analogous to a Farrington-Manning test, all with
 improved control of Type 1 error achieved by the bias and skewness
 corrections. For paired proportions, the superiority test is an ‘N-1’
@@ -65,7 +69,7 @@ observation) never to violate the nominal significance level.
 - See [the tests
   vignette](https://petelaud.github.io/ratesci/articles/tests.html) for
   further details of the relationships between SCAS tests and
-  conventional Chi-squared and CMH tests
+  conventional chi-squared and CMH tests
 
 Another family of methods offered by the package, with reasonable
 performance for large (single-stratum) sample sizes (but without a

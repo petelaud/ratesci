@@ -41,5 +41,6 @@ articles:
   contents:
   - single_rate
   - basic_contrasts
+  - stratified
   - paired_contrasts
   - tests

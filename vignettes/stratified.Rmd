@@ -1,0 +1,82 @@
+---
+title: "3: Stratified contrasts"
+output: rmarkdown::html_vignette
+bibliography: REFERENCES.bib
+link-citations: true
+vignette: >
+  %\VignetteIndexEntry{3: Stratified contrasts}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+options(digits = 3)
+```
+
+```{r setup}
+library(ratesci)
+```
+
+## Introduction to scoreci() for computing confidence intervals for stratified comparisons of independent binomial or Poisson rates
+
+Stratified analysis might be required if a clinical trial employs stratified randomisation, or if results from multiple studies are to be combined in a meta-analysis. The illustration below uses data from a meta-analysis of 9 trials studying the effectiveness of graduated compression stockings for prevention of postoperative deep vein thrombosis (DVT) [from @roderick2005]:
+
+```{r}
+data(compress, package = "ratesci")
+strat_rd <- scoreci(x1 = compress$event.gcs, 
+                   n1 = compress$n.gcs, 
+                   x2 = compress$event.control, 
+                   n2 = compress$n.control, 
+                   contrast = "RD", 
+                   stratified = TRUE)
+strat_rd$estimates
+```
+
+```{r}
+strat_rd$pval
+```
+
+The Qtest object provides a heterogeneity test and related quantities, including an assessment of qualitative heterogeneity (indicating whether treatment effects are in opposite directions in different strata).
+
+```{r}
+strat_rd$Qtest
+```
+
+````{=html}
+<!--
+```{r}
+strat_rr <- scoreci(x1 = compress$event.gcs, 
+                   n1 = compress$n.gcs, 
+                   x2 = compress$event.control, 
+                   n2 = compress$n.control, 
+                   contrast = "RR", 
+                   stratified = TRUE)
+strat_rr$Qtest
+```
+-->
+````
+
+```{r}
+strat_rd$stratdata
+```
+
+### Random effects
+
+In this instance, there is weak evidence ($p = 0.07$) that the treatment effect (on the RD scale) varies across strata. (Estimation on the RR contrast scale gives more consistency across strata.) For the sake of illustration, a random effects analysis of RD would be obtained as follows, giving a wider interval that incorporates the stratum variability. The `random = TRUE` option invokes the t-distribution asymptotic score (TDAS) method [@laud2017], which modifies the asymptotic score methodology using formulae from the Hartung-Knapp-Sidik-Jonkman (HKSJ) random effects meta-analysis method (with superior performance compared to the DerSimonian-Laird method).
+
+```{r}
+strat_rd_rand <- scoreci(x1 = compress$event.gcs, 
+                   n1 = compress$n.gcs, 
+                   x2 = compress$event.control, 
+                   n2 = compress$n.control, 
+                   contrast = "RD", 
+                   stratified = TRUE,
+                   random = TRUE)
+strat_rd_rand$estimates
+```
+
+Note that the TDAS method does not include a skewness correction, so when `random = TRUE`, the `skew` argument only affects the `stratdata` output element.

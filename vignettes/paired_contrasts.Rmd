@@ -1,10 +1,10 @@
 ---
-title: "3: Paired contrasts"
+title: "4: Paired contrasts"
 output: rmarkdown::html_vignette
 bibliography: REFERENCES.bib
 link-citations: true
 vignette: >
-  %\VignetteIndexEntry{3: Paired contrasts}
+  %\VignetteIndexEntry{4: Paired contrasts}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
