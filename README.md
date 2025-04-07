@@ -43,6 +43,14 @@ including random effects). Most of the above list is covered by
 `scoreci()`, with the exception of clustered proportions (which uses
 `clusterpci()`) and paired contrasts (`pairbinci()`).
 
+- See the vignettes for further details and examples of the SCAS methods
+  for the [single
+  rate](https://petelaud.github.io/ratesci/articles/single_rate.html),
+  [basic
+  contrasts](https://petelaud.github.io/ratesci/articles/basic_contrasts.html),
+  and [paired
+  contrasts](https://petelaud.github.io/ratesci/articles/paired_contrasts.html).
+
 In each case, the asymptotic score methods provide a corresponding
 hypothesis test against any specified null parameter value, for a
 superiority test or non-inferiority test, with guaranteed coherence
@@ -52,10 +60,12 @@ non-inferiority test is analogous to a Farrington-Manning test, all with
 improved control of Type 1 error achieved by the bias and skewness
 corrections. For paired proportions, the superiority test is an ‘N-1’
 adjusted variant of the McNemar test, which appears (by empirical
-observation) never to violate the nominal significance level. (Further
-details of the relationships between SCAS tests and conventional
-Chi-squared and CMH tests are given
-[here](https://petelaud.github.io/ratesci/articles/tests.html).)
+observation) never to violate the nominal significance level.
+
+- See [the tests
+  vignette](https://petelaud.github.io/ratesci/articles/tests.html) for
+  further details of the relationships between SCAS tests and
+  conventional Chi-squared and CMH tests
 
 Another family of methods offered by the package, with reasonable
 performance for large (single-stratum) sample sizes (but without a
