@@ -42,7 +42,7 @@
     <li><a class="dropdown-item" href="../articles/basic_contrasts.html">2: Basic contrasts (single stratum)</a></li>
     <li><a class="dropdown-item" href="../articles/stratified.html">3: Stratified contrasts</a></li>
     <li><a class="dropdown-item" href="../articles/paired_contrasts.html">4: Paired contrasts</a></li>
-    <li><a class="dropdown-item" href="../articles/tests.html">5: Tests</a></li>
+    <li><a class="dropdown-item" href="../articles/tests.html">5: Hypothesis tests</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -93,7 +93,7 @@ the Skewness-Corrected Asymptotic Score (SCAS) method is recommended, as
 one that succeeds, on average, at containing the true proportion p with
 the appropriate nominal probability (e.g. 95%), and has evenly
 distributed tail probabilities <span class="citation">(<a href="#ref-laud2017">Laud 2017</a>, Appendix S3.5)</span>. It is a
-modified version of the Wilson Score method. The plot below illustrates
+modified version of the Wilson score method. The plot below illustrates
 the interval non-coverage probability (i.e. 1 minus the actual
 probability that the interval contains the true value of p) achieved by
 SCAS compared to some other popular methods, using moving average
@@ -101,11 +101,12 @@ smoothing (solid lines):</p>
 <p><img src="images/singlepropLNCP50_small.jpg"></p>
 <p>Similar patterns of coverage are seen for the corresponding methods
 for a Poisson rate <span class="citation">(<a href="#ref-laud2017">Laud
-2017</a>)</span>.</p>
-<p>For a worked example, the SCAS 95% interval for the proportion 1/29
-is obtained with <code><a href="../reference/scaspci.html">scaspci()</a></code>, using closed-form calculation
-<span class="citation">(<a href="#ref-laud2017">Laud 2017</a>, Appendix
-A.4)</span>:</p>
+2017</a>)</span>. (Analysis for Poisson rates is obtained using
+<code>distrib = "poi"</code>, with the input <code>n</code> representing
+the exposure time.)</p>
+<p>For a worked example, the SCAS 95% interval for the binomial
+proportion 1/29 is obtained with <code><a href="../reference/scaspci.html">scaspci()</a></code>, using
+closed-form calculation <span class="citation">(<a href="#ref-laud2017">Laud 2017</a>, Appendix A.4)</span>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/scaspci.html">scaspci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">29</span><span class="op">)</span></span>
 <span><span class="co">#&gt;        lower    est upper</span></span>
@@ -142,8 +143,7 @@ distribution:</p>
 <p>If more conservative coverage is required, a continuity adjustment
 may be deployed with <code>cc</code>, as follows, giving
 continuity-adjusted SCAS or Jeffreys, and (if <code>cc</code> is TRUE or
-0.5), the Clopper-Pearson method. Note intermediate adjustments smaller
-than 0.5 give a more refined adjustment<span class="citation">(<a href="#ref-laud2017">Laud 2017</a>, Appendix S2)</span>.</p>
+0.5), the Clopper-Pearson method.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/rateci.html">rateci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">29</span>, cc <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $scas_cc</span></span>
@@ -157,13 +157,28 @@ than 0.5 give a more refined adjustment<span class="citation">(<a href="#ref-lau
 <span><span class="co">#&gt; $cp</span></span>
 <span><span class="co">#&gt;         lower    est upper</span></span>
 <span><span class="co">#&gt; [1,] 0.000873 0.0391 0.178</span></span></code></pre></div>
+<p>Such an adjustment is widely acknowledged to be over-conservative, so
+intermediate adjustments such as <code>cc = 0.25</code> give a more
+refined adjustment<span class="citation">(<a href="#ref-laud2017">Laud
+2017</a>, Appendix S2
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mo>=</mo><mi>c</mi><mi>c</mi></mrow><annotation encoding="application/x-tex">\gamma = cc</annotation></semantics></math>))</span>.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/rateci.html">rateci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">29</span>, cc <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $scas_cc</span></span>
+<span><span class="co">#&gt;         lower    est upper</span></span>
+<span><span class="co">#&gt; [1,] 0.000605 0.0398 0.169</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $jeff_cc</span></span>
+<span><span class="co">#&gt;        lower    est upper</span></span>
+<span><span class="co">#&gt; [1,] 0.00205 0.0403 0.164</span></span></code></pre></div>
 <div class="section level3">
-<h3 id="stratified-and-clustered-datasets">Stratified and clustered datasets<a class="anchor" aria-label="anchor" href="#stratified-and-clustered-datasets"></a>
+<h3 id="stratified-datasets">Stratified datasets<a class="anchor" aria-label="anchor" href="#stratified-datasets"></a>
 </h3>
 <p>For stratified datasets (e.g. data collected in different subgroups
 or collated across different studies), use <code><a href="../reference/scoreci.html">scoreci()</a></code> with
 <code>contrast = "p"</code> and <code>stratified = TRUE</code> (again,
-the skewness correction is recommended, but may be omitted).</p>
+the skewness correction is recommended, but may be omitted for a
+stratified Wilson interval).</p>
 <p>By default, a fixed effect analysis is produced, i.e. one which
 assumes a common true parameter p across strata. The default stratum
 weighting uses the inverse variance of the score underlying the
@@ -172,18 +187,16 @@ pooled proportion (thus avoiding infinite weights for boundary cases).
 Alternative weights are sample size (<code>weighting = "MH"</code>) or
 custom user-specified weights supplied via the <code>wt</code> argument.
 For example, population weighting would be applied via a vector
-(e.g. <code>wt = Ni</code>) containing the true population size (or true
-population proportion <code>Ni/N</code>) represented by each stratum.
-(Note this is not divided by the sample size/proportion per stratum,
-because the weighting is applied at the group level, not the case
-level.)</p>
-<p>Below is an illustration using data from the control arm of 9 trials
-studying postoperative deep vein thrombosis (DVT). This may be a
-somewhat unrealistic example, as the main focus of such studies is to
-estimate the effect of a treatment, rather than to estimate the
-underlying risk of an event, but used here to illustrate the usage of
-<code><a href="../reference/scoreci.html">scoreci()</a></code> for a stratified dataset:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+(e.g. <code>wt = Ni</code>) containing the true population size
+represented by each stratum. (Note this is not divided by the sample
+size per stratum, because the weighting is applied at the group level,
+not the case level.)</p>
+<p>Below is an illustration using control arm data from a meta-analysis
+of 9 trials studying postoperative deep vein thrombosis (DVT). This may
+be a somewhat unrealistic example, as the main focus of these studies is
+to estimate the effect of a treatment, rather than to estimate the
+underlying risk of an event.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">compress</span>, package <span class="op">=</span> <span class="st">"ratesci"</span><span class="op">)</span></span>
 <span><span class="va">strat_p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="va">compress</span><span class="op">$</span><span class="va">event.control</span>, </span>
 <span>                   n1 <span class="op">=</span> <span class="va">compress</span><span class="op">$</span><span class="va">n.control</span>, </span>
@@ -192,10 +205,11 @@ underlying risk of an event, but used here to illustrate the usage of
 <span><span class="va">strat_p</span><span class="op">$</span><span class="va">estimates</span></span>
 <span><span class="co">#&gt;      lower   est upper level p1hat p1mle</span></span>
 <span><span class="co">#&gt; [1,] 0.181 0.212 0.245  0.95 0.212 0.212</span></span></code></pre></div>
-<p>The function also outputs p-values for a 2-sided hypothesis test
+<p>The function also outputs p-values for a two-sided hypothesis test
 against a default null hypothesis p = 0.5, and one-sided tests against a
-user-specified value of theta0:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+user-specified value of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>θ</mi><mn>0</mn></msub><annotation encoding="application/x-tex">\theta_0</annotation></semantics></math>:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">strat_p</span><span class="op">$</span><span class="va">pval</span></span>
 <span><span class="co">#&gt;      chisq pval2sided theta0 scorenull pval_left pval_right</span></span>
 <span><span class="co">#&gt; [1,]   208   4.05e-47    0.5     -14.4  2.02e-47          1</span></span></code></pre></div>
@@ -206,7 +220,7 @@ the control group, which may reflect different characteristics of the
 populations in each study leading to different underlying risk. (Note
 this need not prevent the evaluation of stratified treatment
 comparisons):</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">strat_p</span><span class="op">$</span><span class="va">Qtest</span></span>
 <span><span class="co">#&gt;            Q         Q_df     pval_het           I2         tau2           Qc </span></span>
 <span><span class="co">#&gt;     6.37e+01     8.00e+00     8.84e-11     8.74e+01     1.74e-02     0.00e+00 </span></span>
@@ -216,7 +230,7 @@ comparisons):</p>
 contributions to the Q-statistic. Here the studies contributing most are
 the 3rd and 8th study, with estimated proportions of 0.48 (95% CI: 0.34
 to 0.62) and 0.04 (95% CI: 0.01 to 0.10) respectively:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">strat_p</span><span class="op">$</span><span class="va">stratdata</span></span>
 <span><span class="co">#&gt;       x1j n1j p1hatj wt_fixed wtpct_fixed wtpct_rand theta_j lower_j upper_j</span></span>
 <span><span class="co">#&gt;  [1,]  37 103 0.3592    616.0       16.43      16.43  0.3597  0.2713   0.455</span></span>
@@ -241,22 +255,36 @@ to 0.62) and 0.04 (95% CI: 0.01 to 0.10) respectively:</p>
 <p>For a random effects analysis, use <code>random = TRUE</code>. (This
 may not give a meaningful estimate of stratum variation if the number of
 strata is small.)</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">strat_p_rand</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="va">compress</span><span class="op">$</span><span class="va">event.control</span>, </span>
 <span>                        n1 <span class="op">=</span> <span class="va">compress</span><span class="op">$</span><span class="va">n.control</span>, </span>
 <span>                        contrast <span class="op">=</span> <span class="st">"p"</span>, </span>
 <span>                        stratified <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>                        random <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>                        random <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                        prediction <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">strat_p_rand</span><span class="op">$</span><span class="va">estimates</span></span>
 <span><span class="co">#&gt;      lower  est upper level p1hat p1mle</span></span>
 <span><span class="co">#&gt; [1,] 0.136 0.25 0.364  0.95  0.25  0.25</span></span>
 <span><span class="va">strat_p_rand</span><span class="op">$</span><span class="va">pval</span></span>
 <span><span class="co">#&gt;      chisq pval2sided theta0 scorenull pval_left pval_right</span></span>
 <span><span class="co">#&gt; [1,]  25.2    0.00102    0.5     -5.02  0.000511      0.999</span></span></code></pre></div>
+<p>A prediction interval, representing an expected proportion in a new
+study <span class="citation">(<a href="#ref-higgins2008">Higgins,
+Thompson, and Spiegelhalter 2008</a>)</span>, can be obtained using
+<code>prediction = TRUE</code>:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">strat_p_rand</span><span class="op">$</span><span class="va">prediction</span></span>
+<span><span class="co">#&gt;      lower upper</span></span>
+<span><span class="co">#&gt; [1,]     0 0.571</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="clustered-datasets">Clustered datasets<a class="anchor" aria-label="anchor" href="#clustered-datasets"></a>
+</h3>
 <p>For clustered data, use <code><a href="../reference/clusterpci.html">clusterpci()</a></code>, which applies the
 Wilson-based method proposed by <span class="citation">(<a href="#ref-saha2015">Saha, Miller, and Wang 2015</a>)</span>, and a
-skewness-corrected version:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+skewness-corrected version. (This function currently only applies for
+binomial proportions.)</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>  <span class="co"># Data from Liang 1992</span></span>
 <span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">36</span>, <span class="fl">12</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>          <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>, <span class="fl">7</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -276,15 +304,12 @@ skewness-corrected version:</p>
 <span>  <span class="fu"><a href="../reference/clusterpci.html">clusterpci</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">n</span>, skew <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;       lower    est  upper totx totn xihat    icc</span></span>
 <span><span class="co">#&gt; [1,] 0.2276 0.2958 0.3724   60  203 1.349 0.1855</span></span></code></pre></div>
-<p>All of the above (except <code><a href="../reference/clusterpci.html">clusterpci()</a></code>) can also handle
-Poisson exposure-adjusted rates, using <code>distrib = "poi"</code>,
-where <code>n</code> represents the exposure time.</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="technical-details">Technical details<a class="anchor" aria-label="anchor" href="#technical-details"></a>
 </h2>
-<p>The SCAS method is an extension of the Wilson Score method, using the
+<p>The SCAS method is an extension of the Wilson score method, using the
 same score function
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>p</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>x</mi><mi>/</mi><mi>n</mi><mo>−</mo><mi>p</mi></mrow><annotation encoding="application/x-tex">S(p) = x / n - p</annotation></semantics></math>,
 where
@@ -301,8 +326,8 @@ and the 3rd central moment is
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>μ</mi><mn>3</mn></msub><mo>=</mo><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>p</mi><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mn>2</mn><mi>p</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><msup><mi>n</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">\mu_3 = p(1 - p)(1 - 2p)/n^2</annotation></semantics></math>.
 The
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>100</mn><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>α</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>%</mi></mrow><annotation encoding="application/x-tex">100(1 - \alpha)\%</annotation></semantics></math>
-confidence interval is found as the two solutions of the following
-equation, where
+confidence interval is found as the two solutions (solving for p) of the
+following equation, where
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>z</mi><annotation encoding="application/x-tex">z</annotation></semantics></math>
 is the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>−</mo><mi>α</mi><mi>/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">1 - \alpha / 2</annotation></semantics></math>
@@ -313,10 +338,15 @@ S(p)/V^{1/2} - (z^2 - 1)\mu_3/6V^{3/2} = \pm z
 <p>For unstratified datasets, this has a closed-form solution. The
 formula is extended in <span class="citation">(<a href="#ref-laud2017">Laud 2017</a>)</span> to incorporate stratification
 using inverse variance weights,
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>w</mi><mi>i</mi></msub><mo>=</mo><mn>1</mn><mi>/</mi><mi>V</mi></mrow><annotation encoding="application/x-tex">w_i = 1 / V</annotation></semantics></math>,
-or other weighting schemes as required, with the solution being found by
-iteration over
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>w</mi><mi>i</mi></msub><mo>=</mo><mn>1</mn><mi>/</mi><msub><mi>V</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">w_i = 1 / V_i</annotation></semantics></math>,
+or sample size,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>w</mi><mi>i</mi></msub><mo>=</mo><msub><mi>n</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">w_i = n_i</annotation></semantics></math>,
+or any other weighting scheme as required, with the solution being found
+by iteration over
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>∈</mo><mrow><mo stretchy="true" form="prefix">[</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">p \in [0, 1]</annotation></semantics></math>.</p>
+<p>The hypothesis tests are based on the same equation, but solving to
+find the value of the test statistic z for the given null proportion
+p.</p>
 <p>The Jeffreys interval is obtained as
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mi>/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">\alpha / 2</annotation></semantics></math>
 and
@@ -337,11 +367,21 @@ for the upper limit.</p>
 <!-- The mid-p interval requires iteration to identify limits satisfying the inequalities specified ... -->
 <!-- ## Additional details -->
 <!-- Confidence intervals for a single binomial proportion, x/n, have a long history. The 'classic' ('conventional' / 'textbook') method everyone learns about in school is known as the Wald method, based on a large-sample "simple asymptotic" Normal approximation. It is easily demonstrated that this method generally fails to achieve the nominal confidence level, even when n is quite large. In other words, a 95% Wald confidence interval will contain the true value of p less than 95% of the time. For small proportions, the actual coverage can be alarmingly low. the Wald method can also produce intervals that contain impossible negative values of p, and an extremely unrealistic interval of [0, 0] when x = 0. -->
+</div>
+<div class="section level2 unnumbered">
+<h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
 <div id="ref-brown2001" class="csl-entry">
 Brown, Lawrence D., T. Tony Cai, and Anirban DasGupta. 2001.
 <span>“Interval Estimation for a Binomial Proportion.”</span>
 <em>Statistical Science</em> 16 (2). <a href="https://doi.org/10.1214/ss/1009213286" class="external-link">https://doi.org/10.1214/ss/1009213286</a>.
+</div>
+<div id="ref-higgins2008" class="csl-entry">
+Higgins, Julian P. T., Simon G. Thompson, and David J. Spiegelhalter.
+2008. <span>“A Re-Evaluation of Random-Effects Meta-Analysis.”</span>
+<em>Journal of the Royal Statistical Society Series A: Statistics in
+Society</em> 172 (1): 137–59. <a href="https://doi.org/10.1111/j.1467-985x.2008.00552.x" class="external-link">https://doi.org/10.1111/j.1467-985x.2008.00552.x</a>.
 </div>
 <div id="ref-laud2017" class="csl-entry">
 Laud, Peter J. 2017. <span>“Equal<span>-</span>Tailed Confidence

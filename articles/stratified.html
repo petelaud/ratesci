@@ -42,7 +42,7 @@
     <li><a class="dropdown-item" href="../articles/basic_contrasts.html">2: Basic contrasts (single stratum)</a></li>
     <li><a class="dropdown-item" href="../articles/stratified.html">3: Stratified contrasts</a></li>
     <li><a class="dropdown-item" href="../articles/paired_contrasts.html">4: Paired contrasts</a></li>
-    <li><a class="dropdown-item" href="../articles/tests.html">5: Tests</a></li>
+    <li><a class="dropdown-item" href="../articles/tests.html">5: Hypothesis tests</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -134,6 +134,10 @@ strat_rr$Qtest
 #>     9.96e-01
 ```
 -->
+<p>The stratdata object provides estimates and intervals for each
+stratum, along with details of stratum weights and contributions to the
+Q-statistic (these may be further examined using the
+<code>hetplot</code> argument).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">strat_rd</span><span class="op">$</span><span class="va">stratdata</span></span>
 <span><span class="co">#&gt;       x1j n1j x2j n2j p1hatj p2hatj wt_fixed wtpct_fixed wtpct_rand   theta_j</span></span>
@@ -178,14 +182,33 @@ method).</p>
 <span>                   n2 <span class="op">=</span> <span class="va">compress</span><span class="op">$</span><span class="va">n.control</span>, </span>
 <span>                   contrast <span class="op">=</span> <span class="st">"RD"</span>, </span>
 <span>                   stratified <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>                   random <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>                   random <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                   prediction <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">strat_rd_rand</span><span class="op">$</span><span class="va">estimates</span></span>
 <span><span class="co">#&gt;       lower    est upper level  p1hat p2hat  p1mle p2mle</span></span>
 <span><span class="co">#&gt; [1,] -0.188 -0.124 -0.06  0.95 0.0858  0.21 0.0936 0.218</span></span></code></pre></div>
 <p>Note that the TDAS method does not include a skewness correction, so
 when <code>random = TRUE</code>, the <code>skew</code> argument only
 affects the <code>stratdata</code> output element.</p>
+<p>A prediction interval for the treatment effect in a new study <span class="citation">(<a href="#ref-higgins2008">Higgins, Thompson, and
+Spiegelhalter 2008</a>)</span> can be obtained using
+<code>prediction = TRUE</code>:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">strat_rd_rand</span><span class="op">$</span><span class="va">prediction</span></span>
+<span><span class="co">#&gt;       lower  upper</span></span>
+<span><span class="co">#&gt; [1,] -0.244 0.0158</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2 unnumbered">
+<h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-higgins2008" class="csl-entry">
+Higgins, Julian P. T., Simon G. Thompson, and David J. Spiegelhalter.
+2008. <span>“A Re-Evaluation of Random-Effects Meta-Analysis.”</span>
+<em>Journal of the Royal Statistical Society Series A: Statistics in
+Society</em> 172 (1): 137–59. <a href="https://doi.org/10.1111/j.1467-985x.2008.00552.x" class="external-link">https://doi.org/10.1111/j.1467-985x.2008.00552.x</a>.
+</div>
 <div id="ref-laud2017" class="csl-entry">
 Laud, Peter J. 2017. <span>“Equal<span>-</span>Tailed Confidence
 Intervals for Comparison of Rates.”</span> <em>Pharmaceutical
@@ -198,7 +221,6 @@ Prevention of Venous Thromboembolism: Systematic Reviews of Mechanical
 Methods, Oral Anticoagulation, Dextran and Regional Anaesthesia as
 Thromboprophylaxis.”</span> <em>Health Technology Assessment</em> 9
 (49). <a href="https://doi.org/10.3310/hta9490" class="external-link">https://doi.org/10.3310/hta9490</a>.
-</div>
 </div>
 </div>
 </div>

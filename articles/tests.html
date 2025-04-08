@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>5: Tests • ratesci</title>
+<title>5: Hypothesis tests • ratesci</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
 <link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
@@ -15,7 +15,7 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="5: Tests">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="5: Hypothesis tests">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -42,7 +42,7 @@
     <li><a class="dropdown-item" href="../articles/basic_contrasts.html">2: Basic contrasts (single stratum)</a></li>
     <li><a class="dropdown-item" href="../articles/stratified.html">3: Stratified contrasts</a></li>
     <li><a class="dropdown-item" href="../articles/paired_contrasts.html">4: Paired contrasts</a></li>
-    <li><a class="dropdown-item" href="../articles/tests.html">5: Tests</a></li>
+    <li><a class="dropdown-item" href="../articles/tests.html">5: Hypothesis tests</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -72,7 +72,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>5: Tests</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>5: Hypothesis tests</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/petelaud/ratesci/blob/master/vignettes/tests.Rmd" class="external-link"><code>vignettes/tests.Rmd</code></a></small>
@@ -237,6 +237,11 @@ evaluation].</p>
 For paired proportions, the test is an 'N-1' adjusted variant of the McNemar test. All such tests are expanded in scope to cater for null hypotheses for equivalence/non-inferiority tests, analogous to the Farrington-Manning test. [A planned vignette will explain further.] 
 
 when the skewness correction is omitted. The direct equivalence also holds when the skewness correction is included, if group sizes are equal. If group sizes are unequal, then the skewness-corrected test is an improved variant of the chi-squared test[\^1]. The stratified asymptotic score methods without skewness correction produce a hypothesis test which is equivalent to the Cochran-Mantel-Haenszel (CMH) test, when MH weighting is used for RD or RR, or IVS weighting for OR. In the single-stratum case, the hypothesis test is equivalent to an Egon Pearson 'N-1' chi-squared test. The same equivalence holds when the skewness correction is included, if group sizes are equal.-->
+</div>
+</div>
+<div class="section level2 unnumbered">
+<h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
 <div id="ref-campbell2007" class="csl-entry">
 Campbell, Ian. 2007. <span>“Chi<span>-</span>Squared and
@@ -267,7 +272,6 @@ Kollef, Zhangjing Chen, Jie Song, et al. 2018.
 Including Ventilator-Associated Pneumonia (REPROVE): A Randomised,
 Double-Blind, Phase 3 Non-Inferiority Trial.”</span> <em>The Lancet
 Infectious Diseases</em> 18 (3): 285–95. <a href="https://doi.org/10.1016/s1473-3099(17)30747-8" class="external-link">https://doi.org/10.1016/s1473-3099(17)30747-8</a>.
-</div>
 </div>
 </div>
 </div>
