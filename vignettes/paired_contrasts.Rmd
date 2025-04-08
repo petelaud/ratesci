@@ -97,3 +97,6 @@ To select an alternative method, for example transformed mid-p:
 ```{r}
 pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method = "midp")$estimates
 ```
+## References
+
+

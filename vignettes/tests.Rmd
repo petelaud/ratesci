@@ -1,10 +1,10 @@
 ---
-title: "5: Tests"
+title: "5: Hypothesis tests"
 output: rmarkdown::html_vignette
 bibliography: REFERENCES.bib
 link-citations: true
 vignette: >
-  %\VignetteIndexEntry{5: Tests}
+  %\VignetteIndexEntry{5: Hypothesis tests}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -103,3 +103,5 @@ For paired proportions, the test is an 'N-1' adjusted variant of the McNemar tes
 
 when the skewness correction is omitted. The direct equivalence also holds when the skewness correction is included, if group sizes are equal. If group sizes are unequal, then the skewness-corrected test is an improved variant of the chi-squared test[\^1]. The stratified asymptotic score methods without skewness correction produce a hypothesis test which is equivalent to the Cochran-Mantel-Haenszel (CMH) test, when MH weighting is used for RD or RR, or IVS weighting for OR. In the single-stratum case, the hypothesis test is equivalent to an Egon Pearson 'N-1' chi-squared test. The same equivalence holds when the skewness correction is included, if group sizes are equal.-->
 ```
+
+## References

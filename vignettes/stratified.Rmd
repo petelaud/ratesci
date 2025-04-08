@@ -60,6 +60,8 @@ strat_rr$Qtest
 -->
 ````
 
+The stratdata object provides estimates and intervals for each stratum, along with details of stratum weights and contributions to the Q-statistic (these may be further examined using the `hetplot` argument).
+
 ```{r}
 strat_rd$stratdata
 ```
@@ -75,8 +77,17 @@ strat_rd_rand <- scoreci(x1 = compress$event.gcs,
                    n2 = compress$n.control, 
                    contrast = "RD", 
                    stratified = TRUE,
-                   random = TRUE)
+                   random = TRUE,
+                   prediction = TRUE)
 strat_rd_rand$estimates
 ```
 
 Note that the TDAS method does not include a skewness correction, so when `random = TRUE`, the `skew` argument only affects the `stratdata` output element.
+
+A prediction interval for the treatment effect in a new study [@higgins2008] can be obtained using `prediction = TRUE`:
+
+```{r}
+strat_rd_rand$prediction
+```
+
+## References

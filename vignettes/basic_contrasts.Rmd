@@ -122,3 +122,5 @@ WARNING: Note that confidence intervals for ratio measures should be equivariant
 2.  in addition for OR, interchanging events and non-events produces reciprocal intervals, i.e. the lower and upper confidence limits for the odds ratio of $(n_1 - x_1)/n_1$ vs $(n_2 - x_2)/n_2$ are the reciprocal of the upper and lower limits for $x_1/n_1$ vs $x_2/n_2$.
 
 Unfortunately, the MOVER method for contrast = "OR", as described in [@fagerland2012], does not satisfy the second of these requirements.
+
+## References

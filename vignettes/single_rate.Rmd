@@ -23,13 +23,13 @@ library(ratesci)
 
 ## Introduction to `rateci()` and related functions for estimation of a single binomial or Poisson rate
 
-To calculate a confidence interval for a single binomial proportion ($\hat p = x/n$), the Skewness-Corrected Asymptotic Score (SCAS) method is recommended, as one that succeeds, on average, at containing the true proportion p with the appropriate nominal probability (e.g. 95%), and has evenly distributed tail probabilities [@laud2017, Appendix S3.5]. It is a modified version of the Wilson Score method. The plot below illustrates the interval non-coverage probability (i.e. 1 minus the actual probability that the interval contains the true value of p) achieved by SCAS compared to some other popular methods, using moving average smoothing (solid lines):
+To calculate a confidence interval for a single binomial proportion ($\hat p = x/n$), the Skewness-Corrected Asymptotic Score (SCAS) method is recommended, as one that succeeds, on average, at containing the true proportion p with the appropriate nominal probability (e.g. 95%), and has evenly distributed tail probabilities [@laud2017, Appendix S3.5]. It is a modified version of the Wilson score method. The plot below illustrates the interval non-coverage probability (i.e. 1 minus the actual probability that the interval contains the true value of p) achieved by SCAS compared to some other popular methods, using moving average smoothing (solid lines):
 
-![](images/singlepropLNCP50_small.jpg) 
+![](images/singlepropLNCP50_small.jpg)
 
-Similar patterns of coverage are seen for the corresponding methods for a Poisson rate [@laud2017].
+Similar patterns of coverage are seen for the corresponding methods for a Poisson rate [@laud2017]. (Analysis for Poisson rates is obtained using `distrib = "poi"`, with the input `n` representing the exposure time.)
 
-For a worked example, the SCAS 95% interval for the proportion 1/29 is obtained with `scaspci()`, using closed-form calculation [@laud2017, Appendix A.4]:
+For a worked example, the SCAS 95% interval for the binomial proportion 1/29 is obtained with `scaspci()`, using closed-form calculation [@laud2017, Appendix A.4]:
 
 ```{r}
 scaspci(x = 1, n = 29)
@@ -47,19 +47,25 @@ The Jeffreys interval can also incorporate prior information about $p$ for an ap
 jeffreysci(x = 1, n = 29, ai = 1.5, bi = 9.5)
 ```
 
-If more conservative coverage is required, a continuity adjustment may be deployed with `cc`, as follows, giving continuity-adjusted SCAS or Jeffreys, and (if `cc` is TRUE or 0.5), the Clopper-Pearson method. Note intermediate adjustments smaller than 0.5 give a more refined adjustment[@laud2017, Appendix S2].
+If more conservative coverage is required, a continuity adjustment may be deployed with `cc`, as follows, giving continuity-adjusted SCAS or Jeffreys, and (if `cc` is TRUE or 0.5), the Clopper-Pearson method.
 
 ```{r}
 rateci(x = 1, n = 29, cc = TRUE)
 ```
 
-### Stratified and clustered datasets
+Such an adjustment is widely acknowledged to be over-conservative, so intermediate adjustments such as `cc = 0.25` give a more refined adjustment[@laud2017, Appendix S2 ($\gamma = cc$)].
 
-For stratified datasets (e.g. data collected in different subgroups or collated across different studies), use `scoreci()` with `contrast = "p"` and `stratified = TRUE` (again, the skewness correction is recommended, but may be omitted).
+```{r}
+rateci(x = 1, n = 29, cc = 0.25)
+```
 
-By default, a fixed effect analysis is produced, i.e. one which assumes a common true parameter p across strata. The default stratum weighting uses the inverse variance of the score underlying the SCAS/Wilson method, evaluated at the maximum likelihood estimate for the pooled proportion (thus avoiding infinite weights for boundary cases). Alternative weights are sample size (`weighting = "MH"`) or custom user-specified weights supplied via the `wt` argument. For example, population weighting would be applied via a vector (e.g. `wt = Ni`) containing the true population size (or true population proportion `Ni/N`) represented by each stratum. (Note this is not divided by the sample size/proportion per stratum, because the weighting is applied at the group level, not the case level.)
+### Stratified datasets
 
-Below is an illustration using data from the control arm of 9 trials studying postoperative deep vein thrombosis (DVT). This may be a somewhat unrealistic example, as the main focus of such studies is to estimate the effect of a treatment, rather than to estimate the underlying risk of an event, but used here to illustrate the usage of `scoreci()` for a stratified dataset:
+For stratified datasets (e.g. data collected in different subgroups or collated across different studies), use `scoreci()` with `contrast = "p"` and `stratified = TRUE` (again, the skewness correction is recommended, but may be omitted for a stratified Wilson interval).
+
+By default, a fixed effect analysis is produced, i.e. one which assumes a common true parameter p across strata. The default stratum weighting uses the inverse variance of the score underlying the SCAS/Wilson method, evaluated at the maximum likelihood estimate for the pooled proportion (thus avoiding infinite weights for boundary cases). Alternative weights are sample size (`weighting = "MH"`) or custom user-specified weights supplied via the `wt` argument. For example, population weighting would be applied via a vector (e.g. `wt = Ni`) containing the true population size represented by each stratum. (Note this is not divided by the sample size per stratum, because the weighting is applied at the group level, not the case level.)
+
+Below is an illustration using control arm data from a meta-analysis of 9 trials studying postoperative deep vein thrombosis (DVT). This may be a somewhat unrealistic example, as the main focus of these studies is to estimate the effect of a treatment, rather than to estimate the underlying risk of an event.
 
 ```{r}
 data(compress, package = "ratesci")
@@ -70,7 +76,7 @@ strat_p <- scoreci(x1 = compress$event.control,
 strat_p$estimates
 ```
 
-The function also outputs p-values for a 2-sided hypothesis test against a default null hypothesis p = 0.5, and one-sided tests against a user-specified value of theta0:
+The function also outputs p-values for a two-sided hypothesis test against a default null hypothesis p = 0.5, and one-sided tests against a user-specified value of $\theta_0$:
 
 ```{r}
 strat_p$pval
@@ -95,12 +101,21 @@ strat_p_rand <- scoreci(x1 = compress$event.control,
                         n1 = compress$n.control, 
                         contrast = "p", 
                         stratified = TRUE, 
-                        random = TRUE)
+                        random = TRUE,
+                        prediction = TRUE)
 strat_p_rand$estimates
 strat_p_rand$pval
 ```
 
-For clustered data, use `clusterpci()`, which applies the Wilson-based method proposed by [@saha2015], and a skewness-corrected version:
+A prediction interval, representing an expected proportion in a new study [@higgins2008], can be obtained using `prediction = TRUE`:
+
+```{r}
+strat_p_rand$prediction
+```
+
+### Clustered datasets
+
+For clustered data, use `clusterpci()`, which applies the Wilson-based method proposed by [@saha2015], and a skewness-corrected version. (This function currently only applies for binomial proportions.)
 
 ```{r, include = FALSE}
 options(digits = 4)
@@ -124,17 +139,17 @@ options(digits = 4)
   clusterpci(x, n, skew = TRUE)
 ```
 
-All of the above (except `clusterpci()`) can also handle Poisson exposure-adjusted rates, using `distrib = "poi"`, where `n` represents the exposure time.
-
 ## Technical details
 
-The SCAS method is an extension of the Wilson Score method, using the same score function $S(p) = x / n - p$, where $x$ is the observed number of events from $n$ trials, and $p$ is the true proportion. The variance of $S(p)$ is $V = p(1 - p)/n$, and the 3rd central moment is $\mu_3 = p(1 - p)(1 - 2p)/n^2$. The $100(1 - \alpha)\%$ confidence interval is found as the two solutions of the following equation, where $z$ is the $1 - \alpha / 2$ percentile of the standard normal distribution:
+The SCAS method is an extension of the Wilson score method, using the same score function $S(p) = x / n - p$, where $x$ is the observed number of events from $n$ trials, and $p$ is the true proportion. The variance of $S(p)$ is $V = p(1 - p)/n$, and the 3rd central moment is $\mu_3 = p(1 - p)(1 - 2p)/n^2$. The $100(1 - \alpha)\%$ confidence interval is found as the two solutions (solving for p) of the following equation, where $z$ is the $1 - \alpha / 2$ percentile of the standard normal distribution:
 
 $$
 S(p)/V^{1/2} - (z^2 - 1)\mu_3/6V^{3/2} = \pm z
 $$
 
-For unstratified datasets, this has a closed-form solution. The formula is extended in [@laud2017] to incorporate stratification using inverse variance weights, $w_i = 1 / V$, or other weighting schemes as required, with the solution being found by iteration over $p \in [0, 1]$.
+For unstratified datasets, this has a closed-form solution. The formula is extended in [@laud2017] to incorporate stratification using inverse variance weights, $w_i = 1 / V_i$, or sample size, $w_i = n_i$, or any other weighting scheme as required, with the solution being found by iteration over $p \in [0, 1]$.
+
+The hypothesis tests are based on the same equation, but solving to find the value of the test statistic z for the given null proportion p.
 
 The Jeffreys interval is obtained as $\alpha / 2$ and $1 - \alpha / 2$ quantiles of the $Beta(x + 0.5, n - x + 0.5)$ distribution, with boundary modifications when $x = 0$ or $x = n$ [@brown2001].
 
@@ -145,3 +160,5 @@ A Clopper-Pearson interval may also be obtained as quantiles of a beta distribut
 <!-- ## Additional details -->
 
 <!-- Confidence intervals for a single binomial proportion, x/n, have a long history. The 'classic' ('conventional' / 'textbook') method everyone learns about in school is known as the Wald method, based on a large-sample "simple asymptotic" Normal approximation. It is easily demonstrated that this method generally fails to achieve the nominal confidence level, even when n is quite large. In other words, a 95% Wald confidence interval will contain the true value of p less than 95% of the time. For small proportions, the actual coverage can be alarmingly low. the Wald method can also produce intervals that contain impossible negative values of p, and an extremely unrealistic interval of [0, 0] when x = 0. -->
+
+## References
