@@ -1,0 +1,16 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+*.DS_Store
+*.gitignore
+R/sandbox.R
+to-do.md
+revdep
+R/pairbinci-dev.R
+R/pairbinci-public.R
+R/pairbinci-dev-old.R
+docs
+inst/doc
+/doc/
+/Meta/
