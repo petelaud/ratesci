@@ -20,9 +20,10 @@ ratesci is an [R](https://www.r-project.org) package to compute
 confidence intervals and tests for:
 
 - a single binomial proportion, or Poisson rate (‘p’)
-- binomial risk difference or Poisson rate difference (‘RD’)
-- binomial relative risk or Poisson rate ratio (‘RR’)
-- binomial odds ratio (‘OR’)
+- a difference between binomial proportions or Poisson rates (risk
+  difference or rate difference, ‘RD’)
+- a ratio of proportions or rates (relative risk or rate ratio, ‘RR’)
+- a binomial odds ratio (‘OR’)
 - stratified calculations for any of the above
 - paired binomial contrasts RD and RR
 - paired odds ratio using the conditional model
@@ -62,7 +63,7 @@ superiority test or a non-inferiority test, with guaranteed coherence
 between the test and interval. The superiority test is a variant of (and
 in many cases identical to) a chi-squared test or CMH test, and the
 non-inferiority test is analogous to a Farrington-Manning test, all with
-improved control of Type 1 error achieved by the bias and skewness
+improved control of type I error achieved by the bias and skewness
 corrections. For paired proportions, the superiority test is a variant
 of the McNemar test, incorporating an ‘N-1’ adjustment which appears to
 avoid any violations of the nominal significance level.
