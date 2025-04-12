@@ -87,12 +87,14 @@
 <h2 id="introduction-to-scoreci-for-computing-confidence-intervals-for-stratified-comparisons-of-independent-binomial-or-poisson-rates">Introduction to scoreci() for computing confidence intervals for
 stratified comparisons of independent binomial or Poisson rates<a class="anchor" aria-label="anchor" href="#introduction-to-scoreci-for-computing-confidence-intervals-for-stratified-comparisons-of-independent-binomial-or-poisson-rates"></a>
 </h2>
-<p>Stratified analysis might be required if a clinical trial employs
-stratified randomisation, or if results from multiple studies are to be
-combined in a meta-analysis. The illustration below uses data from a
-meta-analysis of 9 trials studying the effectiveness of graduated
-compression stockings for prevention of postoperative deep vein
-thrombosis (DVT) <span class="citation">(from <a href="#ref-roderick2005">Roderick et al. 2005</a>)</span>:</p>
+<p>Stratified analysis might be required for combining results from
+multiple studies in a meta-analysis, or adjusting clinical trial results
+for factors used in a stratified randomisation. Associated tests for
+common effects over strata (homogeneity) can also be useful for
+examining subgroup effects in a clinical trial. The illustration below
+uses data from a meta-analysis of 9 trials studying the effectiveness of
+graduated compression stockings for prevention of postoperative deep
+vein thrombosis (DVT) <span class="citation">(from <a href="#ref-roderick2005">Roderick et al. 2005</a>)</span>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">compress</span>, package <span class="op">=</span> <span class="st">"ratesci"</span><span class="op">)</span></span>
 <span><span class="va">strat_rd</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="va">compress</span><span class="op">$</span><span class="va">event.gcs</span>, </span>
@@ -111,7 +113,9 @@ thrombosis (DVT) <span class="citation">(from <a href="#ref-roderick2005">Roderi
 <p>The Qtest object provides a heterogeneity test and related
 quantities, including an assessment of qualitative heterogeneity
 (indicating whether treatment effects are in opposite directions in
-different strata).</p>
+different strata). All of which are derived using the score statistic
+and its estimated variance, for a consistent approach - see <span class="citation">(<a href="#ref-laud2017">Laud 2017</a> Supplementary
+Appendix S4)</span>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">strat_rd</span><span class="op">$</span><span class="va">Qtest</span></span>
 <span><span class="co">#&gt;            Q         Q_df     pval_het           I2         tau2           Qc </span></span>
