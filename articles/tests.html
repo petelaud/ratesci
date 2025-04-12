@@ -129,6 +129,29 @@ variant of the chi-squared test.</p>
 <span><span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">5</span>, n1 <span class="op">=</span> <span class="fl">56</span>, x2 <span class="op">=</span> <span class="fl">0</span>, n <span class="op">=</span> <span class="fl">56</span>, skew <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">pval</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span>
 <span><span class="co">#&gt;      chisq pval2sided </span></span>
 <span><span class="co">#&gt;     5.1869     0.0228</span></span></code></pre></div>
+<p>The plot below illustrates the type I error rates achieved by
+different tests for small to medium equal and unequal sample sizes. The
+skewness corrected test fixes a deficiency of the chi-squared test,
+which can severely violate the nominal significance level when group
+sample sizes differ by a factor of 4 or more. The SCAS test does not
+guarantee that the nominal significance level is never violated, but
+rather fluctuates around it, in a similar manner to the “lucky n”
+phenomenon for the single proportion described by <span class="citation">(<a href="#ref-brown2001">Brown, Cai, and DasGupta
+2001</a>)</span>. Violations are relatively infrequent (22%, vs 44% for
+chi-squared), rarely exceeding 5.5% (3%, vs 11% for chi-squared), and
+significance level converges towards the nominal 5% for larger sample
+sizes. The selected example case with
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mn>1</mn></msub><mo>=</mo><msub><mi>n</mi><mn>2</mn></msub><mo>=</mo><mn>25</mn></mrow><annotation encoding="application/x-tex">n_1 = n_2 = 25</annotation></semantics></math>
+plotted by <span class="citation">(<a href="#ref-fagerland2017">Fagerland MW 2017, fig. 4.4</a>)</span> is
+very unrepresentative, and remains an anomolous case for the SCAS test,
+while type I error rates for unequal sample sizes are generally shifted
+downwards. For further improved control of type I error, a small
+continuity adjustment
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mo>=</mo><mn>0.05</mn></mrow><annotation encoding="application/x-tex">\gamma = 0.05</annotation></semantics></math>)
+applied to the SCAS test achieves performance that is more successful
+than the Fisher mid-P test at approximating the Suissa-Shuster exact
+unconditional test.</p>
+<p><img src="images/tiers50.jpg"></p>
 </div>
 <div class="section level3">
 <h3 id="unstratified-non-inferiority-test">Unstratified non-inferiority test<a class="anchor" aria-label="anchor" href="#unstratified-non-inferiority-test"></a>
@@ -142,9 +165,9 @@ non-inferiority test depends on whether the outcome is positive
 (e.g. cure rate) or negative (e.g. mortality rate). The one-sided test
 is analogous to the Farrington-Manning test, but not identical to it,
 due to the ‘N-1’ variance bias correction and skewness correction, both
-of which provide improved control of Type I error (see <span class="citation">(<a href="#ref-laud2017">Laud 2017</a>)</span>, and
+of which provide improved control of type I error (see <span class="citation">(<a href="#ref-laud2017">Laud 2017</a>)</span>, and
 <span class="citation">(<a href="#ref-laud2014">Laud and Dane
-2014</a>)</span>, which used the label GNbc for SCAS. Note the Type I
+2014</a>)</span>, which used the label GNbc for SCAS. Note the type I
 error for the Farrington-Manning test is identical to the one-sided
 coverage probability for the Mee interval).</p>
 <p>See below for an example analysis of a clinical trial testing the
@@ -243,11 +266,20 @@ when the skewness correction is omitted. The direct equivalence also holds when 
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
 <div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-brown2001" class="csl-entry">
+Brown, Lawrence D., T. Tony Cai, and Anirban DasGupta. 2001.
+<span>“Interval Estimation for a Binomial Proportion.”</span>
+<em>Statistical Science</em> 16 (2). <a href="https://doi.org/10.1214/ss/1009213286" class="external-link">https://doi.org/10.1214/ss/1009213286</a>.
+</div>
 <div id="ref-campbell2007" class="csl-entry">
 Campbell, Ian. 2007. <span>“Chi<span>-</span>Squared and
 Fisher<span></span>Irwin Tests of Two<span>-</span>by<span>-</span>Two
 Tables with Small Sample Recommendations.”</span> <em>Statistics in
 Medicine</em> 26 (19): 3661–75. <a href="https://doi.org/10.1002/sim.2832" class="external-link">https://doi.org/10.1002/sim.2832</a>.
+</div>
+<div id="ref-fagerland2017" class="csl-entry">
+Fagerland MW, Laake P, Lydersen S. 2017. <em>Statistical Analysis of
+Contingency Tables</em>. Chapman &amp; Hall/CRC, Boca Raton, FL. <a href="https://contingencytables.com" class="external-link">https://contingencytables.com</a>.
 </div>
 <div id="ref-laud2017" class="csl-entry">
 Laud, Peter J. 2017. <span>“Equal<span>-</span>Tailed Confidence

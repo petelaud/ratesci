@@ -82,9 +82,9 @@
 <p>ratesci is an <a href="https://www.r-project.org" class="external-link">R</a> package to compute confidence intervals and tests for:</p>
 <ul>
 <li>a single binomial proportion, or Poisson rate (‘p’)</li>
-<li>binomial risk difference or Poisson rate difference (‘RD’)</li>
-<li>binomial relative risk or Poisson rate ratio (‘RR’)</li>
-<li>binomial odds ratio (‘OR’)</li>
+<li>a difference between binomial proportions or Poisson rates (risk difference or rate difference, ‘RD’)</li>
+<li>a ratio of proportions or rates (relative risk or rate ratio, ‘RR’)</li>
+<li>a binomial odds ratio (‘OR’)</li>
 <li>stratified calculations for any of the above</li>
 <li>paired binomial contrasts RD and RR</li>
 <li>paired odds ratio using the conditional model</li>
@@ -94,7 +94,7 @@
 <ul>
 <li>See the vignettes for further details and examples of the SCAS and other intervals for the <a href="https://petelaud.github.io/ratesci/articles/single_rate.html">single rate</a>, <a href="https://petelaud.github.io/ratesci/articles/basic_contrasts.html">basic contrasts</a>, <a href="https://petelaud.github.io/ratesci/articles/stratified.html">stratified contrasts</a>, and <a href="https://petelaud.github.io/ratesci/articles/paired_contrasts.html">paired contrasts</a>.</li>
 </ul>
-<p>In each case, the asymptotic score methods provide a corresponding hypothesis test against any specified null parameter value, for a superiority test or a non-inferiority test, with guaranteed coherence between the test and interval. The superiority test is a variant of (and in many cases identical to) a chi-squared test or CMH test, and the non-inferiority test is analogous to a Farrington-Manning test, all with improved control of Type 1 error achieved by the bias and skewness corrections. For paired proportions, the superiority test is a variant of the McNemar test, incorporating an ‘N-1’ adjustment which appears to avoid any violations of the nominal significance level.</p>
+<p>In each case, the asymptotic score methods provide a corresponding hypothesis test against any specified null parameter value, for a superiority test or a non-inferiority test, with guaranteed coherence between the test and interval. The superiority test is a variant of (and in many cases identical to) a chi-squared test or CMH test, and the non-inferiority test is analogous to a Farrington-Manning test, all with improved control of type I error achieved by the bias and skewness corrections. For paired proportions, the superiority test is a variant of the McNemar test, incorporating an ‘N-1’ adjustment which appears to avoid any violations of the nominal significance level.</p>
 <ul>
 <li>See the <a href="https://petelaud.github.io/ratesci/articles/tests.html">hypothesis tests</a> vignette for further details of the relationships between SCAS tests and conventional chi-squared and CMH tests.</li>
 </ul>
