@@ -33,7 +33,7 @@ ratesci is an [R](https://www.r-project.org) package to compute confidence inter
 -   stratified calculations for any of the above
 -   paired binomial contrasts RD and RR
 -   paired odds ratio using the conditional model
--   binomial proportion from clustered data
+-   a binomial proportion from clustered data
 
 A number of different methods are offered, but in each case, the recommended default is based on asymptotic score methodology (from [@wilson1927], [@miettinen1985] and [@tango1998a]), but including skewness corrections following the principles of [@gart1988]. The resulting family of skewness-corrected asymptotic score (SCAS) methods [@laud2017], [and Laud2025, under review] ensures equal-tailed coverage (or central location), in other words for a nominal 95% confidence interval, the one-sided non-coverage probability is (on average) close to 2.5% on each side. Stratified calculations are also catered for (e.g. meta-analysis, including random effects). Most of the above list is covered by `scoreci()`, with the exception of clustered proportions (which uses `clusterpci()`) and paired contrasts (`pairbinci()`). Options are included for omitting the skewness correction to obtain legacy methods such as Miettinen-Nurminen, Wilson and Tango intervals, or chi-squared, CMH, Farrington-Manning or McNemar tests.
 

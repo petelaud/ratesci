@@ -11,6 +11,7 @@
 * `bcf` for variance bias correction.
 * Default paired RD and RR method changed to new SCAS method 
   (i.e. including skewness correction - manuscript under review).
+* `method_RD`, `method_RR` and `method_OR` are replaced with `method`.
 * Bonett-Price methods for RD and RR (including proposed Jeffreys variant 
   option for RR).
 * Default for MOVER method changed to Jeffreys.
@@ -43,7 +44,6 @@
 * Corrected LCL for Poisson mid-p method.
 
 ## Other
-* `method_RD`, `method_RR` and `method_OR` are replaced with `method`.
 * Output object column names are updated (lower, est, upper) for consistency 
   and style conformity.
 * Tests added to confirm consistency of AS methods vs McNemar test.
@@ -70,11 +70,13 @@
   methods for OR.
 * Confirmed and documented that the 2-sided significance test is equivalent 
   to the McNemar test (with or without continuity correction).
+
 ### In `scoreci()`:
 * Confirmed that continuity corrections for all stratified (fixed-effects) 
   binomial contrasts are consistent with the Mantel-Haenszel correction.
 * Updated heterogeneity test to consistently omit non-informative 
   (but non-empty) strata, and output the degrees of freedom.
+
 ### In `moverci()`:
 * Added continuity correction for `type` = "wilson".
 * Added options for `type` = "SCAS" and "midp" intervals.
@@ -86,6 +88,7 @@
   Vincent Jaquet for reporting the issue and proposed solution. 
   Also #27 for RR, thanks to @lovestat.) 
   As a result, double-zero strata need not be excluded when weighting = "MN".
+
 ### In `moverci()`:
 * Corrected calculation of score intervals for single Poisson rate, using 
   Rao score interval.
@@ -122,6 +125,7 @@ for stratified analysis with INV/IVS weights. Experimental for Poisson RR).
   * contrast = RR with IVS/INV weighting if RRtang = FALSE;
   * random = TRUE (needs further evaluation);
   * excluded using new option dropzeros = TRUE.
+
 ### In `tdasci()`:
 * Default uses skew = TRUE for stratum CIs.
 

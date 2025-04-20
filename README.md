@@ -27,7 +27,7 @@ confidence intervals and tests for:
 - stratified calculations for any of the above
 - paired binomial contrasts RD and RR
 - paired odds ratio using the conditional model
-- binomial proportion from clustered data
+- a binomial proportion from clustered data
 
 A number of different methods are offered, but in each case, the
 recommended default is based on asymptotic score methodology (from

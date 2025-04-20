@@ -21,7 +21,7 @@ options(digits = 3)
 library(ratesci)
 ```
 
-## Introduction to scoreci() for computing confidence intervals for stratified comparisons of independent binomial or Poisson rates
+## Confidence intervals for stratified comparisons of independent binomial or Poisson rates
 
 Stratified analysis might be required for combining results from multiple studies in a meta-analysis, or adjusting clinical trial results for factors used in a stratified randomisation. Associated tests for common effects over strata (homogeneity) can also be useful for examining subgroup effects in a clinical trial. The illustration below uses data from a meta-analysis of 9 trials studying the effectiveness of graduated compression stockings for prevention of postoperative deep vein thrombosis (DVT) [from @roderick2005]:
 
