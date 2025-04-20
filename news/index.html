@@ -59,6 +59,8 @@
 <li>
 <code>bcf</code> for variance bias correction.</li>
 <li>Default paired RD and RR method changed to new SCAS method (i.e. including skewness correction - manuscript under review).</li>
+<li>
+<code>method_RD</code>, <code>method_RR</code> and <code>method_OR</code> are replaced with <code>method</code>.</li>
 <li>Bonett-Price methods for RD and RR (including proposed Jeffreys variant option for RR).</li>
 <li>Default for MOVER method changed to Jeffreys.</li>
 <li>MOVER calculations now use x/N as point estimate instead of median from the Beta distribution.</li>
@@ -94,9 +96,7 @@
 </div>
 <div class="section level3">
 <h3 id="other-development-version">Other<a class="anchor" aria-label="anchor" href="#other-development-version"></a></h3>
-<ul><li>
-<code>method_RD</code>, <code>method_RR</code> and <code>method_OR</code> are replaced with <code>method</code>.</li>
-<li>Output object column names are updated (lower, est, upper) for consistency and style conformity.</li>
+<ul><li>Output object column names are updated (lower, est, upper) for consistency and style conformity.</li>
 <li>Tests added to confirm consistency of AS methods vs McNemar test.</li>
 <li>Dependence on polynom package removed.</li>
 <li>Edition 3 of testthat implemented.</li>
@@ -117,10 +117,16 @@
 <li>Added paired MOVER methods with <code>method_RD</code> = “MOVER” and <code>method_RR</code> = “MOVER”. Also “MOVER_newc” incorporates Newcombe’s correlation correction.</li>
 <li>Added <code>moverbase</code>, for specifying different versions of the MOVER methods (Wilson, Jeffreys, midp or SCAS).</li>
 <li>Added “jeff” and “wilson” <code>method_OR</code> options for transformed binomial methods for OR.</li>
-<li>Confirmed and documented that the 2-sided significance test is equivalent to the McNemar test (with or without continuity correction). ### In <code><a href="../reference/scoreci.html">scoreci()</a></code>:</li>
-<li>Confirmed that continuity corrections for all stratified (fixed-effects) binomial contrasts are consistent with the Mantel-Haenszel correction.</li>
-<li>Updated heterogeneity test to consistently omit non-informative (but non-empty) strata, and output the degrees of freedom. ### In <code><a href="../reference/moverci.html">moverci()</a></code>:</li>
-<li>Added continuity correction for <code>type</code> = “wilson”.</li>
+<li>Confirmed and documented that the 2-sided significance test is equivalent to the McNemar test (with or without continuity correction).</li>
+</ul></div>
+<div class="section level4">
+<h4 id="in-scoreci-0-5-0">In <code>scoreci()</code>:<a class="anchor" aria-label="anchor" href="#in-scoreci-0-5-0"></a></h4>
+<ul><li>Confirmed that continuity corrections for all stratified (fixed-effects) binomial contrasts are consistent with the Mantel-Haenszel correction.</li>
+<li>Updated heterogeneity test to consistently omit non-informative (but non-empty) strata, and output the degrees of freedom.</li>
+</ul></div>
+<div class="section level4">
+<h4 id="in-moverci-0-5-0">In <code>moverci()</code>:<a class="anchor" aria-label="anchor" href="#in-moverci-0-5-0"></a></h4>
+<ul><li>Added continuity correction for <code>type</code> = “wilson”.</li>
 <li>Added options for <code>type</code> = “SCAS” and “midp” intervals.</li>
 <li>Standardised output to include lower CL, midpoint, upper CL, in that order.</li>
 </ul></div>
@@ -128,9 +134,12 @@
 <div class="section level3">
 <h3 id="bug-fixes-0-5-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-5-0"></a></h3>
 <div class="section level4">
-<h4 id="in-scoreci-0-5-0">In <code>scoreci()</code>:<a class="anchor" aria-label="anchor" href="#in-scoreci-0-5-0"></a></h4>
-<ul><li>Improved handling of special cases for MN weighting (<a href="https://github.com/petelaud/ratesci/issues/25" class="external-link">#25</a>, thanks to Vincent Jaquet for reporting the issue and proposed solution. Also <a href="https://github.com/petelaud/ratesci/issues/27" class="external-link">#27</a> for RR, thanks to <a href="https://github.com/lovestat" class="external-link">@lovestat</a>.) As a result, double-zero strata need not be excluded when weighting = “MN”. ### In <code><a href="../reference/moverci.html">moverci()</a></code>:</li>
-<li>Corrected calculation of score intervals for single Poisson rate, using Rao score interval.</li>
+<h4 id="in-scoreci-0-5-0-1">In <code>scoreci()</code>:<a class="anchor" aria-label="anchor" href="#in-scoreci-0-5-0-1"></a></h4>
+<ul><li>Improved handling of special cases for MN weighting (<a href="https://github.com/petelaud/ratesci/issues/25" class="external-link">#25</a>, thanks to Vincent Jaquet for reporting the issue and proposed solution. Also <a href="https://github.com/petelaud/ratesci/issues/27" class="external-link">#27</a> for RR, thanks to <a href="https://github.com/lovestat" class="external-link">@lovestat</a>.) As a result, double-zero strata need not be excluded when weighting = “MN”.</li>
+</ul></div>
+<div class="section level4">
+<h4 id="in-moverci-0-5-0-1">In <code>moverci()</code>:<a class="anchor" aria-label="anchor" href="#in-moverci-0-5-0-1"></a></h4>
+<ul><li>Corrected calculation of score intervals for single Poisson rate, using Rao score interval.</li>
 <li>Same correction affects MOVER method for comparison of Poisson rates [i.e. <code><a href="../reference/moverci.html">moverci()</a></code> with <code>distrib</code> = “poi” and <code>type</code> = “wilson”]</li>
 </ul></div>
 </div>
@@ -163,9 +172,12 @@
 <ul><li>contrast = OR with MH weighting;</li>
 <li>contrast = RR with IVS/INV weighting if RRtang = FALSE;</li>
 <li>random = TRUE (needs further evaluation);</li>
-<li>excluded using new option dropzeros = TRUE. ### In <code><a href="../reference/tdasci.html">tdasci()</a></code>:</li>
+<li>excluded using new option dropzeros = TRUE.</li>
 </ul></li>
-<li>Default uses skew = TRUE for stratum CIs.</li>
+</ul></div>
+<div class="section level4">
+<h4 id="in-tdasci-0-4-0">In <code>tdasci()</code>:<a class="anchor" aria-label="anchor" href="#in-tdasci-0-4-0"></a></h4>
+<ul><li>Default uses skew = TRUE for stratum CIs.</li>
 </ul></div>
 </div>
 <div class="section level3">

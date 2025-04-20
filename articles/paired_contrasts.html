@@ -84,11 +84,11 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/petelaud/ratesci" class="external-link">ratesci</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
-<h2 id="introduction-to-pairbinci-and-related-functions-for-computing-confidence-intervals-and-tests-for-comparisons-of-paired-binomial-proportions">Introduction to pairbinci() and related functions for computing
-confidence intervals and tests for comparisons of paired binomial
-proportions<a class="anchor" aria-label="anchor" href="#introduction-to-pairbinci-and-related-functions-for-computing-confidence-intervals-and-tests-for-comparisons-of-paired-binomial-proportions"></a>
+<h2 id="confidence-intervals-and-tests-for-paired-comparisons-of-binomial-proportions">Confidence intervals and tests for paired comparisons of binomial
+proportions<a class="anchor" aria-label="anchor" href="#confidence-intervals-and-tests-for-paired-comparisons-of-binomial-proportions"></a>
 </h2>
-<p>Data structure:</p>
+<p>The input data for paired proportions takes a different structure,
+compared with the data for independent proportions:</p>
 <table class="table">
 <colgroup>
 <col width="20%">
@@ -145,7 +145,7 @@ where
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mover><mi>p</mi><mo accent="true">̂</mo></mover><mn>2</mn></msub><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo>+</mo><mi>c</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><mi>N</mi></mrow><annotation encoding="application/x-tex">\hat p_2 = (a+c)/N</annotation></semantics></math>),
 or relative risk
 (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mover><mi>θ</mi><mo accent="true">̂</mo></mover><mrow><mi>R</mi><mi>R</mi></mrow></msub><mo>=</mo><msub><mover><mi>p</mi><mo accent="true">̂</mo></mover><mn>1</mn></msub><mi>/</mi><msub><mover><mi>p</mi><mo accent="true">̂</mo></mover><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\hat \theta_{RR} = \hat p_1 / \hat p_2</annotation></semantics></math>),
-the Skewness-Corrected Asymptotic Score (SCAS) method is recommended, as
+the skewness-corrected asymptotic score (SCAS) method is recommended, as
 one that succeeds, on average, at containing the true parameter
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math>
 with the appropriate nominal probability (e.g. 95%), and has evenly

@@ -84,26 +84,25 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/petelaud/ratesci" class="external-link">ratesci</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
-<h2 id="introduction-to-rateci-and-related-functions-for-estimation-of-a-single-binomial-or-poisson-rate">Introduction to <code>rateci()</code> and related functions for
-estimation of a single binomial or Poisson rate<a class="anchor" aria-label="anchor" href="#introduction-to-rateci-and-related-functions-for-estimation-of-a-single-binomial-or-poisson-rate"></a>
+<h2 id="estimation-of-a-single-binomial-or-poisson-rate">Estimation of a single binomial or Poisson rate<a class="anchor" aria-label="anchor" href="#estimation-of-a-single-binomial-or-poisson-rate"></a>
 </h2>
 <p>To calculate a confidence interval for a single binomial proportion
 (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>p</mi><mo accent="true">̂</mo></mover><mo>=</mo><mi>x</mi><mi>/</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">\hat p = x/n</annotation></semantics></math>),
-the Skewness-Corrected Asymptotic Score (SCAS) method is recommended, as
+the skewness-corrected asymptotic score (SCAS) method is recommended, as
 one that succeeds, on average, at containing the true proportion p with
 the appropriate nominal probability (e.g. 95%), and has evenly
 distributed tail probabilities <span class="citation">(<a href="#ref-laud2017">Laud 2017</a>, Appendix S3.5)</span>. It is a
 modified version of the Wilson score method. The plot below illustrates
-the interval non-coverage probability (i.e. 1 minus the actual
-probability that the interval contains the true value of p) achieved by
-SCAS compared to some other popular methods, using moving average
-smoothing (solid lines):</p>
+the one-sided and two-sided non-coverage probability (i.e. 1 minus the
+actual probability that the interval contains the true value of p)
+achieved by SCAS compared to some other popular methods, using moving
+average smoothing (solid lines):</p>
 <p><img src="images/singlepropLNCP50_small.jpg"></p>
 <p>Similar patterns of coverage are seen for the corresponding methods
 for a Poisson rate <span class="citation">(<a href="#ref-laud2017">Laud
-2017</a>)</span>. (Analysis for Poisson rates is obtained using
-<code>distrib = "poi"</code>, with the input <code>n</code> representing
-the exposure time.)</p>
+2017</a>)</span>. (Analysis for Poisson rates, such as exposure-adjusted
+adverse event rates) is obtained using <code>distrib = "poi"</code>,
+with the input <code>n</code> representing the exposure time.)</p>
 <p>For a worked example, the SCAS 95% interval for the binomial
 proportion 1/29 is obtained with <code><a href="../reference/scaspci.html">scaspci()</a></code>, using
 closed-form calculation <span class="citation">(<a href="#ref-laud2017">Laud 2017</a>, Appendix A.4)</span>:</p>
@@ -111,9 +110,16 @@ closed-form calculation <span class="citation">(<a href="#ref-laud2017">Laud 201
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/scaspci.html">scaspci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">29</span><span class="op">)</span></span>
 <span><span class="co">#&gt;        lower    est upper</span></span>
 <span><span class="co">#&gt; [1,] 0.00199 0.0398 0.155</span></span></code></pre></div>
-<p><code><a href="../reference/rateci.html">rateci()</a></code> also provides two other methods (Jeffreys and
-mid-p) with similar coverage properties <span class="citation">(<a href="#ref-laud2018">Laud 2018</a>)</span>:</p>
+<p>If you prefer the slightly slower iterative calculation, or want to
+perform a corresponding <a href="https://petelaud.github.io/ratesci/articles/tests.html">hypothesis
+test</a>, you could use:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">1</span>, n1 <span class="op">=</span> <span class="fl">29</span>, contrast <span class="op">=</span> <span class="st">"p"</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
+<span><span class="co">#&gt;        lower    est upper level x1 n1  p1hat  p1mle</span></span>
+<span><span class="co">#&gt; [1,] 0.00199 0.0398 0.155  0.95  1 29 0.0345 0.0398</span></span></code></pre></div>
+<p><code><a href="../reference/rateci.html">rateci()</a></code> also provides two other confidence interval
+methods (Jeffreys and mid-p) with similar coverage properties <span class="citation">(<a href="#ref-laud2018">Laud 2018</a>)</span>:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/rateci.html">rateci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">29</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $scas</span></span>
 <span><span class="co">#&gt;        lower    est upper</span></span>
@@ -136,7 +142,7 @@ prior for
 to a
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mi>e</mi><mi>t</mi><mi>a</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1.5</mn><mo>,</mo><mn>9.5</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Beta(1.5, 9.5)</annotation></semantics></math>
 distribution:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/jeffreysci.html">jeffreysci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">29</span>, ai <span class="op">=</span> <span class="fl">1.5</span>, bi <span class="op">=</span> <span class="fl">9.5</span><span class="op">)</span></span>
 <span><span class="co">#&gt;       lower    est upper</span></span>
 <span><span class="co">#&gt; [1,] 0.0108 0.0553 0.154</span></span></code></pre></div>
@@ -144,7 +150,7 @@ distribution:</p>
 may be deployed with <code>cc</code>, as follows, giving
 continuity-adjusted SCAS or Jeffreys, and (if <code>cc</code> is TRUE or
 0.5), the Clopper-Pearson method.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/rateci.html">rateci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">29</span>, cc <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $scas_cc</span></span>
 <span><span class="co">#&gt;         lower    est upper</span></span>
@@ -162,7 +168,7 @@ intermediate adjustments such as <code>cc = 0.25</code> give a more
 refined adjustment<span class="citation">(<a href="#ref-laud2017">Laud
 2017</a>, Appendix S2
 (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mo>=</mo><mi>c</mi><mi>c</mi></mrow><annotation encoding="application/x-tex">\gamma = cc</annotation></semantics></math>))</span>.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/rateci.html">rateci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">29</span>, cc <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $scas_cc</span></span>
 <span><span class="co">#&gt;         lower    est upper</span></span>
@@ -196,7 +202,7 @@ of 9 trials studying postoperative deep vein thrombosis (DVT). This may
 be a somewhat unrealistic example, as the main focus of these studies is
 to estimate the effect of a treatment, rather than to estimate the
 underlying risk of an event.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">compress</span>, package <span class="op">=</span> <span class="st">"ratesci"</span><span class="op">)</span></span>
 <span><span class="va">strat_p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="va">compress</span><span class="op">$</span><span class="va">event.control</span>, </span>
 <span>                   n1 <span class="op">=</span> <span class="va">compress</span><span class="op">$</span><span class="va">n.control</span>, </span>
@@ -209,7 +215,7 @@ underlying risk of an event.</p>
 against a default null hypothesis p = 0.5, and one-sided tests against a
 user-specified value of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>θ</mi><mn>0</mn></msub><annotation encoding="application/x-tex">\theta_0</annotation></semantics></math>:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">strat_p</span><span class="op">$</span><span class="va">pval</span></span>
 <span><span class="co">#&gt;      chisq pval2sided theta0 scorenull pval_left pval_right</span></span>
 <span><span class="co">#&gt; [1,]   208   4.05e-47    0.5     -14.4  2.02e-47          1</span></span></code></pre></div>
@@ -220,7 +226,7 @@ the control group, which may reflect different characteristics of the
 populations in each study leading to different underlying risk. (Note
 this need not prevent the evaluation of stratified treatment
 comparisons):</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">strat_p</span><span class="op">$</span><span class="va">Qtest</span></span>
 <span><span class="co">#&gt;            Q         Q_df     pval_het           I2         tau2           Qc </span></span>
 <span><span class="co">#&gt;     6.37e+01     8.00e+00     8.84e-11     8.74e+01     1.74e-02     0.00e+00 </span></span>
@@ -230,7 +236,7 @@ comparisons):</p>
 contributions to the Q-statistic. Here the studies contributing most are
 the 3rd and 8th study, with estimated proportions of 0.48 (95% CI: 0.34
 to 0.62) and 0.04 (95% CI: 0.01 to 0.10) respectively:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">strat_p</span><span class="op">$</span><span class="va">stratdata</span></span>
 <span><span class="co">#&gt;       x1j n1j p1hatj wt_fixed wtpct_fixed wtpct_rand theta_j lower_j upper_j</span></span>
 <span><span class="co">#&gt;  [1,]  37 103 0.3592    616.0       16.43      16.43  0.3597  0.2713   0.455</span></span>
@@ -255,7 +261,7 @@ to 0.62) and 0.04 (95% CI: 0.01 to 0.10) respectively:</p>
 <p>For a random effects analysis, use <code>random = TRUE</code>. (This
 may not give a meaningful estimate of stratum variation if the number of
 strata is small.)</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">strat_p_rand</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="va">compress</span><span class="op">$</span><span class="va">event.control</span>, </span>
 <span>                        n1 <span class="op">=</span> <span class="va">compress</span><span class="op">$</span><span class="va">n.control</span>, </span>
 <span>                        contrast <span class="op">=</span> <span class="st">"p"</span>, </span>
@@ -272,7 +278,7 @@ strata is small.)</p>
 study <span class="citation">(<a href="#ref-higgins2008">Higgins,
 Thompson, and Spiegelhalter 2008</a>)</span>, can be obtained using
 <code>prediction = TRUE</code>:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">strat_p_rand</span><span class="op">$</span><span class="va">prediction</span></span>
 <span><span class="co">#&gt;      lower upper</span></span>
 <span><span class="co">#&gt; [1,]     0 0.571</span></span></code></pre></div>
@@ -284,7 +290,7 @@ Thompson, and Spiegelhalter 2008</a>)</span>, can be obtained using
 Wilson-based method proposed by <span class="citation">(<a href="#ref-saha2015">Saha, Miller, and Wang 2015</a>)</span>, and a
 skewness-corrected version. (This function currently only applies for
 binomial proportions.)</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>  <span class="co"># Data from Liang 1992</span></span>
 <span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">36</span>, <span class="fl">12</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>          <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>, <span class="fl">7</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>

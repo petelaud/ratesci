@@ -84,27 +84,35 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/petelaud/ratesci" class="external-link">ratesci</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
-<h2 id="introduction-to-scoreci-and-related-functions-for-computing-confidence-intervals-and-tests-for-comparisons-of-independent-binomial-or-poisson-rates">Introduction to scoreci() and related functions for computing
-confidence intervals and tests for comparisons of independent binomial
-or Poisson rates<a class="anchor" aria-label="anchor" href="#introduction-to-scoreci-and-related-functions-for-computing-confidence-intervals-and-tests-for-comparisons-of-independent-binomial-or-poisson-rates"></a>
+<h2 id="confidence-intervals-for-comparisons-of-independent-binomial-or-poisson-rates">Confidence intervals for comparisons of independent binomial or
+Poisson rates<a class="anchor" aria-label="anchor" href="#confidence-intervals-for-comparisons-of-independent-binomial-or-poisson-rates"></a>
 </h2>
 <div class="section level3">
 <h3 id="scas-and-other-asymptotic-score-methods">SCAS and other asymptotic score methods<a class="anchor" aria-label="anchor" href="#scas-and-other-asymptotic-score-methods"></a>
 </h3>
-<p>To calculate a confidence interval (CI) for a risk difference
+<p>For comparison of two groups when the outcome is a binomial
+proportion, you may wish to quantify the effect size using the
+difference
 (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mover><mi>θ</mi><mo accent="true">̂</mo></mover><mrow><mi>R</mi><mi>D</mi></mrow></msub><mo>=</mo><msub><mover><mi>p</mi><mo accent="true">̂</mo></mover><mn>1</mn></msub><mo>−</mo><msub><mover><mi>p</mi><mo accent="true">̂</mo></mover><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\hat \theta_{RD} = \hat p_1 - \hat p_2</annotation></semantics></math>,
 where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mover><mi>p</mi><mo accent="true">̂</mo></mover><mi>i</mi></msub><mo>=</mo><msub><mi>x</mi><mi>i</mi></msub><mi>/</mi><msub><mi>n</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\hat p_i = x_i/n_i</annotation></semantics></math>),
-or relative risk
-(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mover><mi>θ</mi><mo accent="true">̂</mo></mover><mrow><mi>R</mi><mi>R</mi></mrow></msub><mo>=</mo><msub><mover><mi>p</mi><mo accent="true">̂</mo></mover><mn>1</mn></msub><mi>/</mi><msub><mover><mi>p</mi><mo accent="true">̂</mo></mover><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\hat \theta_{RR} = \hat p_1 / \hat p_2</annotation></semantics></math>)
-or odds ratio
-(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mover><mi>θ</mi><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>R</mi></mrow></msub><mo>=</mo><msub><mover><mi>p</mi><mo accent="true">̂</mo></mover><mn>1</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><msub><mover><mi>p</mi><mo accent="true">̂</mo></mover><mn>2</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><msub><mover><mi>p</mi><mo accent="true">̂</mo></mover><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><msub><mover><mi>p</mi><mo accent="true">̂</mo></mover><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\hat \theta_{OR} = \hat p_1 (1 - \hat p_2) / \hat p_2(1 - \hat p_1)</annotation></semantics></math>,
-the Skewness-Corrected Asymptotic Score (SCAS) method is recommended, as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mover><mi>p</mi><mo accent="true">̂</mo></mover><mi>i</mi></msub><mo>=</mo><msub><mi>x</mi><mi>i</mi></msub><mi>/</mi><msub><mi>n</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\hat p_i = x_i/n_i</annotation></semantics></math>)
+or the ratio of the two proportions
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mover><mi>θ</mi><mo accent="true">̂</mo></mover><mrow><mi>R</mi><mi>R</mi></mrow></msub><mo>=</mo><msub><mover><mi>p</mi><mo accent="true">̂</mo></mover><mn>1</mn></msub><mi>/</mi><msub><mover><mi>p</mi><mo accent="true">̂</mo></mover><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\hat \theta_{RR} = \hat p_1 / \hat p_2</annotation></semantics></math>).
+Another option is the odds ratio
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mover><mi>θ</mi><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>R</mi></mrow></msub><mo>=</mo><msub><mover><mi>p</mi><mo accent="true">̂</mo></mover><mn>1</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><msub><mover><mi>p</mi><mo accent="true">̂</mo></mover><mn>2</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><msub><mover><mi>p</mi><mo accent="true">̂</mo></mover><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><msub><mover><mi>p</mi><mo accent="true">̂</mo></mover><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\hat \theta_{OR} = \hat p_1 (1 - \hat p_2) / \hat p_2(1 - \hat p_1)</annotation></semantics></math>),
+which is less easy to interpret, but is widely used due to its useful
+properties for logistic regression modelling or case-control
+studies.</p>
+<!--
+To calculate a confidence interval (CI) for a risk difference ($\hat \theta_{RD} = \hat p_1 - \hat p_2$, where $\hat p_i = x_i/n_i$), or relative risk ($\hat \theta_{RR} = \hat p_1 / \hat p_2$) or odds ratio ($\hat \theta_{OR} = \hat p_1 (1 - \hat p_2) / \hat p_2(1 - \hat p_1)$), 
+-->
+<p>To calculate a confidence interval (CI) for any of these contrasts,
+the skewness-corrected asymptotic score (SCAS) method is recommended, as
 one that succeeds, on average, at containing the true parameter
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math>
 with the appropriate nominal probability (e.g. 95%), and has evenly
 distributed tail probabilities <span class="citation">(<a href="#ref-laud2017">Laud 2017</a>)</span>. It is a modified version of
-the Miettinen-Nurminen (MN) Asymptotic Score method <span class="citation">(<a href="#ref-miettinen1985">Miettinen and Nurminen
+the Miettinen-Nurminen (MN) asymptotic score method <span class="citation">(<a href="#ref-miettinen1985">Miettinen and Nurminen
 1985</a>)</span>. MN and SCAS each represent a family of methods
 encompassing analysis of RD and RR for binomial proportions or Poisson
 rates (e.g. exposure-adjusted incidence rate), and binomial OR.</p>
@@ -172,29 +180,32 @@ scoreci(x1 = 5, n1 = 56, x2 = 0, n = 29, skew = FALSE, bcf = FALSE)$estimates
 ```
 --->
 <p>The underlying z-statistic is used to obtain a two-sided hypothesis
-test against the null hypothesis of no difference
-(<code>pval2sided</code>). Note that under certain conditions
+test for association (<code>pval2sided</code>). Note that under certain
+conditions
 (i.e. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mn>1</mn></msub><mo>=</mo><msub><mi>n</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">n_1 = n_2</annotation></semantics></math>)
 this is equivalent to the Egon Pearson ‘N-1’ chi-squared test <span class="citation">(<a href="#ref-campbell2007">Campbell 2007</a>)</span>.
 The facility is also provided for a custom one-sided test against any
 specified null hypothesis value
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>θ</mi><mn>0</mn></msub><annotation encoding="application/x-tex">\theta_0</annotation></semantics></math>,
 e.g. for non-inferiority testing (<code>pval_left</code> and
-<code>pval_right</code>)</p>
+<code>pval_right</code>). See the <a href="https://petelaud.github.io/ratesci/articles/tests.html">tests
+vignette</a> for more details.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">out</span><span class="op">$</span><span class="va">pval</span></span>
 <span><span class="co">#&gt;      chisq pval2sided theta0 scorenull pval_left pval_right</span></span>
 <span><span class="co">#&gt; [1,]  3.02      0.082      0      1.74     0.959      0.041</span></span></code></pre></div>
 <p>The <code><a href="../reference/scoreci.html">scoreci()</a></code> function provides options to omit the
-skewness correction (for the MN method) and the variance bias correction
-(for the Mee method, which would be consistent with the Karl Pearson
-unadjusted chi-squared test). For a simpler life, choose SCAS always and
-use the <code><a href="../reference/scasci.html">scasci()</a></code> wrapper function:</p>
+skewness correction (<code>skew = FALSE</code> for the MN method) and
+the variance bias correction (<code>bcf = FALSE</code> for the Mee
+method, which would be consistent with the Karl Pearson unadjusted
+chi-squared test). To keep things simple when choosing the SCAS method,
+you may instead use the <code><a href="../reference/scasci.html">scasci()</a></code> wrapper function instead
+of <code><a href="../reference/scoreci.html">scoreci()</a></code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/scasci.html">scasci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">5</span>, n1 <span class="op">=</span> <span class="fl">56</span>, x2 <span class="op">=</span> <span class="fl">0</span>, n <span class="op">=</span> <span class="fl">29</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
 <span><span class="co">#&gt;        lower    est upper level x1 n1 x2 n2  p1hat p2hat  p1mle p2mle</span></span>
 <span><span class="co">#&gt; [1,] -0.0186 0.0917 0.187  0.95  5 56  0 29 0.0893     0 0.0917     0</span></span></code></pre></div>
-<p>For a confidence interval for the relative risk, use:</p>
+<p>For analysis of relative risk, use:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/scasci.html">scasci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">5</span>, n1 <span class="op">=</span> <span class="fl">56</span>, x2 <span class="op">=</span> <span class="fl">0</span>, n <span class="op">=</span> <span class="fl">29</span>, contrast <span class="op">=</span> <span class="st">"RR"</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
 <span><span class="co">#&gt;      lower  est upper level x1 n1 x2 n2  p1hat p2hat  p1mle  p2mle</span></span>
@@ -228,8 +239,9 @@ intervals calculated separately for
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mn>2</mn></msub><annotation encoding="application/x-tex">p_2</annotation></semantics></math>.
 Newcombe based his method on Wilson intervals, but coverage can be
-improved by using equal-tailed Jeffreys intervals instead (“MOVER-J”)
-<span class="citation">(<a href="#ref-laud2017">Laud 2017</a>)</span><a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;Newcombe considered a MOVER method based on equal-tailed
+slightly improved by using equal-tailed Jeffreys intervals instead
+(“MOVER-J”) <span class="citation">(<a href="#ref-laud2017">Laud
+2017</a>)</span><a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;Newcombe considered a MOVER method based on equal-tailed
 Jeffreys intervals (“MOVER-R Jeffreys”) in chapter 11 of &lt;span class="citation"&gt;(&lt;a href="#ref-newcombe2012"&gt;Newcombe 2012&lt;/a&gt;)&lt;/span&gt;.
 However, the example intervals shown in his Table 11.6 do not match the
 output of
@@ -241,12 +253,11 @@ intervals themselves rather than the MOVER formula. However, Jeffreys
 intervals for a single proportion (“method 12”) in Newcombe’s Table 3.2
 (chapter 3), are matched by &lt;code&gt;jeffreysci(1, 10)&lt;/code&gt;, so the
 source of the discrepancy remains a mystery. Similar discrepancies are
-observed for contrast = “OR”.&lt;/p&gt;'><sup>3</sup></a>. Coverage
-properties remain generally inferior to SCAS - with larger sample sizes,
-MOVER-J has two-sided coverage close to (but slightly below) the nominal
-level, but central location is not achieved (except for the RR
-contrast). There is no corresponding hypothesis test for the MOVER
-methods.</p>
+observed for contrast = “OR”.&lt;/p&gt;'><sup>3</sup></a>. Coverage properties remain generally
+inferior to SCAS - with larger sample sizes, MOVER-J has two-sided
+coverage close to (but slightly below) the nominal level, but central
+location is not achieved (except for the RR contrast).</p>
+<p>There is no corresponding hypothesis test for the MOVER methods.</p>
 <p>A MOVER-J interval for binomial RD from the same observed data as
 above would be obtained using:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -307,6 +318,38 @@ vs
 and Newcombe 2012</a>)</span>, does not satisfy the second of these
 requirements.</p>
 </div>
+</div>
+<div class="section level2">
+<h2 id="technical-details">Technical details<a class="anchor" aria-label="anchor" href="#technical-details"></a>
+</h2>
+<p><span class="citation">(<a href="#ref-miettinen1985">Miettinen and
+Nurminen 1985</a>)</span> took the concept of the Wilson score interval
+for a single proportion and applied it to all contrasts of two
+proportions (not just RD) and Poisson rates. The procedure involves
+finding, at any possible value of the contrast parameter
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math>,
+the maximum likelihood estimates of the two proportions, restricted to
+the given value of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math>.
+The resulting estimates are then included in the score statistic, and
+the confidence interval found by an iterative root-finding algorithm.
+Miettinen &amp; Nurminen’s statistic was defined to follow a
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mi>χ</mi><mn>1</mn><mn>2</mn></msubsup><annotation encoding="application/x-tex">\chi^2_1</annotation></semantics></math>
+distribution, but the SCAS formula uses an equivalent statistic with a
+N(0, 1) distribution, to facilitate one-sided tests.</p>
+<p>Gart and Nam, in a series of papers between 1985 and 1990, proposed
+similar confidence interval methods that included a skewness correction
+in the score statistic (and also a bias correction for OR). Their
+formulae omitted the ‘N-1’ bias correction used by Miettinen &amp;
+Nurminen.</p>
+<p>Farrington and Manning published an article on non-inferiority tests
+for RD and RR, using the same restricted maximum likelihood methodology
+as Miettinen and Nurminen (but omitting the ‘N-1’ correction).</p>
+<p>The SCAS method combines the features of all the above methods, to
+give a comprehensive family of asymptotic score methods with optimised
+performance for universal use for confidence intervals for a wide range
+of sample sizes, with coherent tests for association or for
+non-inferiority. For further details, see <span class="citation">(<a href="#ref-laud2017">Laud 2017</a>)</span>.</p>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
