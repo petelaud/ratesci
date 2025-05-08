@@ -14,6 +14,7 @@
 * `method_RD`, `method_RR` and `method_OR` are replaced with `method`.
 * Bonett-Price methods for RD and RR (including proposed Jeffreys variant 
   option for RR).
+* TDAS method is deprecated.
 * Default for MOVER method changed to Jeffreys.
 * MOVER calculations now use x/N as point estimate instead of median from the
   Beta distribution.

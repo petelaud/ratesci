@@ -371,11 +371,6 @@ test_that("legacy & new methods match published examples", {
   )
   expect_equal(
     unname(round(pairbinci(x = c(53, 16, 8, 9), contrast = "RD",
-                           method = "TDAS")$estimates[, c(1, 3)], 4)),
-    c(-0.0191, 0.2052)
-  )
-  expect_equal(
-    unname(round(pairbinci(x = c(53, 16, 8, 9), contrast = "RD",
                            method = "Score", skew = FALSE,
                            bcf = FALSE)$estimates[, c(1, 3)], 3)),
     c(-0.020, 0.207)

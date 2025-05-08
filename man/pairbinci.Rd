@@ -49,8 +49,8 @@ to be used. The following are available for contrast = "RD" or "RR": \cr
 a choice of input methods - see moverbase); \cr
 "MOVER_newc" = hybrid MOVER methods with correction to correlation
 estimate (Newcombe's "method 10"); \cr
-"TDAS" = t-distribution asymptotic score (experimental method, seems to
-struggle with low numbers); \cr
+"TDAS" = t-distribution asymptotic score (experimental method, now
+deprecated); \cr
 "BP" = Wald with Bonett-Price adjustment for RD, or Hybrid Bonett-Price
 method for RR. \cr
 For contrast = "OR", one of the following methods may be selected,
@@ -127,8 +127,6 @@ correction for improved one-sided coverage.
 Also includes MOVER options using the Method of Variance Estimates Recovery
 for paired RD and RR, incorporating Newcombe's correlation correction, and
 some simpler methods by Bonett & Price for RD and RR.
-Also includes an experimental method using the stratified TDAS method
-with pairs as strata (to be deprecated?).
 For OR, intervals are produced based on transforming various intervals for
 the single proportion, including SCASp, mid-p and Jeffreys.
 All methods have options for continuity adjustment, and the magnitude of

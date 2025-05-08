@@ -10,8 +10,6 @@
 #' Also includes MOVER options using the Method of Variance Estimates Recovery
 #' for paired RD and RR, incorporating Newcombe's correlation correction, and
 #' some simpler methods by Bonett & Price for RD and RR.
-#' Also includes an experimental method using the stratified TDAS method
-#' with pairs as strata (to be deprecated?).
 #' For OR, intervals are produced based on transforming various intervals for
 #' the single proportion, including SCASp, mid-p and Jeffreys.
 #' All methods have options for continuity adjustment, and the magnitude of
@@ -39,8 +37,8 @@
 #'             a choice of input methods - see moverbase); \cr
 #'   "MOVER_newc" = hybrid MOVER methods with correction to correlation
 #'                  estimate (Newcombe's "method 10"); \cr
-#'   "TDAS" = t-distribution asymptotic score (experimental method, seems to
-#'   struggle with low numbers); \cr
+#'   "TDAS" = t-distribution asymptotic score (experimental method, now
+#'            deprecated); \cr
 #'   "BP" = Wald with Bonett-Price adjustment for RD, or Hybrid Bonett-Price
 #'          method for RR. \cr
 #'   For contrast = "OR", one of the following methods may be selected,
@@ -240,9 +238,14 @@ pairbinci <- function(x,
     stop()
   }
   if (contrast %in% c("RD", "RR")) {
+    if (tolower(method) == "tdas") {
+      print("TDAS method is deprecated in pairbinci(); if needed use tdasci() function,
+             but method = 'Score' with skew = TRUE is recommended instead.")
+      stop()
+    }
     if (!(tolower(substr(method, 1, 4)) %in%
-      c("tdas", "scor", "move", "bp"))) {
-      print("Method must be one of 'Score_closed', 'Score', 'BP', 'TDAS',
+      c("scor", "move", "bp"))) {
+      print("Method must be one of 'Score_closed', 'Score', 'BP',
           'MOVER' or 'MOVER_newc' for contrast = 'RD' or 'RR'")
       stop()
     }
@@ -288,11 +291,11 @@ pairbinci <- function(x,
   doublezero <- (x[1] + x[2] + x[3] == 0)
   nodiscord <- (x[2] == 0 && x[3] == 0)
 
-  # Convert the data into 2 columns of 0s and 1s for use in TDAS-based method
-  # and output 2x2 table for validation
-  x1i <- rep(c(1, 1, 0, 0), x)
-  x2i <- rep(c(1, 0, 1, 0), x)
-  xi <- table(x1i = factor(x1i, levels = c(0, 1)), x2i = factor(x2i, levels = c(0, 1)))
+  # Convert input data into 2x2 table to ease interpretation
+  x1i <- rep(c("Success", "Success", "Failure", "Failure"), x)
+  x2i <- rep(c("Success", "Failure", "Success", "Failure"), x)
+  xi <- table(Test_1 = factor(x1i, levels = c("Success", "Failure")),
+              Test_2 = factor(x2i, levels = c("Success", "Failure")))
   x1 <- x[1] + x[2]
   x2 <- x[1] + x[3]
   N <- sum(x)
@@ -356,38 +359,6 @@ pairbinci <- function(x,
       outlist <- list(xi, estimates = estimates)
     }
   } else if (contrast != "OR") {
-    if (method == "TDAS") {
-      # stratified TDAS method for paired data as suggested in Laud 2017
-      n1i <- n2i <- rep(1, sum(x))
-      if (doublezero && contrast == "RR") {
-        outlist <- list(
-          data = xi,
-          estimates = cbind(lower = 0, est = NA, upper = Inf),
-          pval = NA
-        )
-      } else if (nodiscord && contrast == "RR") {
-        out <- scoreci(
-          stratified = TRUE, random = FALSE,
-          x1 = x1i, n1 = n1i, x2 = x2i, n2 = n2i, weighting = "MH",
-          contrast = contrast, distrib = "bin", level = level, cc = cc,
-          theta0 = theta0, warn = FALSE
-        )
-        outlist <- list(data = xi, estimates = out$estimates[, 1:3], pval = out$pval)
-      } else {
-        out <- tdasci(
-          x1 = x1i, n1 = n1i, x2 = x2i, n2 = n2i, weighting = "MH",
-          contrast = contrast, distrib = "bin", level = level, cc = cc,
-          theta0 = theta0, warn = FALSE
-        )
-        estimates <- out$estimates[, , drop = FALSE]
-        pval <- out$pval
-        outlist <- list(
-          data = xi,
-          estimates = out$estimates[, 1:3, drop = FALSE],
-          pval = out$pval
-        )
-      }
-    }
     # Iterative Score methods by Tango (for RD) & Tang (for RR):
     if (method == "Score") {
       myfun <- function(theta) {
