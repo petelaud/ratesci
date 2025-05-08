@@ -1,13 +1,13 @@
 pandoc: 3.1.11
-pkgdown: 2.1.1.9000
-pkgdown_sha: 62d5c5a0fc12899aae97f6ce14018d2784bf308b
+pkgdown: 2.1.2.9000
+pkgdown_sha: 99457e7fa7f36696ae743b06aca59c0fdd97a7d6
 articles:
   basic_contrasts: basic_contrasts.html
   paired_contrasts: paired_contrasts.html
   single_rate: single_rate.html
   stratified: stratified.html
   tests: tests.html
-last_built: 2025-04-20T10:50Z
+last_built: 2025-05-08T20:07Z
 urls:
   reference: https://petelaud.github.io/ratesci/reference
   article: https://petelaud.github.io/ratesci/articles

@@ -100,28 +100,29 @@ The superiority tests described below give consistent results whichever
 contrast is chosen (RD, RR or OR).</p>
 <p>Sometimes, you might want to demonstrate the opposite, i.e. that the
 proportion in group 1 is not smaller (or not larger) than the proportion
-in group 2. For example, if you want to show that a new treatment works
-at least as well as an established comparator. In this case you need a
-non-inferiority test. The null hypothesis for such a test would be
+in group 2. For example, if you want to show that a new treatment is at
+least as effective as an established comparator. In this case you need a
+non-inferiority test. If the outcome measure is positive (e.g cure
+rate), the null hypothesis for such a test would be
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>θ</mi><mrow><mi>R</mi><mi>D</mi></mrow></msub><mo>≤</mo><msub><mi>θ</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">\theta_{RD} ≤ \theta_0</annotation></semantics></math>
-where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>θ</mi><mn>0</mn></msub><mo>&lt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\theta_0 &lt; 0</annotation></semantics></math>,
+(where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>θ</mi><mn>0</mn></msub><mo>&lt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\theta_0 &lt; 0</annotation></semantics></math>),
 or
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>θ</mi><mrow><mi>R</mi><mi>R</mi></mrow></msub><mo>≤</mo><msub><mi>θ</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">\theta_{RR} ≤ \theta_0</annotation></semantics></math>
-where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>θ</mi><mn>0</mn></msub><mo>&lt;</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\theta_0 &lt; 1</annotation></semantics></math>.
+(where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>θ</mi><mn>0</mn></msub><mo>&lt;</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\theta_0 &lt; 1</annotation></semantics></math>).
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>θ</mi><mn>0</mn></msub><annotation encoding="application/x-tex">\theta_0</annotation></semantics></math>
-is called the “non-inferiority margin”. (The direction of the inequality
-depends on whether the outcome is a positive or negative one, e.g. cure
-rate or adverse event rate.)</p>
+is called the “non-inferiority margin”. The direction of the
+inequalities would be reversed for a negative outcome such as adverse
+event rate.</p>
 <p>To demonstrate equivalence (i.e. no difference in either direction),
 you would conduct two one-sided tests, e.g. with
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>θ</mi><mn>0</mn></msub><mo>=</mo><mo>−</mo><mn>0.1</mn></mrow><annotation encoding="application/x-tex">\theta_0 = -0.1</annotation></semantics></math>
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>θ</mi><mn>0</mn></msub><mo>=</mo><mo>+</mo><mn>0.1</mn></mrow><annotation encoding="application/x-tex">\theta_0 = +0.1</annotation></semantics></math>.
-If conducted using a 2.5% significance level, the tests would be
-significant if the corresponding 95% confidence interval falls entirely
-within
+If the tests are each conducted using a 2.5% significance level, the
+null hypothesis would be rejected if the corresponding 95% confidence
+interval falls entirely within
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mn>0.1</mn><mo>,</mo><mn>0.1</mn><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(-0.1, 0.1)</annotation></semantics></math>.</p>
 <div class="section level3">
 <h3 id="unstratified-superiority-test-2x2-test-for-association">Unstratified superiority test (2x2 test for association)<a class="anchor" aria-label="anchor" href="#unstratified-superiority-test-2x2-test-for-association"></a>
@@ -316,6 +317,22 @@ For paired proportions, the test is an 'N-1' adjusted variant of the McNemar tes
 
 when the skewness correction is omitted. The direct equivalence also holds when the skewness correction is included, if group sizes are equal. If group sizes are unequal, then the skewness-corrected test is an improved variant of the chi-squared test[\^1]. The stratified asymptotic score methods without skewness correction produce a hypothesis test which is equivalent to the Cochran-Mantel-Haenszel (CMH) test, when MH weighting is used for RD or RR, or IVS weighting for OR. In the single-stratum case, the hypothesis test is equivalent to an Egon Pearson 'N-1' chi-squared test. The same equivalence holds when the skewness correction is included, if group sizes are equal.-->
 </div>
+<div class="section level3">
+<h3 id="test-for-a-single-proportion">Test for a single proportion<a class="anchor" aria-label="anchor" href="#test-for-a-single-proportion"></a>
+</h3>
+<p><code><a href="../reference/scoreci.html">scoreci()</a></code> with <code>contrast = "p"</code> also provides
+hypothesis tests for unstratified or stratified datasets, matching the
+confidence intervals. <code>pval2sided</code> is a two-sided test
+against the null hypothesis that
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>=</mo><mn>0.5</mn></mrow><annotation encoding="application/x-tex">p = 0.5</annotation></semantics></math>.
+<code>pval_left</code> and <code>pval_right</code> are one-sided tests
+against a user-specified value of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>θ</mi><mn>0</mn></msub><annotation encoding="application/x-tex">\theta_0</annotation></semantics></math>.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">7</span>, n1 <span class="op">=</span> <span class="fl">34</span>, contrast <span class="op">=</span> <span class="st">"p"</span>, theta0 <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span><span class="op">$</span><span class="va">pval</span></span>
+<span><span class="co">#&gt;      chisq pval2sided theta0 scorenull pval_left pval_right</span></span>
+<span><span class="co">#&gt; [1,]  11.8   0.000604    0.1      1.87     0.969     0.0309</span></span></code></pre></div>
+</div>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
@@ -373,7 +390,7 @@ Infectious Diseases</em> 18 (3): 285–95. <a href="https://doi.org/10.1016/s147
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.9000.</p>
 </div>
 
     </footer>

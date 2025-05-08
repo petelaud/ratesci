@@ -9,8 +9,6 @@ correction for improved one-sided coverage.
 Also includes MOVER options using the Method of Variance Estimates Recovery
 for paired RD and RR, incorporating Newcombe's correlation correction, and
 some simpler methods by Bonett &amp;amp; Price for RD and RR.
-Also includes an experimental method using the stratified TDAS method
-with pairs as strata (to be deprecated?).
 For OR, intervals are produced based on transforming various intervals for
 the single proportion, including SCASp, mid-p and Jeffreys.
 All methods have options for continuity adjustment, and the magnitude of
@@ -24,8 +22,6 @@ correction for improved one-sided coverage.
 Also includes MOVER options using the Method of Variance Estimates Recovery
 for paired RD and RR, incorporating Newcombe's correlation correction, and
 some simpler methods by Bonett &amp;amp; Price for RD and RR.
-Also includes an experimental method using the stratified TDAS method
-with pairs as strata (to be deprecated?).
 For OR, intervals are produced based on transforming various intervals for
 the single proportion, including SCASp, mid-p and Jeffreys.
 All methods have options for continuity adjustment, and the magnitude of
@@ -87,8 +83,6 @@ correction for improved one-sided coverage.
 Also includes MOVER options using the Method of Variance Estimates Recovery
 for paired RD and RR, incorporating Newcombe's correlation correction, and
 some simpler methods by Bonett &amp; Price for RD and RR.
-Also includes an experimental method using the stratified TDAS method
-with pairs as strata (to be deprecated?).
 For OR, intervals are produced based on transforming various intervals for
 the single proportion, including SCASp, mid-p and Jeffreys.
 All methods have options for continuity adjustment, and the magnitude of
@@ -153,8 +147,8 @@ to be used. The following are available for contrast = "RD" or "RR": <br>
 a choice of input methods - see moverbase); <br>
 "MOVER_newc" = hybrid MOVER methods with correction to correlation
 estimate (Newcombe's "method 10"); <br>
-"TDAS" = t-distribution asymptotic score (experimental method, seems to
-struggle with low numbers); <br>
+"TDAS" = t-distribution asymptotic score (experimental method, now
+deprecated); <br>
 "BP" = Wald with Bonett-Price adjustment for RD, or Hybrid Bonett-Price
 method for RR. <br>
 For contrast = "OR", one of the following methods may be selected,
@@ -312,10 +306,10 @@ proportions. (2025, Under review)</p>
 <span class="r-in"><span><span class="co"># SCAS method for RD</span></span></span>
 <span class="r-in"><span><span class="fu">pairbinci</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, contrast <span class="op">=</span> <span class="st">"RD"</span>, method <span class="op">=</span> <span class="st">"Score"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $data</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    x2i</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x1i  0  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   0 12  7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1  1  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          Test_2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test_1    Success Failure</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Success       1       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Failure       7      12</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          lower       est     upper level    p1hat    p2hat    p1mle    p2mle</span>
@@ -334,10 +328,10 @@ proportions. (2025, Under review)</p>
 <span class="r-in"><span><span class="co"># Tango method</span></span></span>
 <span class="r-in"><span><span class="fu">pairbinci</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, contrast <span class="op">=</span> <span class="st">"RD"</span>, method <span class="op">=</span> <span class="st">"Score"</span>, skew <span class="op">=</span> <span class="cn">FALSE</span>, bcf <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $data</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    x2i</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x1i  0  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   0 12  7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1  1  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          Test_2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test_1    Success Failure</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Success       1       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Failure       7      12</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          lower       est     upper level    p1hat    p2hat    p1mle    p2mle</span>
@@ -356,10 +350,10 @@ proportions. (2025, Under review)</p>
 <span class="r-in"><span><span class="co"># MOVER-NJ method</span></span></span>
 <span class="r-in"><span><span class="fu">pairbinci</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, contrast <span class="op">=</span> <span class="st">"RD"</span>, method <span class="op">=</span> <span class="st">"MOVER_newc"</span>, moverbase <span class="op">=</span> <span class="st">"jeff"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $data</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    x2i</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x1i  0  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   0 12  7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1  1  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          Test_2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test_1    Success Failure</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Success       1       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Failure       7      12</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          lower       est     upper level    p1hat    p2hat phi_hat</span>
@@ -374,10 +368,10 @@ proportions. (2025, Under review)</p>
 <span class="r-in"><span><span class="co"># SCAS for RR</span></span></span>
 <span class="r-in"><span><span class="fu">pairbinci</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, contrast <span class="op">=</span> <span class="st">"RR"</span>, method <span class="op">=</span> <span class="st">"Score"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $data</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    x2i</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x1i  0  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   0 12  7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1  1  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          Test_2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test_1    Success Failure</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Success       1       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Failure       7      12</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         lower      est    upper level    p1hat    p2hat    p1mle    p2mle</span>
@@ -396,10 +390,10 @@ proportions. (2025, Under review)</p>
 <span class="r-in"><span><span class="co"># Tang method</span></span></span>
 <span class="r-in"><span><span class="fu">pairbinci</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, contrast <span class="op">=</span> <span class="st">"RR"</span>, method <span class="op">=</span> <span class="st">"Score"</span>, skew <span class="op">=</span> <span class="cn">FALSE</span>, bcf <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $data</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    x2i</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x1i  0  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   0 12  7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1  1  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          Test_2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test_1    Success Failure</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Success       1       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Failure       7      12</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         lower  est    upper level    p1hat    p2hat    p1mle    p2mle  phi_hat</span>
@@ -418,10 +412,10 @@ proportions. (2025, Under review)</p>
 <span class="r-in"><span><span class="co"># MOVER-NJ</span></span></span>
 <span class="r-in"><span><span class="fu">pairbinci</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, contrast <span class="op">=</span> <span class="st">"RR"</span>, method <span class="op">=</span> <span class="st">"MOVER_newc"</span>, moverbase <span class="op">=</span> <span class="st">"jeff"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $data</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    x2i</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x1i  0  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   0 12  7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1  1  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          Test_2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test_1    Success Failure</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Success       1       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Failure       7      12</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         lower  est    upper level    p1hat    p2hat phi_hat</span>
@@ -436,10 +430,10 @@ proportions. (2025, Under review)</p>
 <span class="r-in"><span><span class="co"># Transformed SCASp method for OR</span></span></span>
 <span class="r-in"><span><span class="fu">pairbinci</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, contrast <span class="op">=</span> <span class="st">"OR"</span>, method <span class="op">=</span> <span class="st">"SCASp"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $data</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    x2i</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x1i  0  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   0 12  7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1  1  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          Test_2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test_1    Success Failure</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Success       1       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Failure       7      12</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         lower      est    upper</span>
@@ -456,10 +450,10 @@ proportions. (2025, Under review)</p>
 <span class="r-in"><span><span class="co"># Transformed Wilson method</span></span></span>
 <span class="r-in"><span><span class="fu">pairbinci</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, contrast <span class="op">=</span> <span class="st">"OR"</span>, method <span class="op">=</span> <span class="st">"wilson"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $data</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    x2i</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x1i  0  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   0 12  7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1  1  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          Test_2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test_1    Success Failure</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Success       1       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Failure       7      12</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         lower      est   upper</span>
@@ -481,7 +475,7 @@ proportions. (2025, Under review)</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.9000.</p>
 </div>
 
     </footer></div>
