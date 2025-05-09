@@ -3,13 +3,13 @@
 intervals for the rate (or risk) difference ("RD") or ratio ("RR") for
 independent binomial or Poisson rates, or for odds ratio ("OR", binomial
 only). (developed from Newcombe, Donner &amp;amp; Zou, Li et al, and Fagerland &amp;amp;
-Newcombe, and generalised as "MOVER-B" in forthcoming publication) including
+Newcombe, and generalised as "MOVER-B" in Laud 2017) including
 special case "MOVER-J" using non-informative priors with optional continuity
 adjustment.  This function is vectorised in x1, x2, n1, and n2.'><meta property="og:description" content='Wrapper function for the MOVER-B methods.  Approximate Bayesian confidence
 intervals for the rate (or risk) difference ("RD") or ratio ("RR") for
 independent binomial or Poisson rates, or for odds ratio ("OR", binomial
 only). (developed from Newcombe, Donner &amp;amp; Zou, Li et al, and Fagerland &amp;amp;
-Newcombe, and generalised as "MOVER-B" in forthcoming publication) including
+Newcombe, and generalised as "MOVER-B" in Laud 2017) including
 special case "MOVER-J" using non-informative priors with optional continuity
 adjustment.  This function is vectorised in x1, x2, n1, and n2.'><meta property="og:image" content="https://petelaud.github.io/ratesci/logo.png"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -63,7 +63,7 @@ adjustment.  This function is vectorised in x1, x2, n1, and n2.'><meta property=
 intervals for the rate (or risk) difference ("RD") or ratio ("RR") for
 independent binomial or Poisson rates, or for odds ratio ("OR", binomial
 only). (developed from Newcombe, Donner &amp; Zou, Li et al, and Fagerland &amp;
-Newcombe, and generalised as "MOVER-B" in forthcoming publication) including
+Newcombe, and generalised as "MOVER-B" in Laud 2017) including
 special case "MOVER-J" using non-informative priors with optional continuity
 adjustment.  This function is vectorised in x1, x2, n1, and n2.</p>
     </div>
@@ -133,6 +133,16 @@ Appendix S2 (default 0.5 if cc = TRUE). Forced equal to 0.5 if type = "exact".</
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Additional arguments.</p></dd>
+
+</dl></div>
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>A list containing the following components:</p><dl><dt>estimates</dt>
+<dd><p>a matrix containing estimates of the rates in each group
+and of the requested contrast, with its confidence interval</p></dd>
+
+<dt>call</dt>
+<dd><p>details of the function call</p></dd>
 
 </dl></div>
     <div class="section level2">

@@ -126,6 +126,16 @@ priors are used)</p></dd>
 
 </dl></div>
     <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>A list containing the following components:</p><dl><dt>estimates</dt>
+<dd><p>a matrix containing estimated rate(s), and corresponding
+approximate Bayesian confidence interval, and the input values x and n</p></dd>
+
+<dt>call</dt>
+<dd><p>details of the function call</p></dd>
+
+</dl></div>
+    <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>Laud PJ. Equal-tailed confidence intervals for comparison of
 rates. Pharmaceutical Statistics 2017; 16:334-348.</p>
@@ -141,8 +151,14 @@ proportion. Statistical Science 2001; 16(2):101-133</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Jeffreys method:</span></span></span>
 <span class="r-in"><span><span class="fu">jeffreysci</span><span class="op">(</span>x <span class="op">=</span> <span class="fl">5</span>, n <span class="op">=</span> <span class="fl">56</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           lower        est     upper</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.03489147 0.09177968 0.1846509</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           lower        est     upper x  n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.03489147 0.09177968 0.1846509 5 56</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $call</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> distrib   level      cc     adj      ai      bi </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   "bin"  "0.95"     "0"  "TRUE"   "0.5"   "0.5" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

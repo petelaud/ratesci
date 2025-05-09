@@ -165,8 +165,14 @@ adjustment for Jeffreys intervals recommended on p108 of Brown et al.
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A matrix containing the confidence interval for the requested contrast</p>
-    </div>
+    <p>A list containing the following components:</p><dl><dt>estimates</dt>
+<dd><p>a matrix containing estimates of the rates in each group
+and of the requested contrast, with its confidence interval</p></dd>
+
+<dt>call</dt>
+<dd><p>details of the function call</p></dd>
+
+</dl></div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>Laud PJ. Equal-tailed confidence intervals for comparison of
@@ -193,13 +199,29 @@ Statistics 2014; 29(3-4):869-889.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Binomial RD, MOVER-J method:</span></span></span>
 <span class="r-in"><span><span class="fu">moverci</span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">5</span>, n1 <span class="op">=</span> <span class="fl">56</span>, x2 <span class="op">=</span> <span class="fl">0</span>, n2 <span class="op">=</span> <span class="fl">29</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             lower        est     upper</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] -0.009734968 0.08403347 0.1772258</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             lower        est     upper level x1 n1 x2 n2      p1hat       p2hat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] -0.009734968 0.08403347 0.1772258  0.95  5 56  0 29 0.09177968 0.007746206</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $call</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  distrib contrast    level     type      adj       cc       a1       b1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    "bin"     "RD"   "0.95"   "jeff"  "FALSE"  "FALSE"    "0.5"    "0.5" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       a2       b2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    "0.5"    "0.5" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Binomial RD, Newcombe method:</span></span></span>
 <span class="r-in"><span><span class="fu">moverci</span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">5</span>, n1 <span class="op">=</span> <span class="fl">56</span>, x2 <span class="op">=</span> <span class="fl">0</span>, n2 <span class="op">=</span> <span class="fl">29</span>, type <span class="op">=</span> <span class="st">"wilson"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            lower        est   upper</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] -0.03813715 0.08928571 0.19256</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            lower        est   upper level x1 n1 x2 n2      p1hat p2hat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] -0.03813715 0.08928571 0.19256  0.95  5 56  0 29 0.08928571     0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $call</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  distrib contrast    level     type      adj       cc       a1       b1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    "bin"     "RD"   "0.95" "wilson"  "FALSE"  "FALSE"    "0.5"    "0.5" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       a2       b2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    "0.5"    "0.5" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

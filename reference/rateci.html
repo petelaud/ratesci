@@ -95,10 +95,12 @@ adjustment.</p></dd>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A list containing, for each method, a matrix containing lower and upper
-confidence limits for each value of x and n. Methods shown depend on the cc
+confidence limits and point estimate of p for each value of x and n.
+Methods shown depend on the cc
 parameter, which specifies whether the continuity adjustment is applied to
 the SCAS and Jeffreys methods. The corresponding 'exact' method is
-Clopper-Pearson/Garwood if cc == TRUE and mid-p if cc == FALSE.</p>
+Clopper-Pearson/Garwood if cc = TRUE and mid-p if cc = FALSE.
+The last list item contains details of the function call.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>

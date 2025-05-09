@@ -262,13 +262,27 @@ location is not achieved (except for the RR contrast).</p>
 above would be obtained using:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/moverci.html">moverci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">5</span>, n1 <span class="op">=</span> <span class="fl">56</span>, x2 <span class="op">=</span> <span class="fl">0</span>, n <span class="op">=</span> <span class="fl">29</span><span class="op">)</span></span>
-<span><span class="co">#&gt;         lower   est upper</span></span>
-<span><span class="co">#&gt; [1,] -0.00973 0.084 0.177</span></span></code></pre></div>
+<span><span class="co">#&gt; $estimates</span></span>
+<span><span class="co">#&gt;         lower   est upper level x1 n1 x2 n2  p1hat   p2hat</span></span>
+<span><span class="co">#&gt; [1,] -0.00973 0.084 0.177  0.95  5 56  0 29 0.0918 0.00775</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $call</span></span>
+<span><span class="co">#&gt;  distrib contrast    level     type      adj       cc       a1       b1 </span></span>
+<span><span class="co">#&gt;    "bin"     "RD"   "0.95"   "jeff"  "FALSE"  "FALSE"    "0.5"    "0.5" </span></span>
+<span><span class="co">#&gt;       a2       b2 </span></span>
+<span><span class="co">#&gt;    "0.5"    "0.5"</span></span></code></pre></div>
 <p>For comparison, Newcombe’s version using Wilson intervals is:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/moverci.html">moverci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">5</span>, n1 <span class="op">=</span> <span class="fl">56</span>, x2 <span class="op">=</span> <span class="fl">0</span>, n <span class="op">=</span> <span class="fl">29</span>, type <span class="op">=</span> <span class="st">"wilson"</span><span class="op">)</span></span>
-<span><span class="co">#&gt;        lower    est upper</span></span>
-<span><span class="co">#&gt; [1,] -0.0381 0.0893 0.193</span></span></code></pre></div>
+<span><span class="co">#&gt; $estimates</span></span>
+<span><span class="co">#&gt;        lower    est upper level x1 n1 x2 n2  p1hat p2hat</span></span>
+<span><span class="co">#&gt; [1,] -0.0381 0.0893 0.193  0.95  5 56  0 29 0.0893     0</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $call</span></span>
+<span><span class="co">#&gt;  distrib contrast    level     type      adj       cc       a1       b1 </span></span>
+<span><span class="co">#&gt;    "bin"     "RD"   "0.95" "wilson"  "FALSE"  "FALSE"    "0.5"    "0.5" </span></span>
+<span><span class="co">#&gt;       a2       b2 </span></span>
+<span><span class="co">#&gt;    "0.5"    "0.5"</span></span></code></pre></div>
 <p>The MOVER approach may be further modified by adapting the Jeffreys
 interval (which uses a non-informative
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mi>e</mi><mi>t</mi><mi>a</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0.5</mn><mo>,</mo><mn>0.5</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Beta(0.5, 0.5)</annotation></semantics></math>
@@ -287,8 +301,15 @@ and
 might be updated as follows:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/moverbci.html">moverbci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">5</span>, n1 <span class="op">=</span> <span class="fl">56</span>, x2 <span class="op">=</span> <span class="fl">0</span>, n <span class="op">=</span> <span class="fl">29</span>, a1 <span class="op">=</span> <span class="fl">1.5</span>, b1 <span class="op">=</span> <span class="fl">9.5</span>, a2 <span class="op">=</span> <span class="fl">0.5</span>, b2 <span class="op">=</span> <span class="fl">10.5</span><span class="op">)</span></span>
-<span><span class="co">#&gt;        lower    est upper</span></span>
-<span><span class="co">#&gt; [1,] 0.00917 0.0872 0.172</span></span></code></pre></div>
+<span><span class="co">#&gt; $estimates</span></span>
+<span><span class="co">#&gt;        lower    est upper level x1 n1 x2 n2 p1hat   p2hat</span></span>
+<span><span class="co">#&gt; [1,] 0.00917 0.0872 0.172  0.95  5 56  0 29 0.093 0.00578</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $call</span></span>
+<span><span class="co">#&gt;  distrib contrast    level     type      adj       cc       a1       b1 </span></span>
+<span><span class="co">#&gt;    "bin"     "RD"   "0.95"   "jeff"  "FALSE"      "0"    "1.5"    "9.5" </span></span>
+<span><span class="co">#&gt;       a2       b2 </span></span>
+<span><span class="co">#&gt;    "0.5"   "10.5"</span></span></code></pre></div>
 <p>WARNING: Note that confidence intervals for ratio measures should be
 equivariant, in the sense that:</p>
 <ol style="list-style-type: decimal">
