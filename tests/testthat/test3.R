@@ -20,13 +20,13 @@ test_that("legacy & new methods match published examples", {
   # Newcombe/'Score'/Square&add
   expect_equal(
     unname(round(moverci(x1 = 5, x2 = 0, n1 = 56, n2 = 29,
-                         type = "wilson")[, c(1, 3)], 4)),
+                         type = "wilson")$estimates[, c(1, 3)], 4)),
     c(-0.0381, 0.1926)
   )
   # MOVER-J
   expect_equal(
     unname(round(moverci(x1 = 5, x2 = 0, n1 = 56, n2 = 29,
-                         type = "jeff")[, c(1, 3)], 3)),
+                         type = "jeff")$estimates[, c(1, 3)], 3)),
     c(-0.010, 0.177)
   )
   # Gart Nam 1990 for skewness corrected RD (unable to replicate other examples)
@@ -60,20 +60,20 @@ test_that("legacy & new methods match published examples", {
   expect_equal(
     unname(round(moverci(x1 = 15, x2 = 41, n1 = 19017, n2 = 28010,
                          distrib = "poi", contrast = "RR",
-                         type = "jeff")[, c(1, 3)], 4)),
+                         type = "jeff")$estimates[, c(1, 3)], 4)),
     c(0.2933, 0.9571)
   )
   expect_equal(
     unname(round(moverci(x1 = 60, x2 = 30, n2 = 54308.8, n1 = 51477.5,
                          level = 0.9, distrib = "poi", contrast = "RR",
-                         type = "jeff")[, c(1, 3)], 4)),
+                         type = "jeff")$estimates[, c(1, 3)], 4)),
     c(1.4668, 3.0586)
   )
   # Zou Donner for RR - they pre-round the Wilson interval to 3dps
   expect_equal(
     unname(round(moverci(x1 = 6, n1 = 22, x2 = 112, n2 = 842,
                          distrib = "bin", contrast = "RR",
-                         type = "wilson")[, c(1, 3)], 4)),
+                         type = "wilson")$estimates[, c(1, 3)], 4)),
     c(0.9735, 3.7295)
   )
 
@@ -81,7 +81,7 @@ test_that("legacy & new methods match published examples", {
   expect_equal(
     unname(round(moverci(x1 = c(24, 29, 7), n1 = c(73, 55, 18),
                          x2 = c(53, 11, 1), n2 = c(65, 11, 18),
-                         contrast = "RR", type = "wilson")[, c(1, 3)], 3)),
+                         contrast = "RR", type = "wilson")$estimates[, c(1, 3)], 3)),
     matrix(c(0.282, 0.563, 0.398, 0.761, 1.277, 40.751), byrow = T, nrow = 3)
   )
   expect_equal(
@@ -178,7 +178,7 @@ test_that("legacy & new methods match published examples", {
       x1 = c(24, 29, 7), n1 = c(73, 55, 18),
       x2 = c(53, 11, 1), n2 = c(65, 11, 18),
       contrast = "OR", type = "wilson"
-    )[, c(1, 3)], 3)),
+    )$estimates[, c(1, 3)], 3)),
     matrix(c(0.050, 0.242, 0, 0.427, 1.395, 75.890), byrow = T, nrow = 3)
   )
   expect_equal(
@@ -506,28 +506,28 @@ test_that("legacy & new methods match published examples", {
       unname(round(moverci(
         x1 = 15, x2 = 41, n1 = 19017, n2 = 28010,
         distrib = "poi", contrast = "RR", type = "wilson"
-      )[, c(1, 3)], 4)),
+      )$estimates[, c(1, 3)], 4)),
       c(0.3007, 0.9714)
     )
     expect_equal(
       unname(round(moverci(
         x1 = 15, x2 = 41, n1 = 19017, n2 = 28010,
         distrib = "poi", contrast = "RR", type = "jeff"
-      )[, c(1, 3)], 4)),
+      )$estimates[, c(1, 3)], 4)),
       c(0.2928, 0.9573)
     )
     expect_equal(
       unname(round(moverci(
         x1 = 60, x2 = 30, n1 = 51477.5, n2 = 54308.8, level = 0.9,
         distrib = "poi", contrast = "RR", type = "wilson"
-      )[, c(1, 3)], 4)),
+      )$estimates[, c(1, 3)], 4)),
       c(1.4611, 3.0424)
     )
     expect_equal(
       unname(round(moverci(
         x1 = 60, x2 = 30, n1 = 51477.5, n2 = 54308.8, level = 0.9,
         distrib = "poi", contrast = "RR", type = "jeff"
-      )[, c(1, 3)], 4)),
+      )$estimates[, c(1, 3)], 4)),
       c(1.4667, 3.0608)
     )
   }
@@ -541,7 +541,7 @@ test_that("legacy & new methods match published examples", {
   )
   # SCAS
   expect_equal(
-    unname(round(scaspci(x = 0, n = 20), 4)[, c(1, 3)]),
+    unname(round(scaspci(x = 0, n = 20)$estimates, 4)[, c(1, 3)]),
     c(0, 0.1297)
   )
   # mid-p
@@ -556,7 +556,7 @@ test_that("legacy & new methods match published examples", {
   )
   # Jeffreys, cf Brown et al. 2001
   expect_equal(
-    unname(round(jeffreysci(x = 0, n = 20), 3)[, c(1, 3)]),
+    unname(round(jeffreysci(x = 0, n = 20)$estimates, 3)[, c(1, 3)]),
     c(0.00, 0.117)
   )
   # Wilson
@@ -566,7 +566,7 @@ test_that("legacy & new methods match published examples", {
   )
   # SCAS
   expect_equal(
-    unname(round(scaspci(x = 1, n = 29), 4)[, c(1, 3)]),
+    unname(round(scaspci(x = 1, n = 29)$estimates, 4)[, c(1, 3)]),
     c(0.0020, 0.1549)
   )
   # mid-p
@@ -581,7 +581,7 @@ test_that("legacy & new methods match published examples", {
   )
   # Jeffreys, cf Brown et al. 2001
   expect_equal(
-    unname(round(jeffreysci(x = 1, n = 29), 3)[, c(1, 3)]),
+    unname(round(jeffreysci(x = 1, n = 29)$estimates, 3)[, c(1, 3)]),
     c(0.004, 0.150)
   )
 
@@ -592,7 +592,7 @@ test_that("legacy & new methods match published examples", {
   )
   # SCAS clustered
   expect_equal(
-    unname(round(scaspci(x = 60, n = 203, xihat = 1.349133), 3)[, c(1, 3)]),
+    unname(round(scaspci(x = 60, n = 203, xihat = 1.349133)$estimates, 3)[, c(1, 3)]),
     c(0.228, 0.372)
   )
 

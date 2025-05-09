@@ -46,7 +46,10 @@
 #' @inheritParams jeffreysci
 #' @importFrom stats pchisq pf pnorm pt qbeta qgamma qnorm qqnorm qt
 #' @importFrom graphics abline lines text
-#' @return A matrix containing the confidence interval for the requested contrast
+#' @return A list containing the following components: \describe{
+#'   \item{estimates}{a matrix containing estimates of the rates in each group
+#'   and of the requested contrast, with its confidence interval}
+#'   \item{call}{details of the function call} }
 #' @examples
 #' # Binomial RD, MOVER-J method:
 #' moverci(x1 = 5, n1 = 56, x2 = 0, n2 = 29)
@@ -161,12 +164,12 @@ moverci <- function(x1,
     j1 <- jeffreysci(x1, n1,
       ai = a1, bi = b1, cc = cc, level = level,
       distrib = distrib, adj = adj
-    )
+    )$estimates[, c(1:3), drop = FALSE]
     if (contrast != "p") {
       j2 <- jeffreysci(x2, n2,
         ai = a2, bi = b2, cc = cc, level = level,
         distrib = distrib, adj = adj
-      )
+      )$estimates[, c(1:3), drop = FALSE]
     } else {
       j2 <- NULL
     }
@@ -276,9 +279,15 @@ moverci <- function(x1,
       lower[(x1 == 0)] <- 0
     }
   }
-  CI <- cbind(lower = lower, est = est, upper = upper)
-  row.names(CI) <- NULL
-  CI
+  estimates <- cbind(lower = lower, est = est, upper = upper, level = level,
+              x1 = x1, n1 = n1, x2 = x2, n2 = n2, p1hat = p1hat, p2hat = p2hat)
+  row.names(estimates) <- NULL
+  call <- c(
+    distrib = distrib, contrast = contrast, level = level, type = type, adj = adj,
+    cc = cc, a1 = a1, b1 = b1, a2 = a2, b2 = b2
+  )
+  outlist <-list(estimates = estimates, call = call)
+  return(outlist)
 }
 
 #' Jeffreys and other approximate Bayesian confidence intervals for a single
@@ -308,6 +317,10 @@ moverci <- function(x1,
 #'   adjustment recommended on p108 of Brown et al. (set to FALSE if informative
 #'   priors are used)
 #' @param ... Other arguments.
+#' @return A list containing the following components: \describe{
+#'   \item{estimates}{a matrix containing estimated rate(s), and corresponding
+#'   approximate Bayesian confidence interval, and the input values x and n}
+#'   \item{call}{details of the function call} }
 #' @importFrom stats qbeta qgamma qnorm
 #' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
 #' @examples
@@ -366,8 +379,13 @@ jeffreysci <- function(x,
     }
     CI_upper <- qgamma(1 - alpha / 2, (x + (ai + cc)), scale = 1 / n)
   }
-  CI <- cbind(lower = CI_lower, est = est, upper = CI_upper)
-  CI
+  CI <- cbind(lower = CI_lower, est = est, upper = CI_upper, x = x, n = n)
+  outlist <- list(estimates = CI)
+  call <- c(
+    distrib = distrib, level = level, cc = cc, adj = adj, ai = ai, bi = bi
+  )
+  outlist <- append(outlist, list(call = call))
+  return(outlist)
 }
 
 #' Approximate Bayesian ("MOVER-B") confidence intervals for
@@ -377,7 +395,7 @@ jeffreysci <- function(x,
 #' intervals for the rate (or risk) difference ("RD") or ratio ("RR") for
 #' independent binomial or Poisson rates, or for odds ratio ("OR", binomial
 #' only). (developed from Newcombe, Donner & Zou, Li et al, and Fagerland &
-#' Newcombe, and generalised as "MOVER-B" in forthcoming publication) including
+#' Newcombe, and generalised as "MOVER-B" in Laud 2017) including
 #' special case "MOVER-J" using non-informative priors with optional continuity
 #' adjustment.  This function is vectorised in x1, x2, n1, and n2.
 #'
@@ -389,6 +407,10 @@ jeffreysci <- function(x,
 #'   each group (default ai = bi = 0.5 for Jeffreys uninformative priors). Gamma
 #'   priors for Poisson rates require only a1, a2.
 #' @inheritParams moverci
+#' @return A list containing the following components: \describe{
+#'   \item{estimates}{a matrix containing estimates of the rates in each group
+#'   and of the requested contrast, with its confidence interval}
+#'   \item{call}{details of the function call} }
 #' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
 #' @export
 moverbci <- function(x1,

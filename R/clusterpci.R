@@ -20,7 +20,8 @@
 #' @return A list containing the following components: \describe{
 #'   \item{estimates}{the estimate and confidence interval for p and
 #'   the specified confidence level, along with estimates of the ICC and
-#'   the variance inflation factor, xihat}}
+#'   the variance inflation factor, xihat}
+#'   \item{call}{details of the function call}}
 #' @examples
 #'   # Data example from Liang 1992, used in Saha 2016 and Short 2020:
 #'   # Note Saha states the ICC estimate is 0.1871 and Short makes it 0.1855.
@@ -69,11 +70,15 @@ clusterpci <- function(x,
   xihat <- sum(n * (1 + (n-1)*phihat)) / totn # Variance inflation factor
 
   if (skew == TRUE) {
-    out <- scaspci(totx, totn, xihat = xihat, level = level, bcf = FALSE, cc = cc)
+    out <- scaspci(totx, totn, xihat = xihat, level = level, bcf = FALSE, cc = cc)$estimates
   } else {
     out <- wilsonci(totx, totn, xihat = xihat, level = level, cc = cc)
   }
   newout <- cbind(out, totx = totx, totn = totn,  xihat = xihat, icc = phihat)
-  return(newout)
+  call <- c(
+    level = paste(level), skew = skew, cc = cc
+  )
+  outlist <- list(estimates = newout, call = call)
+  return(outlist)
 }
 

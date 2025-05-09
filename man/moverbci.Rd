@@ -50,12 +50,18 @@ Appendix S2 (default 0.5 if cc = TRUE). Forced equal to 0.5 if type = "exact".}
 
 \item{...}{Additional arguments.}
 }
+\value{
+A list containing the following components: \describe{
+\item{estimates}{a matrix containing estimates of the rates in each group
+and of the requested contrast, with its confidence interval}
+\item{call}{details of the function call} }
+}
 \description{
 Wrapper function for the MOVER-B methods.  Approximate Bayesian confidence
 intervals for the rate (or risk) difference ("RD") or ratio ("RR") for
 independent binomial or Poisson rates, or for odds ratio ("OR", binomial
 only). (developed from Newcombe, Donner & Zou, Li et al, and Fagerland &
-Newcombe, and generalised as "MOVER-B" in forthcoming publication) including
+Newcombe, and generalised as "MOVER-B" in Laud 2017) including
 special case "MOVER-J" using non-informative priors with optional continuity
 adjustment.  This function is vectorised in x1, x2, n1, and n2.
 }

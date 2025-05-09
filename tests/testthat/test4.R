@@ -129,19 +129,19 @@ for (i in 1:3) {
       cbind(
         RDbin = fround(moverci(x1 = x1, x2 = x2, n1 = n1, n2 = n2,
                                distrib = "bin", contrast = "RD", adj = F,
-                               type = "jeff")[, c(1, 3)], 3),
+                               type = "jeff")$estimates[, c(1, 3)], 3),
         RDpoi = fround(moverci(x1 = x1, x2 = x2, n1 = n1, n2 = n2,
                                distrib = "poi", contrast = "RD", adj = F,
-                               type = "jeff")[, c(1, 3)], 3),
+                               type = "jeff")$estimates[, c(1, 3)], 3),
         RRbin = fround(moverci(x1 = x1, x2 = x2, n1 = n1, n2 = n2,
                                distrib = "bin", contrast = "RR", adj = F,
-                               type = "jeff")[, c(1, 3)], 3),
+                               type = "jeff")$estimates[, c(1, 3)], 3),
         RRpoi = fround(moverci(x1 = x1, x2 = x2, n1 = n1, n2 = n2,
                                distrib = "poi", contrast = "RR", adj = F,
-                               type = "jeff")[, c(1, 3)], 3),
+                               type = "jeff")$estimates[, c(1, 3)], 3),
         OR = fround(moverci(x1 = x1, x2 = x2, n1 = n1, n2 = n2,
                             distrib = "bin", contrast = "OR", adj = F,
-                            type = "jeff")[, c(1, 3)], 3)
+                            type = "jeff")$estimates[, c(1, 3)], 3)
       )
     #                , AN=
     #                  c(
@@ -300,37 +300,37 @@ if (FALSE) {
         c(
           RDbin = fround(moverci(x1 = x1, x2 = x2, n1 = n1, n2 = n2,
                                  distrib = "bin", contrast = "RD",
-                                 cc = 0.5)[, c(1, 3)], 3),
+                                 cc = 0.5)$estimates[, c(1, 3)], 3),
           RDpoi = fround(moverci(x1 = x1, x2 = x2, n1 = n1, n2 = n2,
                                  distrib = "poi", contrast = "RD",
-                                 cc = 0.5)[, c(1, 3)], 3),
+                                 cc = 0.5)$estimates[, c(1, 3)], 3),
           RRbin = fround(moverci(x1 = x1, x2 = x2, n1 = n1, n2 = n2,
                                  distrib = "bin", contrast = "RR",
-                                 cc = 0.5)[, c(1, 3)], 3),
+                                 cc = 0.5)$estimates[, c(1, 3)], 3),
           RRpoi = fround(moverci(x1 = x1, x2 = x2, n1 = n1, n2 = n2,
                                  distrib = "poi", contrast = "RR",
-                                 cc = 0.5)[, c(1, 3)], 3),
+                                 cc = 0.5)$estimates[, c(1, 3)], 3),
           OR = fround(moverci(x1 = x1, x2 = x2, n1 = n1, n2 = n2,
                               distrib = "bin", contrast = "OR",
-                              cc = 0.5)[, c(1, 3)], 3)
+                              cc = 0.5)$estimates[, c(1, 3)], 3)
         ),
       MOVERcc0.25 =
         c(
           RDbin = fround(moverci(x1 = x1, x2 = x2, n1 = n1, n2 = n2,
                                  distrib = "bin", contrast = "RD",
-                                 cc = 0.25)[, c(1, 3)], 3),
+                                 cc = 0.25)$estimates[, c(1, 3)], 3),
           RDpoi = fround(moverci(x1 = x1, x2 = x2, n1 = n1, n2 = n2,
                                  distrib = "poi", contrast = "RD",
-                                 cc = 0.25)[, c(1, 3)], 3),
+                                 cc = 0.25)$estimates[, c(1, 3)], 3),
           RRbin = fround(moverci(x1 = x1, x2 = x2, n1 = n1, n2 = n2,
                                  distrib = "bin", contrast = "RR",
-                                 cc = 0.25)[, c(1, 3)], 3),
+                                 cc = 0.25)$estimates[, c(1, 3)], 3),
           RRpoi = fround(moverci(x1 = x1, x2 = x2, n1 = n1, n2 = n2,
                                  distrib = "poi", contrast = "RR",
-                                 cc = 0.25)[, c(1, 3)], 3),
+                                 cc = 0.25)$estimates[, c(1, 3)], 3),
           OR = fround(moverci(x1 = x1, x2 = x2, n1 = n1, n2 = n2,
                               distrib = "bin", contrast = "OR",
-                              cc = 0.25)[, c(1, 3)], 3)
+                              cc = 0.25)$estimates[, c(1, 3)], 3)
         )
     )
     tabS1 <- list(tabS1, xtable(mytab))

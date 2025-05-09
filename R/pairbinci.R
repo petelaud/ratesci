@@ -323,7 +323,7 @@ pairbinci <- function(x,
       OR_ci <- scaspci(
         x = x12, n = x12 + x21, distrib = "bin",
         level = level, cc = cc, bcf = bcf, bign = N
-      )
+      )$estimates[, c(1:3), drop = FALSE]
       estimates <- OR_ci / (1 - OR_ci)
       scorezero <- scoretheta(
         theta = 0.5, x1 = x12, n1 = x12 + x21, n2 = x[1] + x[4],
@@ -354,7 +354,7 @@ pairbinci <- function(x,
       estimates <- (trans_ci / (1 - trans_ci))
       outlist <- list(xi, estimates = estimates)
     } else if (method == "jeff") {
-      trans_ci <- jeffreysci(x = x12, n = x12 + x21, cc = cc, level = level)
+      trans_ci <- jeffreysci(x = x12, n = x12 + x21, cc = cc, level = level)$estimates[, c(1:3), drop = FALSE]
       estimates <- (trans_ci / (1 - trans_ci))
       outlist <- list(xi, estimates = estimates)
     }
