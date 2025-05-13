@@ -25,7 +25,8 @@ Appendix S2 (default 0.5 for 'conventional' adjustment if cc = TRUE).}
 A list containing the following components: \describe{
 \item{estimates}{the estimate and confidence interval for p and
 the specified confidence level, along with estimates of the ICC and
-the variance inflation factor, xihat}}
+the variance inflation factor, xihat}
+\item{call}{details of the function call}}
 }
 \description{
 Asymptotic Score confidence intervals for a proportion estimated from

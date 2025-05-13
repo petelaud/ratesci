@@ -72,7 +72,10 @@ adjustment for Jeffreys intervals recommended on p108 of Brown et al.
 \item{...}{Additional arguments.}
 }
 \value{
-A matrix containing the confidence interval for the requested contrast
+A list containing the following components: \describe{
+\item{estimates}{a matrix containing estimates of the rates in each group
+and of the requested contrast, with its confidence interval}
+\item{call}{details of the function call} }
 }
 \description{
 Confidence intervals applying the MOVER method ("Method of Variance Estimates

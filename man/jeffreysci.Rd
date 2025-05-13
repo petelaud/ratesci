@@ -43,6 +43,12 @@ priors are used)}
 
 \item{...}{Other arguments.}
 }
+\value{
+A list containing the following components: \describe{
+\item{estimates}{a matrix containing estimated rate(s), and corresponding
+approximate Bayesian confidence interval, and the input values x and n}
+\item{call}{details of the function call} }
+}
 \description{
 Generalised approximate Bayesian confidence intervals based on a Beta (for
 binomial rates) or Gamma (for Poisson rates) conjugate priors. Encompassing

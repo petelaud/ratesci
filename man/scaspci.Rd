@@ -47,6 +47,12 @@ Appendix S2 (default 0.5 for 'conventional' adjustment if cc = TRUE).}
 
 \item{...}{Other arguments.}
 }
+\value{
+A list containing the following components: \describe{
+\item{estimates}{a matrix containing estimated rate(s), the
+SCAS confidence interval, and the input values x and n}
+\item{call}{details of the function call} }
+}
 \description{
 This function is vectorised in x, n.
 }

@@ -3,8 +3,8 @@
 \docType{data}
 \name{crash}
 \alias{crash}
-\title{Data from systematic review of the effect on mortality of
-corticosteroids in traumatic brain injury}
+\title{Corticosteroids in acute traumatic brain injury: updated systematic review of randomised
+controlled trials (reported with MRC CRASH trial results, Roberts et al. 2001)}
 \format{
 A data frame with five variables:
 \describe{

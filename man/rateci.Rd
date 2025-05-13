@@ -23,10 +23,12 @@ adjustment.}
 }
 \value{
 A list containing, for each method, a matrix containing lower and upper
-confidence limits for each value of x and n. Methods shown depend on the cc
+confidence limits and point estimate of p for each value of x and n.
+Methods shown depend on the cc
 parameter, which specifies whether the continuity adjustment is applied to
 the SCAS and Jeffreys methods. The corresponding 'exact' method is
-Clopper-Pearson/Garwood if cc == TRUE and mid-p if cc == FALSE.
+Clopper-Pearson/Garwood if cc = TRUE and mid-p if cc = FALSE.
+The last list item contains details of the function call.
 }
 \description{
 Confidence intervals for the single binomial or Poisson rate. Including

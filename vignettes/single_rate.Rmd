@@ -21,13 +21,13 @@ options(digits = 3)
 library(ratesci)
 ```
 
-## Introduction to `rateci()` and related functions for estimation of a single binomial or Poisson rate
+## Estimation of a single binomial or Poisson rate
 
-To calculate a confidence interval for a single binomial proportion ($\hat p = x/n$), the Skewness-Corrected Asymptotic Score (SCAS) method is recommended, as one that succeeds, on average, at containing the true proportion p with the appropriate nominal probability (e.g. 95%), and has evenly distributed tail probabilities [@laud2017, Appendix S3.5]. It is a modified version of the Wilson score method. The plot below illustrates the interval non-coverage probability (i.e. 1 minus the actual probability that the interval contains the true value of p) achieved by SCAS compared to some other popular methods, using moving average smoothing (solid lines):
+To calculate a confidence interval for a single binomial proportion ($\hat p = x/n$), the skewness-corrected asymptotic score (SCAS) method is recommended, as one that succeeds, on average, at containing the true proportion p with the appropriate nominal probability (e.g. 95%), and has evenly distributed tail probabilities [@laud2017, Appendix S3.5]. It is a modified version of the Wilson score method. The plot below illustrates the one-sided and two-sided non-coverage probability (i.e. 1 minus the actual probability that the interval contains the true value of p) achieved by SCAS compared to some other popular methods, using moving average smoothing (solid lines):
 
 ![](images/singlepropLNCP50_small.jpg)
 
-Similar patterns of coverage are seen for the corresponding methods for a Poisson rate [@laud2017]. (Analysis for Poisson rates is obtained using `distrib = "poi"`, with the input `n` representing the exposure time.)
+Similar patterns of coverage are seen for the corresponding methods for a Poisson rate [@laud2017]. (Analysis for Poisson rates, such as exposure-adjusted adverse event rates) is obtained using `distrib = "poi"`, with the input `n` representing the exposure time.)
 
 For a worked example, the SCAS 95% interval for the binomial proportion 1/29 is obtained with `scaspci()`, using closed-form calculation [@laud2017, Appendix A.4]:
 
@@ -35,7 +35,13 @@ For a worked example, the SCAS 95% interval for the binomial proportion 1/29 is 
 scaspci(x = 1, n = 29)
 ```
 
-`rateci()` also provides two other methods (Jeffreys and mid-p) with similar coverage properties [@laud2018]:
+If you prefer the slightly slower iterative calculation, or want to perform a corresponding [hypothesis test](https://petelaud.github.io/ratesci/articles/tests.html), you could use:
+
+```{r}
+scoreci(x1 = 1, n1 = 29, contrast = "p")$estimates
+```
+
+`rateci()` also provides two other confidence interval methods (Jeffreys and mid-p) with similar coverage properties [@laud2018]:
 
 ```{r}
 rateci(x = 1, n = 29)

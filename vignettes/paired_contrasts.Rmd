@@ -21,9 +21,9 @@ options(digits = 3)
 library(ratesci)
 ```
 
-## Introduction to pairbinci() and related functions for computing confidence intervals and tests for comparisons of paired binomial proportions
+## Confidence intervals and tests for paired comparisons of binomial proportions
 
-Data structure:
+The input data for paired proportions takes a different structure, compared with the data for independent proportions:
 
 |  |  |  |  |  |
 |---------------|---------------|---------------|---------------|---------------|
@@ -35,7 +35,7 @@ Data structure:
 
 ### SCAS and other asymptotic score methods for RD and RR
 
-To calculate a confidence interval (CI) for a paired risk difference ($\hat \theta_{RD} = \hat p_1 - \hat p_2$, where $\hat p_1 = (a+b)/N$, $\hat p_2 = (a+c)/N$), or relative risk ($\hat \theta_{RR} = \hat p_1 / \hat p_2$), the Skewness-Corrected Asymptotic Score (SCAS) method is recommended, as one that succeeds, on average, at containing the true parameter $\theta$ with the appropriate nominal probability (e.g. 95%), and has evenly distributed tail probabilities [Laud2025, under review]. It is a modified version of the asymptotic score methods by [@tango1998] for RD, and [@nam2002] and [@tang2003] for RR, incorporating both a skewness correction and a correction in the variance estimate.
+To calculate a confidence interval (CI) for a paired risk difference ($\hat \theta_{RD} = \hat p_1 - \hat p_2$, where $\hat p_1 = (a+b)/N$, $\hat p_2 = (a+c)/N$), or relative risk ($\hat \theta_{RR} = \hat p_1 / \hat p_2$), the skewness-corrected asymptotic score (SCAS) method is recommended, as one that succeeds, on average, at containing the true parameter $\theta$ with the appropriate nominal probability (e.g. 95%), and has evenly distributed tail probabilities (Laud 2025, under review). It is a modified version of the asymptotic score methods by [@tango1998] for RD, and [@nam2002] and [@tang2003] for RR, incorporating both a skewness correction and a correction in the variance estimate.
 
 The plots below illustrate the one-sided and two-sided interval coverage probabilities achieved by SCAS compared to some other popular methods[^1], when $N=40$ and the correlation coefficient is 0.25. A selection of coverage probability plots for other sample sizes and correlations can be found in the "plots" folder of the [cpplot GitHub repository](https://github.com/petelaud/cpplot/tree/master/plots).
 
@@ -84,7 +84,7 @@ pairbinci(x = c(1, 1, 7, 12), contrast = "RD", method = "MOVER_newc", moverbase 
 
 ### Conditional odds ratio
 
-Confidence intervals for paired odds ratio are obtained conditional on the number of discordant pairs, by transforming a confidence interval for the proportion $b / (b+c)$. Transformed SCAS (with or without a variance bias correction, to ensure consistency with the above SCAS hypothesis tests for RD and RR) or transformed mid-p intervals are recommended [Laud2025, under review].
+Confidence intervals for paired odds ratio are obtained conditional on the number of discordant pairs, by transforming a confidence interval for the proportion $b / (b+c)$. Transformed SCAS (with or without a variance bias correction, to ensure consistency with the above SCAS hypothesis tests for RD and RR) or transformed mid-p intervals are recommended (Laud 2025, under review).
 
 ```{r}
 out <- pairbinci(x = c(1, 1, 7, 12), contrast = "OR")

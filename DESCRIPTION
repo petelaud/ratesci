@@ -16,8 +16,8 @@ Description: Computes confidence intervals for binomial or Poisson rates and
     from Miettinen & Nurminen (1985) <doi:10.1002/sim.4780040211> 
     and Gart & Nam (1988) <doi:10.2307/2531848>, and in 
     Laud (2025, under review) for paired proportions. 
-    The same score produces hypothesis tests
-    analogous to the test for binomial RD and RR by Farrington & Manning
+    The same score produces hypothesis tests that are improved versions
+    of the test for binomial RD and RR by Farrington & Manning
     (1990) <doi:10.1002/sim.4780091208>, or the McNemar test for paired
     data. The package also includes MOVER methods (Method Of Variance
     Estimates Recovery) for all contrasts, derived from the Newcombe

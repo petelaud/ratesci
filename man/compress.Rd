@@ -3,8 +3,8 @@
 \docType{data}
 \name{compress}
 \alias{compress}
-\title{Data from systematic review of the effect of graduated compression
-stockings for prevention of DVT}
+\title{Systematic review of the effect of graduated compression stockings for prevention of DVT
+(Roderick et al. 2005)}
 \format{
 A data frame with five variables:
 \describe{

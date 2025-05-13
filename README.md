@@ -20,13 +20,14 @@ ratesci is an [R](https://www.r-project.org) package to compute
 confidence intervals and tests for:
 
 - a single binomial proportion, or Poisson rate (‘p’)
-- binomial risk difference or Poisson rate difference (‘RD’)
-- binomial relative risk or Poisson rate ratio (‘RR’)
-- binomial odds ratio (‘OR’)
+- a difference between binomial proportions or Poisson rates (risk
+  difference or rate difference, ‘RD’)
+- a ratio of proportions or rates (relative risk or rate ratio, ‘RR’)
+- a binomial odds ratio (‘OR’)
 - stratified calculations for any of the above
 - paired binomial contrasts RD and RR
 - paired odds ratio using the conditional model
-- binomial proportion from clustered data
+- a binomial proportion from clustered data
 
 A number of different methods are offered, but in each case, the
 recommended default is based on asymptotic score methodology (from
@@ -34,17 +35,17 @@ recommended default is based on asymptotic score methodology (from
 1985](#ref-miettinen1985)) and ([Tango 1998](#ref-tango1998a))), but
 including skewness corrections following the principles of ([Gart and
 Nam 1988](#ref-gart1988)). The resulting family of skewness-corrected
-asymptotic score (SCAS) methods ([Laud 2017](#ref-laud2017)), \[and
-Laud2025, under review\] ensures equal-tailed coverage (or central
-location), in other words for a nominal 95% confidence interval, the
-one-sided non-coverage probability is (on average) close to 2.5% on each
-side. Stratified calculations are also catered for (e.g. meta-analysis,
+asymptotic score (SCAS) methods ([Laud 2017](#ref-laud2017)), (and Laud
+2025, under review) ensures equal-tailed coverage (or central location),
+in other words for a nominal 95% confidence interval, the one-sided
+non-coverage probability is (on average) close to 2.5% on each side.
+Stratified calculations are also catered for (e.g. meta-analysis,
 including random effects). Most of the above list is covered by
-`scoreci()`, with the exception of clustered proportions (which uses
-`clusterpci()`) and paired contrasts (`pairbinci()`). Options are
-included for omitting the skewness correction to obtain legacy methods
-such as Miettinen-Nurminen, Wilson and Tango intervals, or chi-squared,
-CMH, Farrington-Manning or McNemar tests.
+`scoreci()`, with the exception of clustered proportions (which are
+handled by `clusterpci()`) and paired contrasts (`pairbinci()`). Options
+are included for omitting the skewness correction to obtain legacy
+methods such as Miettinen-Nurminen, Wilson and Tango intervals, or
+chi-squared, CMH, Farrington-Manning or McNemar tests.
 
 - See the vignettes for further details and examples of the SCAS and
   other intervals for the [single
@@ -56,16 +57,16 @@ CMH, Farrington-Manning or McNemar tests.
   and [paired
   contrasts](https://petelaud.github.io/ratesci/articles/paired_contrasts.html).
 
-In each case, the asymptotic score methods provide a corresponding
-hypothesis test against any specified null parameter value, for a
-superiority test or a non-inferiority test, with guaranteed coherence
-between the test and interval. The superiority test is a variant of (and
-in many cases identical to) a chi-squared test or CMH test, and the
-non-inferiority test is analogous to a Farrington-Manning test, all with
-improved control of Type 1 error achieved by the bias and skewness
-corrections. For paired proportions, the superiority test is a variant
-of the McNemar test, incorporating an ‘N-1’ adjustment which appears to
-avoid any violations of the nominal significance level.
+In each case, the asymptotic score methods provide a matching hypothesis
+test against any specified null parameter value, for a superiority test
+or a non-inferiority test, with guaranteed coherence between the test
+and interval. The superiority test is a variant of (and in many cases
+identical to) a chi-squared test or CMH test, and the non-inferiority
+test is analogous to a Farrington-Manning test, all with improved
+control of type I error achieved by the bias and skewness corrections.
+For paired proportions, the superiority test is a variant of the McNemar
+test, incorporating an ‘N-1’ adjustment which appears to avoid any
+violations of the nominal significance level.
 
 - See the [hypothesis
   tests](https://petelaud.github.io/ratesci/articles/tests.html)
@@ -74,21 +75,21 @@ avoid any violations of the nominal significance level.
 
 Another family of methods offered by the package, with reasonable
 performance for large (single-stratum) sample sizes (but without a
-corresponding hypothesis test), uses the Method of Variance Estimates
+matching hypothesis test), uses the Method of Variance Estimates
 Recovery (MOVER), also known as Square-and-Add ([Newcombe 2012, chap.
 7](#ref-newcombe2012)). These methods combine intervals calculated
 separately for each proportion. The recommended default gives the
 MOVER-J method, using Jeffreys equal-tailed intervals instead of the
 Wilson method preferred by Newcombe. This improves on traditional
 approximate methods with respect to one-sided and two-sided coverage,
-particularly in the case of RR, but does not match the performance of
+particularly for the RR contrast, but does not match the performance of
 the SCAS method. As the Jeffreys interval is based on a Bayesian
 conjugate prior, the MOVER approach allows the option to incorporate
 prior beliefs about the rates in each group - by default, the
-non-informative Jeffreys $Beta(0.5, 0.5)$ priors are used. MOVER
-intervals are available in `moverci()` for all contrasts of independent
-binomial and Poisson rates, and in `pairbinci()` for the paired binomial
-contrasts.
+non-informative Jeffreys $Beta(0.5, 0.5)$ priors are used (or
+corresponding Gamma priors for Poisson rates). MOVER intervals are
+available in `moverci()` for all contrasts of independent binomial and
+Poisson rates, and in `pairbinci()` for the paired binomial contrasts.
 
 For those wishing to achieve strictly conservative coverage, continuity
 adjustments are provided as approximations to “exact” methods, with the
@@ -162,10 +163,10 @@ both would produce the Tango asymptotic score interval for
 ``` r
 pairbinci(x = c(1, 1, 7, 12))
 #> $data
-#>    x2i
-#> x1i  0  1
-#>   0 12  7
-#>   1  1  1
+#>          Test_2
+#> Test_1    Success Failure
+#>   Success       1       1
+#>   Failure       7      12
 #> 
 #> $estimates
 #>        lower     est    upper level   p1hat p2hat  p1mle  p2mle phi_hat phi_c
@@ -209,6 +210,8 @@ For single binomial or Poisson rates:
   including SCAS, Jeffreys, midp and Clopper-Pearson/Garwood.
 - `clusterpci()`: Saha’s Wilson-based interval for a single proportion
   based on clustered data, with a skewness-corrected version.
+
+## References
 
 <div id="refs" class="references csl-bib-body hanging-indent"
 entry-spacing="0">

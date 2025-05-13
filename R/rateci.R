@@ -23,6 +23,10 @@
 #'   adjustment. Numeric value is taken as the gamma parameter in Laud 2017,
 #'   Appendix S2 (default 0.5 for 'conventional' adjustment if cc = TRUE).
 #' @param ... Other arguments.
+#' @return A list containing the following components: \describe{
+#'   \item{estimates}{a matrix containing estimated rate(s), the
+#'   SCAS confidence interval, and the input values x and n}
+#'   \item{call}{details of the function call} }
 #' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
 #' @references
 #'   Laud PJ. Equal-tailed confidence intervals for comparison of
@@ -95,9 +99,17 @@ scaspci <- function(x,
     } else {
       #      Rmpfr::asNumeric((-Bu + sqrt(Rmpfr::pmax(0, Bu^2 - 4 * A * Cu))) / (2 * A))
       ((-Bu + sqrt(pmax(0, Bu^2 - 4 * A * Cu))) / (2 * A))
-    }
+    },
+    x = x,
+    n = n
   ))
-  return(CI)
+  outlist <- list(estimates = CI)
+  call <- c(
+    distrib = distrib, level = level, bcf = bcf,
+    cc = cc
+  )
+  outlist <- append(outlist, list(call = call))
+  return(outlist)
 }
 
 #' Selected confidence intervals for the single binomial or Poisson rate.
@@ -117,10 +129,12 @@ scaspci <- function(x,
 #' @param cc Number or logical (default FALSE) specifying continuity
 #'   adjustment.
 #' @return A list containing, for each method, a matrix containing lower and upper
-#'   confidence limits for each value of x and n. Methods shown depend on the cc
+#'   confidence limits and point estimate of p for each value of x and n.
+#'   Methods shown depend on the cc
 #'   parameter, which specifies whether the continuity adjustment is applied to
 #'   the SCAS and Jeffreys methods. The corresponding 'exact' method is
-#'   Clopper-Pearson/Garwood if cc == TRUE and mid-p if cc == FALSE.
+#'   Clopper-Pearson/Garwood if cc = TRUE and mid-p if cc = FALSE.
+#'   The last list item contains details of the function call.
 #' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
 #' @references
 #'   Laud PJ. Equal-tailed confidence intervals for comparison of
@@ -153,7 +167,7 @@ rateci <- function(x,
     print("Negative inputs!")
     stop()
   }
-  if (n == 0) {
+  if (any(n == 0)) {
     print("Sample size is zero!")
     stop()
   }
@@ -164,7 +178,7 @@ rateci <- function(x,
     distrib = distrib,
     level = level,
     cc = cc
-  )[, c(1:3), drop = FALSE]
+  )$estimates[, c(1:5), drop = FALSE]
   ci_jeff <- jeffreysci(
     x = x,
     n = n,
@@ -174,7 +188,7 @@ rateci <- function(x,
     level = level,
     distrib = distrib,
     adj = TRUE
-  )[, c(1:3), drop = FALSE]
+  )$estimates[, c(1:5), drop = FALSE]
   ci_exact <- exactci(
     x = x,
     n = n,
@@ -183,17 +197,22 @@ rateci <- function(x,
     distrib = distrib
   )
   if (cc == 0) {
-    return(list(scas = ci_scas, jeff = ci_jeff, midp = ci_exact))
+    outlist <- list(scas = ci_scas, jeff = ci_jeff, midp = ci_exact)
   } else if (cc == 0.5) {
     if (distrib == "bin") {
-      return(list(scas_cc = ci_scas, jeff_cc = ci_jeff, cp = ci_exact))
+      outlist <- list(scas_cc = ci_scas, jeff_cc = ci_jeff, cp = ci_exact)
     } else {
-      return(list(scas_cc = ci_scas, jeff_cc = ci_jeff, garwood = ci_exact))
+      outlist <- list(scas_cc = ci_scas, jeff_cc = ci_jeff, garwood = ci_exact)
     }
   } else {
-    return(list(scas_cc = ci_scas, jeff_cc = ci_jeff))
+    outlist <- list(scas_cc = ci_scas, jeff_cc = ci_jeff)
     # exact method not applicable if using a compromise value of cc
   }
+  call <- c(
+    distrib = distrib, level = level, cc = cc
+  )
+  outlist <- append(outlist, list(call = call))
+  return(outlist)
 }
 
 #' Clopper-Pearson/Garwood and mid-p intervals for single binomial or
@@ -241,8 +260,9 @@ exactci <- function(x,
     ftn = uproot, precis = precis, uplow = "up", contrast = "p",
     distrib = distrib
   )
-  return(cbind(lower = lower, est = est, upper = upper) /
-           ifelse(distrib == "poi", n, 1))
+  outdata <- cbind(lower = lower, est = est, upper = upper) /
+    ifelse(distrib == "poi", n, 1)
+  return(cbind(outdata, x = x, n = n))
 }
 
 
