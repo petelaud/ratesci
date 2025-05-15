@@ -301,12 +301,19 @@ pairbinci <- function(x,
   N <- sum(x)
   p1hat <- x1 / N
   p2hat <- x2 / N
-  phi_hat <- phi_c <- (x[1] * x[4] - x[2] * x[3]) / sqrt(x1 * (N - x1) * x2 * (N - x2))
+  phi_hat <- (x[1] * x[4] - x[2] * x[3]) / sqrt(x1 * (N - x1) * x2 * (N - x2))
+  #if (is.na(phi_hat) | is.infinite(phi_hat)) {
+  if (is.na(phi_hat) ) {
+      phi_hat <- 0
+  }
+  phi_c <- phi_hat
   if (x[1] * x[4] - x[2] * x[3] > 0) {
     phi_c <- (max(x[1] * x[4] - x[2] * x[3] - N / 2, 0) /
       sqrt(x1 * (N - x1) * x2 * (N - x2)))
   }
   psi_hat <- x[1] * x[4] / (x[2] * x[3])
+  if (is.na(psi_hat)) psi_hat <- 0
+
 
   if (contrast == "OR") {
     # special case for OR, use conditional method based on transforming the
@@ -393,6 +400,11 @@ pairbinci <- function(x,
         theta = MLE, x = x, contrast = contrast, cc = cc,
         skew = skew, bcf = bcf
       )
+      # fix some extreme cases with zero counts
+      if (contrast %in% c("RR")) {
+        upper[x2 == 0] <- Inf
+        MLE[x2 == 0 & skew == FALSE] <- Inf
+      }
       estimates <- cbind(
         lower = lower, est = MLE, upper = upper,
         level = level, p1hat = p1hat, p2hat = p2hat,
@@ -470,7 +482,7 @@ pairbinci <- function(x,
   }
   outlist <- list(data = xi, estimates = round(estimates, precis))
   # MOVER methods don't produce p-values
-  if (!(method %in% c("MOVER", "MOVER_newc", "midp", "wilson", "jeff"))) {
+  if (!(method %in% c("MOVER", "MOVER_newc", "midp", "wilson", "jeff", "BP"))) {
     outlist <- append(outlist, list(pval = pval))
   }
   # Set unused arguments to null to omit them from call
