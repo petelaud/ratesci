@@ -17,6 +17,9 @@
 #' @param cc Number or logical (default FALSE) specifying (amount of) continuity
 #'   adjustment. Numeric value is taken as the gamma parameter in Laud 2017,
 #'   Appendix S2 (default 0.5 for 'conventional' adjustment if cc = TRUE).
+#' @param theta0 Number to be used in a one-sided significance test (e.g.
+#'   non-inferiority margin). 1-sided p-value will be <0.025 iff 2-sided 95\% CI
+#'   excludes theta0.
 #' @return A list containing the following components: \describe{
 #'   \item{estimates}{the estimate and confidence interval for p and
 #'   the specified confidence level, along with estimates of the ICC and
@@ -56,7 +59,8 @@ clusterpci <- function(x,
                        n,
                        level = 0.95,
                        skew = TRUE,
-                       cc = FALSE) {
+                       cc = FALSE,
+                       theta0 = 0.5) {
 
   totx <- sum(x)
 
@@ -74,11 +78,23 @@ clusterpci <- function(x,
   } else {
     out <- wilsonci(totx, totn, xihat = xihat, level = level, cc = cc)
   }
+
+  scoreth0 <- scoretheta(
+    theta = theta0, x1 = totx, x2 = NULL, n1 = totn, n2 = NULL,
+    contrast = "p", bcf = FALSE, xihat = xihat,
+    distrib = "bin", skew = skew, cc = cc, level = level
+  )$score
+  pval_left <- pnorm(scoreth0)
+  pval_right <- 1 - pval_left
+  pval <- cbind(
+    theta0 = theta0, scorenull = scoreth0, pval_left, pval_right
+  )
+
   newout <- cbind(out, totx = totx, totn = totn,  xihat = xihat, icc = phihat)
   call <- c(
     level = paste(level), skew = skew, cc = cc
   )
-  outlist <- list(estimates = newout, call = call)
+  outlist <- list(estimates = newout, pval = pval, call = call)
   return(outlist)
 }
 

@@ -1,7 +1,7 @@
 # ratesci (development version)
 
 ## New features
-* New function `clusterpci()` for estimation of a single binomial proportion 
+* New function `clusterpci()` for CI and test for a single binomial proportion 
   from clustered data.
 * Example datasets are now included.
 * Improved documentation with pkgdown website & vignettes.

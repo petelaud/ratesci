@@ -1407,6 +1407,7 @@ scoretheta <- function(theta,
                        bcf = TRUE,
                        skew = TRUE,
                        simpleskew = FALSE,
+                       xihat = 1,
                        level = 0.95,
                        or_bias = TRUE,
                        rr_tang = TRUE,
@@ -1558,7 +1559,7 @@ scoretheta <- function(theta,
     Stheta <- p1hat - theta
     Stheta[n1 == 0] <- 0
     if (distrib == "bin") {
-      V <- (pmax(0, (theta * (1 - theta) / n1))) * lambda
+      V <- (pmax(0, (theta * (1 - theta) / n1))) * lambda * xihat
       mu3 <- (theta * (1 - theta) * (1 - 2 * theta) / (n1^2))
     } else if (distrib == "poi") {
       V <- theta / n1
