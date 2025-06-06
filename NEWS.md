@@ -23,7 +23,8 @@
   intermediate correction of the user's choosing). `cctype` is deprecated.
 * Default conditional odds ratio method changed to SCASp (with closed-form 
   calculation).
-* Output object now includes estimates of p1, p2, phi and psi.
+* Output object now includes estimates of p1, p2, phi (correlation) 
+  and psi (odds ratio used by Fagerland et al).
 * Output object now includes function call.
 
 ### In `scaspci()`:

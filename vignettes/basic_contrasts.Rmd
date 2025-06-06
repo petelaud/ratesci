@@ -135,9 +135,9 @@ Unfortunately, the MOVER method for contrast = "OR", as described in [@fagerland
 
 ## Technical details
 
-[@miettinen1985] took the concept of the Wilson score interval for a single proportion and applied it to all contrasts of two proportions (not just RD) and Poisson rates. The procedure involves finding, at any possible value of the contrast parameter $\theta$, the maximum likelihood estimates of the two proportions, restricted to the given value of $\theta$. The resulting estimates are then included in the score statistic, and the confidence interval found by an iterative root-finding algorithm. Miettinen & Nurminen's statistic was defined to follow a $\chi^2_1$ distribution, but the SCAS formula uses an equivalent statistic with a N(0, 1) distribution, to facilitate one-sided tests.
+[@miettinen1985] took the concept of the Wilson score interval for a single proportion and applied it to all contrasts of two proportions (not just RD) and Poisson rates. The procedure involves finding, at any possible value of the contrast parameter $\theta$, the maximum likelihood estimates of the two proportions, restricted to the given value of $\theta$. The resulting estimates are then included in the score statistic, and the confidence interval found by an iterative root-finding algorithm. Miettinen and Nurminen's statistic was defined to follow a $\chi^2_1$ distribution, but the SCAS formula uses an equivalent statistic with a N(0, 1) distribution, to facilitate one-sided tests.
 
-Gart and Nam, in a series of papers between 1985 and 1990, proposed similar confidence interval methods that included a skewness correction in the score statistic (and also a bias correction for OR). Their formulae omitted the 'N-1' bias correction used by Miettinen & Nurminen.
+Gart and Nam, in a series of papers between 1985 and 1990, proposed similar confidence interval methods that included a skewness correction in the score statistic (and also a bias correction for OR). Their formulae omitted the 'N-1' bias correction used by Miettinen and Nurminen.
 
 Farrington and Manning published an article on non-inferiority tests for RD and RR, using the same restricted maximum likelihood methodology as Miettinen and Nurminen (but omitting the 'N-1' correction).
 

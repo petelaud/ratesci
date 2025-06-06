@@ -44,8 +44,9 @@ including random effects). Most of the above list is covered by
 `scoreci()`, with the exception of clustered proportions (which are
 handled by `clusterpci()`) and paired contrasts (`pairbinci()`). Options
 are included for omitting the skewness correction to obtain legacy
-methods such as Miettinen-Nurminen, Wilson and Tango intervals, or
-chi-squared, CMH, Farrington-Manning or McNemar tests.
+methods such as stratified or unstratified Miettinen-Nurminen and Wilson
+intervals, Tango intervals for paired data, or chi-squared, CMH,
+Farrington-Manning or McNemar tests.
 
 - See the vignettes for further details and examples of the SCAS and
   other intervals for the [single

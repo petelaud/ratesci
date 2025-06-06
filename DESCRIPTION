@@ -13,13 +13,13 @@ Description: Computes confidence intervals for binomial or Poisson rates and
     and estimation of a proportion from clustered binomial data.  
     Includes skewness-corrected asymptotic score ('SCAS') methods, 
     which have been developed in Laud (2017) <doi:10.1002/pst.1813> 
-    from Miettinen & Nurminen (1985) <doi:10.1002/sim.4780040211> 
-    and Gart & Nam (1988) <doi:10.2307/2531848>, and in 
-    Laud (2025, under review) for paired proportions. 
-    The same score produces hypothesis tests that are improved versions
-    of the test for binomial RD and RR by Farrington & Manning
-    (1990) <doi:10.1002/sim.4780091208>, or the McNemar test for paired
-    data. The package also includes MOVER methods (Method Of Variance
+    from Miettinen and Nurminen (1985) <doi:10.1002/sim.4780040211> 
+    and Gart and Nam (1988) <doi:10.2307/2531848>, and in 
+    Laud (2025, under review) for paired proportions. The same score produces 
+    hypothesis tests that are improved versions of the non-inferiority test 
+    for binomial RD and RR by Farrington and Manning (1990) 
+    <doi:10.1002/sim.4780091208>, or a generalisation of the McNemar test for 
+    paired data. The package also includes MOVER methods (Method Of Variance
     Estimates Recovery) for all contrasts, derived from the Newcombe
     method but with options to use equal-tailed intervals in place of the
     Wilson score method, and generalised for Bayesian applications
