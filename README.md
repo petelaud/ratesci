@@ -58,16 +58,17 @@ Farrington-Manning or McNemar tests.
   and [paired
   contrasts](https://petelaud.github.io/ratesci/articles/paired_contrasts.html).
 
-In each case, the asymptotic score methods provide a matching hypothesis
-test against any specified null parameter value, for a superiority test
-or a non-inferiority test, with guaranteed coherence between the test
-and interval. The superiority test is a variant of (and in many cases
-identical to) a chi-squared test or CMH test, and the non-inferiority
-test is analogous to a Farrington-Manning test, all with improved
-control of type I error achieved by the bias and skewness corrections.
-For paired proportions, the superiority test is a variant of the McNemar
-test, incorporating an ‘N-1’ adjustment which appears to avoid any
-violations of the nominal significance level.
+In each case, the asymptotic score methods provide a matching 2-sided
+test for association, and also a 1-sided hypothesis test against any
+specified null parameter value for a non-inferiority test. Both tests
+are guaranteed to be coherent with the interval. The test for
+association is a variant of (and in many cases identical to) a
+chi-squared test or CMH test, and the non-inferiority test is analogous
+to a Farrington-Manning test, all with improved control of type I error
+achieved by the bias and skewness corrections. For paired proportions,
+the test for association is a variant of the McNemar test, incorporating
+an ‘N-1’ adjustment which appears to avoid any violations of the nominal
+significance level.
 
 - See the [hypothesis
   tests](https://petelaud.github.io/ratesci/articles/tests.html)
