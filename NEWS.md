@@ -38,6 +38,7 @@
 * (Note adjusted sample size for bias correction can be achieved by including a 
    non-zero value for n2.)
 * ORbias, RRtang, and MNtol arguments renamed as or_bias, rr_tang and mn_tol.
+* Implementation of `precis` argument is improved for RR and OR contrasts.
 
 ## Bug fixes
 ### In `exactci()`:

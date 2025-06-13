@@ -128,6 +128,9 @@ pak::pak("petelaud/ratesci")
 This builds the package from source based on the current version on
 [GitHub](https://github.com/petelaud/ratesci)
 
+A SAS macro implementation of `scoreci()` is also available at
+<https://github.com/petelaud/ratesci-sas>
+
 ## Example
 
 Below is a basic example which shows you how to request a confidence

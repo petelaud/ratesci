@@ -24,23 +24,26 @@ bisect <- function(ftn,
   hi <- rep(1, nstrat)
   lo <- rep(-1, nstrat)
   dp <- 2
+  dpt <- 1E12
+  lastmidt <- 1E12
   niter <- 1
-  while (niter <= max.iter && any(dp > tiny | is.na(hi))) {
+  while (niter <= max.iter && any(dpt > tiny | dp > tiny | is.na(hi))) {
+#  while (niter <= max.iter && any(dp > tiny | is.na(hi))) {
     dp <- 0.5 * dp
-    mid <- pmax(-1, pmin(1, round((hi + lo) / 2, 10)))
+    mid <- pmax(-1, pmin(1, round((hi + lo) / 2, 12)))
     # rounding avoids machine precision problem with, e.g. 7/10-6/10
     if (contrast == "RD" && distrib == "bin") {
-      scor <- ftn(mid)
+      midt <- mid
     } else if (contrast == "RD" && distrib == "poi") {
-      scor <- ftn(round(tan(pi * mid / 2), 10))
-      # avoid machine precision producing values outside [-1, 1]
+      midt <- round(tan(pi * mid / 2), 12)
     } else if (contrast %in% c("RR", "OR") ||
                (contrast == "p" && distrib == "poi")) {
-      scor <- ftn(round(tan(pi * (mid + 1) / 4), 10))
-      # avoid machine precision producing values outside [-1, 1]
+      midt <- round(tan(pi * (mid + 1) / 4), 12)
     } else if (contrast == "p" && distrib == "bin") {
-      scor <- ftn((mid + 1) / 2)
+      midt <- (mid + 1) / 2
     }
+    scor <- ftn(midt)
+    dpt <- abs(midt - lastmidt)
     check <- (scor <= 0) | is.na(scor)
     # ??scor=NA only happens when |p1-p2|=1 and |theta|=1 for RD
     # (in which case hi==lo anyway), or if p1=p2=0
@@ -48,6 +51,7 @@ bisect <- function(ftn,
     hi[check] <- mid[check]
     lo[!check] <- mid[!check]
     niter <- niter + 1
+    lastmidt <- midt
   }
   if (uplow == "low") {
     best <- lo
@@ -173,3 +177,5 @@ epcs.test <- function(data.cells,
   )
   return(output.list)
 }
+
+

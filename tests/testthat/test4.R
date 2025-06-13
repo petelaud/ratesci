@@ -97,6 +97,7 @@ for (i in 1:3) {
                             stratified = F, theta0 = 0.5, skew = T,
                             or_bias = F,
                             contrast = "OR")$estimates[, c(1, 3)], 3)
+
 # Corrigendum version
 #        OR <- fround(scoreci(x1 = x1, x2 = x2, n1 = n1, n2 = n2,
 #                             stratified = F, theta0 = 0.5, skew = T,
@@ -162,9 +163,10 @@ tab2
 # load(file="tests/testthat/Table2.Rdata")
 load(file = "Table2.Rdata")
 # tab2==tab2check
+# Precision of function for OR has improved since publication, so just check to 4 sig figs
 test_that("no change to published examples", {
   expect_equal(
-    unname(tab2), unname(tab2check)
+    unname(signif(tab2, 4)), unname(signif(tab2check, 4))
   )
 })
 
