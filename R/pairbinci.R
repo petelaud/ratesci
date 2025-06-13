@@ -583,9 +583,11 @@ scorepair <- function(theta,
     # replaces previous 'delrocco' and 'constant' cctype options
       corr <- cc * (1 + theta) * sign(Stheta) / N
 
-    q12 <- (q21 + (theta - 1) * (1 - x[4] / N)) / theta
+    q12num <- (q21 + (theta - 1) * (1 - x[4] / N))
+    q12 <- ifelse(q12num < 1E-10, 0, q12num / theta)
     # Below from Tang 2003
-    q11 <- (1 - x[4] / N - (1 + theta) * q21) / theta
+    q11num <- (1 - x[4] / N - (1 + theta) * q21)
+    q11 <- ifelse(q11num < 1E-10, 0, q11num / theta)
     q22 <- 1 - q11 - q12 - q21
     p2d <- q21 + q11
     #    p1d <- q12 + q11
@@ -604,7 +606,7 @@ scorepair <- function(theta,
       3 * ((-theta)^2) * (q11 * (1 - p2d)^2 + q12 * p2d^2 - p1d * p2d * (1 - p2d))) / (N^2)
   }
   scterm <- mu3 / (6 * V^(3 / 2))
-  scterm[abs(mu3) < 1E-10] <- 0 # Avoids issues with e.g. x = c(1, 3, 0, 6)
+  scterm[abs(mu3) < 1E-10 | abs(V) < 1E-10] <- 0 # Avoids issues with e.g. x = c(1, 3, 0, 6)
   score1 <- ifelse(Stheta == 0, 0, (Stheta - corr) / sqrt(V))
   A <- scterm
   B <- 1
