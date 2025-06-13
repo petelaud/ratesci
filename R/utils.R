@@ -30,15 +30,15 @@ bisect <- function(ftn,
   while (niter <= max.iter && any(dpt > tiny | is.na(hi))) {
 #  while (niter <= max.iter && any(dp > tiny | is.na(hi))) {
     dp <- 0.5 * dp
-    mid <- pmax(-1, pmin(1, round((hi + lo) / 2, 20)))
+    mid <- pmax(-1, pmin(1, round((hi + lo) / 2, 15)))
     # rounding avoids machine precision problem with, e.g. 7/10-6/10
     if (contrast == "RD" && distrib == "bin") {
       midt <- mid
     } else if (contrast == "RD" && distrib == "poi") {
-      midt <- round(tan(pi * mid / 2), 20)
+      midt <- round(tan(pi * mid / 2), 15)
     } else if (contrast %in% c("RR", "OR") ||
                (contrast == "p" && distrib == "poi")) {
-      midt <- round(tan(pi * (mid + 1) / 4), 20)
+      midt <- round(tan(pi * (mid + 1) / 4), 15)
     } else if (contrast == "p" && distrib == "bin") {
       midt <- (mid + 1) / 2
     }
