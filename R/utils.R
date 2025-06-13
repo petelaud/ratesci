@@ -27,18 +27,18 @@ bisect <- function(ftn,
   dpt <- 1E12
   lastmidt <- 1E12
   niter <- 1
-  while (niter <= max.iter && any(dpt > tiny | dp > tiny | is.na(hi))) {
+  while (niter <= max.iter && any(dpt > tiny | is.na(hi))) {
 #  while (niter <= max.iter && any(dp > tiny | is.na(hi))) {
     dp <- 0.5 * dp
-    mid <- pmax(-1, pmin(1, round((hi + lo) / 2, 12)))
+    mid <- pmax(-1, pmin(1, round((hi + lo) / 2, 20)))
     # rounding avoids machine precision problem with, e.g. 7/10-6/10
     if (contrast == "RD" && distrib == "bin") {
       midt <- mid
     } else if (contrast == "RD" && distrib == "poi") {
-      midt <- round(tan(pi * mid / 2), 12)
+      midt <- round(tan(pi * mid / 2), 20)
     } else if (contrast %in% c("RR", "OR") ||
                (contrast == "p" && distrib == "poi")) {
-      midt <- round(tan(pi * (mid + 1) / 4), 12)
+      midt <- round(tan(pi * (mid + 1) / 4), 20)
     } else if (contrast == "p" && distrib == "bin") {
       midt <- (mid + 1) / 2
     }
