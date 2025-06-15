@@ -12,7 +12,7 @@
 #'   \item{event.control}{Number of deaths in control group}
 #'   \item{n.control}{Number of patients in control group}
 #'  }
-#' @source <http://www.ncbi.nlm.nih.gov/pubmed/15474134>
+#' @source <https://pubmed.ncbi.nlm.nih.gov/15474134>
 "crash"
 
 #' Meta-analysis of the effect of cisapride for treatment of non-ulcer dyspepsia
@@ -29,7 +29,7 @@
 #'   \item{event.plac}{Number of events (successes) in placebo group}
 #'   \item{n.plac}{Number of patients in placebo group}
 #'  }
-#' @source <https://onlinelibrary.wiley.com/doi/10.1002/sim.1009>
+#' @source \doi{10.1002/sim.1009}
 "cisapride"
 
 #' Systematic review of the effect of graduated compression stockings for prevention of DVT
@@ -46,5 +46,5 @@
 #'   \item{event.control}{Number of events (DVTs) in control group}
 #'   \item{n.control}{Number of patients in control group}
 #'  }
-#' @source <https://www.journalslibrary.nihr.ac.uk/hta/HTA9490>
+#' @source \doi{10.3310/hta9490}
 "compress"

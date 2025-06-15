@@ -16,7 +16,7 @@ A data frame with five variables:
 }
 }
 \source{
-\url{https://onlinelibrary.wiley.com/doi/10.1002/sim.1009}
+\doi{10.1002/sim.1009}
 }
 \usage{
 cisapride

@@ -16,7 +16,7 @@ A data frame with five variables:
 }
 }
 \source{
-\url{https://www.journalslibrary.nihr.ac.uk/hta/HTA9490}
+\doi{10.3310/hta9490}
 }
 \usage{
 compress
