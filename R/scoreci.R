@@ -103,14 +103,20 @@
 #'   stratified = "TRUE": \cr
 #'   "IVS" = Inverse Variance of Score (see Laud 2017 for details); \cr
 #'   "INV" = Inverse Variance (bcf omitted, default for contrast = "OR"); \cr
-#'   "MH" = Mantel-Haenszel (default for contrast = "RD" or "RR");
+#'   "MH" = Mantel-Haenszel (n1j * n2j) / (n1j + n2j)
+#'          (default for contrast = "RD" or "RR" giving CMH test);
 #'          (= sample size for contrast = "p"); \cr
 #'   "MN" = Miettinen-Nurminen weights.
 #'          (similar to MH for contrast = "RD" or "RR",
 #'          similar to INV for contrast = "OR"); \cr
+#'   "Tang" = (n1j * n2j) / (n1j + n2j) / (1 - pj) from Tang 2020,
+#'            for an optimal test of RD if RRs are constant across strata.
+#'            (Included only for validation purposes. In general, such a test
+#'            would more logically use contrast = "RR" with weighting = "INV")
 #'   For CI consistent with a CMH test, select skew = FALSE, random = FALSE,
 #'   and use default MH weighting for RD/RR and INV for OR. \cr
 #'   Weighting = 'MN' also matches the CMH test. \cr
+#'   For the Radhakrishna optimal (most powerful) test, select INV weighting.
 #'   Note: Alternative user-specified weighting may also be applied, via the
 #'         'wt' argument.
 #' @param wt Numeric vector containing (optional) user-specified weights.
@@ -412,6 +418,12 @@ scoreci <- function(x1,
       rr_tang <- FALSE
     } else if (is.null(rr_tang)) {
       rr_tang <- TRUE
+    }
+    if (stratified == TRUE && (tolower(weighting) %in% c("tang"))) {
+      if (!(contrast == "RD")) {
+          print("Tang weights only applicable to the RD contrast")
+          stop()
+      }
     }
   } else {
     rr_tang <- FALSE
@@ -1594,6 +1606,9 @@ scoretheta <- function(theta,
         # MH weights for RD, applied across other comparative parameters too
         # (without theoretical justification for OR)
         if (contrast == "p") wt <- n1
+      } else if (tolower(weighting) == "tang" && contrast %in% c("RD")) {
+        wt <- n1 * n2 / ((n1 + n2) * (1 - (p1d + p2d)/2))
+        # Weights for optimal test of RD when effect is consistent on RR scale, from Tang 2020
       } else if (weighting == "IVS") {
         # IVS: inverse variance weights updated wih V_tilde
         if (all(V == 0) || all(V == Inf | is.na(V))) {

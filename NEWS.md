@@ -39,6 +39,8 @@
    non-zero value for n2.)
 * ORbias, RRtang, and MNtol arguments renamed as or_bias, rr_tang and mn_tol.
 * Implementation of `precis` argument is improved for RR and OR contrasts.
+* For contrast = "RD", weighting = "Tang" provides optimal test if RR is 
+  constant across strata.
 
 ## Bug fixes
 ### In `exactci()`:

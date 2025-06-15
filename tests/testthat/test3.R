@@ -56,6 +56,69 @@ test_that("legacy & new methods match published examples", {
                          rr_tang = FALSE, bcf = F, skew = T)$estimates[, c(1, 3)], 3)),
     matrix(c(0.806, 6.148, 0.822, 4.954), byrow = T, nrow = 2)
   )
+  # Gart Nam 1988 for stratified skewness corrected RR
+  # - Gart's version is equivalent to INV weighting
+  expect_equal(
+    unname(round(scoreci(x1 = c(4, 2, 4, 1), n1 = c(16, 16, 18, 15),
+                         x2 = c(5, 3, 10, 3), n2 = c(79, 87, 90, 82),
+                         contrast = "RR", bcf = F, skew = F, cc = F,
+                         stratified = T, weighting = "INV")$estimates[, c(1, 3)], 2)),
+    c(1.35, 5.03)
+  )
+  expect_equal(
+    unname(round(scoreci(x1 = c(4, 2, 4, 1), n1 = c(16, 16, 18, 15),
+                         x2 = c(5, 3, 10, 3), n2 = c(79, 87, 90, 82),
+                         contrast = "RR", bcf = F, skew = T, cc = F,
+                         stratified = T, weighting = "INV")$estimates[, c(1, 3)], 2)),
+    c(1.31, 5.08)
+  )
+  # Homogeneity test
+  expect_equal(
+    unname(round(scoreci(x1 = c(4, 2, 4, 1), n1 = c(16, 16, 18, 15),
+                         x2 = c(5, 3, 10, 3), n2 = c(79, 87, 90, 82),
+                         contrast = "RR", bcf = F, skew = F, cc = F,
+                         stratified = T, weighting = "INV")$Qtest[c(1, 3)], 2)),
+    c(0.95, 0.81)
+  )
+
+  # Optimal score tests (without skewness corrections)
+  # Efficient score test if OR is constant (weighting = 'MH' for RD, 'INV' for OR)
+  # == CMH test
+  expect_equal(
+    unname(round(scoreci(x1 = c(4, 2, 4, 1), n1 = c(16, 16, 18, 15),
+                x2 = c(5, 3, 10, 3), n2 = c(79, 87, 90, 82),
+                contrast = "RD", bcf = T, skew = F, cc = F,
+                stratified = T, weighting = "MH")$pval[, 1:2], 4)),
+    unname(round(scoreci(x1 = c(4, 2, 4, 1), n1 = c(16, 16, 18, 15),
+                x2 = c(5, 3, 10, 3), n2 = c(79, 87, 90, 82),
+                contrast = "OR", bcf = T, skew = F, cc = F,
+                stratified = T, weighting = "INV")$pval[, 1:2], 4))
+  )
+  # Efficient score test if RD is constant (weighting = 'INV' for RD)
+  expect_equal(
+    unname(round(scoreci(x1 = c(4, 2, 4, 1), n1 = c(16, 16, 18, 15),
+          x2 = c(5, 3, 10, 3), n2 = c(79, 87, 90, 82),
+          contrast = "RD", bcf = T, skew = F, cc = F,
+          stratified = T, weighting = "INV")$pval[, 1:2], 4)),
+    unname(round(scoreci(x1 = c(4, 2, 4, 1), n1 = c(16, 16, 18, 15),
+                         x2 = c(5, 3, 10, 3), n2 = c(79, 87, 90, 82),
+                         contrast = "OR", bcf = T, skew = F, cc = F,
+                         stratified = T, weighting = "MH")$pval[, 1:2], 4))
+  )
+  # Efficient score test if RR is constant (weighting = 'Tang' for RD, 'INV' for RR)
+  # 'Tang' weights for this test of RD are (n1*n0/(n1+n0))/(1-p)
+  expect_equal(
+    unname(round(scoreci(x1 = c(4, 2, 4, 1), n1 = c(16, 16, 18, 15),
+          x2 = c(5, 3, 10, 3), n2 = c(79, 87, 90, 82),
+          contrast = "RD", bcf = T, skew = F, cc = F,
+          stratified = T, weighting = "Tang")$pval[, 1:2], 4)),
+    unname(round(scoreci(x1 = c(4, 2, 4, 1), n1 = c(16, 16, 18, 15),
+          x2 = c(5, 3, 10, 3), n2 = c(79, 87, 90, 82),
+          contrast = "RR", rr_tang = T, bcf = T, skew = F, cc = F,
+          stratified = T, weighting = "INV")$pval[, 1:2], 4))
+  )
+
+
   # Li Tang Wong for Poisson RR (don't quite match!)
   expect_equal(
     unname(round(moverci(x1 = 15, x2 = 41, n1 = 19017, n2 = 28010,
@@ -132,7 +195,21 @@ test_that("legacy & new methods match published examples", {
     c(0.4124, 0.9461)
   )
 
-
+  # Reproduce Mehrotra & Railkar p-values
+  if (FALSE) {
+  scoreci(
+    x2 = c(26, 25, 11), n2 = c(453, 174, 70),
+    x1 = c(21, 11, 8), n1 = c(464, 165, 69),
+    contrast = "RD", skew = FALSE, bcf = FALSE,
+    stratified = TRUE, weighting = "INV"
+  )$pval # Not far off
+  scoreci(
+    x2 = c(26, 25, 11), n2 = c(453, 174, 70),
+    x1 = c(21, 11, 8), n1 = c(464, 165, 69),
+    contrast = "RD", skew = FALSE, bcf = FALSE,
+    stratified = TRUE, weighting = "MH"
+  )$pval # Bang on
+  }
 
   # Check CMH test equivalences stated by Tang
   x1 <- c(21, 11, 8)

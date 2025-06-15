@@ -100,14 +100,20 @@ been fully evaluated.}
 stratified = "TRUE": \cr
 "IVS" = Inverse Variance of Score (see Laud 2017 for details); \cr
 "INV" = Inverse Variance (bcf omitted, default for contrast = "OR"); \cr
-"MH" = Mantel-Haenszel (default for contrast = "RD" or "RR");
+"MH" = Mantel-Haenszel (n1j * n2j) / (n1j + n2j)
+(default for contrast = "RD" or "RR" giving CMH test);
 (= sample size for contrast = "p"); \cr
 "MN" = Miettinen-Nurminen weights.
 (similar to MH for contrast = "RD" or "RR",
 similar to INV for contrast = "OR"); \cr
+"Tang" = (n1j * n2j) / (n1j + n2j) / (1 - pj) from Tang 2020,
+for an optimal test of RD if RRs are constant across strata.
+(Included only for validation purposes. In general, such a test
+would more logically use contrast = "RR" with weighting = "INV")
 For CI consistent with a CMH test, select skew = FALSE, random = FALSE,
 and use default MH weighting for RD/RR and INV for OR. \cr
 Weighting = 'MN' also matches the CMH test. \cr
+For the Radhakrishna optimal (most powerful) test, select INV weighting.
 Note: Alternative user-specified weighting may also be applied, via the
 'wt' argument.}
 

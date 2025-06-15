@@ -79,9 +79,9 @@ reprove$pval[, 3:6]
 
 ### Stratified test
 
-For stratified datasets (2 x 2 x k tables), the "conventional" test for association is the Cochran-Mantel-Haenszel (CMH) test. Unlike in the single stratum case, the CMH test already incorporates the 'N-1' variance bias correction.
+For stratified datasets (2 x 2 x k tables), an often-used "conventional" test for association is the Cochran-Mantel-Haenszel (CMH) test. Unlike in the single stratum case, the CMH test already incorporates the 'N-1' variance bias correction.
 
-`scoreci()` permits a range of different weighting schemes for stratified analysis - when Mantel-Haenszel weighting is used for `contrast = "RD"` or `contrast = "RR"` or IVS weighting for `contrast = "OR"`, the stratified SCAS two-sided test is a skewness-corrected version of the CMH test. As for the unstratified case, if group sizes are equal, the skewness correction term is zero.
+`scoreci()` permits a range of different weighting schemes for stratified analysis. When Mantel-Haenszel weighting is used for `contrast = "RD"` or `contrast = "RR"`, or IVS weighting for `contrast = "OR"`, then the stratified SCAS two-sided test is a skewness-corrected version of the CMH test. As for the unstratified case, if group sizes are equal, the skewness correction term is zero.
 
 The one-sided test is analogous to a stratified version of an 'N-1' adjusted and skewness-corrected Farrington-Manning test. This is achieved by reframing Miettinen-Nurminen's score statistic as a normally distributed z-statistic instead of a chi-squared statistic.
 
@@ -105,6 +105,10 @@ reprove_cmh <- mantelhaen.test(data_array, correct = FALSE)
 reprove_cmh$p.value
 
 ```
+
+### Weights for an optimal test
+
+The CMH test (obtained as a test for RD or RR with MH weights, or a test for OR with INV weights) has been shown to be optimal if the treatment effect is constant over strata on the odds ratio scale (see [@radhakrishna1965]). If instead the treatment effect is constant on the difference scale, then INV weighting for RD would be optimal. If the treatment effect is constant across strata on the relative risk scale, then the optimal test is produced by a test for RR = 1 with `weighting = "INV"`, and `rr_tang = TRUE`, which applies the modified score function in [@tang2020]. Naturally, one does not know in advance which one of these assumptions might hold. Mehrotra and Railkar proposed 'Minimum Risk' weighting as a compromise between INV and MH weighting, which may be implemented in a future update.
 
 ### Tests for paired binomial proportions
 
