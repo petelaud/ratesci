@@ -243,14 +243,14 @@ established comparator treatment, with a non-inferiority margin of
 <div class="section level3">
 <h3 id="stratified-test">Stratified test<a class="anchor" aria-label="anchor" href="#stratified-test"></a>
 </h3>
-<p>For stratified datasets (2 x 2 x k tables), the “conventional” test
-for association is the Cochran-Mantel-Haenszel (CMH) test. Unlike in the
-single stratum case, the CMH test already incorporates the ‘N-1’
-variance bias correction.</p>
+<p>For stratified datasets (2 x 2 x k tables), an often-used
+“conventional” test for association is the Cochran-Mantel-Haenszel (CMH)
+test. Unlike in the single stratum case, the CMH test already
+incorporates the ‘N-1’ variance bias correction.</p>
 <p><code><a href="../reference/scoreci.html">scoreci()</a></code> permits a range of different weighting schemes
-for stratified analysis - when Mantel-Haenszel weighting is used for
-<code>contrast = "RD"</code> or <code>contrast = "RR"</code> or IVS
-weighting for <code>contrast = "OR"</code>, the stratified SCAS
+for stratified analysis. When Mantel-Haenszel weighting is used for
+<code>contrast = "RD"</code> or <code>contrast = "RR"</code>, or IVS
+weighting for <code>contrast = "OR"</code>, then the stratified SCAS
 two-sided test is a skewness-corrected version of the CMH test. As for
 the unstratified case, if group sizes are equal, the skewness correction
 term is zero.</p>
@@ -280,6 +280,23 @@ follows:</p>
 <span><span class="va">reprove_cmh</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/mantelhaen.test.html" class="external-link">mantelhaen.test</a></span><span class="op">(</span><span class="va">data_array</span>, correct <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">reprove_cmh</span><span class="op">$</span><span class="va">p.value</span></span>
 <span><span class="co">#&gt; [1] 0.206</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="weights-for-an-optimal-test">Weights for an optimal test<a class="anchor" aria-label="anchor" href="#weights-for-an-optimal-test"></a>
+</h3>
+<p>The CMH test (obtained as a test for RD or RR with MH weights, or a
+test for OR with INV weights) has been shown to be optimal if the
+treatment effect is constant over strata on the odds ratio scale (see
+<span class="citation">(<a href="#ref-radhakrishna1965">Radhakrishna
+1965</a>)</span>). If instead the treatment effect is constant on the
+difference scale, then INV weighting for RD would be optimal. If the
+treatment effect is constant across strata on the relative risk scale,
+then the optimal test is produced by a test for RR = 1 with
+<code>weighting = "INV"</code>, and <code>rr_tang = TRUE</code>, which
+applies the modified score function in <span class="citation">(<a href="#ref-tang2020">Tang 2020</a>)</span>. Naturally, one does not know
+in advance which one of these assumptions might hold. Mehrotra and
+Railkar proposed ‘Minimum Risk’ weighting as a compromise between INV
+and MH weighting, which may be implemented in a future update.</p>
 </div>
 <div class="section level3">
 <h3 id="tests-for-paired-binomial-proportions">Tests for paired binomial proportions<a class="anchor" aria-label="anchor" href="#tests-for-paired-binomial-proportions"></a>
@@ -368,6 +385,15 @@ Using a Graphical Approach and Moving Averages.”</span>
 Nam, Jun-mo. 1997. <span>“Establishing Equivalence of Two Treatments and
 Sample Size Requirements in Matched-Pairs Design.”</span>
 <em>Biometrics</em> 53 (4): 1422. <a href="https://doi.org/10.2307/2533508" class="external-link">https://doi.org/10.2307/2533508</a>.
+</div>
+<div id="ref-radhakrishna1965" class="csl-entry">
+Radhakrishna, S. 1965. <span>“Combination of Results from Several 2 x 2
+Contingency Tables.”</span> <em>Biometrics</em> 21 (1): 86. <a href="https://doi.org/10.2307/2528354" class="external-link">https://doi.org/10.2307/2528354</a>.
+</div>
+<div id="ref-tang2020" class="csl-entry">
+Tang, Yongqiang. 2020. <span>“Score Confidence Intervals and Sample
+Sizes for Stratified Comparisons of Binomial Proportions.”</span>
+<em>Statistics in Medicine</em> 39 (24): 3427–57. <a href="https://doi.org/10.1002/sim.8674" class="external-link">https://doi.org/10.1002/sim.8674</a>.
 </div>
 <div id="ref-torres2018" class="csl-entry">
 Torres, Antoni, Nanshan Zhong, Jan Pachl, Jean-François Timsit, Marin
