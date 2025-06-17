@@ -141,8 +141,11 @@ d is the number of pairs with no event under both conditions <br>
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
 <dd><p>Character string indicating the confidence interval method
 to be used. The following are available for contrast = "RD" or "RR": <br>
-"Score" = iterative Tango (for RD) / Tang (for RR) asymptotic score (default); <br>
-"Score_closed" = closed form solution for Tango/Tang interval; <br>
+"Score" = (default) asymptotic score class of methods including Tango
+(for RD) / Tang (for RR), by iterative calculations, with
+optional skewness correction; <br>
+"Score_closed" = closed form solution for Tango/Tang intervals
+(without skewness correction); <br>
 "MOVER" = hybrid MOVER method (as per "method 8" in Newcombe, but with
 a choice of input methods - see moverbase); <br>
 "MOVER_newc" = hybrid MOVER methods with correction to correlation

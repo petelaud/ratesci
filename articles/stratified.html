@@ -89,12 +89,12 @@ binomial or Poisson rates<a class="anchor" aria-label="anchor" href="#confidence
 </h2>
 <p>Stratified analysis might be required for combining results from
 multiple studies in a meta-analysis, or adjusting clinical trial results
-for factors used in a stratified randomisation. Associated tests for
-common effects over strata (homogeneity) can also be useful for
-examining subgroup effects in a clinical trial. The illustration below
-uses data from a meta-analysis of 9 trials studying the effectiveness of
-graduated compression stockings for prevention of postoperative deep
-vein thrombosis (DVT) <span class="citation">(from <a href="#ref-roderick2005">Roderick et al. 2005</a>)</span>:</p>
+for factors used in a stratified randomisation. Associated tests against
+a null hypothesis of common effects over strata (homogeneity) can also
+be useful for examining subgroup effects in a clinical trial. The
+illustration below uses data from a meta-analysis of 9 trials studying
+the effectiveness of graduated compression stockings for prevention of
+postoperative deep vein thrombosis (DVT) <span class="citation">(from <a href="#ref-roderick2005">Roderick et al. 2005</a>)</span>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">compress</span>, package <span class="op">=</span> <span class="st">"ratesci"</span><span class="op">)</span></span>
 <span><span class="va">strat_rd</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="va">compress</span><span class="op">$</span><span class="va">event.gcs</span>, </span>
@@ -138,10 +138,13 @@ strat_rr$Qtest
 #>     9.96e-01
 ```
 -->
-<p>The stratdata object provides estimates and intervals for each
-stratum, along with details of stratum weights and contributions to the
-Q-statistic (these may be further examined using the
-<code>hetplot</code> argument).</p>
+<p>It is important to note that heterogeneity tests often have low
+power, so it is recommended to inspect the stratum-specific estimates as
+well<span class="citation">(<a href="#ref-greenland1982">Greenland
+1982</a>)</span>. The stratdata object provides estimates and intervals
+for each stratum, along with details of stratum weights and
+contributions to the Q-statistic (these may be further examined using
+the <code>hetplot</code> argument).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">strat_rd</span><span class="op">$</span><span class="va">stratdata</span></span>
 <span><span class="co">#&gt;       x1j n1j x2j n2j p1hatj p2hatj wt_fixed wtpct_fixed wtpct_rand   theta_j</span></span>
@@ -207,6 +210,11 @@ Spiegelhalter 2008</a>)</span> can be obtained using
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
 <div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-greenland1982" class="csl-entry">
+Greenland, Sander. 1982. <span>“Interpretation and Estimation of Summary
+Ratios Under Heterogeneity.”</span> <em>Statistics in Medicine</em> 1
+(3): 217–27. <a href="https://doi.org/10.1002/sim.4780010304" class="external-link">https://doi.org/10.1002/sim.4780010304</a>.
+</div>
 <div id="ref-higgins2008" class="csl-entry">
 Higgins, Julian P. T., Simon G. Thompson, and David J. Spiegelhalter.
 2008. <span>“A Re-Evaluation of Random-Effects Meta-Analysis.”</span>
