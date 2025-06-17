@@ -2,8 +2,8 @@
 % Please edit documentation in R/scoreci.R
 \name{scoreci}
 \alias{scoreci}
-\title{Score confidence intervals for comparisons of independent binomial or Poisson
-rates.}
+\title{Score confidence intervals and tests for a single binomial or Poisson rate,
+or for comparisons of independent rates, with or without stratification.}
 \usage{
 scoreci(
   x1,
@@ -87,8 +87,8 @@ Experimental for distrib = "poi".}
 
 \item{RRtang}{(deprecated: argument renamed to rr_tang)}
 
-\item{bcf}{Logical (default TRUE) indicating whether to apply bias correction
-in the score denominator. Applicable to distrib = "bin" only. \cr
+\item{bcf}{Logical (default TRUE) indicating whether to apply 'N-1' variance
+correction in the score denominator. Applicable to distrib = "bin" only. \cr
 NOTE: bcf = FALSE option is really only included for legacy validation
 against previous published methods (i.e. Gart & Nam, Mee, or standard
 Chi-squared test) and for contrast = "p".}
@@ -232,7 +232,7 @@ ratio ("RR") for independent binomial or Poisson rates, or for odds ratio
 from Gart & Nam, and generalised as "SCAS" in Laud 2017) and continuity
 adjustment (for strictly conservative coverage).
 Also includes score intervals for a single binomial proportion or Poisson
-rate. Based on the Wilson score interval, when corrected for skewness,
+rate ("p"). Based on the Wilson score interval, when corrected for skewness,
 coverage is almost identical to the mid-p method, or Clopper-Pearson
 when also continuity-adjusted.
 Hypothesis tests for superiority or non-inferiority are provided using the

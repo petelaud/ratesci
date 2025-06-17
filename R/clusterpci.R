@@ -1,4 +1,4 @@
-#' Confidence intervals for a single binomial rate from clustered data.
+#' Score confidence intervals for a single binomial rate from clustered data.
 #'
 #' Asymptotic Score confidence intervals for a proportion estimated from
 #' a clustered sample, as decribed by Saha et al. 2016.

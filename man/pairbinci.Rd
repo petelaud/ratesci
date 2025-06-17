@@ -43,8 +43,11 @@ d is the number of pairs with no event under both conditions \cr
 
 \item{method}{Character string indicating the confidence interval method
 to be used. The following are available for contrast = "RD" or "RR": \cr
-"Score" = iterative Tango (for RD) / Tang (for RR) asymptotic score (default); \cr
-"Score_closed" = closed form solution for Tango/Tang interval; \cr
+"Score" = (default) asymptotic score class of methods including Tango
+(for RD) / Tang (for RR), by iterative calculations, with
+optional skewness correction; \cr
+"Score_closed" = closed form solution for Tango/Tang intervals
+(without skewness correction); \cr
 "MOVER" = hybrid MOVER method (as per "method 8" in Newcombe, but with
 a choice of input methods - see moverbase); \cr
 "MOVER_newc" = hybrid MOVER methods with correction to correlation

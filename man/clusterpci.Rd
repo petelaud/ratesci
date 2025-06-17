@@ -2,7 +2,7 @@
 % Please edit documentation in R/clusterpci.R
 \name{clusterpci}
 \alias{clusterpci}
-\title{Confidence intervals for a single binomial rate from clustered data.}
+\title{Score confidence intervals for a single binomial rate from clustered data.}
 \usage{
 clusterpci(x, n, level = 0.95, skew = TRUE, cc = FALSE, theta0 = 0.5)
 }

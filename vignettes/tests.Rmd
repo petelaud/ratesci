@@ -81,7 +81,7 @@ reprove$pval[, 3:6]
 
 For stratified datasets (2 x 2 x k tables), an often-used "conventional" test for association is the Cochran-Mantel-Haenszel (CMH) test. Unlike in the single stratum case, the CMH test already incorporates the 'N-1' variance bias correction.
 
-`scoreci()` permits a range of different weighting schemes for stratified analysis. When Mantel-Haenszel weighting is used for `contrast = "RD"` or `contrast = "RR"`, or IVS weighting for `contrast = "OR"`, then the stratified SCAS two-sided test is a skewness-corrected version of the CMH test. As for the unstratified case, if group sizes are equal, the skewness correction term is zero.
+`scoreci()` permits a range of different weighting schemes for stratified analysis. When Mantel-Haenszel weighting is used for `contrast = "RD"` or `contrast = "RR"`, or INV weighting is used for `contrast = "OR"`, or if MN weighting is used for any of the three binomial contrasts, then the test for association produced by `scoreci()` is the CMH test. If INV weighting is used, then Radhakrishna's optimal contrast-specific test is produced (see below). If the skewness correction is applied, then the tests are skewness-corrected versions of those tests, and if group sizes are equal in all strata, the skewness correction term is zero.
 
 The one-sided test is analogous to a stratified version of an 'N-1' adjusted and skewness-corrected Farrington-Manning test. This is achieved by reframing Miettinen-Nurminen's score statistic as a normally distributed z-statistic instead of a chi-squared statistic.
 
@@ -108,7 +108,12 @@ reprove_cmh$p.value
 
 ### Weights for an optimal test
 
-The CMH test (obtained as a test for RD or RR with MH weights, or a test for OR with INV weights) has been shown to be optimal if the treatment effect is constant over strata on the odds ratio scale (see [@radhakrishna1965]). If instead the treatment effect is constant on the difference scale, then INV weighting for RD would be optimal. If the treatment effect is constant across strata on the relative risk scale, then the optimal test is produced by a test for RR = 1 with `weighting = "INV"`, and `rr_tang = TRUE`, which applies the modified score function in [@tang2020]. Naturally, one does not know in advance which one of these assumptions might hold. Mehrotra and Railkar proposed 'Minimum Risk' weighting as a compromise between INV and MH weighting, which may be implemented in a future update.
+The CMH test (obtained as a test for RD or RR with MH weights, or a test for OR with INV weights) has been shown to be optimal if the treatment effect is constant over strata on the odds ratio scale (see [@radhakrishna1965]). If instead the treatment effect is constant on the difference scale, then INV weighting for RD is optimal. If the treatment effect is constant across strata on the relative risk scale, then the optimal test is produced by a test for RR = 1 with `weighting = "INV"`, and `rr_tang = TRUE`, which applies the modified score function in [@tang2020]. Naturally, one does not know in advance which one of these assumptions might hold. Mehrotra and Railkar proposed 'Minimum Risk' weighting as a compromise between INV and MH weighting, which may be implemented in a future update.
+
+<!--
+[Needs further thought, and possibly a separate vignette]
+Note that the type I error for a test of association is not affected by the choice of weights, since the null hypothesis is that the rates are equal in all strata, which would imply equal null values on all contrast scales. The same is not the case for a non-inferiority test - for example, a null hypothesis of RD = -0.1 in all strata would not necessarily translate to homogeneity on the odds ratio scale, if there is variability in the control group rates across strata. Therefore the choice of weights might affect the performance of the test. The skewness correction is also particularly relevant for 
+-->
 
 ### Tests for paired binomial proportions
 

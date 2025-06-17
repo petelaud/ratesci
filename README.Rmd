@@ -24,7 +24,7 @@ options(digits = 4)
 
 <!-- badges: end -->
 
-ratesci is an [R](https://www.r-project.org) package to compute confidence intervals and tests for:
+ratesci is an [R](https://www.r-project.org) package to compute confidence intervals ('CIs') and tests for:
 
 -   a single binomial proportion, or Poisson rate ('p')
 -   a difference between binomial proportions or Poisson rates (risk difference or rate difference, 'RD')
@@ -35,11 +35,13 @@ ratesci is an [R](https://www.r-project.org) package to compute confidence inter
 -   paired odds ratio using the conditional model
 -   a binomial proportion from clustered data
 
-A number of different methods are offered, but in each case, the recommended default is based on asymptotic score methodology (from [@wilson1927], [@miettinen1985] and [@tango1998a]), but including skewness corrections following the principles of [@gart1988]. The resulting family of skewness-corrected asymptotic score (SCAS) methods [@laud2017], (and Laud 2025, under review) ensures equal-tailed coverage (or central location), in other words for a nominal 95% confidence interval, the one-sided non-coverage probability is (on average) close to 2.5% on each side. Stratified calculations are also catered for (e.g. meta-analysis, including random effects). Most of the above list is covered by `scoreci()`, with the exception of clustered proportions (which are handled by `clusterpci()`) and paired contrasts (`pairbinci()`). Options are included for omitting the skewness correction to obtain legacy methods such as stratified or unstratified Miettinen-Nurminen and Wilson intervals, Tango intervals for paired data, or chi-squared, CMH, Farrington-Manning or McNemar tests.
+A number of different methods are offered, but in each case, the recommended default is based on asymptotic score methodology (from [@wilson1927], [@miettinen1985] and [@tango1998a]), but including skewness corrections following the principles of [@gart1988]. The resulting family of skewness-corrected asymptotic score (SCAS) methods [@laud2017], (and Laud 2025, under review) ensures equal-tailed coverage (also referred to as central location), in other words for a nominal 95% confidence interval, the one-sided non-coverage probability is (on average) close to 2.5% on each side. The equal-tailed property is particularly important for non-inferiority testing (as it ensures correct type I error rates for one-sided tests), but should be considered generally desirable for two-sided confidence intervals. Unfortunately this aspect of performance is often overlooked in the literature, in favour of interval width.
+
+Most of the above list is covered by `scoreci()`, with the exception of clustered proportions (which are handled by `clusterpci()`) and paired contrasts (`pairbinci()`). Stratified calculations are also catered for (e.g. for analysis of a clinical trial with stratified randomisation, or for a meta-analysis, including random effects). Options are included for omitting the skewness correction to obtain legacy methods such as stratified or unstratified Miettinen-Nurminen and Wilson intervals, Tango intervals for paired data, or chi-squared, CMH, Farrington-Manning or McNemar tests.
 
 -   See the vignettes for further details and examples of the SCAS and other intervals for the [single rate](https://petelaud.github.io/ratesci/articles/single_rate.html), [basic contrasts](https://petelaud.github.io/ratesci/articles/basic_contrasts.html), [stratified contrasts](https://petelaud.github.io/ratesci/articles/stratified.html), and [paired contrasts](https://petelaud.github.io/ratesci/articles/paired_contrasts.html).
 
-In each case, the asymptotic score methods provide a matching 2-sided test for association, and also a 1-sided hypothesis test against any specified null parameter value for a non-inferiority test. Both tests are guaranteed to be coherent with the interval. The test for association is a variant of (and in many cases identical to) a chi-squared test or CMH test, and the non-inferiority test is analogous to a Farrington-Manning test, all with improved control of type I error achieved by the bias and skewness corrections. For paired proportions, the test for association is a variant of the McNemar test, incorporating an 'N-1' adjustment which appears to avoid any violations of the nominal significance level.
+In each case, the asymptotic score methods provide a matching 2-sided test for association, and also a 1-sided hypothesis test against any specified null parameter value for a non-inferiority test. Both tests are guaranteed to be coherent with the interval, so that a 100(1-$\alpha$)% interval excludes the null hypothesis value if and only if the hypothesis test is significant at the $\alpha$ 2-sided or $\alpha$/2 1-sided significance level. The tests for association are variants of (and in many cases directly equivalent to) a chi-squared test or CMH test, and the non-inferiority test is analogous to a Farrington-Manning test, all with improved control of type I error achieved by the bias and skewness corrections. For paired proportions, the test for association is a variant of the McNemar test, incorporating an 'N-1' adjustment which (empirically) avoids any violations of the nominal significance level.
 
 -   See the [hypothesis tests](https://petelaud.github.io/ratesci/articles/tests.html) vignette for further details of the relationships between SCAS tests and conventional chi-squared and CMH tests.
 
@@ -82,25 +84,5 @@ An example of a paired analysis follows, using the data from Table II of [@fager
 ```{r example2}
 pairbinci(x = c(1, 1, 7, 12))
 ```
-
-#### Overview
-
-ratesci contains the following functions:
-
-For comparisons of rates (contrasts RD, RR and OR):
-
--   `scoreci()`: for score-based confidence intervals including SCAS, Miettinen-Nurminen and Gart-Nam, with or without stratification.
--   `scasci()`: wrapper function to compute SCAS intervals.
--   `tdasci()`: wrapper function to compute TDAS stratified intervals incorporating random effects.
--   `moverci()`: for the MOVER methods, including Newcombe and MOVER-J.
--   `moverbci()`: wrapper function to compute MOVER-B intervals.
--   `pairbinci()`: for paired binomial data, including SCAS, asymptotic score and MOVER methods for RD and RR, and transformed binomial intervals for conditional OR.
-
-For single binomial or Poisson rates:
-
--   `scaspci()`: non-iterative SCAS method for a single rate. For stratified calculations use `scoreci()` with `contrast = "p"`.
--   `jeffreysci()`: wrapper function to compute Jeffreys interval for a single rate (with option to incorporate prior information).
--   `rateci()`: wrapper function for selected methods for a single rate, including SCAS, Jeffreys, midp and Clopper-Pearson/Garwood.
--   `clusterpci()`: Saha's Wilson-based interval for a single proportion based on clustered data, with a skewness-corrected version.
 
 ## References

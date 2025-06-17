@@ -5,20 +5,18 @@ template:
 
 reference:
 - title: Core functions
-  desc: >
-    The main nuts & bolts of the package.
 
-- subtitle: CIs for a single proportion or rate
-  contents:
-  - scaspci
-  - jeffreysci
-  - clusterpci
-
-- subtitle: CIs for a contrast of two proportions or rates
+- subtitle: Intervals for a contrast of two proportions or rates
   contents:
   - scoreci
   - moverci
   - pairbinci
+
+- subtitle: Intervals for a single proportion or rate
+  contents:
+  - scaspci
+  - jeffreysci
+  - clusterpci
 
 - title: Wrapper functions
   desc: >

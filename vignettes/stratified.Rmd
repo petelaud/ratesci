@@ -23,7 +23,7 @@ library(ratesci)
 
 ## Confidence intervals for stratified comparisons of independent binomial or Poisson rates
 
-Stratified analysis might be required for combining results from multiple studies in a meta-analysis, or adjusting clinical trial results for factors used in a stratified randomisation. Associated tests for common effects over strata (homogeneity) can also be useful for examining subgroup effects in a clinical trial. The illustration below uses data from a meta-analysis of 9 trials studying the effectiveness of graduated compression stockings for prevention of postoperative deep vein thrombosis (DVT) [from @roderick2005]:
+Stratified analysis might be required for combining results from multiple studies in a meta-analysis, or adjusting clinical trial results for factors used in a stratified randomisation. Associated tests against a null hypothesis of common effects over strata (homogeneity) can also be useful for examining subgroup effects in a clinical trial. The illustration below uses data from a meta-analysis of 9 trials studying the effectiveness of graduated compression stockings for prevention of postoperative deep vein thrombosis (DVT) [from @roderick2005]:
 
 ```{r}
 data(compress, package = "ratesci")
@@ -60,7 +60,7 @@ strat_rr$Qtest
 -->
 ````
 
-The stratdata object provides estimates and intervals for each stratum, along with details of stratum weights and contributions to the Q-statistic (these may be further examined using the `hetplot` argument).
+It is important to note that heterogeneity tests often have low power, so it is recommended to inspect the stratum-specific estimates as well[@greenland1982]. The stratdata object provides estimates and intervals for each stratum, along with details of stratum weights and contributions to the Q-statistic (these may be further examined using the `hetplot` argument).
 
 ```{r}
 strat_rd$stratdata
