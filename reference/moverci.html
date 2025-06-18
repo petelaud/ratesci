@@ -78,16 +78,16 @@ This function is vectorised in x1, x2, n1, and n2.</p>
 <span>  <span class="va">n1</span>,</span>
 <span>  x2 <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  n2 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  distrib <span class="op">=</span> <span class="st">"bin"</span>,</span>
+<span>  contrast <span class="op">=</span> <span class="st">"RD"</span>,</span>
+<span>  level <span class="op">=</span> <span class="fl">0.95</span>,</span>
 <span>  a1 <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  b1 <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  a2 <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  b2 <span class="op">=</span> <span class="fl">0.5</span>,</span>
-<span>  cc <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  level <span class="op">=</span> <span class="fl">0.95</span>,</span>
-<span>  distrib <span class="op">=</span> <span class="st">"bin"</span>,</span>
-<span>  contrast <span class="op">=</span> <span class="st">"RD"</span>,</span>
 <span>  type <span class="op">=</span> <span class="st">"jeff"</span>,</span>
 <span>  adj <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  cc <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -106,26 +106,11 @@ respectively.</p></dd>
 times (for Poisson rates) in each group.</p></dd>
 
 
-<dt id="arg-a-b-a-b-">a1, b1, a2, b2<a class="anchor" aria-label="anchor" href="#arg-a-b-a-b-"></a></dt>
-<dd><p>Numbers defining the Beta(ai,bi) prior distributions for
-each group (default ai = bi = 0.5 for Jeffreys method). Gamma priors for
-Poisson rates require only a1, a2.</p></dd>
-
-
-<dt id="arg-cc">cc<a class="anchor" aria-label="anchor" href="#arg-cc"></a></dt>
-<dd><p>Number or logical specifying (amount of) continuity adjustment
-(default FALSE). Numeric value is taken as the gamma parameter in Laud 2017,
-Appendix S2 (default 0.5 if cc = TRUE). Forced equal to 0.5 if type = "exact".</p></dd>
-
-
-<dt id="arg-level">level<a class="anchor" aria-label="anchor" href="#arg-level"></a></dt>
-<dd><p>Number specifying confidence level (between 0 and 1, default
-0.95).</p></dd>
-
-
 <dt id="arg-distrib">distrib<a class="anchor" aria-label="anchor" href="#arg-distrib"></a></dt>
 <dd><p>Character string indicating distribution assumed for the input
-data: "bin" = binomial (default), "poi" = Poisson.</p></dd>
+data:<br>
+"bin" = binomial (default);<br>
+"poi" = Poisson.</p></dd>
 
 
 <dt id="arg-contrast">contrast<a class="anchor" aria-label="anchor" href="#arg-contrast"></a></dt>
@@ -133,7 +118,18 @@ data: "bin" = binomial (default), "poi" = Poisson.</p></dd>
 "RD" = rate difference (default); <br>
 "RR" = rate ratio; <br>
 "OR" = odds ratio; <br>
-"p" gives an interval for the single proportion x1/n1.</p></dd>
+"p" gives an interval for the single proportion <code>x1/n1</code>.</p></dd>
+
+
+<dt id="arg-level">level<a class="anchor" aria-label="anchor" href="#arg-level"></a></dt>
+<dd><p>Number specifying confidence level (between 0 and 1, default
+0.95).</p></dd>
+
+
+<dt id="arg-a-b-a-b-">a1, b1, a2, b2<a class="anchor" aria-label="anchor" href="#arg-a-b-a-b-"></a></dt>
+<dd><p>Numbers defining the Beta(ai,bi) prior distributions for
+each group (default ai = bi = 0.5 for Jeffreys method). Gamma priors for
+Poisson rates require only a1, a2.</p></dd>
 
 
 <dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
@@ -142,21 +138,28 @@ the individual group rates. <br>
 "jeff" = Jeffreys equal-tailed intervals (default); <br>
 "exact" = Clopper-Pearson/Garwood exact intervals (note this does NOT
 result in a strictly conservative interval for the contrast, except for
-contrast = "p". The scoreci function with cc = TRUE is recommended as a
+contrast = "p". The scoreci function with <code>cc = TRUE</code> is recommended as a
 superior approximation of 'exact' methods); <br>
 "midp" = mid-p intervals; <br>
 "SCAS" = SCAS non-iterative intervals; <br>
 "wilson" = Wilson score intervals (as per Newcombe 1998).
-(Rao score is used for distrib = "poi") <br>
+(Rao score is used for <code>distrib = "poi"</code>) <br>
 NB: "wilson" option is included only for legacy validation against previous
-published method by Newcombe. It is not recommended, as type = "jeff"
+published method by Newcombe. It is not recommended, as <code>type = "jeff"</code>
 or other equal-tailed options achieve much better coverage properties.</p></dd>
 
 
 <dt id="arg-adj">adj<a class="anchor" aria-label="anchor" href="#arg-adj"></a></dt>
 <dd><p>Logical (default FALSE) indicating whether to apply the boundary
 adjustment for Jeffreys intervals recommended on p108 of Brown et al.
-(type = "jeff" only: set to FALSE if using informative priors)</p></dd>
+(<code>type = "jeff"</code> only: set to FALSE if using informative priors)</p></dd>
+
+
+<dt id="arg-cc">cc<a class="anchor" aria-label="anchor" href="#arg-cc"></a></dt>
+<dd><p>Number or logical specifying (amount of) continuity adjustment
+(default FALSE). Numeric value is taken as the gamma parameter in Laud
+2017, Appendix S2 (default 0.5 if <code>cc = TRUE</code>). Forced equal to 0.5 if
+<code>type = "exact"</code>.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>

@@ -113,7 +113,9 @@ times (for Poisson rates) in each group.</p></dd>
 
 <dt id="arg-distrib">distrib<a class="anchor" aria-label="anchor" href="#arg-distrib"></a></dt>
 <dd><p>Character string indicating distribution assumed for the input
-data: "bin" = binomial (default), "poi" = Poisson.</p></dd>
+data: <br>
+"bin" = binomial (default), <br>
+"poi" = Poisson.</p></dd>
 
 
 <dt id="arg-contrast">contrast<a class="anchor" aria-label="anchor" href="#arg-contrast"></a></dt>
@@ -121,7 +123,7 @@ data: "bin" = binomial (default), "poi" = Poisson.</p></dd>
 "RD" = rate difference (default); <br>
 "RR" = rate ratio; <br>
 "OR" = odds ratio; <br>
-"p" gives an interval for the single proportion or rate x1/n1.</p></dd>
+"p" gives an interval for the single proportion or rate <code>x1/n1</code>.</p></dd>
 
 
 <dt id="arg-level">level<a class="anchor" aria-label="anchor" href="#arg-level"></a></dt>
@@ -131,9 +133,9 @@ data: "bin" = binomial (default), "poi" = Poisson.</p></dd>
 
 <dt id="arg-cc">cc<a class="anchor" aria-label="anchor" href="#arg-cc"></a></dt>
 <dd><p>Number or logical (default FALSE) specifying (amount of) continuity
-adjustment. Numeric value is taken as the gamma parameter in Laud 2017,
-Appendix S2 (default 0.5 for 'conventional' Yates adjustment if
-cc = TRUE). <br>
+adjustment. Numeric value between 0 and 0.5 is taken as the gamma parameter
+in Laud 2017, Appendix S2 (<code>cc = TRUE</code> translates to 0.5 for 'conventional'
+Yates adjustment). <br>
 IMPORTANT NOTES:</p><ol><li><p>This adjustment (conventionally but controversially termed
 'continuity correction') is aimed at approximating strictly
 conservative coverage, NOT for dealing with zero cell counts. Such
@@ -142,10 +144,9 @@ except to deal with double-zero cells for stratified  RD (&amp; double-100%
 cells for binomial RD &amp; RR) with IVS/INV weights.</p></li>
 <li><p>The continuity adjustments provided here have not been fully tested for
 stratified methods, but are found to match the continuity-adjusted version
-of the Mantel-Haenszel test,
-when cc = 0.5 for any of the binomial contrasts. Flexibility is included for
-a less conservative adjustment, such as cc = 0.25 suggested in Laud 2017
-(see Appendix S3.4), or cc = 3/16 = 0.1875 in Mehrotra &amp; Railkar (2000)</p></li>
+of the Mantel-Haenszel test, when <code>cc = 0.5</code> for any of the binomial
+contrasts. Flexibility is included for a less conservative adjustment, such
+as <code>cc = 0.25</code> suggested in Laud 2017 (see Appendix S3.4), or <code>cc = 3/16 =   0.1875</code> in Mehrotra &amp; Railkar (2000).</p></li>
 </ol></dd>
 
 
@@ -188,7 +189,8 @@ x-axis of plots (useful for ratio contrasts which can be infinite).</p></dd>
 <dd><p>String indicating which weighting method to use if
 stratified = "TRUE": <br>
 "IVS" = Inverse Variance of Score (see Laud 2017 for details); <br>
-"INV" = Inverse Variance (bcf omitted, default for contrast = "OR"); <br>
+"INV" = Inverse Variance (bcf omitted, default for contrast = "OR" giving
+CMH test); <br>
 "MH" = Mantel-Haenszel (n1j * n2j) / (n1j + n2j)
 (default for contrast = "RD" or "RR" giving CMH test);
 (= sample size for contrast = "p"); <br>
@@ -199,10 +201,9 @@ similar to INV for contrast = "OR"); <br>
 for an optimal test of RD if RRs are constant across strata.
 (Included only for validation purposes. In general, such a test
 would more logically use contrast = "RR" with weighting = "INV")
-For CI consistent with a CMH test, select skew = FALSE, random = FALSE,
-and use default MH weighting for RD/RR and INV for OR. <br>
-Weighting = 'MN' also matches the CMH test. <br>
-For the Radhakrishna optimal (most powerful) test, select INV weighting.
+For CI consistent with a CMH test, select <code>skew = FALSE</code>, <code>random = FALSE</code>,
+and use default MH weighting for RD/RR and INV for OR. <br><code>Weighting = "MN"</code> also matches the CMH test. <br>
+For the Radhakrishna optimal (most powerful) test, select INV weighting.<br>
 Note: Alternative user-specified weighting may also be applied, via the
 'wt' argument.</p></dd>
 
@@ -217,7 +218,8 @@ iteration with weighting = "MN".</p></dd>
 
 
 <dt id="arg-wt">wt<a class="anchor" aria-label="anchor" href="#arg-wt"></a></dt>
-<dd><p>Numeric vector containing (optional) user-specified weights.</p></dd>
+<dd><p>Numeric vector containing (optional) user-specified weights.<br>
+Overrides <code>weighting</code> if non-empty.</p></dd>
 
 
 <dt id="arg-skew">skew<a class="anchor" aria-label="anchor" href="#arg-skew"></a></dt>
