@@ -19,7 +19,7 @@ correction or not. (To be evaluated)}
 
 \item{cc}{Number or logical (default FALSE) specifying (amount of) continuity
 adjustment. Numeric value is taken as the gamma parameter in Laud 2017,
-Appendix S2 (default 0.5 for 'conventional' adjustment if cc = TRUE).}
+Appendix S2 (default 0.5 for 'conventional' adjustment if \code{cc = TRUE}).}
 
 \item{theta0}{Number to be used in a one-sided significance test (e.g.
 non-inferiority margin). 1-sided p-value will be <0.025 iff 2-sided 95\\% CI
@@ -30,6 +30,8 @@ A list containing the following components: \describe{
 \item{estimates}{the estimate and confidence interval for p and
 the specified confidence level, along with estimates of the ICC and
 the variance inflation factor, xihat}
+\item{pval}{one-sided significance tests against the null hypothesis that
+theta >= or <= theta0 as specified}
 \item{call}{details of the function call}}
 }
 \description{
@@ -37,11 +39,6 @@ Asymptotic Score confidence intervals for a proportion estimated from
 a clustered sample, as decribed by Saha et al. 2016.
 With optional skewness correction to improve interval location
 (to be evaluated).
-To be added:
-\itemize{
-\item Hypothesis test.
-\item Poisson rate version? (Possibly using dispersion index = var/mean)
-}
 }
 \examples{
   # Data example from Liang 1992, used in Saha 2016 and Short 2020:

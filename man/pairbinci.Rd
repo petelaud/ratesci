@@ -7,7 +7,7 @@
 pairbinci(
   x,
   level = 0.95,
-  contrast = "RD",
+  contrast = c("RD", "RR", "OR"),
   method = ifelse(contrast == "OR", "SCASp", "Score"),
   moverbase = ifelse(method \%in\% c("MOVER", "MOVER_newc", "BP"), "jeff", NULL),
   bcf = TRUE,
@@ -42,7 +42,7 @@ d is the number of pairs with no event under both conditions \cr
 "OR" = conditional odds ratio.}
 
 \item{method}{Character string indicating the confidence interval method
-to be used. The following are available for contrast = "RD" or "RR": \cr
+to be used. The following are available for \code{contrast = "RD"} or \code{"RR"}: \cr
 "Score" = (default) asymptotic score class of methods including Tango
 (for RD) / Tang (for RR), by iterative calculations, with
 optional skewness correction; \cr
@@ -56,9 +56,9 @@ estimate (Newcombe's "method 10"); \cr
 deprecated); \cr
 "BP" = Wald with Bonett-Price adjustment for RD, or Hybrid Bonett-Price
 method for RR. \cr
-For contrast = "OR", one of the following methods may be selected,
+For \code{contrast = "OR"}, one of the following methods may be selected,
 all of which are based on transformation of an interval for a single
-proportion b/(b+c): \cr
+proportion \code{b/(b+c)}: \cr
 "SCASp" = transformed skewness-corrected score (default); \cr
 "jeff" = transformed Jeffreys; \cr
 "midp" = transformed mid-p; \cr
@@ -73,13 +73,14 @@ and for the Hybrid BP method for RR:
 "midp" = mid-p,
 "wilson" = Wilson score (not recommended, known to be skewed)}
 
-\item{bcf}{Logical (default FALSE) indicating whether to apply bias correction
-in the score denominator. (Under evaluation.)}
+\item{bcf}{Logical (default FALSE) indicating whether to apply variance bias
+correction in the score denominator. (Under evaluation, manuscript under
+review.)}
 
 \item{skew}{Logical (default TRUE) indicating whether to apply skewness
 correction or not. (Under evaluation, manuscript under review.)
 \itemize{
-\item Only applies for the iterative method = "Score"
+\item Only applies for the iterative \code{method = "Score"}.
 }}
 
 \item{cc}{Number or logical (default FALSE) specifying (amount of) continuity
@@ -102,7 +103,7 @@ places) to be used in optimisation subroutine for the confidence interval.}
 
 \item{method_OR}{(deprecated: parameter renamed to method)}
 
-\item{cctype}{(deprecated: new equivariant cc method implemented instead)}
+\item{cctype}{(deprecated: new equivariant cc method implemented instead.)}
 
 \item{...}{Other arguments.}
 }
@@ -120,13 +121,13 @@ as specified}
 \item{call}{details of the function call}}
 }
 \description{
-Confidence intervals for the rate (or risk) difference ('RD'),
-rate ratio ('RR') or conditional odds ratio ('OR'), for paired binomial data.
-(For paired Poisson rates, suggest use the tdasci function with distrib = "poi",
-and weighting = "MH", with pairs as strata.)
+Confidence intervals for the rate (or risk) difference ("RD"), rate ratio
+("RR") or conditional odds ratio ("OR"), for paired binomial data. (For
+paired Poisson rates, suggest use the tdasci function with \code{distrib = "poi"},
+and \code{weighting = "MH"}, with pairs as strata.)
 This function applies the score-based Tango and Tang methods for RD and
-RR respectively, with iterative and closed-form versions, and a skewness
-correction for improved one-sided coverage.
+RR respectively, with iterative and closed-form versions, and an added
+skewness correction for improved one-sided coverage.
 Also includes MOVER options using the Method of Variance Estimates Recovery
 for paired RD and RR, incorporating Newcombe's correlation correction, and
 some simpler methods by Bonett & Price for RD and RR.

@@ -24,13 +24,15 @@ scaspci(
 times (for Poisson rates).}
 
 \item{distrib}{Character string indicating distribution assumed for the input
-data: "bin" = binomial (default), "poi" = Poisson.}
+data:\cr
+"bin" = binomial (default);\cr
+"poi" = Poisson.}
 
 \item{level}{Number specifying confidence level (between 0 and 1, default
 0.95).}
 
 \item{bcf}{Logical (default TRUE) indicating whether to apply bias correction
-in the score denominator. Applicable to distrib = "bin" only.}
+in the score denominator. Applicable to \code{distrib = "bin"} only.}
 
 \item{bign}{Sample size N to be used in the calculation of bcf, if different
 from n. (Used by transformed SCASp method for paired conditional OR in
@@ -39,7 +41,7 @@ from n. (Used by transformed SCASp method for paired conditional OR in
 \item{xihat}{Number specifying estimated variance inflation factor for a
 skewness corrected version of the Saha Wilson Score interval for clustered
 binomial proportions. Need to calculate using BMS and WMS as per Saha 2016.
-Used by new clusterpci() function for data entered per cluster.}
+Used by \code{clusterpci()} function for data entered per cluster.}
 
 \item{cc}{Number or logical (default FALSE) specifying (amount of) continuity
 adjustment. Numeric value is taken as the gamma parameter in Laud 2017,
@@ -54,6 +56,8 @@ SCAS confidence interval, and the input values x and n}
 \item{call}{details of the function call} }
 }
 \description{
+Closed-form function for computing confidence intervals for a single rate.
+Note: For associated hypothesis tests, use \code{scoreci()} with \code{contrast = "p"}.
 This function is vectorised in x, n.
 }
 \references{

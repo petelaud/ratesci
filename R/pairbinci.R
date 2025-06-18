@@ -1,12 +1,12 @@
 #' Confidence intervals for comparisons of paired binomial rates.
 #'
-#' Confidence intervals for the rate (or risk) difference ('RD'),
-#' rate ratio ('RR') or conditional odds ratio ('OR'), for paired binomial data.
-#' (For paired Poisson rates, suggest use the tdasci function with distrib = "poi",
-#' and weighting = "MH", with pairs as strata.)
+#' Confidence intervals for the rate (or risk) difference ("RD"), rate ratio
+#' ("RR") or conditional odds ratio ("OR"), for paired binomial data. (For
+#' paired Poisson rates, suggest use the tdasci function with `distrib = "poi"`,
+#' and `weighting = "MH"`, with pairs as strata.)
 #' This function applies the score-based Tango and Tang methods for RD and
-#' RR respectively, with iterative and closed-form versions, and a skewness
-#' correction for improved one-sided coverage.
+#' RR respectively, with iterative and closed-form versions, and an added
+#' skewness correction for improved one-sided coverage.
 #' Also includes MOVER options using the Method of Variance Estimates Recovery
 #' for paired RD and RR, incorporating Newcombe's correlation correction, and
 #' some simpler methods by Bonett & Price for RD and RR.
@@ -30,7 +30,7 @@
 #'   "RR" = rate ratio; \cr
 #'   "OR" = conditional odds ratio.
 #' @param method Character string indicating the confidence interval method
-#'   to be used. The following are available for contrast = "RD" or "RR": \cr
+#'   to be used. The following are available for `contrast = "RD"` or `"RR"`: \cr
 #'   "Score" = (default) asymptotic score class of methods including Tango
 #'             (for RD) / Tang (for RR), by iterative calculations, with
 #'             optional skewness correction; \cr
@@ -44,9 +44,9 @@
 #'            deprecated); \cr
 #'   "BP" = Wald with Bonett-Price adjustment for RD, or Hybrid Bonett-Price
 #'          method for RR. \cr
-#'   For contrast = "OR", one of the following methods may be selected,
+#'   For `contrast = "OR"`, one of the following methods may be selected,
 #'   all of which are based on transformation of an interval for a single
-#'   proportion b/(b+c): \cr
+#'   proportion `b/(b+c)`: \cr
 #'   "SCASp" = transformed skewness-corrected score (default); \cr
 #'   "jeff" = transformed Jeffreys; \cr
 #'   "midp" = transformed mid-p; \cr
@@ -59,15 +59,16 @@
 #'   "SCASp" = skewness-corrected score,
 #'   "midp" = mid-p,
 #'   "wilson" = Wilson score (not recommended, known to be skewed)
-#' @param bcf Logical (default FALSE) indicating whether to apply bias correction
-#'   in the score denominator. (Under evaluation.)
+#' @param bcf Logical (default FALSE) indicating whether to apply variance bias
+#'   correction in the score denominator. (Under evaluation, manuscript under
+#'   review.)
 #' @param skew Logical (default TRUE) indicating whether to apply skewness
 #'   correction or not. (Under evaluation, manuscript under review.)
-#'   - Only applies for the iterative method = "Score"
+#'   - Only applies for the iterative `method = "Score"`.
 #' @param cc Number or logical (default FALSE) specifying (amount of) continuity
 #'   adjustment. When a score-based method is used, cc = 0.5 corresponds to the
 #'   continuity-corrected McNemar test.
-#' @param cctype (deprecated: new equivariant cc method implemented instead)
+#' @param cctype (deprecated: new equivariant cc method implemented instead.)
 #' @param theta0 Number to be used in a one-sided significance test (e.g.
 #'   non-inferiority margin). 1-sided p-value will be < 0.025 iff 2-sided 95\% CI
 #'   excludes theta0. NB: can also be used for a superiority test by setting

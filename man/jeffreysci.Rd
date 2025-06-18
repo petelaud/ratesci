@@ -23,11 +23,11 @@ jeffreysci(
 \item{n}{Numeric vector of sample sizes (for binomial rates) or exposure
 times (for Poisson rates).}
 
-\item{ai, bi}{Numbers defining the Beta prior distribution (default ai = bi =
-0.5 for Jeffreys interval). Gamma prior for Poisson rates requires only ai.}
+\item{ai, bi}{Numbers defining the Beta prior distribution (default `ai = bi =
+0.5`` for Jeffreys interval). Gamma prior for Poisson rates requires only ai.}
 
 \item{cc}{Number or logical specifying (amount of) "continuity adjustment".
-cc = 0 (default) gives Jeffreys interval, cc = 0.5 gives the
+cc = 0 (default) gives Jeffreys interval, \code{cc = 0.5} gives the
 Clopper-Pearson interval (or Garwood for Poisson). A value between 0 and
 0.5 allows a compromise between proximate and conservative coverage.}
 
@@ -35,7 +35,9 @@ Clopper-Pearson interval (or Garwood for Poisson). A value between 0 and
 0.95).}
 
 \item{distrib}{Character string indicating distribution assumed for the input
-data: "bin" = binomial (default), "poi" = Poisson.}
+data:\cr
+"bin" = binomial (default);\cr
+"poi" = Poisson.}
 
 \item{adj}{Logical (default TRUE) indicating whether to apply the boundary
 adjustment recommended on p108 of Brown et al. (set to FALSE if informative

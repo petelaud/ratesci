@@ -4,9 +4,6 @@
 #' a clustered sample, as decribed by Saha et al. 2016.
 #' With optional skewness correction to improve interval location
 #' (to be evaluated).
-#' To be added:
-#' * Hypothesis test.
-#' * Poisson rate version? (Possibly using dispersion index = var/mean)
 #'
 #' @param x Numeric vector of number of events per cluster.
 #' @param n Numeric vector of sample sizes per cluster.
@@ -16,7 +13,7 @@
 #'   correction or not. (To be evaluated)
 #' @param cc Number or logical (default FALSE) specifying (amount of) continuity
 #'   adjustment. Numeric value is taken as the gamma parameter in Laud 2017,
-#'   Appendix S2 (default 0.5 for 'conventional' adjustment if cc = TRUE).
+#'   Appendix S2 (default 0.5 for 'conventional' adjustment if `cc = TRUE`).
 #' @param theta0 Number to be used in a one-sided significance test (e.g.
 #'   non-inferiority margin). 1-sided p-value will be <0.025 iff 2-sided 95\% CI
 #'   excludes theta0.
@@ -24,6 +21,8 @@
 #'   \item{estimates}{the estimate and confidence interval for p and
 #'   the specified confidence level, along with estimates of the ICC and
 #'   the variance inflation factor, xihat}
+#'   \item{pval}{one-sided significance tests against the null hypothesis that
+#'   theta >= or <= theta0 as specified}
 #'   \item{call}{details of the function call}}
 #' @examples
 #'   # Data example from Liang 1992, used in Saha 2016 and Short 2020:

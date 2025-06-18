@@ -1,17 +1,20 @@
 #' Score confidence intervals and tests for a single binomial or Poisson rate,
 #' or for comparisons of independent rates, with or without stratification.
 #'
+#' @description
 #' Score-based confidence intervals for the rate (or risk) difference ("RD") or
 #' ratio ("RR") for independent binomial or Poisson rates, or for odds ratio
-#' ("OR", binomial only). Including options for bias correction (from Miettinen
-#' & Nurminen), skewness correction ("GNbc" method from Laud & Dane, developed
-#' from Gart & Nam, and generalised as "SCAS" in Laud 2017) and continuity
-#' adjustment (for strictly conservative coverage).
+#' ("OR", binomial only). Including options for variance bias correction (from
+#' Miettinen & Nurminen), skewness correction ("GNbc" method from Laud & Dane,
+#' developed from Gart & Nam, and generalised as "SCAS" in Laud 2017) and
+#' continuity adjustment (for strictly conservative coverage).
+#'
 #' Also includes score intervals for a single binomial proportion or Poisson
-#' rate ("p"). Based on the Wilson score interval, when corrected for skewness,
-#' coverage is almost identical to the mid-p method, or Clopper-Pearson
-#' when also continuity-adjusted.
-#' Hypothesis tests for superiority or non-inferiority are provided using the
+#' rate ("p"). These are based on the Wilson score interval, and when corrected
+#' for skewness, coverage is almost identical to the mid-p method, or to
+#' Clopper-Pearson when also continuity-adjusted.
+#'
+#' Hypothesis tests for association or non-inferiority are provided using the
 #' same score, to ensure consistency between test and CI.
 #' This function is vectorised in x1, x2, n1, and n2.  Vector inputs may also be
 #' combined into a single stratified analysis (e.g. meta-analysis), either using
@@ -21,43 +24,52 @@
 #' For fixed-effects analysis of stratified datasets, with weighting = "MH" for
 #' RD or RR, or weighting = "INV" for OR, omitting the skewness correction
 #' produces the CMH test, together with a coherent confidence interval for the
-#' required contrast.
+#' required contrast. Alternatively, weighting = "INV" for any contrast gives
+#' intervals consistent with the efficient score test.
 #'
 #' @param x1,x2 Numeric vectors of numbers of events in group 1 & group 2
 #'   respectively.
 #' @param n1,n2 Numeric vectors of sample sizes (for binomial rates) or exposure
 #'   times (for Poisson rates) in each group.
 #' @param distrib Character string indicating distribution assumed for the input
-#'   data: "bin" = binomial (default), "poi" = Poisson.
+#'   data: \cr
+#'   "bin" = binomial (default), \cr
+#'   "poi" = Poisson.
 #' @param contrast Character string indicating the contrast of interest: \cr
 #'   "RD" = rate difference (default); \cr
 #'   "RR" = rate ratio; \cr
 #'   "OR" = odds ratio; \cr
-#'   "p" gives an interval for the single proportion or rate x1/n1.
+#'   "p" gives an interval for the single proportion or rate `x1/n1`.
 #' @param level Number specifying confidence level (between 0 and 1, default
 #'   0.95).
 #' @param skew Logical (default TRUE) indicating whether to apply skewness
-#'   correction (for the SCAS method recommended in Laud 2017) or not (for
+#'   correction (for the SCAS or Gart-Nam method) or not (for
 #'   the Miettinen-Nurminen method).
 #' @param simpleskew Logical (default FALSE) indicating whether to use the
 #'   "simplified" skewness correction instead of the quadratic solution.
 #'   See Laud 2021 for details. \cr
 #'   NOTE: this version of the score is only suitable for obtaining confidence
 #'   limits, not p-values.
-#' @param ORbias (deprecated: argument renamed to or_bias)
-#' @param or_bias Logical (default is TRUE for contrast="OR", otherwise
+#' @param ORbias (deprecated: argument renamed to or_bias.)
+#' @param or_bias Logical (default is TRUE for `contrast = "OR"`, otherwise
 #'   NULL) indicating whether to apply additional bias correction for OR derived
-#'   from Gart 1985. (Corrigendum to Laud 2017, published May 2018).
-#'   Only applies if contrast is "OR".
+#'   from Gart 1985. (Laud 2018). Only applies if contrast is "OR".
+#' @param RRtang (deprecated: argument renamed to rr_tang.)
+#' @param rr_tang Logical indicating whether to use Tang's score for RR:
+#'   Stheta = (p1hat - p2hat * theta) / p2d (see Tang 2020).
+#'   Default TRUE for `stratified = TRUE`, with weighting = "IVS" or "INV".
+#'   Forced to FALSE for `stratified = TRUE` with other weightings.
+#'   Has no effect when `stratified = FALSE`, as p2d terms cancel out.
+#'   Experimental for `distrib = "poi"`.
 #' @param bcf Logical (default TRUE) indicating whether to apply 'N-1' variance
-#'   correction in the score denominator. Applicable to distrib = "bin" only. \cr
-#'   NOTE: bcf = FALSE option is really only included for legacy validation
+#'   correction in the score denominator. Applicable to `distrib = "bin"` only. \cr
+#'   NOTE: `bcf = FALSE` option is really only included for legacy validation
 #'   against previous published methods (i.e. Gart & Nam, Mee, or standard
-#'   Chi-squared test) and for contrast = "p".
+#'   Chi-squared test) and for `contrast = "p"`.
 #' @param cc Number or logical (default FALSE) specifying (amount of) continuity
-#'   adjustment. Numeric value is taken as the gamma parameter in Laud 2017,
-#'   Appendix S2 (default 0.5 for 'conventional' Yates adjustment if
-#'   cc = TRUE). \cr
+#'   adjustment. Numeric value between 0 and 0.5 is taken as the gamma parameter
+#'   in Laud 2017, Appendix S2 (`cc = TRUE` translates to 0.5 for 'conventional'
+#'   Yates adjustment). \cr
 #'   IMPORTANT NOTES:
 #'   1) This adjustment (conventionally but controversially termed
 #'   'continuity correction') is aimed at approximating strictly
@@ -67,23 +79,23 @@
 #'   cells for binomial RD & RR) with IVS/INV weights.
 #'   2) The continuity adjustments provided here have not been fully tested for
 #'   stratified methods, but are found to match the continuity-adjusted version
-#'   of the Mantel-Haenszel test,
-#'   when cc = 0.5 for any of the binomial contrasts. Flexibility is included for
-#'   a less conservative adjustment, such as cc = 0.25 suggested in Laud 2017
-#'   (see Appendix S3.4), or cc = 3/16 = 0.1875 in Mehrotra & Railkar (2000)
+#'   of the Mantel-Haenszel test, when `cc = 0.5` for any of the binomial
+#'   contrasts. Flexibility is included for a less conservative adjustment, such
+#'   as `cc = 0.25` suggested in Laud 2017 (see Appendix S3.4), or `cc = 3/16 =
+#'   0.1875` in Mehrotra & Railkar (2000).
 #' @param theta0 Number to be used in a one-sided significance test (e.g.
 #'   non-inferiority margin). 1-sided p-value will be <0.025 iff 2-sided 95\% CI
-#'   excludes theta0. (If bcf = FALSE and skew = FALSE this gives a
+#'   excludes theta0. (If `bcf = FALSE` and `skew = FALSE` this gives a
 #'   Farrington-Manning test.) \cr
-#'   By default, a two-sided test against theta0 = 0 (for RD) or 1 (for RR/OR)
-#'   is also output:
-#'   - If bcf = FALSE and skew = FALSE this is the same as K. Pearson's Chi-squared
+#'   By default, a two-sided test for association against theta0 = 0 (for RD) or
+#'   1 (for RR/OR) is also output:
+#'   - If `bcf = FALSE` and `skew = FALSE` this is the same as K. Pearson's Chi-squared
 #'     test in the single stratum case.
-#'   - bcf = TRUE gives E. Pearson's 'N-1' Chi-squared test for a single stratum,
+#'   - `bcf = TRUE` gives E. Pearson's 'N-1' Chi-squared test for a single stratum,
 #'     (Recommended by Campbell 2007: https://doi.org/10.1002/sim.2832)
-#'     and (with default weighting and random = FALSE) the CMH test for stratified
-#'      tables.
-#'   - Default bcf = TRUE and skew = TRUE produces a skewness-corrected version
+#'     and (with default weighting and `random = FALSE`) the CMH test for stratified
+#'     tables.
+#'   - Default `bcf = TRUE` and `skew = TRUE produces a skewness-corrected version
 #'     of the 'N-1' Chi-squared test or CMH. This correction will only change the
 #'     p-value if group sizes are unequal.
 #' @param precis Number (default 6) specifying precision (i.e. number of decimal
@@ -102,7 +114,8 @@
 #' @param weighting String indicating which weighting method to use if
 #'   stratified = "TRUE": \cr
 #'   "IVS" = Inverse Variance of Score (see Laud 2017 for details); \cr
-#'   "INV" = Inverse Variance (bcf omitted, default for contrast = "OR"); \cr
+#'   "INV" = Inverse Variance (bcf omitted, default for contrast = "OR" giving
+#'          CMH test); \cr
 #'   "MH" = Mantel-Haenszel (n1j * n2j) / (n1j + n2j)
 #'          (default for contrast = "RD" or "RR" giving CMH test);
 #'          (= sample size for contrast = "p"); \cr
@@ -113,34 +126,28 @@
 #'            for an optimal test of RD if RRs are constant across strata.
 #'            (Included only for validation purposes. In general, such a test
 #'            would more logically use contrast = "RR" with weighting = "INV")
-#'   For CI consistent with a CMH test, select skew = FALSE, random = FALSE,
+#'   For CI consistent with a CMH test, select `skew = FALSE`, `random = FALSE`,
 #'   and use default MH weighting for RD/RR and INV for OR. \cr
-#'   Weighting = 'MN' also matches the CMH test. \cr
-#'   For the Radhakrishna optimal (most powerful) test, select INV weighting.
+#'   `Weighting = "MN"` also matches the CMH test. \cr
+#'   For the Radhakrishna optimal (most powerful) test, select INV weighting.\cr
 #'   Note: Alternative user-specified weighting may also be applied, via the
 #'         'wt' argument.
-#' @param wt Numeric vector containing (optional) user-specified weights.
-#' @param sda Sparse data adjustment to avoid zero variance when x1 + x2 = 0:
-#'           Only applied when stratified = TRUE.
+#' @param wt Numeric vector containing (optional) user-specified weights.\cr
+#'          Overrides `weighting` if non-empty.
+#' @param sda Sparse data adjustment to avoid zero variance when `x1 + x2 = 0`:
+#'           Only applied when `stratified = TRUE`.
 #'           Default 0.5 for RD with IVS/INV weights.
 #'           Not required for RR/OR, default is to remove double-zero strata
 #'           instead.
 #' @param fda Full data adjustment to avoid zero variance when x1 + x2 = n1 + n2:
-#'           Only applied when stratified = TRUE.
+#'           Only applied when `stratified = TRUE`.
 #'           Default 0.5 for RD & RR with IVS/INV weights.
 #'           Not required for OR, default is to remove affected strata.
 #' @param dropzeros Logical (default FALSE) indicating whether to drop
-#'   uninformative strata for RR/OR (i.e. strata with x1 = 0 and x2 = 0),
+#'   uninformative strata for RR/OR (i.e. strata with `x1 + x2 = 0`),
 #'   even when the choice of weights would allow
 #'   them to be retained for a fixed effects analysis.
 #'   Has no effect on estimates, just the heterogeneity test.
-#' @param RRtang (deprecated: argument renamed to rr_tang)
-#' @param rr_tang Logical indicating whether to use Tang's score for RR:
-#'   Stheta = (p1hat - p2hat * theta) / p2d (see Tang 2020).
-#'   Default TRUE for stratified = TRUE, with weighting = "IVS" or "INV".
-#'   Forced to FALSE for stratified = TRUE, with other weightings.
-#'   Has no effect when stratified = FALSE, as p2d terms cancel out.
-#'   Experimental for distrib = "poi".
 #' @param hetplot Logical (default FALSE) indicating whether to output plots for
 #'   evaluating heterogeneity of stratified datasets.
 #' @param MNtol (deprecated: argument renamed to mn_tol)
@@ -149,7 +156,7 @@
 #' @param random Logical (default FALSE) indicating whether to perform random
 #'   effects meta-analysis for stratified data, using the t-distribution (TDAS)
 #'   method for stratified data (defined in Laud 2017). \cr
-#'   NOTE: If random = TRUE, then skew = TRUE only affects the per-stratum
+#'   NOTE: If `random = TRUE`, then `skew = TRUE` only affects the per-stratum
 #'   estimates.
 #' @param prediction Logical (default FALSE) indicating whether to produce
 #'   a prediction interval (work in progress).
@@ -161,9 +168,9 @@
 #'   \item{estimates}{a matrix containing estimates of the rates in each group
 #'   and of the requested contrast, with its confidence interval} \item{pval}{a
 #'   matrix containing details of the corresponding 2-sided significance test
-#'   against the null hypothesis that p_1 = p_2, and one-sided significance
+#'   against the null hypothesis that `p_1 = p_2`, and one-sided significance
 #'   tests against the null hypothesis that theta >= or <= theta0}
-#'   \item{call}{details of the function call} } If stratified = TRUE, the
+#'   \item{call}{details of the function call} } If `stratified = TRUE`, the
 #'   following outputs are added: \describe{ \item{Qtest}{a vector of values
 #'   describing and testing heterogeneity} \item{weighting}{a string indicating
 #'   the selected weighting method} \item{stratdata}{a matrix containing stratum
@@ -208,7 +215,7 @@
 #'   stratified = TRUE
 #' )
 #'
-#' # TDAS example, using data from Hartung & Knapp:
+#' # "Random effects" TDAS example, using data from Hartung & Knapp:
 #' scoreci(
 #'   x1 = c(15, 12, 29, 42, 14, 44, 14, 29, 10, 17, 38, 19, 21),
 #'   x2 = c(9, 1, 18, 31, 6, 17, 7, 23, 3, 6, 12, 22, 19),
@@ -219,6 +226,7 @@
 #'
 #' # Stratified example, with extremely rare instance of non-calculable skewness
 #' # correction seen on plot of score function:
+#' @examplesIf interactive()
 #' scoreci(
 #'   x1 = c(1, 16), n1 = c(20, 40), x2 = c(0, 139), n2 = c(80, 160),
 #'   contrast = "RD", skew = TRUE, simpleskew = FALSE,

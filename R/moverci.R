@@ -18,30 +18,31 @@
 #'   each group (default ai = bi = 0.5 for Jeffreys method). Gamma priors for
 #'   Poisson rates require only a1, a2.
 #' @param cc Number or logical specifying (amount of) continuity adjustment
-#'   (default FALSE). Numeric value is taken as the gamma parameter in Laud 2017,
-#'   Appendix S2 (default 0.5 if cc = TRUE). Forced equal to 0.5 if type = "exact".
+#'   (default FALSE). Numeric value is taken as the gamma parameter in Laud
+#'   2017, Appendix S2 (default 0.5 if `cc = TRUE`). Forced equal to 0.5 if
+#'   `type = "exact"`.
 #' @param contrast Character string indicating the contrast of interest: \cr
 #'  "RD" = rate difference (default); \cr
 #'  "RR" = rate ratio; \cr
 #'  "OR" = odds ratio; \cr
-#'  "p" gives an interval for the single proportion x1/n1.
+#'  "p" gives an interval for the single proportion `x1/n1`.
 #' @param type Character string indicating the method used for the intervals for
 #'   the individual group rates. \cr
 #'   "jeff" = Jeffreys equal-tailed intervals (default); \cr
 #'   "exact" = Clopper-Pearson/Garwood exact intervals (note this does NOT
 #'   result in a strictly conservative interval for the contrast, except for
-#'   contrast = "p". The scoreci function with cc = TRUE is recommended as a
+#'   contrast = "p". The scoreci function with `cc = TRUE` is recommended as a
 #'   superior approximation of 'exact' methods); \cr
 #'   "midp" = mid-p intervals; \cr
 #'   "SCAS" = SCAS non-iterative intervals; \cr
 #'   "wilson" = Wilson score intervals (as per Newcombe 1998).
-#'              (Rao score is used for distrib = "poi") \cr
+#'              (Rao score is used for `distrib = "poi"`) \cr
 #'   NB: "wilson" option is included only for legacy validation against previous
-#'   published method by Newcombe. It is not recommended, as type = "jeff"
+#'   published method by Newcombe. It is not recommended, as `type = "jeff"`
 #'   or other equal-tailed options achieve much better coverage properties.
 #' @param adj Logical (default FALSE) indicating whether to apply the boundary
 #'   adjustment for Jeffreys intervals recommended on p108 of Brown et al.
-#'   (type = "jeff" only: set to FALSE if using informative priors)
+#'   (`type = "jeff"` only: set to FALSE if using informative priors)
 #' @param ... Additional arguments.
 #' @inheritParams jeffreysci
 #' @importFrom stats pchisq pf pnorm pt qbeta qgamma qnorm qqnorm qt
@@ -82,16 +83,16 @@ moverci <- function(x1,
                     n1,
                     x2 = NULL,
                     n2 = NULL,
+                    distrib = "bin",
+                    contrast = "RD",
+                    level = 0.95,
                     a1 = 0.5,
                     b1 = 0.5,
                     a2 = 0.5,
                     b2 = 0.5,
-                    cc = FALSE,
-                    level = 0.95,
-                    distrib = "bin",
-                    contrast = "RD",
                     type = "jeff",
                     adj = FALSE,
+                    cc = FALSE,
                     ...) {
   if (!(tolower(substr(type, 1, 4)) %in%
     c("jeff", "wils", "exac", "scas", "midp"))) {
@@ -303,16 +304,18 @@ moverci <- function(x1,
 #' @param x Numeric vector of number of events.
 #' @param n Numeric vector of sample sizes (for binomial rates) or exposure
 #'   times (for Poisson rates).
-#' @param ai,bi Numbers defining the Beta prior distribution (default ai = bi =
-#'   0.5 for Jeffreys interval). Gamma prior for Poisson rates requires only ai.
+#' @param ai,bi Numbers defining the Beta prior distribution (default `ai = bi =
+#'   0.5`` for Jeffreys interval). Gamma prior for Poisson rates requires only ai.
 #' @param cc Number or logical specifying (amount of) "continuity adjustment".
-#'   cc = 0 (default) gives Jeffreys interval, cc = 0.5 gives the
+#'   cc = 0 (default) gives Jeffreys interval, `cc = 0.5` gives the
 #'   Clopper-Pearson interval (or Garwood for Poisson). A value between 0 and
 #'   0.5 allows a compromise between proximate and conservative coverage.
 #' @param level Number specifying confidence level (between 0 and 1, default
 #'   0.95).
 #' @param distrib Character string indicating distribution assumed for the input
-#'   data: "bin" = binomial (default), "poi" = Poisson.
+#'   data:\cr
+#'   "bin" = binomial (default);\cr
+#'   "poi" = Poisson.
 #' @param adj Logical (default TRUE) indicating whether to apply the boundary
 #'   adjustment recommended on p108 of Brown et al. (set to FALSE if informative
 #'   priors are used)

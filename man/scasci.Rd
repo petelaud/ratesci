@@ -38,21 +38,23 @@ respectively.}
 times (for Poisson rates) in each group.}
 
 \item{distrib}{Character string indicating distribution assumed for the input
-data: "bin" = binomial (default), "poi" = Poisson.}
+data: \cr
+"bin" = binomial (default), \cr
+"poi" = Poisson.}
 
 \item{contrast}{Character string indicating the contrast of interest: \cr
 "RD" = rate difference (default); \cr
 "RR" = rate ratio; \cr
 "OR" = odds ratio; \cr
-"p" gives an interval for the single proportion or rate x1/n1.}
+"p" gives an interval for the single proportion or rate \code{x1/n1}.}
 
 \item{level}{Number specifying confidence level (between 0 and 1, default
 0.95).}
 
 \item{cc}{Number or logical (default FALSE) specifying (amount of) continuity
-adjustment. Numeric value is taken as the gamma parameter in Laud 2017,
-Appendix S2 (default 0.5 for 'conventional' Yates adjustment if
-cc = TRUE). \cr
+adjustment. Numeric value between 0 and 0.5 is taken as the gamma parameter
+in Laud 2017, Appendix S2 (\code{cc = TRUE} translates to 0.5 for 'conventional'
+Yates adjustment). \cr
 IMPORTANT NOTES:
 \enumerate{
 \item This adjustment (conventionally but controversially termed
@@ -63,10 +65,9 @@ except to deal with double-zero cells for stratified  RD (& double-100\%
 cells for binomial RD & RR) with IVS/INV weights.
 \item The continuity adjustments provided here have not been fully tested for
 stratified methods, but are found to match the continuity-adjusted version
-of the Mantel-Haenszel test,
-when cc = 0.5 for any of the binomial contrasts. Flexibility is included for
-a less conservative adjustment, such as cc = 0.25 suggested in Laud 2017
-(see Appendix S3.4), or cc = 3/16 = 0.1875 in Mehrotra & Railkar (2000)
+of the Mantel-Haenszel test, when \code{cc = 0.5} for any of the binomial
+contrasts. Flexibility is included for a less conservative adjustment, such
+as \code{cc = 0.25} suggested in Laud 2017 (see Appendix S3.4), or \code{cc = 3/16 =   0.1875} in Mehrotra & Railkar (2000).
 }}
 
 \item{theta0}{Number to be used in a one-sided significance test (e.g.
@@ -99,7 +100,8 @@ been fully evaluated.}
 \item{weighting}{String indicating which weighting method to use if
 stratified = "TRUE": \cr
 "IVS" = Inverse Variance of Score (see Laud 2017 for details); \cr
-"INV" = Inverse Variance (bcf omitted, default for contrast = "OR"); \cr
+"INV" = Inverse Variance (bcf omitted, default for contrast = "OR" giving
+CMH test); \cr
 "MH" = Mantel-Haenszel (n1j * n2j) / (n1j + n2j)
 (default for contrast = "RD" or "RR" giving CMH test);
 (= sample size for contrast = "p"); \cr
@@ -110,10 +112,10 @@ similar to INV for contrast = "OR"); \cr
 for an optimal test of RD if RRs are constant across strata.
 (Included only for validation purposes. In general, such a test
 would more logically use contrast = "RR" with weighting = "INV")
-For CI consistent with a CMH test, select skew = FALSE, random = FALSE,
+For CI consistent with a CMH test, select \code{skew = FALSE}, \code{random = FALSE},
 and use default MH weighting for RD/RR and INV for OR. \cr
-Weighting = 'MN' also matches the CMH test. \cr
-For the Radhakrishna optimal (most powerful) test, select INV weighting.
+\code{Weighting = "MN"} also matches the CMH test. \cr
+For the Radhakrishna optimal (most powerful) test, select INV weighting.\cr
 Note: Alternative user-specified weighting may also be applied, via the
 'wt' argument.}
 
@@ -122,7 +124,8 @@ iteration with weighting = "MN".}
 
 \item{MNtol}{(deprecated: argument renamed to mn_tol)}
 
-\item{wt}{Numeric vector containing (optional) user-specified weights.}
+\item{wt}{Numeric vector containing (optional) user-specified weights.\cr
+Overrides \code{weighting} if non-empty.}
 
 \item{warn}{Logical (default TRUE) giving the option to suppress warnings.}
 

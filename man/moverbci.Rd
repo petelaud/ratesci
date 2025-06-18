@@ -33,20 +33,23 @@ each group (default ai = bi = 0.5 for Jeffreys uninformative priors). Gamma
 priors for Poisson rates require only a1, a2.}
 
 \item{distrib}{Character string indicating distribution assumed for the input
-data: "bin" = binomial (default), "poi" = Poisson.}
+data:\cr
+"bin" = binomial (default);\cr
+"poi" = Poisson.}
 
 \item{contrast}{Character string indicating the contrast of interest: \cr
 "RD" = rate difference (default); \cr
 "RR" = rate ratio; \cr
 "OR" = odds ratio; \cr
-"p" gives an interval for the single proportion x1/n1.}
+"p" gives an interval for the single proportion \code{x1/n1}.}
 
 \item{level}{Number specifying confidence level (between 0 and 1, default
 0.95).}
 
 \item{cc}{Number or logical specifying (amount of) continuity adjustment
-(default FALSE). Numeric value is taken as the gamma parameter in Laud 2017,
-Appendix S2 (default 0.5 if cc = TRUE). Forced equal to 0.5 if type = "exact".}
+(default FALSE). Numeric value is taken as the gamma parameter in Laud
+2017, Appendix S2 (default 0.5 if \code{cc = TRUE}). Forced equal to 0.5 if
+\code{type = "exact"}.}
 
 \item{...}{Additional arguments.}
 }

@@ -48,7 +48,9 @@ Differences in two-sided coverage can be more subtle:
 
 ![](images/summaryRD95_45,15_small.jpg)
 
-The skewness correction, introduced by [@gart1988] should be considered essential for analysis of ratio contrasts, but can also have a substantial effect for RD as seen here.
+The skewness correction, introduced by [@gart1988] should be considered essential for analysis of relative risk, but can also have a substantial effect for RD as seen above. The one-sided coverage of MN for RR can be poor even in large samples with equal-sized groups, which means that the confidence interval tends to be located too close to 1:
+
+![](images/binRR_95_100,100os_small.jpg)
 
 [Note: [@fagerland2011] dismissed the MN method, saying that it can be somewhat liberal. In fact, based on reconstruction of their results, it appears that their evaluation was of the closely-related but inferior Mee method, which omits the N/(N-1) variance bias correction. This error was corrected in their 2017 book. Essentially, it seems they reject the MN method on the basis of some very small regions of the parameter space where coverage is slightly below nominal. These dips in coverage do occur, but fluctuate above and below the nominal level in a pattern of ridges and furrows aligned along the diagonal of a fixed value of $\theta_{RD}$. The most severe dips tend to occur when sample sizes are multiples of 10 (e.g. $(n_1, n_2) = (40, 10)$), which might be relatively rare in practice. The moving average smoothing in the above surface plots is designed to even out these fluctuations in coverage. The 'N-1' adjustment in the MN method elevates coverage probabilities slightly, and the skewness correction gives a further improvement overall, as well as substantially improving one-sided coverage when group sizes are unequal.]
 

@@ -1,24 +1,28 @@
 #' Skewness-corrected asymptotic score ("SCAS") confidence intervals for
 #' single binomial or Poisson rate using closed-form calculations.
 #'
+#' Closed-form function for computing confidence intervals for a single rate.
+#' Note: For associated hypothesis tests, use `scoreci()` with `contrast = "p"`.
 #' This function is vectorised in x, n.
 #'
 #' @param x Numeric vector of number of events.
 #' @param n Numeric vector of sample sizes (for binomial rates) or exposure
 #'   times (for Poisson rates).
 #' @param distrib Character string indicating distribution assumed for the input
-#'   data: "bin" = binomial (default), "poi" = Poisson.
+#'   data:\cr
+#'   "bin" = binomial (default);\cr
+#'   "poi" = Poisson.
 #' @param level Number specifying confidence level (between 0 and 1, default
 #'   0.95).
 #' @param bcf Logical (default TRUE) indicating whether to apply bias correction
-#'   in the score denominator. Applicable to distrib = "bin" only.
+#'   in the score denominator. Applicable to `distrib = "bin"` only.
 #' @param bign Sample size N to be used in the calculation of bcf, if different
 #'   from n. (Used by transformed SCASp method for paired conditional OR in
 #'   `pairbinci()`)
 #' @param xihat Number specifying estimated variance inflation factor for a
 #'   skewness corrected version of the Saha Wilson Score interval for clustered
 #'   binomial proportions. Need to calculate using BMS and WMS as per Saha 2016.
-#'   Used by new clusterpci() function for data entered per cluster.
+#'   Used by `clusterpci()` function for data entered per cluster.
 #' @param cc Number or logical (default FALSE) specifying (amount of) continuity
 #'   adjustment. Numeric value is taken as the gamma parameter in Laud 2017,
 #'   Appendix S2 (default 0.5 for 'conventional' adjustment if cc = TRUE).
