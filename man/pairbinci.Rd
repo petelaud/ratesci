@@ -7,7 +7,7 @@
 pairbinci(
   x,
   level = 0.95,
-  contrast = c("RD", "RR", "OR"),
+  contrast = "RD",
   method = ifelse(contrast == "OR", "SCASp", "Score"),
   moverbase = ifelse(method \%in\% c("MOVER", "MOVER_newc", "BP"), "jeff", NULL),
   bcf = TRUE,
