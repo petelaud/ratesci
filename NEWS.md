@@ -1,4 +1,4 @@
-# ratesci (development version)
+# ratesci 1.0.0 (2025-06-19)
 
 ## New features
 * New function `clusterpci()` for CI and test for a single binomial proportion 
@@ -51,7 +51,7 @@
 ## Other
 * Output object column names are updated (lower, est, upper) for consistency 
   and style conformity.
-* Tests added to confirm consistency of AS methods vs McNemar test.
+* Tests added to confirm consistency of score methods vs McNemar test.
 * Dependence on polynom package removed.
 * Edition 3 of testthat implemented.
 
