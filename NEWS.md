@@ -1,3 +1,5 @@
+# ratesci (development version)
+
 # ratesci 1.0.0 (2025-06-20)
 
 ## New features
