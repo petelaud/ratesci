@@ -389,27 +389,34 @@ a prediction interval (work in progress).</p></dd>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A list containing the following components:</p><dl><dt>estimates</dt>
-<dd><p>a matrix containing estimates of the rates in each group
-and of the requested contrast, with its confidence interval</p></dd>
- <dt>pval</dt>
-<dd><p>a
-matrix containing details of the corresponding 2-sided significance test
+<dd><p>a matrix containing estimates of the requested contrast
+and its confidence interval, and the estimated rates in each group:
+(p1hat, p2hat) are (r1, r0) from Miettinen-Nurminen, or (r1*, r0*) when
+stratified; (p1mle, p2mle) are (R1, R0), or (R1*, R0*) when stratified,
+evaluated at the MLE for the contrast parameter, incorporating any
+specified skewness/bias corrections.</p></dd>
+
+<dt>pval</dt>
+<dd><p>a matrix containing details of the corresponding 2-sided significance test
 against the null hypothesis that <code>p_1 = p_2</code>, and one-sided significance
-tests against the null hypothesis that theta &gt;= or &lt;= theta0</p></dd>
+tests against the null hypothesis that theta &gt;= or &lt;= theta0.</p></dd>
 
 <dt>call</dt>
-<dd><p>details of the function call</p></dd>
+<dd><p>details of the function call.</p></dd>
 
 </dl><p>If <code>stratified = TRUE</code>, the
 following outputs are added:</p><dl><dt>Qtest</dt>
 <dd><p>a vector of values
-describing and testing heterogeneity</p></dd>
- <dt>weighting</dt>
+describing and testing heterogeneity, including a score-based version of a
+Q statistic and p-value, I^2 and tau^2 to quantify heterogeneity, and a
+test for qualitative interaction analogous to the Gail and Simon test.</p></dd>
+
+<dt>weighting</dt>
 <dd><p>a string indicating
-the selected weighting method</p></dd>
+the selected weighting method.</p></dd>
  <dt>stratdata</dt>
 <dd><p>a matrix containing stratum
-estimates and weights</p></dd>
+estimates and weights.</p></dd>
 
 </dl></div>
     <div class="section level2">

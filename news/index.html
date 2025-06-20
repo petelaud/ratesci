@@ -46,14 +46,14 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="ratesci-development-version">ratesci (development version)<a class="anchor" aria-label="anchor" href="#ratesci-development-version"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.0.0" id="ratesci-100-2025-06-19">ratesci 1.0.0 (2025-06-19)<a class="anchor" aria-label="anchor" href="#ratesci-100-2025-06-19"></a></h2>
 <div class="section level3">
-<h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
+<h3 id="new-features-1-0-0">New features<a class="anchor" aria-label="anchor" href="#new-features-1-0-0"></a></h3>
 <ul><li>New function <code><a href="../reference/clusterpci.html">clusterpci()</a></code> for CI and test for a single binomial proportion from clustered data.</li>
 <li>Example datasets are now included.</li>
 <li>Improved documentation with pkgdown website &amp; vignettes.</li>
 </ul><div class="section level4">
-<h4 id="in-pairbinci-development-version">In <code>pairbinci()</code>:<a class="anchor" aria-label="anchor" href="#in-pairbinci-development-version"></a></h4>
+<h4 id="in-pairbinci-1-0-0">In <code>pairbinci()</code>:<a class="anchor" aria-label="anchor" href="#in-pairbinci-1-0-0"></a></h4>
 <ul><li>
 <code>skew</code> for skewness correction.</li>
 <li>
@@ -72,14 +72,14 @@
 <li>Output object now includes function call.</li>
 </ul></div>
 <div class="section level4">
-<h4 id="in-scaspci-development-version">In <code>scaspci()</code>:<a class="anchor" aria-label="anchor" href="#in-scaspci-development-version"></a></h4>
+<h4 id="in-scaspci-1-0-0">In <code>scaspci()</code>:<a class="anchor" aria-label="anchor" href="#in-scaspci-1-0-0"></a></h4>
 <ul><li>
 <code>bcf</code> option now implemented for contrast = “p” (default = FALSE).</li>
 <li>
 <code>bign</code> allows a different sample size to be used in the bias correction (used within transformed SCASp method for paired OR in <code>pairbinci</code>, for consistency with ‘N-1’ test).</li>
 </ul></div>
 <div class="section level4">
-<h4 id="in-scoreci-development-version">In <code>scoreci()</code>:<a class="anchor" aria-label="anchor" href="#in-scoreci-development-version"></a></h4>
+<h4 id="in-scoreci-1-0-0">In <code>scoreci()</code>:<a class="anchor" aria-label="anchor" href="#in-scoreci-1-0-0"></a></h4>
 <ul><li>
 <code>bcf</code> option now implemented for contrast = “p” (default = FALSE).</li>
 <li>(Note adjusted sample size for bias correction can be achieved by including a non-zero value for n2.)</li>
@@ -89,18 +89,18 @@
 </ul></div>
 </div>
 <div class="section level3">
-<h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
+<h3 id="bug-fixes-1-0-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-0-0"></a></h3>
 <div class="section level4">
-<h4 id="in-exactci-development-version">In <code>exactci()</code>:<a class="anchor" aria-label="anchor" href="#in-exactci-development-version"></a></h4>
+<h4 id="in-exactci-1-0-0">In <code>exactci()</code>:<a class="anchor" aria-label="anchor" href="#in-exactci-1-0-0"></a></h4>
 <ul><li>Corrected duplicate point estimate reported for vector inputs.</li>
 <li>Derive point estimates to match LCL and UCL with level = 0.</li>
 <li>Corrected LCL for Poisson mid-p method.</li>
 </ul></div>
 </div>
 <div class="section level3">
-<h3 id="other-development-version">Other<a class="anchor" aria-label="anchor" href="#other-development-version"></a></h3>
+<h3 id="other-1-0-0">Other<a class="anchor" aria-label="anchor" href="#other-1-0-0"></a></h3>
 <ul><li>Output object column names are updated (lower, est, upper) for consistency and style conformity.</li>
-<li>Tests added to confirm consistency of AS methods vs McNemar test.</li>
+<li>Tests added to confirm consistency of score methods vs McNemar test.</li>
 <li>Dependence on polynom package removed.</li>
 <li>Edition 3 of testthat implemented.</li>
 </ul></div>
