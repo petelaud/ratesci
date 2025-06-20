@@ -1,8 +1,9 @@
-#' Corticosteroids in acute traumatic brain injury: updated systematic review of randomised
-#' controlled trials (reported with MRC CRASH trial results, Roberts et al. 2001)
+#' Corticosteroids in acute traumatic brain injury: updated systematic review of
+#' randomised controlled trials
 #'
-#' Data from systematic review of the effect on mortality of
-#' corticosteroids in traumatic brain injury
+#' Data from systematic review of the effect on mortality of corticosteroids in
+#' traumatic brain injury (reported with MRC CRASH trial results, Roberts et al.
+#' 2001)
 #'
 #' @format A data frame with five variables:
 #' \describe{
@@ -16,10 +17,9 @@
 "crash"
 
 #' Meta-analysis of the effect of cisapride for treatment of non-ulcer dyspepsia
-#' (Hartung & Knapp 2001)
 #'
-#' Data from systematic review of the effect of cisapride for
-#' treatment of non-ulcer dyspepsia
+#' Data from systematic review of the effect of cisapride for treatment of
+#' non-ulcer dyspepsia (Hartung & Knapp 2001)
 #'
 #' @format A data frame with five variables:
 #' \describe{
@@ -32,11 +32,11 @@
 #' @source \doi{10.1002/sim.1009}
 "cisapride"
 
-#' Systematic review of the effect of graduated compression stockings for prevention of DVT
-#' (Roderick et al. 2005)
+#' Systematic review of the effect of graduated compression stockings for
+#' prevention of DVT
 #'
-#' Data from systematic review of the effect of graduated compression
-#' stockings for prevention of DVT
+#' Data from systematic review of the effect of graduated compression stockings
+#' for prevention of DVT (Roderick et al. 2005)
 #'
 #' @format A data frame with five variables:
 #' \describe{

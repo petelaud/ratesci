@@ -18,7 +18,7 @@
 #'   in the score denominator. Applicable to `distrib = "bin"` only.
 #' @param bign Sample size N to be used in the calculation of bcf, if different
 #'   from n. (Used by transformed SCASp method for paired conditional OR in
-#'   `pairbinci()`)
+#'   `pairbinci()`.)
 #' @param xihat Number specifying estimated variance inflation factor for a
 #'   skewness corrected version of the Saha Wilson Score interval for clustered
 #'   binomial proportions. Need to calculate using BMS and WMS as per Saha 2016.
@@ -29,8 +29,8 @@
 #' @param ... Other arguments.
 #' @return A list containing the following components: \describe{
 #'   \item{estimates}{a matrix containing estimated rate(s), the
-#'   SCAS confidence interval, and the input values x and n}
-#'   \item{call}{details of the function call} }
+#'   SCAS confidence interval, and the input values x and n.}
+#'   \item{call}{details of the function call.} }
 #' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
 #' @references
 #'   Laud PJ. Equal-tailed confidence intervals for comparison of

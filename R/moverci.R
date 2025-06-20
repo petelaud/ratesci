@@ -42,15 +42,15 @@
 #'   or other equal-tailed options achieve much better coverage properties.
 #' @param adj Logical (default FALSE) indicating whether to apply the boundary
 #'   adjustment for Jeffreys intervals recommended on p108 of Brown et al.
-#'   (`type = "jeff"` only: set to FALSE if using informative priors)
+#'   (`type = "jeff"` only: set to FALSE if using informative priors.)
 #' @param ... Additional arguments.
 #' @inheritParams jeffreysci
 #' @importFrom stats pchisq pf pnorm pt qbeta qgamma qnorm qqnorm qt
 #' @importFrom graphics abline lines text
 #' @return A list containing the following components: \describe{
 #'   \item{estimates}{a matrix containing estimates of the rates in each group
-#'   and of the requested contrast, with its confidence interval}
-#'   \item{call}{details of the function call} }
+#'   and of the requested contrast, with its confidence interval.}
+#'   \item{call}{details of the function call.} }
 #' @examples
 #' # Binomial RD, MOVER-J method:
 #' moverci(x1 = 5, n1 = 56, x2 = 0, n2 = 29)
@@ -318,12 +318,12 @@ moverci <- function(x1,
 #'   "poi" = Poisson.
 #' @param adj Logical (default TRUE) indicating whether to apply the boundary
 #'   adjustment recommended on p108 of Brown et al. (set to FALSE if informative
-#'   priors are used)
+#'   priors are used).
 #' @param ... Other arguments.
 #' @return A list containing the following components: \describe{
 #'   \item{estimates}{a matrix containing estimated rate(s), and corresponding
-#'   approximate Bayesian confidence interval, and the input values x and n}
-#'   \item{call}{details of the function call} }
+#'   approximate Bayesian confidence interval, and the input values x and n.}
+#'   \item{call}{details of the function call.} }
 #' @importFrom stats qbeta qgamma qnorm
 #' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
 #' @examples

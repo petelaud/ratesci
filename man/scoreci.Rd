@@ -215,16 +215,24 @@ a prediction interval (work in progress).}
 }
 \value{
 A list containing the following components: \describe{
-\item{estimates}{a matrix containing estimates of the rates in each group
-and of the requested contrast, with its confidence interval} \item{pval}{a
-matrix containing details of the corresponding 2-sided significance test
+\item{estimates}{a matrix containing estimates of the requested contrast
+and its confidence interval, and the estimated rates in each group:
+(p1hat, p2hat) are (r1, r0) from Miettinen-Nurminen, or (r1*, r0*) when
+stratified; (p1mle, p2mle) are (R1, R0), or (R1*, R0*) when stratified,
+evaluated at the MLE for the contrast parameter, incorporating any
+specified skewness/bias corrections.}
+\item{pval}{a matrix containing details of the corresponding 2-sided significance test
 against the null hypothesis that \code{p_1 = p_2}, and one-sided significance
-tests against the null hypothesis that theta >= or <= theta0}
-\item{call}{details of the function call} } If \code{stratified = TRUE}, the
-following outputs are added: \describe{ \item{Qtest}{a vector of values
-describing and testing heterogeneity} \item{weighting}{a string indicating
-the selected weighting method} \item{stratdata}{a matrix containing stratum
-estimates and weights}}
+tests against the null hypothesis that theta >= or <= theta0.}
+\item{call}{details of the function call.} } If \code{stratified = TRUE}, the
+following outputs are added: \describe{
+\item{Qtest}{a vector of values
+describing and testing heterogeneity, including a score-based version of a
+Q statistic and p-value, I^2 and tau^2 to quantify heterogeneity, and a
+test for qualitative interaction analogous to the Gail and Simon test.}
+\item{weighting}{a string indicating
+the selected weighting method.} \item{stratdata}{a matrix containing stratum
+estimates and weights.}}
 }
 \description{
 Score-based confidence intervals for the rate (or risk) difference ("RD") or

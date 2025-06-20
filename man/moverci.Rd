@@ -65,7 +65,7 @@ or other equal-tailed options achieve much better coverage properties.}
 
 \item{adj}{Logical (default FALSE) indicating whether to apply the boundary
 adjustment for Jeffreys intervals recommended on p108 of Brown et al.
-(\code{type = "jeff"} only: set to FALSE if using informative priors)}
+(\code{type = "jeff"} only: set to FALSE if using informative priors.)}
 
 \item{cc}{Number or logical specifying (amount of) continuity adjustment
 (default FALSE). Numeric value is taken as the gamma parameter in Laud
@@ -77,8 +77,8 @@ adjustment for Jeffreys intervals recommended on p108 of Brown et al.
 \value{
 A list containing the following components: \describe{
 \item{estimates}{a matrix containing estimates of the rates in each group
-and of the requested contrast, with its confidence interval}
-\item{call}{details of the function call} }
+and of the requested contrast, with its confidence interval.}
+\item{call}{details of the function call.} }
 }
 \description{
 Confidence intervals applying the MOVER method ("Method of Variance Estimates

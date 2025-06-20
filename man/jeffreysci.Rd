@@ -41,15 +41,15 @@ data:\cr
 
 \item{adj}{Logical (default TRUE) indicating whether to apply the boundary
 adjustment recommended on p108 of Brown et al. (set to FALSE if informative
-priors are used)}
+priors are used).}
 
 \item{...}{Other arguments.}
 }
 \value{
 A list containing the following components: \describe{
 \item{estimates}{a matrix containing estimated rate(s), and corresponding
-approximate Bayesian confidence interval, and the input values x and n}
-\item{call}{details of the function call} }
+approximate Bayesian confidence interval, and the input values x and n.}
+\item{call}{details of the function call.} }
 }
 \description{
 Generalised approximate Bayesian confidence intervals based on a Beta (for

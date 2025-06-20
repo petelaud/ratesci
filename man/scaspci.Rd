@@ -36,7 +36,7 @@ in the score denominator. Applicable to \code{distrib = "bin"} only.}
 
 \item{bign}{Sample size N to be used in the calculation of bcf, if different
 from n. (Used by transformed SCASp method for paired conditional OR in
-\code{pairbinci()})}
+\code{pairbinci()}.)}
 
 \item{xihat}{Number specifying estimated variance inflation factor for a
 skewness corrected version of the Saha Wilson Score interval for clustered
@@ -52,8 +52,8 @@ Appendix S2 (default 0.5 for 'conventional' adjustment if cc = TRUE).}
 \value{
 A list containing the following components: \describe{
 \item{estimates}{a matrix containing estimated rate(s), the
-SCAS confidence interval, and the input values x and n}
-\item{call}{details of the function call} }
+SCAS confidence interval, and the input values x and n.}
+\item{call}{details of the function call.} }
 }
 \description{
 Closed-form function for computing confidence intervals for a single rate.

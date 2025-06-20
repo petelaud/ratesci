@@ -165,16 +165,24 @@
 #' @importFrom stats pchisq pf pnorm pt qbeta qgamma qnorm qqnorm qt dbinom
 #' @importFrom graphics abline lines text
 #' @return A list containing the following components: \describe{
-#'   \item{estimates}{a matrix containing estimates of the rates in each group
-#'   and of the requested contrast, with its confidence interval} \item{pval}{a
-#'   matrix containing details of the corresponding 2-sided significance test
+#'   \item{estimates}{a matrix containing estimates of the requested contrast
+#'   and its confidence interval, and the estimated rates in each group:
+#'   (p1hat, p2hat) are (r1, r0) from Miettinen-Nurminen, or (r1*, r0*) when
+#'   stratified; (p1mle, p2mle) are (R1, R0), or (R1*, R0*) when stratified,
+#'   evaluated at the MLE for the contrast parameter, incorporating any
+#'   specified skewness/bias corrections.}
+#'   \item{pval}{a matrix containing details of the corresponding 2-sided significance test
 #'   against the null hypothesis that `p_1 = p_2`, and one-sided significance
-#'   tests against the null hypothesis that theta >= or <= theta0}
-#'   \item{call}{details of the function call} } If `stratified = TRUE`, the
-#'   following outputs are added: \describe{ \item{Qtest}{a vector of values
-#'   describing and testing heterogeneity} \item{weighting}{a string indicating
-#'   the selected weighting method} \item{stratdata}{a matrix containing stratum
-#'   estimates and weights}}
+#'   tests against the null hypothesis that theta >= or <= theta0.}
+#'   \item{call}{details of the function call.} } If `stratified = TRUE`, the
+#'   following outputs are added: \describe{
+#'   \item{Qtest}{a vector of values
+#'   describing and testing heterogeneity, including a score-based version of a
+#'   Q statistic and p-value, I^2 and tau^2 to quantify heterogeneity, and a
+#'   test for qualitative interaction analogous to the Gail and Simon test.}
+#'   \item{weighting}{a string indicating
+#'   the selected weighting method.} \item{stratdata}{a matrix containing stratum
+#'   estimates and weights.}}
 #' @examples
 #' # Binomial RD, SCAS method:
 #' scoreci(
@@ -1183,7 +1191,7 @@ scoreci <- function(x1,
 #' or Poisson rates, or for odds ratio ("OR", binomial only), or the single rate
 #' ("p"). (This is the "GNbc" method from Laud & Dane, developed from Gart &
 #' Nam, and generalised as "SCAS" in Laud 2017) including optional
-#' continuity adjustment  This function is vectorised in x1, x2, n1, and n2.
+#' continuity adjustment.  This function is vectorised in x1, x2, n1, and n2.
 #' Vector inputs may also be combined into a single stratified analysis (e.g.
 #' meta-analysis). This method assumes the contrast is constant across strata
 #' (fixed effects).  For a 'random-effects' method use tdasci (or scoreci with

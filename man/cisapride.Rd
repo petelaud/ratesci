@@ -3,8 +3,7 @@
 \docType{data}
 \name{cisapride}
 \alias{cisapride}
-\title{Meta-analysis of the effect of cisapride for treatment of non-ulcer dyspepsia
-(Hartung & Knapp 2001)}
+\title{Meta-analysis of the effect of cisapride for treatment of non-ulcer dyspepsia}
 \format{
 A data frame with five variables:
 \describe{
@@ -22,7 +21,7 @@ A data frame with five variables:
 cisapride
 }
 \description{
-Data from systematic review of the effect of cisapride for
-treatment of non-ulcer dyspepsia
+Data from systematic review of the effect of cisapride for treatment of
+non-ulcer dyspepsia (Hartung & Knapp 2001)
 }
 \keyword{datasets}

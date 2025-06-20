@@ -71,7 +71,7 @@ and for the Hybrid BP method for RR:
 "jeff" = Jeffreys equal-tailed interval (default),
 "SCASp" = skewness-corrected score,
 "midp" = mid-p,
-"wilson" = Wilson score (not recommended, known to be skewed)}
+"wilson" = Wilson score (not recommended, known to be skewed).}
 
 \item{bcf}{Logical (default FALSE) indicating whether to apply variance bias
 correction in the score denominator. (Under evaluation, manuscript under
@@ -109,16 +109,16 @@ places) to be used in optimisation subroutine for the confidence interval.}
 }
 \value{
 A list containing the following components: \describe{
-\item{data}{the input data in 2x2 matrix form}
+\item{data}{the input data in 2x2 matrix form.}
 \item{estimates}{the requested contrast, with its confidence interval and
 the specified confidence level, along with estimates of the marginal
 probabilities and the correlation coefficient (uncorrected and
-corrected)}
+corrected).}
 \item{pval}{the corresponding 2-sided significance test
 against the null hypothesis that p_1 = p_2, and one-sided
 significance tests against the null hypothesis that theta >= or <= theta0
-as specified}
-\item{call}{details of the function call}}
+as specified.}
+\item{call}{details of the function call.}}
 }
 \description{
 Confidence intervals for the rate (or risk) difference ("RD"), rate ratio
