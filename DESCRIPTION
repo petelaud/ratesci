@@ -1,7 +1,7 @@
 Type: Package
 Package: ratesci
 Title: Confidence Intervals and Tests for Comparisons of Binomial Proportions or Poisson Rates
-Version: 0.5.0.9000
+Version: 1.0.0
 Authors@R: 
     person("Pete", "Laud", , "p.j.laud@sheffield.ac.uk", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-3766-7090"))

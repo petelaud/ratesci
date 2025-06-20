@@ -1,4 +1,4 @@
-# ratesci 1.0.0 (2025-06-19)
+# ratesci 1.0.0 (2025-06-20)
 
 ## New features
 * New function `clusterpci()` for CI and test for a single binomial proportion 
