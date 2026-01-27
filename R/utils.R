@@ -187,6 +187,7 @@ epcs.test <- function(data.cells,
 #' and confirming the equivalence vs the beta distribution formula
 #' - only affects binomial case
 #'
+#' @importFrom stats qf
 #' @references
 #'    Tang M-L, Ling M-H, Ling L, Tian G.
 #'    Confidence intervals for a difference between proportions based on paired data.
