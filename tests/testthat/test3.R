@@ -486,14 +486,21 @@ test_that("legacy & new methods match published examples", {
     c(0.0562, 0.3292)
   )
 
-  # RD: Tang(ML) 2010 example - MOVER-wilson matches, but MOVER-jeffreys doesnt
+  # RD: Tang(ML) 2010 example - MOVER-wilson matches:
   expect_equal(
     unname(round(pairbinci(x = c(8, 3, 1, 2), contrast = "RD",
                            method = "MOVER_newc",
                            moverbase = "wilson")$estimates[, c(1, 3)], 4)),
     c(-0.1574, 0.4136)
   )
-  # RD: Tang(ML) 2010 example - Tang matches
+# ... but MOVER-jeffreys doesnt:
+#  expect_equal(
+#    unname(round(pairbinci(x = c(8, 3, 1, 2), contrast = "RD",
+#                           method = "MOVER_newc",
+#                           moverbase = "jeff")$estimates[, c(1, 3)], 4)),
+#    c(-0.1574, 0.4136)
+#  )
+  # RD: Tang(ML) 2010 example - Tango matches
   expect_equal(
     unname(round(pairbinci(x = c(8, 3, 1, 2), contrast = "RD",
                            method = "Score_closed", skew = FALSE,
@@ -519,7 +526,13 @@ test_that("legacy & new methods match published examples", {
   # to request code to investigate the discrepancy
   #  expect_equal(
   #    unname(round(pairbinci(x = c(8, 3, 1, 2), contrast = "RR",
-  #.          method = "MOVER", moverbase = "jeff")$estimates[, c(1, 3)], 4)),
+  #          method = "MOVER", moverbase = "jeff")$estimates[, c(1, 3)], 4)),
+  #    c(0.8101, 2.0236)
+  #  )
+  # Try including Newcombe adjusted correlation estimate - still no match
+  #  expect_equal(
+  #    unname(round(pairbinci(x = c(8, 3, 1, 2), contrast = "RR",
+  #          method = "MOVER_newc", moverbase = "jeff")$estimates[, c(1, 3)], 4)),
   #    c(0.8101, 2.0236)
   #  )
 
