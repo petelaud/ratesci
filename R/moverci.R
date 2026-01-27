@@ -368,17 +368,18 @@ jeffreysci <- function(x,
       # adjustment at boundary values
       CI_lower[x == 0] <- 0
       CI_upper[x == n] <- 1
-      est[x == 0] <- 0
-      est[x == n] <- 1
+      est[x == 0 & n > 0] <- 0
+      est[x == n & n > 0] <- 1
     }
   } else if (distrib == "poi") {
     # Jeffreys prior for Poisson rate uses gamma distribution,
     # as defined in Li et al. with continuity adjustment from Laud 2017.
     CI_lower <- qgamma(alpha / 2, x + (ai - cc), scale = 1 / n)
     est <- qgamma(0.5, x + (ai), scale = 1 / n)
+    est[x == 0 & n == 0] <- NaN
     if (adj == TRUE) {
       CI_lower[x == 0] <- 0
-      est[x == 0] <- 0
+      est[x == 0 & n > 0] <- 0
     }
     CI_upper <- qgamma(1 - alpha / 2, (x + (ai + cc)), scale = 1 / n)
   }

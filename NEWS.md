@@ -1,5 +1,11 @@
 # ratesci (development version)
 
+## Bug fixes
+### In `rateci()` and `moverci()`:
+* Permit n=0 to produce output interval as [0, 1] for binomial, or [0, Inf] for Poisson
+  with point estimate displayed as NaN
+  (prevents error in `pairbinci()` with `method` = "BP").
+
 # ratesci 1.0.0 (2025-06-20)
 
 ## New features

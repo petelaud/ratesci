@@ -102,7 +102,7 @@ scaspci <- function(x,
       ifelse(x == n, 1, (1 - (-Bu - sqrt(pmax(0, Bu^2 - 4 * A * Cu))) / (2 * A)))
     } else {
       #      Rmpfr::asNumeric((-Bu + sqrt(Rmpfr::pmax(0, Bu^2 - 4 * A * Cu))) / (2 * A))
-      ((-Bu + sqrt(pmax(0, Bu^2 - 4 * A * Cu))) / (2 * A))
+      ifelse(n == 0, Inf, (-Bu + sqrt(pmax(0, Bu^2 - 4 * A * Cu))) / (2 * A))
     },
     x = x,
     n = n
@@ -167,12 +167,12 @@ rateci <- function(x,
     print("x > n not possible for distrib = 'bin'")
     stop()
   }
-  if (any(c(x, n) < 0)) {
-    print("Negative inputs!")
+  if (distrib == "poi" && any(n == 0 & x > n + 0.001)) {
+    print("x > 0 not possible for distrib = 'poi' if n = 0")
     stop()
   }
-  if (any(n == 0)) {
-    print("Sample size is zero!")
+  if (any(c(x, n) < 0)) {
+    print("Negative inputs!")
     stop()
   }
 
@@ -260,12 +260,16 @@ exactci <- function(x,
     ftn = midroot, precis = precis, uplow = "low",
     contrast = "p", distrib = distrib
   )
+  est[x == 0 & n == 0] <- NaN
   upper <- bisect(
     ftn = uproot, precis = precis, uplow = "up", contrast = "p",
     distrib = distrib
   )
   outdata <- cbind(lower = lower, est = est, upper = upper) /
     ifelse(distrib == "poi", n, 1)
+  if (distrib == 'poi') {
+    outdata[x == 0, 'lower'] <- 0
+  }
   return(cbind(outdata, x = x, n = n))
 }
 
