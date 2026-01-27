@@ -1,0 +1,58 @@
+# Selected confidence intervals for the single binomial or Poisson rate.
+
+Confidence intervals for the single binomial or Poisson rate. Including
+SCAS or Jeffreys intervals, with or without continuity adjustment, and
+'exact' Clopper-Pearson/Garwood or mid-p intervals. This function is
+vectorised in x, n.
+
+## Usage
+
+``` r
+rateci(x, n, distrib = "bin", level = 0.95, cc = FALSE)
+```
+
+## Arguments
+
+- x:
+
+  Numeric vector of number of events.
+
+- n:
+
+  Numeric vector of sample size (for binomial rate) or exposure times
+  (for Poisson rate).
+
+- distrib:
+
+  Character string indicating distribution assumed for the input data:
+  "bin" = binomial (default), "poi" = Poisson.
+
+- level:
+
+  Number specifying confidence level (between 0 and 1, default 0.95).
+
+- cc:
+
+  Number or logical (default FALSE) specifying continuity adjustment.
+
+## Value
+
+A list containing, for each method, a matrix containing lower and upper
+confidence limits and point estimate of p for each value of x and n.
+Methods shown depend on the cc parameter, which specifies whether the
+continuity adjustment is applied to the SCAS and Jeffreys methods. The
+corresponding 'exact' method is Clopper-Pearson/Garwood if cc = TRUE and
+mid-p if cc = FALSE. The last list item contains details of the function
+call.
+
+## References
+
+Laud PJ. Equal-tailed confidence intervals for comparison of rates.
+Pharmaceutical Statistics 2017; 16:334-348. (Appendix A.4)
+
+Brown LD, Cai TT and DasGupta A. Interval estimation for a binomial
+proportion. Statistical Science 2001; 16(2):101-133.
+
+## Author
+
+Pete Laud, <p.j.laud@sheffield.ac.uk>

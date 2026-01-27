@@ -47,6 +47,13 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="ratesci-development-version">ratesci (development version)<a class="anchor" aria-label="anchor" href="#ratesci-development-version"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
+<div class="section level4">
+<h4 id="in-rateci-and-moverci-development-version">In <code>rateci()</code> and <code>moverci()</code>:<a class="anchor" aria-label="anchor" href="#in-rateci-and-moverci-development-version"></a></h4>
+<ul><li>Permit n=0 to produce output interval as [0, 1] for binomial, or [0, Inf] for Poisson with point estimate displayed as NaN (prevents error in <code><a href="../reference/pairbinci.html">pairbinci()</a></code> with <code>method</code> = “BP”).</li>
+</ul></div>
+</div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.0.0" id="ratesci-100-2025-06-20">ratesci 1.0.0 (2025-06-20)<a class="anchor" aria-label="anchor" href="#ratesci-100-2025-06-20"></a></h2><p class="text-muted">CRAN release: 2025-06-20</p>
@@ -251,7 +258,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.9000.</p>
 </div>
 
     </footer></div>
