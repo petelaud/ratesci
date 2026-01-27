@@ -311,7 +311,7 @@ scoreci(
 
 # Stratified example, with extremely rare instance of non-calculable skewness
 # correction seen on plot of score function:
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 scoreci(
   x1 = c(1, 16), n1 = c(20, 40), x2 = c(0, 139), n2 = c(80, 160),
   contrast = "RD", skew = TRUE, simpleskew = FALSE,
