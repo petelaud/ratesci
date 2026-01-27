@@ -179,3 +179,74 @@ epcs.test <- function(data.cells,
 }
 
 
+#' Jeffreys and other approximate Bayesian confidence intervals for a single
+#' binomial or Poisson rate.
+#'
+#' @description
+#' F-distribution version of Jeffreys interval, for checking M-L Tang version of MOVER-NJ
+#' and confirming the equivalence vs the beta distribution formula
+#' - only affects binomial case
+#'
+#' @references
+#'    Tang M-L, Ling M-H, Ling L, Tian G.
+#'    Confidence intervals for a difference between proportions based on paired data.
+#'    Stat Med. 2010;29:86-96. DOI: 10.1002/sim.3738
+#'
+#' @noRd
+jeffreysFci <- function(x,
+                       n,
+                       ai = 0.5,
+                       bi = 0.5,
+                       cc = 0,
+                       level = 0.95,
+                       distrib = "bin",
+                       adj = TRUE,
+                       ...) {
+  if (!is.numeric(c(x, n))) {
+    print("Non-numeric inputs!")
+    stop()
+  }
+  if (any(c(x, n) < 0)) {
+    print("Negative inputs!")
+    stop()
+  }
+  if (distrib == "bin" && (any(x > n + 0.001))) {
+    print("x > n not possible for distrib = 'bin'")
+    stop()
+  }
+  if (as.character(cc) == "TRUE") cc <- 0.5
+
+  alpha <- 1 - level
+  if (distrib == "bin") {
+    CI_lower <- (2*x + 1) / (2*x + 1 + (2*(n-x) + 1)*qf(1-alpha/2, 2*(n-x)+1, 2*x+1))
+#   CI_lower <- qbeta(alpha / 2, x + (ai - cc), n - x + (bi + cc)) # Version used in jeffreysci() for reference
+    est <- qbeta(0.5, x + (ai), n - x + (bi)) # Obtain phat as the median
+    CI_upper <- (2*x + 1) / (2*x + 1 + (2*(n-x) + 1)*qf(alpha/2, 2*(n-x)+1, 2*x+1))
+#   CI_upper <- qbeta(1 - alpha / 2, x + (ai + cc), n - x + (bi - cc)) # Version used in jeffreysci() for reference
+    if (adj == TRUE) {
+      # adjustment at boundary values
+      CI_lower[x == 0] <- 0
+      CI_upper[x == n] <- 1
+      est[x == 0] <- 0
+      est[x == n] <- 1
+    }
+  } else if (distrib == "poi") {
+    # Jeffreys prior for Poisson rate uses gamma distribution,
+    # as defined in Li et al. with continuity adjustment from Laud 2017.
+    CI_lower <- qgamma(alpha / 2, x + (ai - cc), scale = 1 / n)
+    est <- qgamma(0.5, x + (ai), scale = 1 / n)
+    if (adj == TRUE) {
+      CI_lower[x == 0] <- 0
+      est[x == 0] <- 0
+    }
+    CI_upper <- qgamma(1 - alpha / 2, (x + (ai + cc)), scale = 1 / n)
+  }
+  CI <- cbind(lower = CI_lower, est = est, upper = CI_upper, x = x, n = n)
+  outlist <- list(estimates = CI)
+  call <- c(
+    distrib = distrib, level = level, cc = cc, adj = adj, ai = ai, bi = bi
+  )
+  outlist <- append(outlist, list(call = call))
+  return(outlist)
+}
+
