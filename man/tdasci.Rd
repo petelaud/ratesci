@@ -156,6 +156,10 @@ only), or for prevalence or incidence rate ("p"). This function combines
 vector inputs into a single stratified random effects analysis
 (e.g. meta-analysis), incorporating any stratum variability into the
 confidence interval.
+
+Applies recommended default options, including bias correction for OR
+from Laud 2018. Should a user wish to compute TDAS intervals without bias
+correction to match results from Laud 2017, use scoreci() with or_bias = FALSE.
 }
 \references{
 Laud PJ. Equal-tailed confidence intervals for comparison of

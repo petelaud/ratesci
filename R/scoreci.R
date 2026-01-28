@@ -1290,6 +1290,7 @@ scasci <- function(x1,
 #' random effects stratified comparisons of independent binomial or
 #' Poisson rates.
 #'
+#' @description
 #' Wrapper function for the TDAS method. Score-based stratified confidence
 #' intervals for the rate (or risk) difference ("RD") or ratio ("RR") for
 #' independent binomial or Poisson rates, or for odds ratio ("OR", binomial
@@ -1297,6 +1298,10 @@ scasci <- function(x1,
 #' vector inputs into a single stratified random effects analysis
 #' (e.g. meta-analysis), incorporating any stratum variability into the
 #' confidence interval.
+#'
+#' Applies recommended default options, including bias correction for OR
+#' from Laud 2018. Should a user wish to compute TDAS intervals without bias
+#' correction to match results from Laud 2017, use scoreci() with or_bias = FALSE.
 #'
 #' @param x1,x2 Numeric vectors of numbers of events in group 1 & group 2
 #'   respectively.

@@ -97,12 +97,6 @@ for (i in 1:3) {
                             stratified = F, theta0 = 0.5, skew = T,
                             or_bias = F,
                             contrast = "OR")$estimates[, c(1, 3)], 3)
-
-# Corrigendum version
-#        OR <- fround(scoreci(x1 = x1, x2 = x2, n1 = n1, n2 = n2,
-#                             stratified = F, theta0 = 0.5, skew = T,
-#                             or_bias = T,
-#                             contrast = "OR")$estimates[, c(1, 3)], 3)
       ),
     MN =
       cbind(
@@ -171,6 +165,45 @@ test_that("no change to published examples", {
 })
 
 
+# Updated results for OR with bias correction as published in the corrigendum
+tab2x <- NULL
+for (i in 1:3) {
+  x1 <- x1hkp[i]
+  x2 <- x2hkp[i]
+  n1 <- n1hkp[i]
+  n2 <- n2hkp[i]
+  mytab <- rbind(
+    SCAS =
+      cbind(
+        # Corrigendum version
+        OR_biascorrect <- fround(scoreci(x1 = x1, x2 = x2, n1 = n1, n2 = n2,
+                                         stratified = F, theta0 = 0.5, skew = T,
+                                         or_bias = T,
+                                         contrast = "OR")$estimates[, c(1, 3)], 3)
+      ),
+    MN =
+      cbind(
+        OR_biascorrect = fround(scoreci(x1 = x1, x2 = x2, n1 = n1, n2 = n2,
+                                        stratified = F, theta0 = 0.5, skew = F,
+                                        or_bias = T,
+                                        contrast = "OR")$estimates[, c(1, 3)], 3)
+      )
+  )
+  mytab
+  tab2x <- rbind(tab2x, mytab)
+}
+
+# tab2xcheck <- tab2x
+# save(tab2xcheck,file="tests/testthat/Table2x.Rdata")
+# load(file="tests/testthat/Table2.Rdata")
+load(file = "Table2x.Rdata")
+# tab2==tab2check
+# Precision of function for OR has improved since publication, so just check to 4 sig figs
+test_that("no change to published examples", {
+  expect_equal(
+    unname(signif(tab2x, 4)), unname(signif(tab2xcheck, 4))
+  )
+})
 
 ###################
 # Table 3: Stratified confidence intervals using cisapride data
@@ -241,6 +274,39 @@ test_that("no change to published examples", {
   )
 })
 
+
+# Updated results for OR with bias correction defined in the corrigendum
+# produced by default by tdasci()
+tab3x <- rbind(
+  SCASmh = c(
+    OR = fround(scoreci(x1 = x1hk, x2 = x2hk, n1 = n1hk, n2 = n2hk,
+                        contrast = "OR", stratified = T, weighting = "MH",
+                        skew = T, or_bias = T, random = F, hk = F,
+                        fixtau = T)$estimates[, c(2, 1, 3)], 2)
+  ),
+  SCASiv = c(
+    OR = fround(scoreci(x1 = x1hk, x2 = x2hk, n1 = n1hk, n2 = n2hk,
+                        contrast = "OR", stratified = T, weighting = "IVS",
+                        skew = T, or_bias = T, random = F, hk = F,
+                        fixtau = T)$estimates[, c(2, 1, 3)], 2)
+  ),
+  TDAS = c(
+    OR = fround(scoreci(x1 = x1hk, x2 = x2hk, n1 = n1hk, n2 = n2hk,
+                        contrast = "OR", or_bias = T, stratified = T,
+                        weighting = "IVS",
+                        random = T)$estimates[, c(2, 1, 3)], 2)
+  )
+)
+tab3x
+# tab3xcheck <- tab3x
+# save(tab3xcheck,file="tests/testthat/Table3x.Rdata")
+load(file = "Table3x.Rdata")
+# tab2==tab2check
+test_that("no change to published examples", {
+  expect_equal(
+    tab3x, tab3xcheck
+  )
+})
 
 # Examples below need converting into test_that calls
 
