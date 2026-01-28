@@ -5,13 +5,19 @@ independent binomial or Poisson rates, or for odds ratio ("OR", binomial
 only), or for prevalence or incidence rate ("p"). This function combines
 vector inputs into a single stratified random effects analysis
 (e.g. meta-analysis), incorporating any stratum variability into the
-confidence interval.'><meta property="og:description" content='Wrapper function for the TDAS method. Score-based stratified confidence
+confidence interval.
+Applies recommended default options, including bias correction for OR
+from Laud 2018. Should a user wish to compute TDAS intervals without bias
+correction to match results from Laud 2017, use scoreci() with or_bias = FALSE.'><meta property="og:description" content='Wrapper function for the TDAS method. Score-based stratified confidence
 intervals for the rate (or risk) difference ("RD") or ratio ("RR") for
 independent binomial or Poisson rates, or for odds ratio ("OR", binomial
 only), or for prevalence or incidence rate ("p"). This function combines
 vector inputs into a single stratified random effects analysis
 (e.g. meta-analysis), incorporating any stratum variability into the
-confidence interval.'><meta property="og:image" content="https://petelaud.github.io/ratesci/logo.png"></head><body>
+confidence interval.
+Applies recommended default options, including bias correction for OR
+from Laud 2018. Should a user wish to compute TDAS intervals without bias
+correction to match results from Laud 2017, use scoreci() with or_bias = FALSE.'><meta property="og:image" content="https://petelaud.github.io/ratesci/logo.png"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -66,6 +72,9 @@ only), or for prevalence or incidence rate ("p"). This function combines
 vector inputs into a single stratified random effects analysis
 (e.g. meta-analysis), incorporating any stratum variability into the
 confidence interval.</p>
+<p>Applies recommended default options, including bias correction for OR
+from Laud 2018. Should a user wish to compute TDAS intervals without bias
+correction to match results from Laud 2017, use scoreci() with or_bias = FALSE.</p>
     </div>
 
     <div class="section level2">
