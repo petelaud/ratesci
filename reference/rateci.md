@@ -1,14 +1,16 @@
 # Selected confidence intervals for the single binomial or Poisson rate.
 
 Confidence intervals for the single binomial or Poisson rate. Including
-SCAS or Jeffreys intervals, with or without continuity adjustment, and
-'exact' Clopper-Pearson/Garwood or mid-p intervals. This function is
-vectorised in x, n.
+SCAS and Jeffreys intervals, with or without continuity adjustment, and
+'exact' Clopper-Pearson/Garwood or mid-p intervals, and another version
+of the exact or mid-p interval derived from Beta distributions (from
+eqn. (17) of Brown et al.), with an equivalent using Gamma distributions
+for a Poisson rate (). This function is vectorised in x, n.
 
 ## Usage
 
 ``` r
-rateci(x, n, distrib = "bin", level = 0.95, cc = FALSE)
+rateci(x, n, distrib = "bin", level = 0.95, std_est = TRUE, cc = FALSE)
 ```
 
 ## Arguments
@@ -31,6 +33,13 @@ rateci(x, n, distrib = "bin", level = 0.95, cc = FALSE)
 
   Number specifying confidence level (between 0 and 1, default 0.95).
 
+- std_est:
+
+  logical, specifying if the crude point estimate for the proportion
+  value x/n should be returned (TRUE, default) or the method-specific
+  alternative point estimate consistent with a 0% confidence interval
+  (FALSE).
+
 - cc:
 
   Number or logical (default FALSE) specifying continuity adjustment.
@@ -52,6 +61,9 @@ Pharmaceutical Statistics 2017; 16:334-348. (Appendix A.4)
 
 Brown LD, Cai TT and DasGupta A. Interval estimation for a binomial
 proportion. Statistical Science 2001; 16(2):101-133.
+
+Garwood F. Fiducial limits for the Poisson distribution. Biometrika
+1936; 28(3-4):437, doi:10.1093/biomet/28.3-4.437.
 
 ## Author
 

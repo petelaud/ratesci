@@ -61,19 +61,23 @@ with similar coverage properties ([Laud 2018](#ref-laud2018)):
 rateci(x = 1, n = 29)
 #> $scas
 #>        lower    est upper x  n
-#> [1,] 0.00199 0.0398 0.155 1 29
+#> [1,] 0.00199 0.0345 0.155 1 29
 #> 
 #> $jeff
 #>        lower    est upper x  n
-#> [1,] 0.00375 0.0403  0.15 1 29
+#> [1,] 0.00375 0.0345  0.15 1 29
 #> 
 #> $midp
 #>        lower    est upper x  n
-#> [1,] 0.00172 0.0391 0.159 1 29
+#> [1,] 0.00172 0.0345 0.159 1 29
+#> 
+#> $midp_beta
+#>        lower    est upper x  n
+#> [1,] 0.00467 0.0345 0.149 1 29
 #> 
 #> $call
-#> distrib   level      cc 
-#>   "bin"  "0.95" "FALSE"
+#> distrib   level      cc std_est 
+#>   "bin"  "0.95" "FALSE"  "TRUE"
 ```
 
 The Jeffreys interval can also incorporate prior information about $p$
@@ -100,19 +104,23 @@ Jeffreys, and (if `cc` is TRUE or 0.5), the Clopper-Pearson method.
 rateci(x = 1, n = 29, cc = TRUE)
 #> $scas_cc
 #>         lower    est upper x  n
-#> [1,] 6.19e-06 0.0398 0.182 1 29
+#> [1,] 6.19e-06 0.0345 0.182 1 29
 #> 
 #> $jeff_cc
 #>         lower    est upper x  n
-#> [1,] 0.000873 0.0403 0.178 1 29
+#> [1,] 0.000873 0.0345 0.178 1 29
 #> 
 #> $cp
 #>         lower    est upper x  n
-#> [1,] 0.000873 0.0391 0.178 1 29
+#> [1,] 0.000873 0.0345 0.178 1 29
+#> 
+#> $cp_beta
+#>         lower    est upper x  n
+#> [1,] 0.000873 0.0345 0.178 1 29
 #> 
 #> $call
-#> distrib   level      cc 
-#>   "bin"  "0.95"   "0.5"
+#> distrib   level      cc std_est 
+#>   "bin"  "0.95"   "0.5"  "TRUE"
 ```
 
 Such an adjustment is widely acknowledged to be over-conservative, so
@@ -123,15 +131,19 @@ adjustment([Laud 2017](#ref-laud2017), Appendix S2 ($\gamma = cc$)).
 rateci(x = 1, n = 29, cc = 0.25)
 #> $scas_cc
 #>         lower    est upper x  n
-#> [1,] 0.000605 0.0398 0.169 1 29
+#> [1,] 0.000605 0.0345 0.169 1 29
 #> 
 #> $jeff_cc
 #>        lower    est upper x  n
-#> [1,] 0.00205 0.0403 0.164 1 29
+#> [1,] 0.00205 0.0345 0.164 1 29
+#> 
+#> $beta_cc
+#>        lower    est upper x  n
+#> [1,] 0.00277 0.0345 0.163 1 29
 #> 
 #> $call
-#> distrib   level      cc 
-#>   "bin"  "0.95"  "0.25"
+#> distrib   level      cc std_est 
+#>   "bin"  "0.95"  "0.25"  "TRUE"
 ```
 
 ### Stratified datasets

@@ -128,19 +128,23 @@ methods (Jeffreys and mid-p) with similar coverage properties <span class="citat
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/rateci.html">rateci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">29</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $scas</span></span>
 <span><span class="co">#&gt;        lower    est upper x  n</span></span>
-<span><span class="co">#&gt; [1,] 0.00199 0.0398 0.155 1 29</span></span>
+<span><span class="co">#&gt; [1,] 0.00199 0.0345 0.155 1 29</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $jeff</span></span>
 <span><span class="co">#&gt;        lower    est upper x  n</span></span>
-<span><span class="co">#&gt; [1,] 0.00375 0.0403  0.15 1 29</span></span>
+<span><span class="co">#&gt; [1,] 0.00375 0.0345  0.15 1 29</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $midp</span></span>
 <span><span class="co">#&gt;        lower    est upper x  n</span></span>
-<span><span class="co">#&gt; [1,] 0.00172 0.0391 0.159 1 29</span></span>
+<span><span class="co">#&gt; [1,] 0.00172 0.0345 0.159 1 29</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $midp_beta</span></span>
+<span><span class="co">#&gt;        lower    est upper x  n</span></span>
+<span><span class="co">#&gt; [1,] 0.00467 0.0345 0.149 1 29</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $call</span></span>
-<span><span class="co">#&gt; distrib   level      cc </span></span>
-<span><span class="co">#&gt;   "bin"  "0.95" "FALSE"</span></span></code></pre></div>
+<span><span class="co">#&gt; distrib   level      cc std_est </span></span>
+<span><span class="co">#&gt;   "bin"  "0.95" "FALSE"  "TRUE"</span></span></code></pre></div>
 <p>The Jeffreys interval can also incorporate prior information about
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>
 for an approximate Bayesian confidence interval. For example, a pilot
@@ -168,19 +172,23 @@ continuity-adjusted SCAS or Jeffreys, and (if <code>cc</code> is TRUE or
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/rateci.html">rateci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">29</span>, cc <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $scas_cc</span></span>
 <span><span class="co">#&gt;         lower    est upper x  n</span></span>
-<span><span class="co">#&gt; [1,] 6.19e-06 0.0398 0.182 1 29</span></span>
+<span><span class="co">#&gt; [1,] 6.19e-06 0.0345 0.182 1 29</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $jeff_cc</span></span>
 <span><span class="co">#&gt;         lower    est upper x  n</span></span>
-<span><span class="co">#&gt; [1,] 0.000873 0.0403 0.178 1 29</span></span>
+<span><span class="co">#&gt; [1,] 0.000873 0.0345 0.178 1 29</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $cp</span></span>
 <span><span class="co">#&gt;         lower    est upper x  n</span></span>
-<span><span class="co">#&gt; [1,] 0.000873 0.0391 0.178 1 29</span></span>
+<span><span class="co">#&gt; [1,] 0.000873 0.0345 0.178 1 29</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $cp_beta</span></span>
+<span><span class="co">#&gt;         lower    est upper x  n</span></span>
+<span><span class="co">#&gt; [1,] 0.000873 0.0345 0.178 1 29</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $call</span></span>
-<span><span class="co">#&gt; distrib   level      cc </span></span>
-<span><span class="co">#&gt;   "bin"  "0.95"   "0.5"</span></span></code></pre></div>
+<span><span class="co">#&gt; distrib   level      cc std_est </span></span>
+<span><span class="co">#&gt;   "bin"  "0.95"   "0.5"  "TRUE"</span></span></code></pre></div>
 <p>Such an adjustment is widely acknowledged to be over-conservative, so
 intermediate adjustments such as <code>cc = 0.25</code> give a more
 refined adjustment<span class="citation">(<a href="#ref-laud2017">Laud
@@ -190,15 +198,19 @@ refined adjustment<span class="citation">(<a href="#ref-laud2017">Laud
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/rateci.html">rateci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">29</span>, cc <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $scas_cc</span></span>
 <span><span class="co">#&gt;         lower    est upper x  n</span></span>
-<span><span class="co">#&gt; [1,] 0.000605 0.0398 0.169 1 29</span></span>
+<span><span class="co">#&gt; [1,] 0.000605 0.0345 0.169 1 29</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $jeff_cc</span></span>
 <span><span class="co">#&gt;        lower    est upper x  n</span></span>
-<span><span class="co">#&gt; [1,] 0.00205 0.0403 0.164 1 29</span></span>
+<span><span class="co">#&gt; [1,] 0.00205 0.0345 0.164 1 29</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $beta_cc</span></span>
+<span><span class="co">#&gt;        lower    est upper x  n</span></span>
+<span><span class="co">#&gt; [1,] 0.00277 0.0345 0.163 1 29</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $call</span></span>
-<span><span class="co">#&gt; distrib   level      cc </span></span>
-<span><span class="co">#&gt;   "bin"  "0.95"  "0.25"</span></span></code></pre></div>
+<span><span class="co">#&gt; distrib   level      cc std_est </span></span>
+<span><span class="co">#&gt;   "bin"  "0.95"  "0.25"  "TRUE"</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="stratified-datasets">Stratified datasets<a class="anchor" aria-label="anchor" href="#stratified-datasets"></a>
 </h3>
