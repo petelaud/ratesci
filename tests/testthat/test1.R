@@ -93,27 +93,28 @@ for (midp in c(FALSE, TRUE)) {
 }
 for (distrib in c("bin", "poi")) {
   for (midp in c(FALSE, TRUE)) {
-  test_that("Midpoint equals UCL and LCL for level = 0", {
+    for (beta in c(FALSE, TRUE)) {
+  test_that("Midpoint equals mid-p UCL and LCL for level = 0", {
     expect_equal(
       unname(exactci(x = 0:40, n = 40,
-                     midp = midp, distrib = "poi"
+                     midp = midp, distrib = "poi", beta = beta
       )[, 2]),
       unname(exactci(x = 0:40, n = 40,
-                         midp = TRUE, distrib = "poi", level = 0
+                         midp = TRUE, distrib = "poi", level = 0, beta = beta
       )[, 1]),
       tolerance = 1E-5
     )
     expect_equal(
       unname(exactci(x = 0:40, n = 40,
-                     midp = midp, distrib = "poi"
+                     midp = midp, distrib = "poi", beta = beta
       )[, 2]),
       unname(exactci(x = 0:40, n = 40,
-                     midp = TRUE, distrib = "poi", level = 0
+                     midp = TRUE, distrib = "poi", level = 0, beta = beta
       )[, 3]),
       tolerance = 1E-5
     )
   })
-}}
+}}}
 
 
 test_that("Tang score matches IVS", {

@@ -118,9 +118,13 @@ scaspci <- function(x,
 
 #' Selected confidence intervals for the single binomial or Poisson rate.
 #'
+#' @description
 #' Confidence intervals for the single binomial or Poisson rate. Including
-#' SCAS or Jeffreys intervals, with or without continuity adjustment, and
-#' 'exact' Clopper-Pearson/Garwood or mid-p intervals.
+#' SCAS and Jeffreys intervals, with or without continuity adjustment, and
+#' 'exact' Clopper-Pearson/Garwood or mid-p intervals, and
+#' another version of the exact or mid-p interval derived from Beta distributions
+#' (from eqn. (17) of Brown et al.), with an equivalent using Gamma distributions
+#' for a Poisson rate ().
 #' This function is vectorised in x, n.
 #'
 #' @param x Numeric vector of number of events.
@@ -130,6 +134,9 @@ scaspci <- function(x,
 #'   data: "bin" = binomial (default), "poi" = Poisson.
 #' @param level Number specifying confidence level (between 0 and 1, default
 #'   0.95).
+#' @param std_est logical, specifying if the crude point estimate for the proportion
+#'   value x/n should be returned (TRUE, default) or the method-specific alternative
+#'   point estimate consistent with a 0% confidence interval (FALSE).
 #' @param cc Number or logical (default FALSE) specifying continuity
 #'   adjustment.
 #' @return A list containing, for each method, a matrix containing lower and upper
@@ -147,11 +154,15 @@ scaspci <- function(x,
 #'   Brown LD, Cai TT and DasGupta A. Interval estimation for a binomial
 #'   proportion. Statistical Science 2001; 16(2):101-133.
 #'
+#'   Garwood F. Fiducial limits for the Poisson distribution. Biometrika
+#'   1936; 28(3-4):437, doi:10.1093/biomet/28.3-4.437.
+#'
 #' @export
 rateci <- function(x,
                    n,
                    distrib = "bin",
                    level = 0.95,
+                   std_est = TRUE,
                    cc = FALSE
                    ) {
   # in case x is input as a vector but n is not
@@ -183,6 +194,8 @@ rateci <- function(x,
     level = level,
     cc = cc
   )$estimates[, c(1:5), drop = FALSE]
+  if (std_est) ci_scas[, 2] <- x / n
+
   ci_jeff <- jeffreysci(
     x = x,
     n = n,
@@ -193,27 +206,51 @@ rateci <- function(x,
     distrib = distrib,
     adj = TRUE
   )$estimates[, c(1:5), drop = FALSE]
+  if (std_est) ci_jeff[, 2] <- x / n
+
   ci_exact <- exactci(
     x = x,
     n = n,
     level = level,
     midp = 0.5 - cc,
+    beta = FALSE,
     distrib = distrib
   )
+  if (std_est) ci_exact[, 2] <- x / n
+
+  ci_beta <- exactci(
+    x = x,
+    n = n,
+    level = level,
+    midp = 0.5 - cc,
+    beta = TRUE,
+    distrib = distrib
+  )
+  if (std_est) ci_beta[, 2] <- x / n
+
   if (cc == 0) {
-    outlist <- list(scas = ci_scas, jeff = ci_jeff, midp = ci_exact)
+    if (distrib == "bin") {
+      outlist <- list(scas = ci_scas, jeff = ci_jeff, midp = ci_exact, midp_beta = ci_beta)
+    } else {
+      outlist <- list(scas = ci_scas, jeff = ci_jeff, midp = ci_exact, midp_gamma = ci_beta)
+    }
   } else if (cc == 0.5) {
     if (distrib == "bin") {
-      outlist <- list(scas_cc = ci_scas, jeff_cc = ci_jeff, cp = ci_exact)
+      outlist <- list(scas_cc = ci_scas, jeff_cc = ci_jeff, cp = ci_exact, cp_beta = ci_beta)
     } else {
-      outlist <- list(scas_cc = ci_scas, jeff_cc = ci_jeff, garwood = ci_exact)
+      outlist <- list(scas_cc = ci_scas, jeff_cc = ci_jeff, garwood = ci_exact, gw_gamma = ci_beta)
     }
   } else {
-    outlist <- list(scas_cc = ci_scas, jeff_cc = ci_jeff)
+    if (distrib == "bin") {
+      outlist <- list(scas_cc = ci_scas, jeff_cc = ci_jeff, beta_cc = ci_beta)
+    } else {
+      outlist <- list(scas_cc = ci_scas, jeff_cc = ci_jeff, gamma_cc = ci_beta)
+    }
     # exact method not applicable if using a compromise value of cc
+    # - but experimental beta/gamma distribution version included
   }
   call <- c(
-    distrib = distrib, level = level, cc = cc
+    distrib = distrib, level = level, cc = cc, std_est = std_est
   )
   outlist <- append(outlist, list(call = call))
   return(outlist)
@@ -231,40 +268,63 @@ exactci <- function(x,
                     n,
                     level = 0.95,
                     midp = TRUE,
+                    beta = FALSE,
                     distrib = "bin",
                     precis = 8
                     ) {
   alpha <- 1 - level
+  if (length(n) < length(x)) n <- rep(n, length(x))
   if (as.character(midp) == "TRUE") midp <- 0.5
-  if (distrib == "bin") {
-    lowroot <- function(p) {
-      pbinom(x - 1, n, p) + midp * dbinom(x, n, p) -
-        (1 - alpha / 2)
+  if (beta == FALSE) {
+    if (distrib == "bin") {
+      lowroot <- function(p) {
+        pbinom(x - 1, n, p) + midp * dbinom(x, n, p) -
+          (1 - alpha / 2)
+      }
+      midroot <- function(p) {
+        pbinom(x - 1, n, p) + 0.5 * dbinom(x, n, p) - 0.5
+      }
+      uproot <- function(p) {
+        pbinom(x, n, p) - midp * dbinom(x, n, p) - alpha / 2
+      }
+    } else if (distrib == "poi") {
+      lowroot <- function(p) ppois(x - 1, p) + midp * dpois(x, p) - (1 - alpha / 2)
+      midroot <- function(p) ppois(x - 1, p) + 0.5 * dpois(x, p) - 0.5
+      uproot <- function(p) ppois(x, p) - midp * dpois(x, p) - alpha / 2
     }
-    midroot <- function(p) {
-      pbinom(x - 1, n, p) + 0.5 * dbinom(x, n, p) - 0.5
+    lower <- bisect(
+      ftn = lowroot, precis = precis, uplow = "low",
+      contrast = "p", distrib = distrib
+    )
+    est <- bisect(
+      ftn = midroot, precis = precis, uplow = "low",
+      contrast = "p", distrib = distrib
+    )
+    est[x == 0 & n == 0] <- NaN
+    upper <- bisect(
+      ftn = uproot, precis = precis, uplow = "up", contrast = "p",
+      distrib = distrib
+    )
+  } else if (beta == TRUE) {
+    if (distrib == "bin") {
+      est <- 0.5 * (qbeta(0.5, x, n - x + 1) + qbeta(0.5, x + 1, n - x))
+      lower <- (1 - midp) * qbeta(alpha / 2, x, n - x + 1) + midp * qbeta(alpha / 2, x + 1, n - x)
+      lower[x == n] <- qbeta(alpha / (2 * (1 - midp)), x, n - x + 1)[x == n]
+      lower[x == 0] <- 0
+      est[x == 0] <- 0
+      upper <- (1 - midp) * qbeta(1 - alpha / 2, x + 1, n - x) + midp * qbeta(1 - alpha / 2, x, n - x + 1)
+      upper[x == 0] <- qbeta(1 - alpha / (2 * (1 - midp)), x + 1, n - x)[x == 0]
+      upper[x == n] <- 1
+      est[x == n] <- 1
+    } else if (distrib == "poi") {
+      est <- n * (0.5 * qgamma(0.5, x, scale = 1 / n) + 0.5 * qgamma(0.5, x + 1, scale = 1 / n))
+      lower <- n * ((1 - midp) * qgamma(alpha / 2, x, scale = 1 / n) + (midp) * qgamma(alpha / 2, x + 1, scale = 1 / n))
+      lower[x == 0] <- 0
+      est[x == 0] <- 0
+      upper <- n * ((midp) * qgamma(1 - alpha / 2, x, scale = 1 / n) + (1 - midp) * qgamma(1 - alpha / 2, x + 1, scale = 1 / n))
+      upper[x == 0] <- (n * qgamma(1 - alpha / (2 * (1 - midp)), x + 1, scale = 1 / n))[x == 0]
     }
-    uproot <- function(p) {
-      pbinom(x, n, p) - midp * dbinom(x, n, p) - alpha / 2
-    }
-  } else if (distrib == "poi") {
-    lowroot <- function(p) ppois(x - 1, p) + midp * dpois(x, p) - (1 - alpha / 2)
-    midroot <- function(p) ppois(x - 1, p) + 0.5 * dpois(x, p) - 0.5
-    uproot <- function(p) ppois(x, p) - midp * dpois(x, p) - alpha / 2
   }
-  lower <- bisect(
-    ftn = lowroot, precis = precis, uplow = "low",
-    contrast = "p", distrib = distrib
-  )
-  est <- bisect(
-    ftn = midroot, precis = precis, uplow = "low",
-    contrast = "p", distrib = distrib
-  )
-  est[x == 0 & n == 0] <- NaN
-  upper <- bisect(
-    ftn = uproot, precis = precis, uplow = "up", contrast = "p",
-    distrib = distrib
-  )
   outdata <- cbind(lower = lower, est = est, upper = upper) /
     ifelse(distrib == "poi", n, 1)
   if (distrib == 'poi') {
@@ -272,5 +332,4 @@ exactci <- function(x,
   }
   return(cbind(outdata, x = x, n = n))
 }
-
 
