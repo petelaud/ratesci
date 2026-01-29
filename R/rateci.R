@@ -123,8 +123,10 @@ scaspci <- function(x,
 #' SCAS and Jeffreys intervals, with or without continuity adjustment, and
 #' 'exact' Clopper-Pearson/Garwood or mid-p intervals, and
 #' another version of the exact or mid-p interval derived from Beta distributions
-#' (from eqn. (17) of Brown et al.), with an equivalent using Gamma distributions
-#' for a Poisson rate ().
+#' (from p.115 of Brown et al.), with an equivalent using Gamma distributions
+#' for a Poisson rate. Note that these closed-form calculations exactly match
+#' the iterative calculations for the exact interval (when `cc = TRUE`), but not
+#' for the mid-p interval (`cc = FALSE`)
 #' This function is vectorised in x, n.
 #'
 #' @param x Numeric vector of number of events.
@@ -139,6 +141,9 @@ scaspci <- function(x,
 #'   point estimate consistent with a 0% confidence interval (FALSE).
 #' @param cc Number or logical (default FALSE) specifying continuity
 #'   adjustment.
+#' @param precis Number (default 8) specifying precision (i.e. number of decimal
+#'   places) to be used in root-finding subroutine for the exact confidence interval.
+#'   (Note all other methods use closed-form calculations so are not affected.)
 #' @return A list containing, for each method, a matrix containing lower and upper
 #'   confidence limits and point estimate of p for each value of x and n.
 #'   Methods shown depend on the cc
@@ -163,7 +168,8 @@ rateci <- function(x,
                    distrib = "bin",
                    level = 0.95,
                    std_est = TRUE,
-                   cc = FALSE
+                   cc = FALSE,
+                   precis = 8
                    ) {
   # in case x is input as a vector but n is not
   if (length(n) < length(x) && length(x) > 1) {
@@ -214,7 +220,8 @@ rateci <- function(x,
     level = level,
     midp = 0.5 - cc,
     beta = FALSE,
-    distrib = distrib
+    distrib = distrib,
+    precis = precis
   )
   if (std_est) ci_exact[, 2] <- x / n
 

@@ -4,7 +4,15 @@
 \alias{rateci}
 \title{Selected confidence intervals for the single binomial or Poisson rate.}
 \usage{
-rateci(x, n, distrib = "bin", level = 0.95, std_est = TRUE, cc = FALSE)
+rateci(
+  x,
+  n,
+  distrib = "bin",
+  level = 0.95,
+  std_est = TRUE,
+  cc = FALSE,
+  precis = 8
+)
 }
 \arguments{
 \item{x}{Numeric vector of number of events.}
@@ -24,6 +32,10 @@ point estimate consistent with a 0\% confidence interval (FALSE).}
 
 \item{cc}{Number or logical (default FALSE) specifying continuity
 adjustment.}
+
+\item{precis}{Number (default 8) specifying precision (i.e. number of decimal
+places) to be used in root-finding subroutine for the exact confidence interval.
+(Note all other methods use closed-form calculations so are not affected.)}
 }
 \value{
 A list containing, for each method, a matrix containing lower and upper
@@ -39,8 +51,10 @@ Confidence intervals for the single binomial or Poisson rate. Including
 SCAS and Jeffreys intervals, with or without continuity adjustment, and
 'exact' Clopper-Pearson/Garwood or mid-p intervals, and
 another version of the exact or mid-p interval derived from Beta distributions
-(from eqn. (17) of Brown et al.), with an equivalent using Gamma distributions
-for a Poisson rate ().
+(from p.115 of Brown et al.), with an equivalent using Gamma distributions
+for a Poisson rate. Note that these closed-form calculations exactly match
+the iterative calculations for the exact interval (when \code{cc = TRUE}), but not
+for the mid-p interval (\code{cc = FALSE})
 This function is vectorised in x, n.
 }
 \references{
