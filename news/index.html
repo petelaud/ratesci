@@ -48,6 +48,16 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="ratesci-development-version">ratesci (development version)<a class="anchor" aria-label="anchor" href="#ratesci-development-version"></a></h2>
 <div class="section level3">
+<h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
+<div class="section level4">
+<h4 id="in-rateci-development-version">In <code>rateci()</code>:<a class="anchor" aria-label="anchor" href="#in-rateci-development-version"></a></h4>
+<ul><li>New default point estimate is the “common sense” crude estimate <code>x / n</code>, instead of an estimate that is consistent with a 0% CI. <code>std_est</code> allows the user to choose. (<a href="https://github.com/petelaud/ratesci/issues/32" class="external-link">#32</a>, thanks to Chelsea Dickens for raising the issue.)</li>
+<li>New output object containing an alternative formulation of the exact or mid-p interval based on Beta or Gamma distributions. These match Clopper-Pearson and Garwood precisely when <code>cc</code> is <code>TRUE</code>, and approximately match the corresponding mid-p intervals when <code>cc</code> is <code>FALSE</code>.</li>
+<li>
+<code>precis</code> for setting the precision of the exact and mid-p method.</li>
+</ul></div>
+</div>
+<div class="section level3">
 <h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
 <div class="section level4">
 <h4 id="in-rateci-and-moverci-development-version">In <code>rateci()</code> and <code>moverci()</code>:<a class="anchor" aria-label="anchor" href="#in-rateci-and-moverci-development-version"></a></h4>

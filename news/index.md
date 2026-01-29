@@ -2,6 +2,22 @@
 
 ## ratesci (development version)
 
+### New features
+
+#### In `rateci()`:
+
+- New default point estimate is the “common sense” crude estimate
+  `x / n`, instead of an estimate that is consistent with a 0% CI.
+  `std_est` allows the user to choose.
+  ([\#32](https://github.com/petelaud/ratesci/issues/32), thanks to
+  Chelsea Dickens for raising the issue.)
+- New output object containing an alternative formulation of the exact
+  or mid-p interval based on Beta or Gamma distributions. These match
+  Clopper-Pearson and Garwood precisely when `cc` is `TRUE`, and
+  approximately match the corresponding mid-p intervals when `cc` is
+  `FALSE`.
+- `precis` for setting the precision of the exact and mid-p method.
+
 ### Bug fixes
 
 #### In `rateci()` and `moverci()`:
