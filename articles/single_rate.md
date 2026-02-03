@@ -75,6 +75,27 @@ rateci(x = 1, n = 29)
 #>        lower    est upper x  n
 #> [1,] 0.00467 0.0345 0.149 1 29
 #> 
+#> $wilson
+#>        lower    est upper x  n
+#> [1,] 0.00611 0.0345 0.172 1 29
+#> 
+#> $wald
+#>                           x  n
+#> [1,] -0.0319 0.0345 0.101 1 29
+#> 
+#> $ciarray
+#> , , 1
+#> 
+#>                  lower    est upper x  n
+#> SCAS           0.00199 0.0345 0.155 1 29
+#> Jeffreys       0.00375 0.0345 0.150 1 29
+#> mid-p          0.00172 0.0345 0.159 1 29
+#> mid-p(beta)    0.00467 0.0345 0.149 1 29
+#> Wilson         0.00611 0.0345 0.172 1 29
+#> Wald          -0.03193 0.0345 0.101 1 29
+#> Agresti-Coull -0.00842 0.0345 0.186 1 29
+#> 
+#> 
 #> $call
 #> distrib   level      cc std_est 
 #>   "bin"  "0.95" "FALSE"  "TRUE"
@@ -118,6 +139,19 @@ rateci(x = 1, n = 29, cc = TRUE)
 #>         lower    est upper x  n
 #> [1,] 0.000873 0.0345 0.178 1 29
 #> 
+#> $ciarray
+#> , , 1
+#> 
+#>                      lower    est upper x  n
+#> SCAS_cc           6.19e-06 0.0345 0.182 1 29
+#> Jeffreys_cc       8.73e-04 0.0345 0.178 1 29
+#> Clopper-Pearson   8.73e-04 0.0345 0.178 1 29
+#> CP(beta)          8.73e-04 0.0345 0.178 1 29
+#> Wilson_cc         1.80e-03 0.0345 0.196 1 29
+#> Wald_cc          -4.92e-02 0.0345 0.118 1 29
+#> Agresti-Coull_cc -2.36e-02 0.0345 0.202 1 29
+#> 
+#> 
 #> $call
 #> distrib   level      cc std_est 
 #>   "bin"  "0.95"   "0.5"  "TRUE"
@@ -140,6 +174,19 @@ rateci(x = 1, n = 29, cc = 0.25)
 #> $beta_cc
 #>        lower    est upper x  n
 #> [1,] 0.00277 0.0345 0.163 1 29
+#> 
+#> $ciarray
+#> , , 1
+#> 
+#>                      lower    est upper x  n
+#> SCAS_cc           0.000605 0.0345 0.169 1 29
+#> Jeffreys_cc       0.002052 0.0345 0.164 1 29
+#> mid-p_cc          0.001162 0.0345 0.169 1 29
+#> mid-p(beta)_cc    0.002770 0.0345 0.163 1 29
+#> Wilson_cc         0.003766 0.0345 0.184 1 29
+#> Wald_cc          -0.040547 0.0345 0.110 1 29
+#> Agresti-Coull_cc -0.016030 0.0345 0.194 1 29
+#> 
 #> 
 #> $call
 #> distrib   level      cc std_est 

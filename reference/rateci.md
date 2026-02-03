@@ -1,14 +1,44 @@
 # Selected confidence intervals for the single binomial or Poisson rate.
 
-Confidence intervals for the single binomial or Poisson rate. Including
-SCAS and Jeffreys intervals, with or without continuity adjustment, and
-'exact' Clopper-Pearson/Garwood or mid-p intervals, and another version
-of the exact or mid-p interval derived from Beta distributions (from
-p.115 of Brown et al.), with an equivalent using Gamma distributions for
-a Poisson rate. Note that these closed-form calculations exactly match
-the iterative calculations for the exact interval (when `cc = TRUE`),
-but not for the mid-p interval (`cc = FALSE`) This function is
-vectorised in x, n.
+Confidence intervals for the single binomial or Poisson rate. This
+convenience wrapper function produces a selection of alternative
+methods. The first three are recommended for achieving 1-sided and
+2-sided coverage probability close to the nominal levels (see Laud 2017
+and Laud 2018):
+
+- SCAS (skewness-corrected asymptotic score)
+
+- Jeffreys
+
+- mid-p (two versions, using exact calculation or approximation via
+  Beta/Gamma distribution, see p.115 of Brown et al.)) The following
+  more approximate methods are included for users wishing to use a more
+  established or commonly used method:
+
+- Wilson score
+
+- Agresti-Coull
+
+- Wald (strongly advise this is not used for any purpose but included
+  for reference)
+
+All methods can be made more conservative with a 'continuity
+adjustment', which may either be specified as TRUE, or an intermediate
+'compromise' value between 0 and 0.5 may be selected. When `cc` is
+`TRUE` or `0.5`, the mid-p method becomes the Clopper-Pearson interval
+(or Garwood for Poisson rates). Note that Brown et al's Beta formulation
+perfectly matches the exact interval when `cc` is TRUE (i.e. for
+Clopper-Pearson) but not when `cc` is `FALSE` (for mid-p) All methods
+except Agresti-Coull have equivalent formulae for the Poisson
+distribution: Garwood for Clopper-Pearson, Rao score for Wilson score.
+Jeffreys has a Poisson equivalent using the Gamma distribution. e.g. See
+Brown et al. 2003, Swift 2009 and Laud 2017. The formulation for the
+approximate mid-p interval using Gamma distribution for a Poisson rate
+has been deduced by the package author from the corresponding formulae
+from Brown et al., and has not (to the best of my knowledge) been
+published.
+
+This function is vectorised in x, n.
 
 ## Usage
 
