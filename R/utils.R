@@ -140,6 +140,31 @@ wilsonci <- function(x,
   cbind(lower = lower, est = est, upper = upper)
 }
 
+
+#' Wald interval, and equivalent for Poisson data
+#'
+#' with optional continuity adjustment
+#'
+#' @noRd
+waldci <- function(x,
+                   n,
+                   distrib="bin",
+                   level = 0.95,
+                   cc = 0) {
+  if (length(n) < length(x)) n <- rep(n, length.out = length(x))
+  if (cc == TRUE) cc <- 0.5
+  phat <- x / n
+  z <- qnorm(1 - (1 - level) / 2)
+  if(distrib == "bin") {
+    waldci <- array(x/n + rep(c(-1, 0 ,1), each = length(x)) * (z * sqrt(phat * (1 - phat)/n) + cc/n), c(length(x), 3))
+  }
+  if(distrib == "poi") {
+    waldci <- array(x/n + rep(c(-1, 0 ,1), each = length(x)) * (z * sqrt(phat/n) + cc/n), c(length(x), 3))
+  }
+  return(waldci)
+}
+
+
 #' Rounding with trailing zeros
 #'
 #' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}

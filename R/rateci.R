@@ -119,14 +119,36 @@ scaspci <- function(x,
 #' Selected confidence intervals for the single binomial or Poisson rate.
 #'
 #' @description
-#' Confidence intervals for the single binomial or Poisson rate. Including
-#' SCAS and Jeffreys intervals, with or without continuity adjustment, and
-#' 'exact' Clopper-Pearson/Garwood or mid-p intervals, and
-#' another version of the exact or mid-p interval derived from Beta distributions
-#' (from p.115 of Brown et al.), with an equivalent using Gamma distributions
-#' for a Poisson rate. Note that these closed-form calculations exactly match
-#' the iterative calculations for the exact interval (when `cc = TRUE`), but not
-#' for the mid-p interval (`cc = FALSE`)
+#' Confidence intervals for the single binomial or Poisson rate. This
+#' convenience wrapper function produces a selection of alternative methods. The
+#' first three are recommended for achieving 1-sided and 2-sided coverage
+#' probability close to the nominal levels (see Laud 2017 and Laud 2018):
+#' - SCAS (skewness-corrected asymptotic score)
+#' - Jeffreys
+#' - mid-p (two versions, using exact calculation or approximation via
+#' Beta/Gamma distribution, see p.115 of Brown et al.))
+#' The following more approximate methods are included for users wishing to use
+#' a more established or commonly used method:
+#' - Wilson score
+#' - Agresti-Coull
+#' - Wald (strongly advise this is not used for any purpose but included for reference)
+#'
+#' All methods can be made more conservative with a 'continuity adjustment',
+#' which may either be specified as TRUE, or an intermediate 'compromise'
+#' value between 0 and 0.5 may be selected. When `cc` is `TRUE` or `0.5`, the
+#' mid-p method becomes the Clopper-Pearson interval (or Garwood for Poisson
+#' rates).
+#' Note that Brown et al's Beta formulation perfectly matches the exact interval
+#' when `cc` is TRUE (i.e. for Clopper-Pearson) but not when `cc` is `FALSE`
+#' (for mid-p)
+#' All methods except Agresti-Coull have equivalent formulae for the Poisson
+#' distribution: Garwood for Clopper-Pearson, Rao score for Wilson score.
+#' Jeffreys has a Poisson equivalent using the Gamma distribution. e.g. See Brown
+#' et al. 2003, Swift 2009 and Laud 2017. The formulation for the approximate
+#' mid-p interval using Gamma distribution for a Poisson rate has been deduced
+#' by the package author from the corresponding formulae from Brown et al., and
+#' has not (to the best of my knowledge) been published.
+#'
 #' This function is vectorised in x, n.
 #'
 #' @param x Numeric vector of number of events.
@@ -136,20 +158,22 @@ scaspci <- function(x,
 #'   data: "bin" = binomial (default), "poi" = Poisson.
 #' @param level Number specifying confidence level (between 0 and 1, default
 #'   0.95).
-#' @param std_est logical, specifying if the crude point estimate for the proportion
-#'   value x/n should be returned (TRUE, default) or the method-specific alternative
-#'   point estimate consistent with a 0% confidence interval (FALSE).
+#' @param std_est logical, specifying if the crude point estimate for the
+#'   proportion value x/n should be returned (TRUE, default) or the
+#'   method-specific alternative point estimate consistent with a 0% confidence
+#'   interval (FALSE).
 #' @param cc Number or logical (default FALSE) specifying continuity
 #'   adjustment.
 #' @param precis Number (default 8) specifying precision (i.e. number of decimal
-#'   places) to be used in root-finding subroutine for the exact confidence interval.
-#'   (Note all other methods use closed-form calculations so are not affected.)
-#' @return A list containing, for each method, a matrix containing lower and upper
-#'   confidence limits and point estimate of p for each value of x and n.
-#'   Methods shown depend on the cc
-#'   parameter, which specifies whether the continuity adjustment is applied to
-#'   the SCAS and Jeffreys methods. The corresponding 'exact' method is
-#'   Clopper-Pearson/Garwood if cc = TRUE and mid-p if cc = FALSE.
+#'   places) to be used in root-finding subroutine for the exact confidence
+#'   interval. (Note all other methods use closed-form calculations so are not
+#'   affected.)
+#' @return A list containing, for each method, a matrix containing lower and
+#'   upper confidence limits and point estimate of p for each value of x and n.
+#'   Methods shown depend on the cc parameter, which specifies whether the
+#'   continuity adjustment is applied to the SCAS and Jeffreys methods. The
+#'   corresponding 'exact' method is Clopper-Pearson/Garwood if cc = TRUE and
+#'   mid-p if cc = FALSE.
 #'   The last list item contains details of the function call.
 #' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
 #' @references
@@ -235,38 +259,94 @@ rateci <- function(x,
   )
   if (std_est) ci_beta[, 2] <- x / n
 
+  ci_wilson <- cbind(wilsonci(
+    x = x,
+    n = n,
+    level = level,
+    cc = cc,
+    distrib = distrib
+  ), x, n)
+
+  ci_wald <- cbind(waldci(
+    x = x,
+    n = n,
+    level = level,
+    cc = cc,
+    distrib = distrib
+  ), x, n)
+
+
+  z <- qnorm(1 - (1 - level)/2)
+  ci_ac <-  cbind(waldci(
+    x = x + z^2 / 2,
+    n = n + z^2,
+    level = level,
+    cc = cc,
+    distrib = distrib
+  ), x, n)
+  if (std_est) ci_ac[, 2] <- x / n
+
+#  outarr <- 1
+  mydimnames <- dimnames(ci_scas)
+  if (distrib == "bin") {
+    outarr <- array(c(ci_scas, ci_jeff, ci_exact, ci_beta,
+                      ci_wilson, ci_wald, ci_ac),
+                  dim <- c(dim(ci_scas), 7))
+  } else if (distrib == "poi") {
+    outarr <- array(c(ci_scas, ci_jeff, ci_exact, ci_beta,
+                      ci_wilson, ci_wald),
+                    dim <- c(dim(ci_scas), 6))
+  }
   if (cc == 0) {
+    mydimnames[[3]] <- c("SCAS", "Jeffreys", "mid-p", "mid-p(beta)",
+                         "Wilson", "Wald", "Agresti-Coull")
     if (distrib == "bin") {
-      outlist <- list(scas = ci_scas, jeff = ci_jeff, midp = ci_exact, midp_beta = ci_beta)
-    } else {
-      outlist <- list(scas = ci_scas, jeff = ci_jeff, midp = ci_exact, midp_gamma = ci_beta)
+      outlist <- list(scas = ci_scas, jeff = ci_jeff, midp = ci_exact,
+                      midp_beta = ci_beta, wilson = ci_wilson, wald = ci_wald)
+    } else if (distrib == "poi") {
+      outlist <- list(scas = ci_scas, jeff = ci_jeff, midp = ci_exact,
+                      midp_gamma = ci_beta)
+      mydimnames[[3]][4] <- "mid-p(gamma)"
     }
   } else if (cc == 0.5) {
+    mydimnames[[3]] <- c("SCAS_cc", "Jeffreys_cc", "Clopper-Pearson", "CP(beta)",
+                         "Wilson_cc", "Wald_cc", "Agresti-Coull_cc")
     if (distrib == "bin") {
-      outlist <- list(scas_cc = ci_scas, jeff_cc = ci_jeff, cp = ci_exact, cp_beta = ci_beta)
-    } else {
-      outlist <- list(scas_cc = ci_scas, jeff_cc = ci_jeff, garwood = ci_exact, gw_gamma = ci_beta)
+      outlist <- list(scas_cc = ci_scas, jeff_cc = ci_jeff, cp = ci_exact,
+                      cp_beta = ci_beta)
+    } else if (distrib == "poi") {
+      outlist <- list(scas_cc = ci_scas, jeff_cc = ci_jeff, garwood = ci_exact,
+                      gw_gamma = ci_beta)
+      mydimnames[[3]][c(3,4)] <- c("Garwood", "Garwood(gamma)")
     }
   } else {
+    mydimnames[[3]] <- c("SCAS_cc", "Jeffreys_cc", "mid-p_cc", "mid-p(beta)_cc",
+                         "Wilson_cc", "Wald_cc", "Agresti-Coull_cc")
     if (distrib == "bin") {
       outlist <- list(scas_cc = ci_scas, jeff_cc = ci_jeff, beta_cc = ci_beta)
-    } else {
+    } else if (distrib == "poi") {
       outlist <- list(scas_cc = ci_scas, jeff_cc = ci_jeff, gamma_cc = ci_beta)
+      mydimnames[[3]][4] <- "mid-p(gamma)_cc"
     }
     # exact method not applicable if using a compromise value of cc
     # - but experimental beta/gamma distribution version included
   }
+  if (distrib == "poi") mydimnames[[3]] <- mydimnames[[3]][-7]
+  dimnames(outarr) <- mydimnames
+  outarr <- aperm(outarr, c(3,2,1))
+
   call <- c(
     distrib = distrib, level = level, cc = cc, std_est = std_est
   )
-  outlist <- append(outlist, list(call = call))
+  outlist <- append(outlist, list(ciarray = outarr, call = call))
   return(outlist)
 }
 
 #' Clopper-Pearson/Garwood and mid-p intervals for single binomial or
 #' Poisson rate
 #'
-#' to calculate exact 'exact' confidence interval for a single binomial or Poisson rate x/n
+#' to calculate exact 'exact' confidence interval for a single binomial
+#' or Poisson rate x/n
 #'
 #' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
 #'
@@ -315,21 +395,27 @@ exactci <- function(x,
   } else if (beta == TRUE) {
     if (distrib == "bin") {
       est <- 0.5 * (qbeta(0.5, x, n - x + 1) + qbeta(0.5, x + 1, n - x))
-      lower <- (1 - midp) * qbeta(alpha / 2, x, n - x + 1) + midp * qbeta(alpha / 2, x + 1, n - x)
+      lower <- (1 - midp) * qbeta(alpha / 2, x, n - x + 1) + midp *
+        qbeta(alpha / 2, x + 1, n - x)
       lower[x == n] <- qbeta(alpha / (2 * (1 - midp)), x, n - x + 1)[x == n]
       lower[x == 0] <- 0
       est[x == 0] <- 0
-      upper <- (1 - midp) * qbeta(1 - alpha / 2, x + 1, n - x) + midp * qbeta(1 - alpha / 2, x, n - x + 1)
+      upper <- (1 - midp) * qbeta(1 - alpha / 2, x + 1, n - x) + midp *
+        qbeta(1 - alpha / 2, x, n - x + 1)
       upper[x == 0] <- qbeta(1 - alpha / (2 * (1 - midp)), x + 1, n - x)[x == 0]
       upper[x == n] <- 1
       est[x == n] <- 1
     } else if (distrib == "poi") {
-      est <- n * (0.5 * qgamma(0.5, x, scale = 1 / n) + 0.5 * qgamma(0.5, x + 1, scale = 1 / n))
-      lower <- n * ((1 - midp) * qgamma(alpha / 2, x, scale = 1 / n) + (midp) * qgamma(alpha / 2, x + 1, scale = 1 / n))
+      est <- n * (0.5 * qgamma(0.5, x, scale = 1 / n) + 0.5 *
+                    qgamma(0.5, x + 1, scale = 1 / n))
+      lower <- n * ((1 - midp) * qgamma(alpha / 2, x, scale = 1 / n) + (midp) *
+                      qgamma(alpha / 2, x + 1, scale = 1 / n))
       lower[x == 0] <- 0
       est[x == 0] <- 0
-      upper <- n * ((midp) * qgamma(1 - alpha / 2, x, scale = 1 / n) + (1 - midp) * qgamma(1 - alpha / 2, x + 1, scale = 1 / n))
-      upper[x == 0] <- (n * qgamma(1 - alpha / (2 * (1 - midp)), x + 1, scale = 1 / n))[x == 0]
+      upper <- n * ((midp) * qgamma(1 - alpha / 2, x, scale = 1 / n) + (1 - midp) *
+                      qgamma(1 - alpha / 2, x + 1, scale = 1 / n))
+      upper[x == 0] <- (n * qgamma(1 - alpha / (2 * (1 - midp)),
+                                   x + 1, scale = 1 / n))[x == 0]
     }
   }
   outdata <- cbind(lower = lower, est = est, upper = upper) /

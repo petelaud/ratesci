@@ -26,35 +26,61 @@ data: "bin" = binomial (default), "poi" = Poisson.}
 \item{level}{Number specifying confidence level (between 0 and 1, default
 0.95).}
 
-\item{std_est}{logical, specifying if the crude point estimate for the proportion
-value x/n should be returned (TRUE, default) or the method-specific alternative
-point estimate consistent with a 0\% confidence interval (FALSE).}
+\item{std_est}{logical, specifying if the crude point estimate for the
+proportion value x/n should be returned (TRUE, default) or the
+method-specific alternative point estimate consistent with a 0\% confidence
+interval (FALSE).}
 
 \item{cc}{Number or logical (default FALSE) specifying continuity
 adjustment.}
 
 \item{precis}{Number (default 8) specifying precision (i.e. number of decimal
-places) to be used in root-finding subroutine for the exact confidence interval.
-(Note all other methods use closed-form calculations so are not affected.)}
+places) to be used in root-finding subroutine for the exact confidence
+interval. (Note all other methods use closed-form calculations so are not
+affected.)}
 }
 \value{
-A list containing, for each method, a matrix containing lower and upper
-confidence limits and point estimate of p for each value of x and n.
-Methods shown depend on the cc
-parameter, which specifies whether the continuity adjustment is applied to
-the SCAS and Jeffreys methods. The corresponding 'exact' method is
-Clopper-Pearson/Garwood if cc = TRUE and mid-p if cc = FALSE.
+A list containing, for each method, a matrix containing lower and
+upper confidence limits and point estimate of p for each value of x and n.
+Methods shown depend on the cc parameter, which specifies whether the
+continuity adjustment is applied to the SCAS and Jeffreys methods. The
+corresponding 'exact' method is Clopper-Pearson/Garwood if cc = TRUE and
+mid-p if cc = FALSE.
 The last list item contains details of the function call.
 }
 \description{
-Confidence intervals for the single binomial or Poisson rate. Including
-SCAS and Jeffreys intervals, with or without continuity adjustment, and
-'exact' Clopper-Pearson/Garwood or mid-p intervals, and
-another version of the exact or mid-p interval derived from Beta distributions
-(from p.115 of Brown et al.), with an equivalent using Gamma distributions
-for a Poisson rate. Note that these closed-form calculations exactly match
-the iterative calculations for the exact interval (when \code{cc = TRUE}), but not
-for the mid-p interval (\code{cc = FALSE})
+Confidence intervals for the single binomial or Poisson rate. This
+convenience wrapper function produces a selection of alternative methods. The
+first three are recommended for achieving 1-sided and 2-sided coverage
+probability close to the nominal levels (see Laud 2017 and Laud 2018):
+\itemize{
+\item SCAS (skewness-corrected asymptotic score)
+\item Jeffreys
+\item mid-p (two versions, using exact calculation or approximation via
+Beta/Gamma distribution, see p.115 of Brown et al.))
+The following more approximate methods are included for users wishing to use
+a more established or commonly used method:
+\item Wilson score
+\item Agresti-Coull
+\item Wald (strongly advise this is not used for any purpose but included for reference)
+}
+
+All methods can be made more conservative with a 'continuity adjustment',
+which may either be specified as TRUE, or an intermediate 'compromise'
+value between 0 and 0.5 may be selected. When \code{cc} is \code{TRUE} or \code{0.5}, the
+mid-p method becomes the Clopper-Pearson interval (or Garwood for Poisson
+rates).
+Note that Brown et al's Beta formulation perfectly matches the exact interval
+when \code{cc} is TRUE (i.e. for Clopper-Pearson) but not when \code{cc} is \code{FALSE}
+(for mid-p)
+All methods except Agresti-Coull have equivalent formulae for the Poisson
+distribution: Garwood for Clopper-Pearson, Rao score for Wilson score.
+Jeffreys has a Poisson equivalent using the Gamma distribution. e.g. See Brown
+et al. 2003, Swift 2009 and Laud 2017. The formulation for the approximate
+mid-p interval using Gamma distribution for a Poisson rate has been deduced
+by the package author from the corresponding formulae from Brown et al., and
+has not (to the best of my knowledge) been published.
+
 This function is vectorised in x, n.
 }
 \references{
