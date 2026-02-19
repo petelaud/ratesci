@@ -3,18 +3,22 @@
 
 ## New features
 ### In `rateci()`:
-* New default point estimate is the "common sense" crude estimate `x / n`, instead of an estimate
-  that is consistent with a 0% CI. `std_est` allows the user to choose. 
-  (#32, thanks to Chelsea Dickens for raising the issue.) 
-* New output object containing an alternative formulation of the exact or mid-p interval
-  based on Beta or Gamma distributions. These match Clopper-Pearson and Garwood precisely when 
-  `cc` is `TRUE`, and approximately match the corresponding mid-p intervals when `cc` is `FALSE`.
+* New default point estimate is the "common sense" crude estimate `x / n`, 
+  instead of an estimate that is consistent with a 0% CI. `std_est` allows the 
+  user to choose. (#32, thanks to Chelsea Dickens for raising the issue.) 
+* New output object containing several confidence interval methods in an array 
+  format, including the inferior Wald, Wilson and Agresti-Coull methods (for 
+  reference, not recommended), plus an alternative formulation of the 
+  Clopper-Pearson or mid-p interval based on Beta or Gamma distributions 
+  (for comparison with the version based on binomial/Poisson tail probabilities). 
+  These match Clopper-Pearson and Garwood precisely when `cc` is `TRUE`, 
+  and approximately match the corresponding mid-p intervals when `cc` is `FALSE`.
 * `precis` for setting the precision of the exact and mid-p method.
 
 ## Bug fixes
 ### In `rateci()` and `moverci()`:
-* Permit n=0 to produce output interval as [0, 1] for binomial, or [0, Inf] for Poisson
-  with point estimate displayed as NaN
+* Permit n=0 to produce output interval as [0, 1] for binomial, or [0, Inf] for 
+  Poisson with point estimate displayed as NaN
   (prevents error in `pairbinci()` with `method` = "BP").
 
 # ratesci 1.0.0 (2025-06-20)
