@@ -11,11 +11,14 @@
   `std_est` allows the user to choose.
   ([\#32](https://github.com/petelaud/ratesci/issues/32), thanks to
   Chelsea Dickens for raising the issue.)
-- New output object containing an alternative formulation of the exact
-  or mid-p interval based on Beta or Gamma distributions. These match
-  Clopper-Pearson and Garwood precisely when `cc` is `TRUE`, and
-  approximately match the corresponding mid-p intervals when `cc` is
-  `FALSE`.
+- New output object containing several confidence interval methods in an
+  array format, including the inferior Wald, Wilson and Agresti-Coull
+  methods (for reference, not recommended), plus an alternative
+  formulation of the Clopper-Pearson or mid-p interval based on Beta or
+  Gamma distributions (for comparison with the version based on
+  binomial/Poisson tail probabilities). These match Clopper-Pearson and
+  Garwood precisely when `cc` is `TRUE`, and approximately match the
+  corresponding mid-p intervals when `cc` is `FALSE`.
 - `precis` for setting the precision of the exact and mid-p method.
 
 ### Bug fixes

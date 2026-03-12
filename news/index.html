@@ -52,7 +52,7 @@
 <div class="section level4">
 <h4 id="in-rateci-development-version">In <code>rateci()</code>:<a class="anchor" aria-label="anchor" href="#in-rateci-development-version"></a></h4>
 <ul><li>New default point estimate is the “common sense” crude estimate <code>x / n</code>, instead of an estimate that is consistent with a 0% CI. <code>std_est</code> allows the user to choose. (<a href="https://github.com/petelaud/ratesci/issues/32" class="external-link">#32</a>, thanks to Chelsea Dickens for raising the issue.)</li>
-<li>New output object containing an alternative formulation of the exact or mid-p interval based on Beta or Gamma distributions. These match Clopper-Pearson and Garwood precisely when <code>cc</code> is <code>TRUE</code>, and approximately match the corresponding mid-p intervals when <code>cc</code> is <code>FALSE</code>.</li>
+<li>New output object containing several confidence interval methods in an array format, including the inferior Wald, Wilson and Agresti-Coull methods (for reference, not recommended), plus an alternative formulation of the Clopper-Pearson or mid-p interval based on Beta or Gamma distributions (for comparison with the version based on binomial/Poisson tail probabilities). These match Clopper-Pearson and Garwood precisely when <code>cc</code> is <code>TRUE</code>, and approximately match the corresponding mid-p intervals when <code>cc</code> is <code>FALSE</code>.</li>
 <li>
 <code>precis</code> for setting the precision of the exact and mid-p method.</li>
 </ul></div>

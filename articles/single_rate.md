@@ -142,14 +142,13 @@ rateci(x = 1, n = 29, cc = TRUE)
 #> $ciarray
 #> , , 1
 #> 
-#>                      lower    est upper x  n
-#> SCAS_cc           6.19e-06 0.0345 0.182 1 29
-#> Jeffreys_cc       8.73e-04 0.0345 0.178 1 29
-#> Clopper-Pearson   8.73e-04 0.0345 0.178 1 29
-#> CP(beta)          8.73e-04 0.0345 0.178 1 29
-#> Wilson_cc         1.80e-03 0.0345 0.196 1 29
-#> Wald_cc          -4.92e-02 0.0345 0.118 1 29
-#> Agresti-Coull_cc -2.36e-02 0.0345 0.202 1 29
+#>                     lower    est upper x  n
+#> SCAS_cc          6.19e-06 0.0345 0.182 1 29
+#> Jeffreys_cc      8.73e-04 0.0345 0.178 1 29
+#> Clopper-Pearson  8.73e-04 0.0345 0.178 1 29
+#> CP(beta)         8.73e-04 0.0345 0.178 1 29
+#> Wilson_cc        1.80e-03 0.0345 0.196 1 29
+#> Wald_cc         -4.92e-02 0.0345 0.118 1 29
 #> 
 #> 
 #> $call
@@ -178,14 +177,13 @@ rateci(x = 1, n = 29, cc = 0.25)
 #> $ciarray
 #> , , 1
 #> 
-#>                      lower    est upper x  n
-#> SCAS_cc           0.000605 0.0345 0.169 1 29
-#> Jeffreys_cc       0.002052 0.0345 0.164 1 29
-#> mid-p_cc          0.001162 0.0345 0.169 1 29
-#> mid-p(beta)_cc    0.002770 0.0345 0.163 1 29
-#> Wilson_cc         0.003766 0.0345 0.184 1 29
-#> Wald_cc          -0.040547 0.0345 0.110 1 29
-#> Agresti-Coull_cc -0.016030 0.0345 0.194 1 29
+#>                    lower    est upper x  n
+#> SCAS_cc         0.000605 0.0345 0.169 1 29
+#> Jeffreys_cc     0.002052 0.0345 0.164 1 29
+#> mid-p_cc        0.001162 0.0345 0.169 1 29
+#> mid-p(beta)_cc  0.002770 0.0345 0.163 1 29
+#> Wilson_cc       0.003766 0.0345 0.184 1 29
+#> Wald_cc        -0.040547 0.0345 0.110 1 29
 #> 
 #> 
 #> $call
