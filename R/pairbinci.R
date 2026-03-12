@@ -44,6 +44,8 @@
 #'            deprecated); \cr
 #'   "BP" = Wald with Bonett-Price adjustment for RD, or Hybrid Bonett-Price
 #'          method for RR. \cr
+#'   "Wald" = Wald approximate normal method. Reluctantly included for
+#'          reference only - not recommended. \cr
 #'   For `contrast = "OR"`, one of the following methods may be selected,
 #'   all of which are based on transformation of an interval for a single
 #'   proportion `b/(b+c)`: \cr
@@ -248,9 +250,9 @@ pairbinci <- function(x,
       stop()
     }
     if (!(tolower(substr(method, 1, 4)) %in%
-      c("scor", "move", "bp"))) {
+      c("scor", "move", "bp", "wald"))) {
       print("Method must be one of 'Score_closed', 'Score', 'BP',
-          'MOVER' or 'MOVER_newc' for contrast = 'RD' or 'RR'")
+          'MOVER', 'MOVER_newc' or 'Wald' for contrast = 'RD' or 'RR'")
       stop()
     }
     # if (FALSE) {
@@ -284,6 +286,13 @@ pairbinci <- function(x,
       print(paste("Continuity adjustment not available for
          Wald with Bonett-Price adjustment for RD -
          cc is set to FALSE"))
+    }
+  }
+  if (method == "Wald" && contrast == "RR" && cc != FALSE) {
+    cc <- FALSE
+    if (warn == TRUE) {
+      print(paste("Continuity adjustment not available for
+         Wald for RR - cc is set to FALSE"))
     }
   }
   if (as.character(cc) == "TRUE") cc <- 0.5
@@ -451,6 +460,12 @@ pairbinci <- function(x,
       )
       outlist <- list(data = xi, estimates = estimates)
     }
+    if (tolower(method) == "wald") {
+      estimates <- waldpairci(
+        x = x, contrast = contrast, level = level, cc = cc
+      )
+      outlist <- list(data = xi, estimates = estimates)
+    }
 
     if ((method == "Score") || (method == "Score_closed")) {
       # optionally add p-value for a test of null hypothesis: theta<=theta0
@@ -486,7 +501,7 @@ pairbinci <- function(x,
   }
   outlist <- list(data = xi, estimates = round(estimates, precis))
   # MOVER methods don't produce p-values
-  if (!(method %in% c("MOVER", "MOVER_newc", "midp", "wilson", "jeff", "BP"))) {
+  if (!(method %in% c("MOVER", "MOVER_newc", "midp", "wilson", "jeff", "BP", "Wald"))) {
     outlist <- append(outlist, list(pval = pval))
   }
   # Set unused arguments to null to omit them from call
@@ -1111,7 +1126,7 @@ bpci <- function(x,
     v <- (p12 + p21 - (p12 - p21)^2) / (n + 2)
     estimates <- cbind(
       lower = pmax(-1, estimate - z0 * sqrt(v)),
-      Estimate = estimate,
+      est = estimate,
       upper = pmin(1, estimate + z0 * sqrt(v))
     )
   } else if (contrast == "RR") {
@@ -1133,6 +1148,55 @@ bpci <- function(x,
     ul <- j1[, 3] / j2[, 1]
     ll <- j1[, 1] / j2[, 3]
     estimates <- cbind(lower = ll, est = estimate, upper = ul)
+    row.names(estimates) <- NULL
+  }
+  estimates
+}
+
+
+#' Wald approximate normal confidence intervals for a paired difference (RD) or ratio (RR)
+#'
+#' R code to calculate Wald CIs for contrast = "RD" or "RR", reluctantly
+#' included for reference
+#'
+#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @references
+#'
+#'
+#' @inheritParams pairbinci
+#'
+#' @noRd
+waldpairci <- function(x,
+                 level = 0.95,
+                 contrast = "RD",
+                 cc = FALSE) {
+  x11 <- x[1]
+  x10 <- x[2]
+  x01 <- x[3]
+  z0 <- qnorm(1 - (1 - level) / 2)
+  x1 <- x11 + x10
+  x0 <- x11 + x01
+  if (as.character(cc) == "TRUE") cc <- 0.5
+
+  if (contrast == "RD") {
+    n <- sum(x)
+    p12 <- (x10) / (n)
+    p21 <- (x01) / (n)
+    estimate <- p12 - p21
+    v <- (p12 + p21 - (abs(p12 - p21) - 2 * cc/n)^2) / (n)
+    estimates <- cbind(
+      lower = pmax(-1, estimate - z0 * sqrt(v)),
+      est = estimate,
+      upper = pmin(1, estimate + z0 * sqrt(v))
+    )
+  } else if (contrast == "RR") {
+    logestimate <- log(x1 / x0)
+    v <- (x10 + x01) / (x1 * x0)
+    estimates <- cbind(
+      lower = exp(logestimate - z0 * sqrt(v)),
+      est = exp(logestimate),
+      upper = exp(logestimate + z0 * sqrt(v))
+    )
     row.names(estimates) <- NULL
   }
   estimates
