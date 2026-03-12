@@ -474,6 +474,36 @@ test_that("legacy & new methods match published examples", {
                            moverbase = "wilson")$estimates[, c(1, 3)], 3)),
     c(-0.507, -0.026)
   )
+  # Wald RD
+  expect_equal(
+    unname(round(pairbinci(x = c(1, 1, 7, 12), contrast = "RD",
+                           method = "Wald")$estimates[, c(1, 3)], 3)),
+    c(-0.520, -0.052)
+  )
+  # Wald-cc RD
+  expect_equal(
+    unname(round(pairbinci(x = c(1, 1, 7, 12), contrast = "RD",
+                           method = "Wald", cc = TRUE)$estimates[, c(1, 3)], 3)),
+    c(-0.529, -0.042)
+  )
+  # Bonett-Price RD
+  expect_equal(
+    unname(round(pairbinci(x = c(1, 1, 7, 12), contrast = "RD",
+                           method = "BP")$estimates[, c(1, 3)], 3)),
+    c(-0.508, -0.013)
+  )
+  # Wald RR
+  expect_equal(
+    unname(round(pairbinci(x = c(1, 1, 7, 12), contrast = "RR",
+                           method = "Wald")$estimates[, c(1, 3)], 3)),
+    c(0.063, 1.000)
+  )
+  # Bonett-Price RR
+  expect_equal(
+    unname(round(pairbinci(x = c(1, 1, 7, 12), contrast = "RR",
+                           method = "BP", moverbase="wilson")$estimates[, c(1, 3)], 3)),
+    c(0.068, 0.923)
+  )
 
   # example from Newcombe, against Newcombe's method 8 result
   expect_equal(
