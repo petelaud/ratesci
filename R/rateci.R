@@ -292,6 +292,7 @@ rateci <- function(x,
     outarr <- array(c(ci_scas, ci_jeff, ci_exact, ci_beta,
                       ci_wilson, ci_wald, ci_ac),
                   dim <- c(dim(ci_scas), 7))
+    if (cc != 0) outarr <- outarr[, , 1:6, drop=FALSE]
   } else if (distrib == "poi") {
     outarr <- array(c(ci_scas, ci_jeff, ci_exact, ci_beta,
                       ci_wilson, ci_wald),
@@ -310,7 +311,7 @@ rateci <- function(x,
     }
   } else if (cc == 0.5) {
     mydimnames[[3]] <- c("SCAS_cc", "Jeffreys_cc", "Clopper-Pearson", "CP(beta)",
-                         "Wilson_cc", "Wald_cc", "Agresti-Coull_cc")
+                         "Wilson_cc", "Wald_cc")
     if (distrib == "bin") {
       outlist <- list(scas_cc = ci_scas, jeff_cc = ci_jeff, cp = ci_exact,
                       cp_beta = ci_beta)
@@ -321,7 +322,7 @@ rateci <- function(x,
     }
   } else {
     mydimnames[[3]] <- c("SCAS_cc", "Jeffreys_cc", "mid-p_cc", "mid-p(beta)_cc",
-                         "Wilson_cc", "Wald_cc", "Agresti-Coull_cc")
+                         "Wilson_cc", "Wald_cc")
     if (distrib == "bin") {
       outlist <- list(scas_cc = ci_scas, jeff_cc = ci_jeff, beta_cc = ci_beta)
     } else if (distrib == "poi") {
