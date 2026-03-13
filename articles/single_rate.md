@@ -139,6 +139,10 @@ rateci(x = 1, n = 29, cc = TRUE)
 #>         lower    est upper x  n
 #> [1,] 0.000873 0.0345 0.178 1 29
 #> 
+#> $blaker
+#>        lower    est upper x  n
+#> [1,] 0.00177 0.0345 0.166 1 29
+#> 
 #> $ciarray
 #> , , 1
 #> 
@@ -149,6 +153,7 @@ rateci(x = 1, n = 29, cc = TRUE)
 #> CP(beta)         8.73e-04 0.0345 0.178 1 29
 #> Wilson_cc        1.80e-03 0.0345 0.196 1 29
 #> Wald_cc         -4.92e-02 0.0345 0.118 1 29
+#> Blaker           1.77e-03 0.0345 0.166 1 29
 #> 
 #> 
 #> $call

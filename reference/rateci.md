@@ -99,8 +99,11 @@ confidence limits and point estimate of p for each value of x and n.
 Methods shown depend on the cc parameter, which specifies whether the
 continuity adjustment is applied to the SCAS and Jeffreys methods. The
 corresponding 'exact' method is Clopper-Pearson/Garwood if cc = TRUE and
-mid-p if cc = FALSE. The last list item contains details of the function
-call.
+mid-p if cc = FALSE. An additional output object 'ciarray' is provided
+for a side-by-side comparison of all methods. These are grouped
+depending on the cc argument (if cc = TRUE then the continuity-adjusted
+and exact strictly conservative methods are included) The last list item
+contains details of the function call.
 
 ## References
 
