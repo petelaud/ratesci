@@ -705,6 +705,19 @@ test_that("legacy & new methods match published examples", {
     c(0.004, 0.150)
   )
 
+  # Blaker binomial: cf Lecoutre 2016
+  expect_equal(
+    unname(round(rateci(x = 2, n = 123, cc = TRUE)$blaker, 4)[, c(1, 3)]),
+    c(0.0029, 0.0575)
+  )
+
+  # Blaker binomial: cf Klaschka p.
+  expect_equal(
+    unname(round(rateci(x = 131, n = 134, cc = TRUE)$blaker, 6)[, c(1, 3)]),
+    c(0.935973, 0.993871)
+  )
+
+
   # Wilson clustered, Liang example data used in Short et al 2020
   expect_equal(
     unname(round(wilsonci(x = 60, n = 203, xihat = 1.349133), 3)[, c(1, 3)]),

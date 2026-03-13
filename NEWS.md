@@ -13,6 +13,8 @@
   (for comparison with the version based on binomial/Poisson tail probabilities). 
   These match Clopper-Pearson and Garwood precisely when `cc` is `TRUE`, 
   and approximately match the corresponding mid-p intervals when `cc` is `FALSE`.
+* New output object for the Blaker exact method (for both binomial and Poisson 
+  rates)
 * `precis` for setting the precision of the exact and mid-p method.
 
 ### In `pairbinci()`:

@@ -263,6 +263,17 @@ rateci <- function(x,
   )
   if (std_est) ci_beta[, 2] <- x / n
 
+    ci_blaker <- t(sapply(1:length(x), function(i) {
+      blakerci(
+        x = x[i],
+        n = n[i],
+        level = level,
+        distrib = distrib,
+        precis = precis
+      )
+    }))
+  dimnames(ci_blaker)[[2]] <- c("lower", "est", "upper", "x", "n")
+
   ci_wilson <- cbind(wilsonci(
     x = x,
     n = n,
@@ -294,13 +305,17 @@ rateci <- function(x,
   mydimnames <- dimnames(ci_scas)
   if (distrib == "bin") {
     outarr <- array(c(ci_scas, ci_jeff, ci_exact, ci_beta,
-                      ci_wilson, ci_wald, ci_ac),
-                  dim <- c(dim(ci_scas), 7))
-    if (cc != 0) outarr <- outarr[, , 1:6, drop=FALSE]
+                      ci_wilson, ci_wald, ci_blaker, ci_ac),
+                  dim <- c(dim(ci_scas), 8))
+    if (cc != 0) {
+      if (cc != 0.5) outarr <- outarr[, , 1:6, drop=FALSE]
+      else outarr <- outarr[, , c(1:7), drop=FALSE]
+    } else outarr <- outarr[, , c(1:6, 8), drop=FALSE]
   } else if (distrib == "poi") {
     outarr <- array(c(ci_scas, ci_jeff, ci_exact, ci_beta,
-                      ci_wilson, ci_wald),
-                    dim <- c(dim(ci_scas), 6))
+                      ci_wilson, ci_wald, ci_blaker),
+                    dim <- c(dim(ci_scas), 7))
+    if (cc != 0.5) outarr <- outarr[, , 1:6, drop=FALSE]
   }
   if (cc == 0) {
     mydimnames[[3]] <- c("SCAS", "Jeffreys", "mid-p", "mid-p(beta)",
@@ -315,13 +330,13 @@ rateci <- function(x,
     }
   } else if (cc == 0.5) {
     mydimnames[[3]] <- c("SCAS_cc", "Jeffreys_cc", "Clopper-Pearson", "CP(beta)",
-                         "Wilson_cc", "Wald_cc")
+                         "Wilson_cc", "Wald_cc", "Blaker")
     if (distrib == "bin") {
       outlist <- list(scas_cc = ci_scas, jeff_cc = ci_jeff, cp = ci_exact,
-                      cp_beta = ci_beta)
+                      cp_beta = ci_beta, blaker = ci_blaker)
     } else if (distrib == "poi") {
       outlist <- list(scas_cc = ci_scas, jeff_cc = ci_jeff, garwood = ci_exact,
-                      gw_gamma = ci_beta)
+                      gw_gamma = ci_beta, blaker = ci_blaker)
       mydimnames[[3]][c(3,4)] <- c("Garwood", "Garwood(gamma)")
     }
   } else {
@@ -336,7 +351,7 @@ rateci <- function(x,
     # exact method not applicable if using a compromise value of cc
     # - but experimental beta/gamma distribution version included
   }
-  if (distrib == "poi") mydimnames[[3]] <- mydimnames[[3]][-7]
+  if (distrib == "poi") mydimnames[[3]] <- mydimnames[[3]][mydimnames[[3]] != "Agresti-Coull"]
   dimnames(outarr) <- mydimnames
   outarr <- aperm(outarr, c(3,2,1))
 
@@ -428,6 +443,77 @@ exactci <- function(x,
   if (distrib == 'poi') {
     outdata[x == 0, 'lower'] <- 0
   }
+  return(cbind(outdata, x = x, n = n))
+}
+
+
+
+#' Blaker 'exact' CI  for single binomial or Poisson rate
+#'
+#' to calculate exact Blaker 'exact' confidence interval for a single binomial
+#' or Poisson rate x/n
+#'
+#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @importFrom stats qbinom qpois
+#'
+#' @noRd
+blakerci <- function(x,
+                    n,
+                    level = 0.95,
+                    distrib = "bin",
+                    precis = 7
+) {
+  alpha <- 1 - level
+  if (length(n) < length(x)) n <- rep(n, length(x))
+  tiny <- (10^-(precis)) / 2
+
+  # Acceptability function from Blaker 2008 Appendix
+  acceptbin <- function(x, n, p) {
+    p1 <- 1 - pbinom(x - 1, n, p)
+    p2 <- pbinom(x, n, p)
+    a1 <- p1 + pbinom(qbinom(p1, n, p) - 1, n, p)
+    a2 <- p2 + 1 - pbinom(qbinom(1 - p2, n, p), n, p)
+    mina <- pmin(a1, a2)
+    return(mina)
+  }
+  # Poisson equivalent function
+  acceptpoi <- function(x, n, p) {
+    p1 <- 1 - ppois(x - 1, n*p)
+    p2 <- ppois(x, n*p)
+    a1 <- p1 + ppois(qpois(p1, n*p) - 1, n*p)
+    a2 <- p2 + 1 - ppois(qpois(1 - p2, n*p), n*p)
+    mina <- pmin(a1, a2)
+    return(mina)
+  }
+
+  # Note: root-finding by bisection can get it wrong
+  # because the function can be non-monotonous
+  # Instead, as we know Blaker is nested in CP, start at the CP limits and
+  # increment inwards
+  est <- x / n
+  if (distrib == 'bin') {
+    upper <- ifelse(x == n, 1, qbeta(1 - alpha / 2, x + 1, n - x))
+    for (i in 4:0) {
+      while(acceptbin(x, n, upper - tiny*10^i) < alpha) upper <- upper - tiny*10^i
+    }
+    lower <- ifelse(x == 0, 0, qbeta(alpha / 2, x, n - x + 1))
+    for (i in 4:0) {
+      while(acceptbin(x, n, lower + tiny*10^i) < alpha) lower <- lower + tiny*10^i
+    }
+  }
+  if (distrib == 'poi') {
+    upper <- qgamma(1 - alpha / 2, x + 1, scale = 1 / n)
+    for (i in 4:0) {
+      while(acceptpoi(x, n, upper - tiny*10^i) < alpha) upper <- upper - tiny*10^i
+    }
+    lower <- ifelse(x == 0, 0, qgamma(alpha / 2, x, scale = 1 / n))
+    for (i in 4:0) {
+      while(acceptpoi(x, n, lower + tiny*10^i) < alpha) lower <- lower + tiny*10^i
+    }
+  }
+
+  outdata <- cbind(lower = lower, est = est, upper = upper)
+
   return(cbind(outdata, x = x, n = n))
 }
 
