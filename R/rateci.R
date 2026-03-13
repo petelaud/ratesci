@@ -174,6 +174,10 @@ scaspci <- function(x,
 #'   continuity adjustment is applied to the SCAS and Jeffreys methods. The
 #'   corresponding 'exact' method is Clopper-Pearson/Garwood if cc = TRUE and
 #'   mid-p if cc = FALSE.
+#'   An additional output object 'ciarray' is provided for a side-by-side
+#'   comparison of all methods. These are grouped depending on the cc argument
+#'   (if cc = TRUE then the continuity-adjusted and exact strictly conservative
+#'   methods are included)
 #'   The last list item contains details of the function call.
 #' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
 #' @references
