@@ -15,6 +15,10 @@
   and approximately match the corresponding mid-p intervals when `cc` is `FALSE`.
 * `precis` for setting the precision of the exact and mid-p method.
 
+### In `pairbinci()`:
+* New `method` = "Wald" option to give approximate normal method - not recommended
+  but provided for reference and evaluation.
+
 ## Bug fixes
 ### In `rateci()` and `moverci()`:
 * Permit n=0 to produce output interval as [0, 1] for binomial, or [0, Inf] for 

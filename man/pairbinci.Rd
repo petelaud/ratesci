@@ -56,6 +56,8 @@ estimate (Newcombe's "method 10"); \cr
 deprecated); \cr
 "BP" = Wald with Bonett-Price adjustment for RD, or Hybrid Bonett-Price
 method for RR. \cr
+"Wald" = Wald approximate normal method. Reluctantly included for
+reference only - not recommended. \cr
 For \code{contrast = "OR"}, one of the following methods may be selected,
 all of which are based on transformation of an interval for a single
 proportion \code{b/(b+c)}: \cr

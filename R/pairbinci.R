@@ -1161,7 +1161,9 @@ bpci <- function(x,
 #'
 #' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
 #' @references
-#'
+#'   Fagerland MW, Lydersen S, Laake P. Recommended tests and
+#'   confidence intervals for paired binomial proportions.
+#'   Statistics in Medicine 2014; 33(16):2850-2875
 #'
 #' @inheritParams pairbinci
 #'
