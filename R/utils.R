@@ -146,6 +146,7 @@ wilsonci <- function(x,
 #' with optional continuity adjustment
 #'
 #' @noRd
+if (FALSE) {
 waldci <- function(x,
                    n,
                    distrib="bin",
@@ -156,13 +157,119 @@ waldci <- function(x,
   phat <- x / n
   z <- qnorm(1 - (1 - level) / 2)
   if(distrib == "bin") {
-    waldci <- array(x/n + rep(c(-1, 0 ,1), each = length(x)) * (z * sqrt(phat * (1 - phat)/n) + cc/n), c(length(x), 3))
+    waldci <- array(x/n + rep(c(-1, 0 ,1), each = length(x)) *
+                      (z * sqrt(phat * (1 - phat)/n) + cc/n), c(length(x), 3))
   }
   if(distrib == "poi") {
-    waldci <- array(x/n + rep(c(-1, 0 ,1), each = length(x)) * (z * sqrt(phat/n) + cc/n), c(length(x), 3))
+    waldci <- array(x/n + rep(c(-1, 0 ,1), each = length(x)) *
+                      (z * sqrt(phat/n) + cc/n), c(length(x), 3))
   }
   return(waldci)
 }
+}
+
+#' Wald interval, and equivalent for Poisson data
+#'
+#' with optional continuity adjustment
+#'
+#' @noRd
+waldci <- function(x1,
+                   n1,
+                   x2 = 0,
+                   n2 = 0,
+                   distrib = "bin",
+                   contrast = "RD",
+                   level = 0.95,
+                   cc = 0) {
+
+  nstrat <- length(x1)
+  # in case x1,x2 are input as vectors but n1,n2 are not
+  if (length(n1) < nstrat && nstrat > 1) n1 <- rep(n1, length.out = nstrat)
+  if (length(n2) < nstrat && nstrat > 1) n2 <- rep(n2, length.out = nstrat)
+
+  if (cc == TRUE) cc <- 0.5
+  p1hat <- x1 / n1
+  p2hat <- x2 / n2
+  z <- qnorm(1 - (1 - level) / 2)
+
+  if (contrast == "p") {
+    if(distrib == "bin") {
+      waldci <- array(p1hat + rep(c(-1, 0 ,1), each = length(x1)) *
+                        (z * sqrt(p1hat * (1 - p1hat)/n1) + cc/n1), c(length(x1), 3))
+    }
+    if(distrib == "poi") {
+      waldci <- array(p1hat + rep(c(-1, 0 ,1), each = length(x1)) *
+                        (z * sqrt(p1hat/n1) + cc/n1), c(length(x1), 3))
+    }
+  }
+
+  if (contrast == "RD") {
+    if(distrib == "bin") {
+      waldci <- array(p1hat - p2hat + rep(c(-1, 0 ,1), each = length(x1)) *
+                        (z * sqrt(p1hat * (1 - p1hat)/n1 + p2hat * (1 - p2hat)/n2) +
+                           cc * (1/n1 + 1/n2)), c(length(x1), 3))
+    }
+    if(distrib == "poi") {
+      waldci <- array(p1hat - p2hat + rep(c(-1, 0 ,1), each = length(x1)) *
+                        (z * sqrt(p1hat/n1 + p2hat/n2) +
+                           cc * (1/n1 + 1/n2)), c(length(x1), 3))
+    }
+  }
+
+  if (contrast == "RR") {
+    if(distrib == "bin") {
+      waldci <- array(exp(log(p1hat / p2hat) +
+                        rep(c(-1, 0 ,1), each = length(x1)) *
+                        (z * sqrt(1/x1 + 1/x2 - 1/n1 - 1/n2))), dim = c(length(x1), 3))
+    }
+    if(distrib == "poi") {
+      waldci <- array(exp(log(p1hat / p2hat) +
+                            rep(c(-1, 0 ,1), each = length(x1)) *
+                            (z * sqrt(1/x1 + 1/x2))), dim = c(length(x1), 3))
+    }
+    waldci[, 3][p1hat == 0] <- Inf
+    waldci[, 1][p2hat == 0] <- 0
+  }
+
+  if (contrast == "OR") {
+    if(distrib == "bin") {
+      waldci <- array(exp(log(p1hat * (1 - p2hat) / (p2hat * (1 - p1hat))) +
+                            rep(c(-1, 0 ,1), each = length(x1)) *
+                            (z * sqrt(1/x1 + 1/x2 + 1/(n1 - x1) + 1/(n2 - x2)))), dim = c(length(x1), 3))
+    }
+    if(distrib == "poi") {
+      print("Odds ratio not applicable to Poisson rates")
+      stop()
+    }
+    waldci[, 3][p1hat == 0] <- Inf
+    waldci[, 1][p2hat == 0] <- 0
+  }
+
+  return(waldci)
+}
+
+
+#' Hauck=Anderson interval
+#'
+#' @noRd
+haci <- function(x1,
+                   n1,
+                   x2,
+                   n2,
+                   level = 0.95) {
+
+  p1hat <- x1 / n1
+  p2hat <- x2 / n2
+  z <- qnorm(1 - (1 - level) / 2)
+
+
+      haci <- array(p1hat - p2hat + rep(c(-1, 0 ,1), each = length(x1)) *
+                        (z * sqrt(p1hat * (1 - p1hat)/(n1 - 1) + p2hat * (1 - p2hat)/(n2 - 1)) +
+                           0.5 * (1/pmin(n1, n2))), c(length(x1), 3))
+
+  return(haci)
+}
+
 
 
 #' Rounding with trailing zeros
