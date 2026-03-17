@@ -17,15 +17,18 @@ Computes confidence intervals for binomial or Poisson rates and their difference
 \item scasci(): wrapper function to compute SCAS interval
 \item tdasci(): wrapper function to compute TDAS random effects stratified
 interval
-\item moverci(): for the MOVER method
+\item moverci(): for the MOVER and MOVER-R methods
 \item moverbci(): wrapper function to compute MOVER-B interval
 \item jeffreysci(): wrapper function to compute Jeffreys interval for a
 single rate
 \item scaspci(): non-iterative SCAS method for a single rate
 \item rateci(): wrapper function for SCAS, Jeffreys or 'exact' methods
 for a single rate
+\item rdci(): wrapper function for various intervals for RD
+\item rrci(): wrapper function for various intervals for RR
+\item orci(): wrapper function for various intervals for OR
 \item pairbinci(): for paired binomial data (includes asymptotic score and
-MOVER options)
+MOVER options for RD and RR, plus a selection of methods for OR)
 \item clusterpci(): for estimation of binomial proportions based on
 clustered data
 }

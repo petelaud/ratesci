@@ -8,15 +8,18 @@
 #'   * scasci(): wrapper function to compute SCAS interval
 #'   * tdasci(): wrapper function to compute TDAS random effects stratified
 #'    interval
-#'   * moverci(): for the MOVER method
+#'   * moverci(): for the MOVER and MOVER-R methods
 #'   * moverbci(): wrapper function to compute MOVER-B interval
 #'   * jeffreysci(): wrapper function to compute Jeffreys interval for a
 #'   single rate
 #'   * scaspci(): non-iterative SCAS method for a single rate
 #'   * rateci(): wrapper function for SCAS, Jeffreys or 'exact' methods
 #'   for a single rate
+#'   * rdci(): wrapper function for various intervals for RD
+#'   * rrci(): wrapper function for various intervals for RR
+#'   * orci(): wrapper function for various intervals for OR
 #'   * pairbinci(): for paired binomial data (includes asymptotic score and
-#'   MOVER options)
+#'   MOVER options for RD and RR, plus a selection of methods for OR)
 #'   * clusterpci(): for estimation of binomial proportions based on
 #'   clustered data
 #' @name ratesci-package

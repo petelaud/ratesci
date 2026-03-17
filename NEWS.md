@@ -2,6 +2,10 @@
 
 
 ## New features
+* New functions `rdci()`, `rrci()` and `orci()` for giving a selection of
+  confidence intervals for each contrast for 2 independent binomial or Poisson
+  rates.
+
 ### In `rateci()`:
 * New default point estimate is the "common sense" crude estimate `x / n`, 
   instead of an estimate that is consistent with a 0% CI. `std_est` allows the 
@@ -26,6 +30,9 @@
 * Permit n=0 to produce output interval as [0, 1] for binomial, or [0, Inf] for 
   Poisson with point estimate displayed as NaN
   (prevents error in `pairbinci()` with `method` = "BP").
+### In `moverci()`:
+* Present NaN MOVER-R Wilson upper limits for RR and OR as Inf. 
+
 
 # ratesci 1.0.0 (2025-06-20)
 

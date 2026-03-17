@@ -39,6 +39,8 @@ A number of different methods are offered, but in each case, the recommended def
 
 Most of the above list is covered by `scoreci()`, with the exception of clustered proportions (which are handled by `clusterpci()`) and paired contrasts (`pairbinci()`). Stratified calculations are also catered for (e.g. for analysis of a clinical trial with stratified randomisation, or for a meta-analysis, including random effects). Options are included for omitting the skewness correction to obtain legacy methods such as stratified or unstratified Miettinen-Nurminen and Wilson intervals, Tango intervals for paired data, or chi-squared, CMH, Farrington-Manning or McNemar tests.
 
+Simplified functions producing a selection of different confidence interval methods for each contrast for independent binomial or Poisson rates (with or without continuity adjustment) are provided by `rdci()`, `rrci()` and `orci()`.
+
 -   See the vignettes for further details and examples of the SCAS and other intervals, including plots illustrating the impact of the skewness correction, for the [single rate](https://petelaud.github.io/ratesci/articles/single_rate.html), [basic contrasts](https://petelaud.github.io/ratesci/articles/basic_contrasts.html), [stratified contrasts](https://petelaud.github.io/ratesci/articles/stratified.html), and [paired contrasts](https://petelaud.github.io/ratesci/articles/paired_contrasts.html).
 
 In each case, the asymptotic score methods provide a matching 2-sided test for association, and also a 1-sided hypothesis test against any specified null parameter value for a non-inferiority test. Both tests are guaranteed to be coherent with the interval, so that a 100(1-$\alpha$)% interval excludes the null hypothesis value if and only if the hypothesis test is significant at the $\alpha$ 2-sided or $\alpha$/2 1-sided significance level. The tests for association are variants of (and in many cases directly equivalent to) a chi-squared test or CMH test, and the non-inferiority test is analogous to a Farrington-Manning test, all with improved control of type I error achieved by the bias and skewness corrections. For paired proportions, the test for association is a variant of the McNemar test, incorporating an 'N-1' adjustment which (empirically) avoids any violations of the nominal significance level.
@@ -68,7 +70,7 @@ pak::pak("petelaud/ratesci")
 
 This builds the package from source based on the current version on [GitHub](https://github.com/petelaud/ratesci)
 
-A SAS macro implementation of `scoreci()` is also available at https://github.com/petelaud/ratesci-sas
+A SAS macro implementation of `scoreci()` and `pairbinci()` is also available at https://github.com/petelaud/ratesci-sas
 
 ## Example
 
