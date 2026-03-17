@@ -46,7 +46,7 @@ Methods shown depend on the cc parameter, which specifies whether the
 continuity adjustment is applied to the SCAS and Jeffreys methods. The
 corresponding 'exact' method is Clopper-Pearson/Garwood if cc = TRUE and
 mid-p if cc = FALSE.
-An additional output object 'ciarray' is provided for a side-by-side
+An additional output object 'estimates' is provided for a side-by-side
 comparison of all methods. These are grouped depending on the cc argument
 (if cc = TRUE then the continuity-adjusted and exact strictly conservative
 methods are included)
@@ -72,8 +72,20 @@ a more established or commonly used method:
 All methods can be made more conservative with a 'continuity adjustment',
 which may either be specified as TRUE, or an intermediate 'compromise'
 value between 0 and 0.5 may be selected. When \code{cc} is \code{TRUE} or \code{0.5}, the
-mid-p method becomes the Clopper-Pearson interval (or Garwood for Poisson
-rates).
+mid-p method becomes the 'exact' Clopper-Pearson interval (or Garwood for Poisson
+rates), and the output also includes the slightly less conservative Blaker
+interval.
+Hence the full list of conservative methods produced (when \code{cc} is \code{TRUE}) is:
+\itemize{
+\item SCAS_cc
+\item Jeffreys_cc
+\item Clopper-Pearson 'exact' (two identical versions, using exact calculation or approximation via
+Beta/Gamma distribution))
+\item Wilson_cc
+\item Wald_cc (strongly advise this is not used for any purpose but included for reference)
+\item Blaker 'exact'
+}
+
 Note that Brown et al's Beta formulation perfectly matches the exact interval
 when \code{cc} is TRUE (i.e. for Clopper-Pearson) but not when \code{cc} is \code{FALSE}
 (for mid-p)

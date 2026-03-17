@@ -136,8 +136,18 @@ scaspci <- function(x,
 #' All methods can be made more conservative with a 'continuity adjustment',
 #' which may either be specified as TRUE, or an intermediate 'compromise'
 #' value between 0 and 0.5 may be selected. When `cc` is `TRUE` or `0.5`, the
-#' mid-p method becomes the Clopper-Pearson interval (or Garwood for Poisson
-#' rates).
+#' mid-p method becomes the 'exact' Clopper-Pearson interval (or Garwood for Poisson
+#' rates), and the output also includes the slightly less conservative Blaker
+#' interval.
+#' Hence the full list of conservative methods produced (when `cc` is `TRUE`) is:
+#' - SCAS_cc
+#' - Jeffreys_cc
+#' - Clopper-Pearson 'exact' (two identical versions, using exact calculation or approximation via
+#' Beta/Gamma distribution))
+#' - Wilson_cc
+#' - Wald_cc (strongly advise this is not used for any purpose but included for reference)
+#' - Blaker 'exact'
+#'
 #' Note that Brown et al's Beta formulation perfectly matches the exact interval
 #' when `cc` is TRUE (i.e. for Clopper-Pearson) but not when `cc` is `FALSE`
 #' (for mid-p)
@@ -174,7 +184,7 @@ scaspci <- function(x,
 #'   continuity adjustment is applied to the SCAS and Jeffreys methods. The
 #'   corresponding 'exact' method is Clopper-Pearson/Garwood if cc = TRUE and
 #'   mid-p if cc = FALSE.
-#'   An additional output object 'ciarray' is provided for a side-by-side
+#'   An additional output object 'estimates' is provided for a side-by-side
 #'   comparison of all methods. These are grouped depending on the cc argument
 #'   (if cc = TRUE then the continuity-adjusted and exact strictly conservative
 #'   methods are included)
@@ -283,8 +293,9 @@ rateci <- function(x,
   ), x, n)
 
   ci_wald <- cbind(waldci(
-    x = x,
-    n = n,
+    x1 = x,
+    n1 = n,
+    contrast = "p",
     level = level,
     cc = cc,
     distrib = distrib
@@ -293,8 +304,9 @@ rateci <- function(x,
 
   z <- qnorm(1 - (1 - level)/2)
   ci_ac <-  cbind(waldci(
-    x = x + z^2 / 2,
-    n = n + z^2,
+    x1 = x + z^2 / 2,
+    n1 = n + z^2,
+    contrast = "p",
     level = level,
     cc = cc,
     distrib = distrib
@@ -358,7 +370,7 @@ rateci <- function(x,
   call <- c(
     distrib = distrib, level = level, cc = cc, std_est = std_est
   )
-  outlist <- append(outlist, list(ciarray = outarr, call = call))
+  outlist <- append(outlist, list(estimates = outarr, call = call))
   return(outlist)
 }
 
