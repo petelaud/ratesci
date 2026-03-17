@@ -413,18 +413,6 @@ if (FALSE) {
                      collapse = ", "), ")", sep = "")
   }
 
-  waldci <- function(x, n, distrib = "bin", level = 0.95) {
-    phat <- x / n
-    z <- qnorm(1 - (1 - level) / 2)
-    if (distrib == "bin") {
-      waldci <- cbind(x / n + z * t(c(-1, 1)) * sqrt(phat * (1 - phat) / n))
-    }
-    if (distrib == "poi") {
-      waldci <- cbind(x / n + z * t(c(-1, 1)) * sqrt(phat / n))
-    }
-    return(waldci)
-  }
-
   tabS2 <- rbind(
     SCAS =
       c(
@@ -459,12 +447,12 @@ if (FALSE) {
       ),
     Wald =
       c(
-        pbin1 = fround(waldci(x = x1g, n = n1g)[, c(1, 2)], 3),
-        ppoi1 = fround(waldci(x = x1g, n = n1g,
-                              distrib = "poi")[, c(1, 2)], 3),
-        pbin2 = fround(waldci(x = x2g, n = n2g)[, c(1, 2)], 3),
-        ppoi2 = fround(waldci(x = x2g, n = n2g,
-                              distrib = "poi")[, c(1, 2)], 3)
+        pbin1 = fround(waldci(x1 = x1g, n1 = n1g, contrast = "p")[, c(1, 3)], 3),
+        ppoi1 = fround(waldci(x1 = x1g, n1 = n1g, contrast = "p",
+                              distrib = "poi")[, c(1, 3)], 3),
+        pbin2 = fround(waldci(x1 = x2g, n1 = n2g, contrast = "p")[, c(1, 3)], 3),
+        ppoi2 = fround(waldci(x1 = x2g, n1 = n2g, contrast = "p",
+                              distrib = "poi")[, c(1, 3)], 3)
       )
   )
   tabS2
