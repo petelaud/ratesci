@@ -26,6 +26,9 @@ reference:
   - scasci
   - tdasci
   - moverbci
+  - rdci
+  - rrci
+  - orci
 
 - title: Datasets
   contents:
