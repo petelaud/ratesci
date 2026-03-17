@@ -257,7 +257,7 @@ moverci <- function(x1,
       U1 * L2 * (2 * q1hat - U1) * (2 * q2hat - L2)))) /
       (L2 * (2 * q2hat - L2))
     est <- p1hat * (1 - p2hat) / (p2hat * (1 - p1hat))
-    if (adj == TRUE) {
+    if (adj == TRUE || type == "wilson") {
       # This is optional for informative priors
       upper[x2 == 0] <- Inf
       lower[(x1 == 0 & x2 == n2) | (x1 == n1 & x2 == 0)] <- 0
@@ -274,7 +274,7 @@ moverci <- function(x1,
       u1 * (2 * p2hat - l2) * (l2 * (2 * p1hat - u1))))) /
       (l2 * (2 * p2hat - l2))
     est <- p1hat / p2hat
-    if (adj == TRUE) {
+    if (adj == TRUE || type == "wilson") {
       # This is optional for informative priors
       upper[x2 == 0] <- Inf
       lower[(x1 == 0)] <- 0
