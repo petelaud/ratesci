@@ -25,18 +25,35 @@ and Laud 2018):
 All methods can be made more conservative with a 'continuity
 adjustment', which may either be specified as TRUE, or an intermediate
 'compromise' value between 0 and 0.5 may be selected. When `cc` is
-`TRUE` or `0.5`, the mid-p method becomes the Clopper-Pearson interval
-(or Garwood for Poisson rates). Note that Brown et al's Beta formulation
-perfectly matches the exact interval when `cc` is TRUE (i.e. for
-Clopper-Pearson) but not when `cc` is `FALSE` (for mid-p) All methods
-except Agresti-Coull have equivalent formulae for the Poisson
-distribution: Garwood for Clopper-Pearson, Rao score for Wilson score.
-Jeffreys has a Poisson equivalent using the Gamma distribution. e.g. See
-Brown et al. 2003, Swift 2009 and Laud 2017. The formulation for the
-approximate mid-p interval using Gamma distribution for a Poisson rate
-has been deduced by the package author from the corresponding formulae
-from Brown et al., and has not (to the best of my knowledge) been
-published.
+`TRUE` or `0.5`, the mid-p method becomes the 'exact' Clopper-Pearson
+interval (or Garwood for Poisson rates), and the output also includes
+the slightly less conservative Blaker interval. Hence the full list of
+conservative methods produced (when `cc` is `TRUE`) is:
+
+- SCAS_cc
+
+- Jeffreys_cc
+
+- Clopper-Pearson 'exact' (two identical versions, using exact
+  calculation or approximation via Beta/Gamma distribution))
+
+- Wilson_cc
+
+- Wald_cc (strongly advise this is not used for any purpose but included
+  for reference)
+
+- Blaker 'exact'
+
+Note that Brown et al's Beta formulation perfectly matches the exact
+interval when `cc` is TRUE (i.e. for Clopper-Pearson) but not when `cc`
+is `FALSE` (for mid-p) All methods except Agresti-Coull have equivalent
+formulae for the Poisson distribution: Garwood for Clopper-Pearson, Rao
+score for Wilson score. Jeffreys has a Poisson equivalent using the
+Gamma distribution. e.g. See Brown et al. 2003, Swift 2009 and Laud
+2017. The formulation for the approximate mid-p interval using Gamma
+distribution for a Poisson rate has been deduced by the package author
+from the corresponding formulae from Brown et al., and has not (to the
+best of my knowledge) been published.
 
 This function is vectorised in x, n.
 
@@ -99,7 +116,7 @@ confidence limits and point estimate of p for each value of x and n.
 Methods shown depend on the cc parameter, which specifies whether the
 continuity adjustment is applied to the SCAS and Jeffreys methods. The
 corresponding 'exact' method is Clopper-Pearson/Garwood if cc = TRUE and
-mid-p if cc = FALSE. An additional output object 'ciarray' is provided
+mid-p if cc = FALSE. An additional output object 'estimates' is provided
 for a side-by-side comparison of all methods. These are grouped
 depending on the cc argument (if cc = TRUE then the continuity-adjusted
 and exact strictly conservative methods are included) The last list item

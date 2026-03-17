@@ -43,6 +43,13 @@ unstratified Miettinen-Nurminen and Wilson intervals, Tango intervals
 for paired data, or chi-squared, CMH, Farrington-Manning or McNemar
 tests.
 
+Simplified functions producing a selection of different confidence
+interval methods for each contrast for independent binomial or Poisson
+rates (with or without continuity adjustment) are provided by
+[`rdci()`](https://petelaud.github.io/ratesci/reference/rdci.md),
+[`rrci()`](https://petelaud.github.io/ratesci/reference/rrci.md) and
+[`orci()`](https://petelaud.github.io/ratesci/reference/orci.md).
+
 - See the vignettes for further details and examples of the SCAS and
   other intervals, including plots illustrating the impact of the
   skewness correction, for the [single
@@ -128,6 +135,8 @@ This builds the package from source based on the current version on
 
 A SAS macro implementation of
 [`scoreci()`](https://petelaud.github.io/ratesci/reference/scoreci.md)
+and
+[`pairbinci()`](https://petelaud.github.io/ratesci/reference/pairbinci.md)
 is also available at <https://github.com/petelaud/ratesci-sas>
 
 ## Example

@@ -17,8 +17,19 @@ Wald (strongly advise this is not used for any purpose but included for referenc
 All methods can be made more conservative with a 'continuity adjustment',
 which may either be specified as TRUE, or an intermediate 'compromise'
 value between 0 and 0.5 may be selected. When cc is TRUE or 0.5, the
-mid-p method becomes the Clopper-Pearson interval (or Garwood for Poisson
-rates).
+mid-p method becomes the 'exact' Clopper-Pearson interval (or Garwood for Poisson
+rates), and the output also includes the slightly less conservative Blaker
+interval.
+Hence the full list of conservative methods produced (when cc is TRUE) is:
+SCAS_cc
+Jeffreys_cc
+Clopper-Pearson 'exact' (two identical versions, using exact calculation or approximation via
+Beta/Gamma distribution))
+Wilson_cc
+Wald_cc (strongly advise this is not used for any purpose but included for reference)
+Blaker 'exact'
+
+
 Note that Brown et al's Beta formulation perfectly matches the exact interval
 when cc is TRUE (i.e. for Clopper-Pearson) but not when cc is FALSE
 (for mid-p)
@@ -47,8 +58,19 @@ Wald (strongly advise this is not used for any purpose but included for referenc
 All methods can be made more conservative with a 'continuity adjustment',
 which may either be specified as TRUE, or an intermediate 'compromise'
 value between 0 and 0.5 may be selected. When cc is TRUE or 0.5, the
-mid-p method becomes the Clopper-Pearson interval (or Garwood for Poisson
-rates).
+mid-p method becomes the 'exact' Clopper-Pearson interval (or Garwood for Poisson
+rates), and the output also includes the slightly less conservative Blaker
+interval.
+Hence the full list of conservative methods produced (when cc is TRUE) is:
+SCAS_cc
+Jeffreys_cc
+Clopper-Pearson 'exact' (two identical versions, using exact calculation or approximation via
+Beta/Gamma distribution))
+Wilson_cc
+Wald_cc (strongly advise this is not used for any purpose but included for reference)
+Blaker 'exact'
+
+
 Note that Brown et al's Beta formulation perfectly matches the exact interval
 when cc is TRUE (i.e. for Clopper-Pearson) but not when cc is FALSE
 (for mid-p)
@@ -122,9 +144,17 @@ a more established or commonly used method:</p></li>
 </ul><p>All methods can be made more conservative with a 'continuity adjustment',
 which may either be specified as TRUE, or an intermediate 'compromise'
 value between 0 and 0.5 may be selected. When <code>cc</code> is <code>TRUE</code> or <code>0.5</code>, the
-mid-p method becomes the Clopper-Pearson interval (or Garwood for Poisson
-rates).
-Note that Brown et al's Beta formulation perfectly matches the exact interval
+mid-p method becomes the 'exact' Clopper-Pearson interval (or Garwood for Poisson
+rates), and the output also includes the slightly less conservative Blaker
+interval.
+Hence the full list of conservative methods produced (when <code>cc</code> is <code>TRUE</code>) is:</p><ul><li><p>SCAS_cc</p></li>
+<li><p>Jeffreys_cc</p></li>
+<li><p>Clopper-Pearson 'exact' (two identical versions, using exact calculation or approximation via
+Beta/Gamma distribution))</p></li>
+<li><p>Wilson_cc</p></li>
+<li><p>Wald_cc (strongly advise this is not used for any purpose but included for reference)</p></li>
+<li><p>Blaker 'exact'</p></li>
+</ul><p>Note that Brown et al's Beta formulation perfectly matches the exact interval
 when <code>cc</code> is TRUE (i.e. for Clopper-Pearson) but not when <code>cc</code> is <code>FALSE</code>
 (for mid-p)
 All methods except Agresti-Coull have equivalent formulae for the Poisson
@@ -200,7 +230,7 @@ Methods shown depend on the cc parameter, which specifies whether the
 continuity adjustment is applied to the SCAS and Jeffreys methods. The
 corresponding 'exact' method is Clopper-Pearson/Garwood if cc = TRUE and
 mid-p if cc = FALSE.
-An additional output object 'ciarray' is provided for a side-by-side
+An additional output object 'estimates' is provided for a side-by-side
 comparison of all methods. These are grouped depending on the cc argument
 (if cc = TRUE then the continuity-adjusted and exact strictly conservative
 methods are included)
@@ -229,7 +259,7 @@ proportion. Statistical Science 2001; 16(2):101-133.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

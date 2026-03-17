@@ -92,6 +92,7 @@
 </ul>
 <p>A number of different methods are offered, but in each case, the recommended default is based on asymptotic score methodology (from (<a href="#ref-wilson1927">Wilson 1927</a>), (<a href="#ref-miettinen1985">Miettinen and Nurminen 1985</a>) and (<a href="#ref-tango1998a">Tango 1998</a>)), but including skewness corrections following the principles of (<a href="#ref-gart1988">Gart and Nam 1988</a>). The resulting family of skewness-corrected asymptotic score (SCAS) methods (<a href="#ref-laud2017">Laud 2017</a>), (and Laud 2025, under review) ensures equal-tailed coverage (also referred to as central location), in other words for a nominal 95% confidence interval, the one-sided non-coverage probability is (on average) close to 2.5% on each side. The equal-tailed property is particularly important for non-inferiority testing (as it ensures correct type I error rates for one-sided tests), but should be considered generally desirable for two-sided confidence intervals. Unfortunately this aspect of performance is often overlooked in the literature, in favour of interval width.</p>
 <p>Most of the above list is covered by <code><a href="reference/scoreci.html">scoreci()</a></code>, with the exception of clustered proportions (which are handled by <code><a href="reference/clusterpci.html">clusterpci()</a></code>) and paired contrasts (<code><a href="reference/pairbinci.html">pairbinci()</a></code>). Stratified calculations are also catered for (e.g. for analysis of a clinical trial with stratified randomisation, or for a meta-analysis, including random effects). Options are included for omitting the skewness correction to obtain legacy methods such as stratified or unstratified Miettinen-Nurminen and Wilson intervals, Tango intervals for paired data, or chi-squared, CMH, Farrington-Manning or McNemar tests.</p>
+<p>Simplified functions producing a selection of different confidence interval methods for each contrast for independent binomial or Poisson rates (with or without continuity adjustment) are provided by <code><a href="reference/rdci.html">rdci()</a></code>, <code><a href="reference/rrci.html">rrci()</a></code> and <code><a href="reference/orci.html">orci()</a></code>.</p>
 <ul>
 <li>See the vignettes for further details and examples of the SCAS and other intervals, including plots illustrating the impact of the skewness correction, for the <a href="https://petelaud.github.io/ratesci/articles/single_rate.html">single rate</a>, <a href="https://petelaud.github.io/ratesci/articles/basic_contrasts.html">basic contrasts</a>, <a href="https://petelaud.github.io/ratesci/articles/stratified.html">stratified contrasts</a>, and <a href="https://petelaud.github.io/ratesci/articles/paired_contrasts.html">paired contrasts</a>.</li>
 </ul>
@@ -113,7 +114,7 @@
 <code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"petelaud/ratesci"</span><span class="op">)</span></span></code></pre></div>
 <p>This builds the package from source based on the current version on <a href="https://github.com/petelaud/ratesci" class="external-link">GitHub</a></p>
-<p>A SAS macro implementation of <code><a href="reference/scoreci.html">scoreci()</a></code> is also available at <a href="https://github.com/petelaud/ratesci-sas" class="external-link uri">https://github.com/petelaud/ratesci-sas</a></p>
+<p>A SAS macro implementation of <code><a href="reference/scoreci.html">scoreci()</a></code> and <code><a href="reference/pairbinci.html">pairbinci()</a></code> is also available at <a href="https://github.com/petelaud/ratesci-sas" class="external-link uri">https://github.com/petelaud/ratesci-sas</a></p>
 </div>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
@@ -235,7 +236,7 @@ Wilson, Edwin B. 1927. “Probable Inference, the Law of Succession, and Statist
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

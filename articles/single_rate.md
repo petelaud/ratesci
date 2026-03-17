@@ -83,7 +83,7 @@ rateci(x = 1, n = 29)
 #>                           x  n
 #> [1,] -0.0319 0.0345 0.101 1 29
 #> 
-#> $ciarray
+#> $estimates
 #> , , 1
 #> 
 #>                  lower    est upper x  n
@@ -143,7 +143,7 @@ rateci(x = 1, n = 29, cc = TRUE)
 #>        lower    est upper x  n
 #> [1,] 0.00177 0.0345 0.166 1 29
 #> 
-#> $ciarray
+#> $estimates
 #> , , 1
 #> 
 #>                     lower    est upper x  n
@@ -179,7 +179,7 @@ rateci(x = 1, n = 29, cc = 0.25)
 #>        lower    est upper x  n
 #> [1,] 0.00277 0.0345 0.163 1 29
 #> 
-#> $ciarray
+#> $estimates
 #> , , 1
 #> 
 #>                    lower    est upper x  n

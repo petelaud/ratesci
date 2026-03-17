@@ -49,7 +49,8 @@
 <h2 class="pkg-version" data-toc-text="development version" id="ratesci-development-version">ratesci (development version)<a class="anchor" aria-label="anchor" href="#ratesci-development-version"></a></h2>
 <div class="section level3">
 <h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
-<div class="section level4">
+<ul><li>New functions <code><a href="../reference/rdci.html">rdci()</a></code>, <code><a href="../reference/rrci.html">rrci()</a></code> and <code><a href="../reference/orci.html">orci()</a></code> for giving a selection of confidence intervals for each contrast for 2 independent binomial or Poisson rates.</li>
+</ul><div class="section level4">
 <h4 id="in-rateci-development-version">In <code>rateci()</code>:<a class="anchor" aria-label="anchor" href="#in-rateci-development-version"></a></h4>
 <ul><li>New default point estimate is the “common sense” crude estimate <code>x / n</code>, instead of an estimate that is consistent with a 0% CI. <code>std_est</code> allows the user to choose. (<a href="https://github.com/petelaud/ratesci/issues/32" class="external-link">#32</a>, thanks to Chelsea Dickens for raising the issue.)</li>
 <li>New output object containing several confidence interval methods in an array format, including the inferior Wald, Wilson and Agresti-Coull methods (for reference, not recommended), plus an alternative formulation of the Clopper-Pearson or mid-p interval based on Beta or Gamma distributions (for comparison with the version based on binomial/Poisson tail probabilities). These match Clopper-Pearson and Garwood precisely when <code>cc</code> is <code>TRUE</code>, and approximately match the corresponding mid-p intervals when <code>cc</code> is <code>FALSE</code>.</li>
@@ -66,7 +67,8 @@
 <h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
 <div class="section level4">
 <h4 id="in-rateci-and-moverci-development-version">In <code>rateci()</code> and <code>moverci()</code>:<a class="anchor" aria-label="anchor" href="#in-rateci-and-moverci-development-version"></a></h4>
-<ul><li>Permit n=0 to produce output interval as [0, 1] for binomial, or [0, Inf] for Poisson with point estimate displayed as NaN (prevents error in <code><a href="../reference/pairbinci.html">pairbinci()</a></code> with <code>method</code> = “BP”).</li>
+<ul><li>Permit n=0 to produce output interval as [0, 1] for binomial, or [0, Inf] for Poisson with point estimate displayed as NaN (prevents error in <code><a href="../reference/pairbinci.html">pairbinci()</a></code> with <code>method</code> = “BP”). ### In <code><a href="../reference/moverci.html">moverci()</a></code>:</li>
+<li>Present NaN MOVER-R Wilson upper limits for RR and OR as Inf.</li>
 </ul></div>
 </div>
 </div>
@@ -273,7 +275,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

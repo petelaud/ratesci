@@ -42,6 +42,13 @@ User-friendly convenience functions with restricted set of options
 - [`moverbci()`](https://petelaud.github.io/ratesci/reference/moverbci.md)
   : Approximate Bayesian ("MOVER-B") confidence intervals for
   comparisons of independent binomial or Poisson rates.
+- [`rdci()`](https://petelaud.github.io/ratesci/reference/rdci.md) :
+  Confidence intervals for rate difference (RD) with independent rates.
+- [`rrci()`](https://petelaud.github.io/ratesci/reference/rrci.md) :
+  Confidence intervals for rate ratio (RR) with independent binomial
+  rates.
+- [`orci()`](https://petelaud.github.io/ratesci/reference/orci.md) :
+  Confidence intervals for odds ratio.
 
 ## Datasets
 

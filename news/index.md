@@ -4,6 +4,13 @@
 
 ### New features
 
+- New functions
+  [`rdci()`](https://petelaud.github.io/ratesci/reference/rdci.md),
+  [`rrci()`](https://petelaud.github.io/ratesci/reference/rrci.md) and
+  [`orci()`](https://petelaud.github.io/ratesci/reference/orci.md) for
+  giving a selection of confidence intervals for each contrast for 2
+  independent binomial or Poisson rates.
+
 #### In `rateci()`:
 
 - New default point estimate is the “common sense” crude estimate
@@ -36,7 +43,9 @@
   \[0, Inf\] for Poisson with point estimate displayed as NaN (prevents
   error in
   [`pairbinci()`](https://petelaud.github.io/ratesci/reference/pairbinci.md)
-  with `method` = “BP”).
+  with `method` = “BP”). \### In
+  [`moverci()`](https://petelaud.github.io/ratesci/reference/moverci.md):
+- Present NaN MOVER-R Wilson upper limits for RR and OR as Inf.
 
 ## ratesci 1.0.0 (2025-06-20)
 
