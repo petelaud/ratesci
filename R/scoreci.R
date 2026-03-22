@@ -1078,9 +1078,9 @@ scoreci <- function(x1,
         }
         text(
           x = c(lower[i], point[i], upper[i]), y = c(-1.5, -1.75, -2) * qnval,
-          labels = formatC(c(lower[i], point[i], upper[i]),
-            format = "fg",
-            4, flag = "#"
+          labels = formatC(0 + round(c(lower[i], point[i], upper[i]), precis),
+            format = ifelse(contrast %in% c("p", "RD"), "f", "fg"),
+            digits = precis, flag = "#"
           ),
           pos = 4, offset = -0.2, cex = 0.8, xpd = TRUE
         )
