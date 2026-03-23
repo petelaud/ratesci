@@ -51,7 +51,7 @@ Another family of methods offered by the package, with reasonable performance fo
 
 For those wishing to achieve strictly conservative coverage, continuity adjustments are provided as approximations to "exact" methods, with the option to adjust the strength of the adjustment (as the Yates correction is widely recognised to be an over-conservative adjustment). The performance of these adjustments has not been extensively evaluated, but they appear to be more successful for SCAS than for MOVER, in terms of achieving conservative coverage.
 
-An online calculator based on this package is available [here](https://ssu.shef.ac.uk/ratesci/calc.php). 
+An online calculator based on this package is available [here](https://petelaud.github.io/ratesci-app). 
 
 ## Installation
 
