@@ -2,7 +2,7 @@
 % Please edit documentation in R/orci.R
 \name{orci}
 \alias{orci}
-\title{Confidence intervals for odds ratio.}
+\title{Confidence intervals for odds ratio with independent binomial proportions.}
 \usage{
 orci(x1, n1, x2, n2, level = 0.95, std_est = TRUE, cc = FALSE, precis = 8)
 }

@@ -176,7 +176,7 @@
 #'   Statistics in Biosciences 2025; https://doi.org/10.1007/s12561-025-09479-4
 #'
 #'   Laud PJ. Improved confidence intervals and tests for paired binomial
-#'   proportions. (2025, Under review)
+#'   proportions. (2026, Under review)
 #'
 #' @export
 pairbinci <- function(x,
@@ -541,6 +541,8 @@ pairbinci <- function(x,
 #'   Statistics in Medicine 2003; 22:1217-1233
 #'
 #' @inheritParams pairbinci
+#' @param theta Numeric value for the contrast parameter, at which the score
+#'   function is to be evaluated.
 #'
 #' @noRd
 scorepair <- function(theta,
@@ -997,6 +999,8 @@ tangci <- function(x,
 #'   Statistical Methods in Medical Research. 2011; 20(3):233-259
 #'
 #' @inheritParams pairbinci
+#' @param corc Logical (default TRUE) indicating whether to apply adjustment
+#'   to the correlation estimate from Newcombe.
 #'
 #' @noRd
 moverpair <- function(x,

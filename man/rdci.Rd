@@ -2,7 +2,8 @@
 % Please edit documentation in R/rdci.R
 \name{rdci}
 \alias{rdci}
-\title{Confidence intervals for rate difference (RD) with independent rates.}
+\title{Confidence intervals for rate difference (RD) with independent binomial or
+Poisson rates.}
 \usage{
 rdci(
   x1,

@@ -1428,6 +1428,8 @@ tdasci <- function(x1,
 #'   9(12):1447-1454.
 #'
 #' @inheritParams scoreci
+#' @param theta Numeric value for the contrast parameter, at which the score
+#'   function is to be evaluated.
 #'
 #' @noRd
 scoretheta <- function(theta,

@@ -2,7 +2,7 @@
 % Please edit documentation in R/rrci.R
 \name{rrci}
 \alias{rrci}
-\title{Confidence intervals for rate ratio (RR) with independent binomial rates.}
+\title{Confidence intervals for rate ratio (RR) with independent binomial or Poisson rates.}
 \usage{
 rrci(
   x1,

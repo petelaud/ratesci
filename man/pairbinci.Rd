@@ -2,7 +2,7 @@
 % Please edit documentation in R/pairbinci.R
 \name{pairbinci}
 \alias{pairbinci}
-\title{Confidence intervals for comparisons of paired binomial rates.}
+\title{Confidence intervals and tests for comparisons of paired binomial rates.}
 \usage{
 pairbinci(
   x,
@@ -220,7 +220,7 @@ Correlated Proportions" (2023).
 Statistics in Biosciences 2025; https://doi.org/10.1007/s12561-025-09479-4
 
 Laud PJ. Improved confidence intervals and tests for paired binomial
-proportions. (2025, Under review)
+proportions. (2026, Under review)
 }
 \author{
 Pete Laud, \email{p.j.laud@sheffield.ac.uk}
