@@ -66,44 +66,43 @@ rdci <- function(x1,
 
   contrast <- "RD"
   est <- (x1 / n1) - (x2 / n2)
+  if (as.character(cc) == "TRUE") cc <- 0.5
 
   ci_adjwald <- rep(NA, 3)
-    ci_wald <- waldci(
-      x1 = x1,
-      n1 = n1,
-      x2 = x2,
-      n2 = n2,
+  ci_wald <- waldci(
+    x1 = x1,
+    n1 = n1,
+    x2 = x2,
+    n2 = n2,
+    contrast = contrast,
+    distrib = distrib,
+    level = level,
+    cc = cc
+  )
+
+  if (cc == FALSE) {
+    ci_adjwald <- waldci(
+      x1 = x1 + 1,
+      n1 = n1 + 2,
+      x2 = x2 + 1,
+      n2 = n2 + 2,
       contrast = contrast,
       distrib = distrib,
       level = level,
       cc = cc
     )
+  }
 
-    if (cc == FALSE) {
-      ci_adjwald <- waldci(
-        x1 = x1 + 1,
-        n1 = n1 + 2,
-        x2 = x2 + 1,
-        n2 = n2 + 2,
-        contrast = contrast,
-        distrib = distrib,
-        level = level,
-        cc = cc
-      )
-    }
+  if (cc == TRUE & distrib == "bin") {
+    ci_adjwald <- haci(
+      x1 = x1,
+      n1 = n1,
+      x2 = x2,
+      n2 = n2,
+      level = level
+    )
+  }
 
-    if (cc == TRUE & distrib == "bin") {
-      ci_adjwald <- haci(
-        x1 = x1,
-        n1 = n1,
-        x2 = x2,
-        n2 = n2,
-        level = level
-      )
-
-    }
-
-  #t1 <- system.time(
   ci_scas <- scasci(
     x1 = x1,
     n1 = n1,
@@ -115,9 +114,7 @@ rdci <- function(x1,
     cc = cc,
     precis = precis
   )$estimates[, c(1:3), drop = FALSE]
-  #)[[3]]
 
-  #t2 <- system.time(
   ci_gn <- scoreci(
     x1 = x1,
     n1 = n1,
@@ -132,9 +129,7 @@ rdci <- function(x1,
     cc = cc,
     precis = precis
   )$estimates[, c(1:3), drop = FALSE]
-  #)[[3]]
 
-  #t3 <- system.time(
   ci_mn <- scoreci(
     x1 = x1,
     n1 = n1,
@@ -149,9 +144,7 @@ rdci <- function(x1,
     cc = cc,
     precis = precis
   )$estimates[, c(1:3), drop = FALSE]
-  #)[[3]]
 
-  #t4 <- system.time(
   ci_mee <- scoreci(
     x1 = x1,
     n1 = n1,
@@ -166,9 +159,7 @@ rdci <- function(x1,
     cc = cc,
     precis = precis
   )$estimates[, c(1:3), drop = FALSE]
-  #)[[3]]
 
-  #t5 <- system.time(
   ci_moverw <- moverci(
     x1 = x1,
     n1 = n1,
@@ -180,9 +171,7 @@ rdci <- function(x1,
     type = "wilson",
     cc = cc
   )$estimates[, c(1:3), drop = FALSE]
-  #)[[3]]
 
-  #t6 <- system.time(
   ci_moverj <- moverci(
     x1 = x1,
     n1 = n1,
@@ -195,7 +184,6 @@ rdci <- function(x1,
     adj = TRUE,
     cc = cc
   )$estimates[, c(1:3), drop = FALSE]
-  #)[[3]]
 
   mydimnames <- dimnames(ci_scas)
   mydimnames[[1]] <- paste0(x1, "/", n1, " vs ", x2, "/", n2)
@@ -224,13 +212,8 @@ rdci <- function(x1,
     if (cc != TRUE || distrib == "poi") outarr <- outarr[, , 1:7, drop = FALSE]
   }
   if (distrib == "poi") outarr <- outarr[, , -c(2, 4), drop = FALSE]
-  #dimnames(outarr) <- mydimnames
-  outarr <- aperm(round(outarr, precis), c(3,2,1))
-  #t7 <- system.time(
-  #)[[3]]
-
-  #times <- c(t1, t2, t3, t4, t5, t6, t7)
-  #times
+  # dimnames(outarr) <- mydimnames
+  outarr <- aperm(round(outarr, precis), c(3, 2, 1))
 
   call <- c(
     distrib = distrib,

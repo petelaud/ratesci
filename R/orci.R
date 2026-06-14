@@ -39,15 +39,13 @@
 #'
 #' @export
 orci <- function(x1,
-                    n1,
-                    x2,
-                    n2,
-                    level = 0.95,
-                    std_est = TRUE,
-                    cc = FALSE,
-                    precis = 8
-) {
-
+                 n1,
+                 x2,
+                 n2,
+                 level = 0.95,
+                 std_est = TRUE,
+                 cc = FALSE,
+                 precis = 8) {
   if (length(x1) != length(x2)) {
     print("x1 and x2 must be the same length")
     stop()
@@ -61,34 +59,34 @@ orci <- function(x1,
 
   contrast <- "OR"
   distrib <- "bin"
-  est <- (x1/n1) / (x2/n2) * (1 - x2/n2) / (1 - x1/n1)
+  est <- (x1 / n1) / (x2 / n2) * (1 - x2 / n2) / (1 - x1 / n1)
+  if (as.character(cc) == "TRUE") cc <- 0.5
 
   ci_adjwald <- rep(NA, 3)
-    ci_wald <- waldci(
-      x1 = x1,
-      n1 = n1,
-      x2 = x2,
-      n2 = n2,
+  ci_wald <- waldci(
+    x1 = x1,
+    n1 = n1,
+    x2 = x2,
+    n2 = n2,
+    distrib = distrib,
+    contrast = contrast,
+    level = level,
+    cc = cc
+  )
+
+  if (cc == FALSE) {
+    ci_adjwald <- waldci(
+      x1 = x1 + 0.5,
+      n1 = n1 + 1,
+      x2 = x2 + 0.5,
+      n2 = n2 + 1,
       distrib = distrib,
       contrast = contrast,
       level = level,
       cc = cc
     )
+  }
 
-    if (cc == FALSE) {
-      ci_adjwald <- waldci(
-        x1 = x1 + 0.5,
-        n1 = n1 + 1,
-        x2 = x2 + 0.5,
-        n2 = n2 + 1,
-        distrib = distrib,
-        contrast = contrast,
-        level = level,
-        cc = cc
-      )
-    }
-
-  #t1 <- system.time(
   ci_scas <- scasci(
     x1 = x1,
     n1 = n1,
@@ -100,9 +98,7 @@ orci <- function(x1,
     cc = cc,
     precis = precis
   )$estimates[, c(1:3), drop = FALSE]
-  #)[[3]]
 
-  #t2 <- system.time(
   ci_gn <- scoreci(
     x1 = x1,
     n1 = n1,
@@ -117,9 +113,7 @@ orci <- function(x1,
     cc = cc,
     precis = precis
   )$estimates[, c(1:3), drop = FALSE]
-  #)[[3]]
 
-  #t3 <- system.time(
   ci_mn <- scoreci(
     x1 = x1,
     n1 = n1,
@@ -134,9 +128,7 @@ orci <- function(x1,
     cc = cc,
     precis = precis
   )$estimates[, c(1:3), drop = FALSE]
-  #)[[3]]
 
-  #t4 <- system.time(
   ci_mee <- scoreci(
     x1 = x1,
     n1 = n1,
@@ -151,9 +143,7 @@ orci <- function(x1,
     cc = cc,
     precis = precis
   )$estimates[, c(1:3), drop = FALSE]
-  #)[[3]]
 
-  #t5 <- system.time(
   ci_moverw <- moverci(
     x1 = x1,
     n1 = n1,
@@ -165,9 +155,7 @@ orci <- function(x1,
     type = "wilson",
     cc = cc
   )$estimates[, c(1:3), drop = FALSE]
-  #)[[3]]
 
-  #t6 <- system.time(
   ci_moverj <- moverci(
     x1 = x1,
     n1 = n1,
@@ -180,22 +168,27 @@ orci <- function(x1,
     adj = TRUE,
     cc = cc
   )$estimates[, c(1:3), drop = FALSE]
-  #)[[3]]
 
   mydimnames <- dimnames(ci_scas)
   mydimnames[[1]] <- paste0(x1, "/", n1, " vs ", x2, "/", n2)
 
-  methodnames <- c("SCAS", "Gart Asymptotic Score", "Miettinen-Nurminen",
-                   "Uncorrected Asymptotic Score",
-                   "MOVER-R Wilson",
-                   "MOVER-R Jeffreys",
-                   "Woolf logit",
-                   "Gart adjusted logit")
+  methodnames <- c(
+    "SCAS", "Gart Asymptotic Score", "Miettinen-Nurminen",
+    "Uncorrected Asymptotic Score",
+    "MOVER-R Wilson",
+    "MOVER-R Jeffreys",
+    "Woolf logit",
+    "Gart adjusted logit"
+  )
   mydimnames[[3]] <- methodnames
 
-  outarr <- array(c(ci_scas, ci_gn, ci_mn, ci_mee,
-                    ci_moverw, ci_moverj, ci_wald, ci_adjwald),
-                  dim <- c(dim(ci_scas), 8))[drop = FALSE]
+  outarr <- array(
+    c(
+      ci_scas, ci_gn, ci_mn, ci_mee,
+      ci_moverw, ci_moverj, ci_wald, ci_adjwald
+    ),
+    dim <- c(dim(ci_scas), 8)
+  )[drop = FALSE]
   dimnames(outarr) <- mydimnames
 
   if (std_est) outarr[, 2, ] <- est
@@ -205,13 +198,8 @@ orci <- function(x1,
     dimnames(outarr) <- mydimnames
     outarr <- outarr[, , 1:6, drop = FALSE]
   }
-  #dimnames(outarr) <- mydimnames
-  outarr <- aperm(round(outarr, precis), c(3,2,1))
-  #t7 <- system.time(
-  #)[[3]]
-
-  #times <- c(t1, t2, t3, t4, t5, t6, t7)
-  #times
+  # dimnames(outarr) <- mydimnames
+  outarr <- aperm(round(outarr, precis), c(3, 2, 1))
 
   call <- c(
     distrib = distrib,
@@ -221,5 +209,4 @@ orci <- function(x1,
 
   outlist <- list(estimates = outarr, call = call)
   return(outlist)
-
 }
