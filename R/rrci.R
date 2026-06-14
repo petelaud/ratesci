@@ -43,16 +43,14 @@
 #'
 #' @export
 rrci <- function(x1,
-                    n1,
-                    x2,
-                    n2,
-                    distrib = "bin",
-                    level = 0.95,
-                    std_est = TRUE,
-                    cc = FALSE,
-                    precis = 8
-) {
-
+                 n1,
+                 x2,
+                 n2,
+                 distrib = "bin",
+                 level = 0.95,
+                 std_est = TRUE,
+                 cc = FALSE,
+                 precis = 8) {
   if (length(x1) != length(x2)) {
     print("x1 and x2 must be the same length")
     stop()
@@ -65,7 +63,7 @@ rrci <- function(x1,
   }
 
   contrast <- "RR"
-  est <- (x1/n1) / (x2/n2)
+  est <- (x1 / n1) / (x2 / n2)
 
     ci_wald <- waldci(
       x1 = x1,
@@ -189,15 +187,19 @@ rrci <- function(x1,
   mydimnames <- dimnames(ci_scas)
   mydimnames[[1]] <- paste0(x1, "/", n1, " vs ", x2, "/", n2)
 
-  methodnames <- c("SCAS", "Gart-Nam", "Miettinen-Nurminen", "Koopman",
-                   "MOVER-R Wilson", "MOVER-R Jeffreys",
-                   "Katz log", "Adjusted log")
+  methodnames <- c(
+    "SCAS", "Gart-Nam", "Miettinen-Nurminen", "Koopman",
+    "MOVER-R Wilson", "MOVER-R Jeffreys",
+    "Katz log", "Adjusted log"
+  )
   if (distrib == "poi") methodnames[7] <- "Approximate Lognormal"
 
   mydimnames[[3]] <- methodnames
 
-  outarr <- array(c(ci_scas, ci_gn, ci_mn, ci_mee, ci_moverw, ci_moverj, ci_wald, ci_adjwald),
-                  dim <- c(dim(ci_scas), 8))[drop = FALSE]
+  outarr <- array(
+    c(ci_scas, ci_gn, ci_mn, ci_mee, ci_moverw, ci_moverj, ci_wald, ci_adjwald),
+    dim <- c(dim(ci_scas), 8)
+  )[drop = FALSE]
   dimnames(outarr) <- mydimnames
 
   if (std_est) outarr[, 2, ] <- est
@@ -229,5 +231,4 @@ rrci <- function(x1,
 
   outlist <- list(estimates = outarr, call = call)
   return(outlist)
-
 }
