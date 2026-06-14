@@ -1,4 +1,4 @@
-# Confidence intervals for odds ratio.
+# Confidence intervals for odds ratio with independent binomial proportions.
 
 Confidence intervals for comparisons of two binomial rates. This
 convenience wrapper function produces a selection of the methods below

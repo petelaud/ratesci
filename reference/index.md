@@ -2,7 +2,7 @@
 
 ## Core functions
 
-### Intervals for a contrast of two proportions or rates
+### Intervals and tests for a contrast of two proportions or rates
 
 - [`scoreci()`](https://petelaud.github.io/ratesci/reference/scoreci.md)
   : Score confidence intervals and tests for a single binomial or
@@ -12,9 +12,10 @@
   : Method of Variance Estimates Recovery ("MOVER") confidence intervals
   for comparisons of independent binomial or Poisson rates.
 - [`pairbinci()`](https://petelaud.github.io/ratesci/reference/pairbinci.md)
-  : Confidence intervals for comparisons of paired binomial rates.
+  : Confidence intervals and tests for comparisons of paired binomial
+  rates.
 
-### Intervals for a single proportion or rate
+### Intervals and tests for a single proportion or rate
 
 - [`scaspci()`](https://petelaud.github.io/ratesci/reference/scaspci.md)
   : Skewness-corrected asymptotic score ("SCAS") confidence intervals
@@ -32,6 +33,20 @@ User-friendly convenience functions with restricted set of options
 
 - [`rateci()`](https://petelaud.github.io/ratesci/reference/rateci.md) :
   Selected confidence intervals for the single binomial or Poisson rate.
+- [`rdci()`](https://petelaud.github.io/ratesci/reference/rdci.md) :
+  Confidence intervals for rate difference (RD) with independent
+  binomial or Poisson rates.
+- [`rrci()`](https://petelaud.github.io/ratesci/reference/rrci.md) :
+  Confidence intervals for rate ratio (RR) with independent binomial or
+  Poisson rates.
+- [`orci()`](https://petelaud.github.io/ratesci/reference/orci.md) :
+  Confidence intervals for odds ratio with independent binomial
+  proportions.
+- [`rdpairci()`](https://petelaud.github.io/ratesci/reference/rdpairci.md)
+  : Confidence intervals for rate difference (RD) with paired binomial
+  rates.
+- [`rrpairci()`](https://petelaud.github.io/ratesci/reference/rrpairci.md)
+  : Confidence intervals for rate ratio (RR) with paired binomial rates.
 - [`scasci()`](https://petelaud.github.io/ratesci/reference/scasci.md) :
   Skewness-corrected asymptotic score ("SCAS") confidence intervals for
   comparisons of independent binomial or Poisson rates.
@@ -42,13 +57,6 @@ User-friendly convenience functions with restricted set of options
 - [`moverbci()`](https://petelaud.github.io/ratesci/reference/moverbci.md)
   : Approximate Bayesian ("MOVER-B") confidence intervals for
   comparisons of independent binomial or Poisson rates.
-- [`rdci()`](https://petelaud.github.io/ratesci/reference/rdci.md) :
-  Confidence intervals for rate difference (RD) with independent rates.
-- [`rrci()`](https://petelaud.github.io/ratesci/reference/rrci.md) :
-  Confidence intervals for rate ratio (RR) with independent binomial
-  rates.
-- [`orci()`](https://petelaud.github.io/ratesci/reference/orci.md) :
-  Confidence intervals for odds ratio.
 
 ## Datasets
 

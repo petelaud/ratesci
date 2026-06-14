@@ -12,8 +12,8 @@
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
 <script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="2: Basic contrasts (single stratum)">
 </head>
@@ -99,7 +99,7 @@ where
 or the ratio of the two proportions
 (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mover><mi>θ</mi><mo accent="true">̂</mo></mover><mrow><mi>R</mi><mi>R</mi></mrow></msub><mo>=</mo><msub><mover><mi>p</mi><mo accent="true">̂</mo></mover><mn>1</mn></msub><mi>/</mi><msub><mover><mi>p</mi><mo accent="true">̂</mo></mover><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\hat \theta_{RR} = \hat p_1 / \hat p_2</annotation></semantics></math>).
 Another option is the odds ratio
-(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mover><mi>θ</mi><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>R</mi></mrow></msub><mo>=</mo><msub><mover><mi>p</mi><mo accent="true">̂</mo></mover><mn>1</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><msub><mover><mi>p</mi><mo accent="true">̂</mo></mover><mn>2</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><msub><mover><mi>p</mi><mo accent="true">̂</mo></mover><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><msub><mover><mi>p</mi><mo accent="true">̂</mo></mover><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\hat \theta_{OR} = \hat p_1 (1 - \hat p_2) / \hat p_2(1 - \hat p_1)</annotation></semantics></math>),
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mover><mi>θ</mi><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>R</mi></mrow></msub><mo>=</mo><msub><mover><mi>p</mi><mo accent="true">̂</mo></mover><mn>1</mn></msub><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><msub><mover><mi>p</mi><mo accent="true">̂</mo></mover><mn>2</mn></msub><mo stretchy="false" form="postfix">)</mo><mi>/</mi><msub><mover><mi>p</mi><mo accent="true">̂</mo></mover><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><msub><mover><mi>p</mi><mo accent="true">̂</mo></mover><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\hat \theta_{OR} = \hat p_1 (1 - \hat p_2) / \hat p_2(1 - \hat p_1)</annotation></semantics></math>),
 which is less easy to interpret, but is widely used due to its useful
 properties for logistic regression modelling or case-control
 studies.</p>
@@ -127,7 +127,7 @@ probabilities.&lt;/p&gt;'><sup>1</sup></a> achieved by SCAS compared to some oth
 popular methods<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;AN = “Wald” Approximate Normal, MOVER-J = Method of
 Variance Estimates Recovery, based on Newcombe’s method but using
 Jeffreys equal-tailed intervals instead of Wilson&lt;/p&gt;"><sup>2</sup></a> with
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>n</mi><mn>1</mn></msub><mo>,</mo><msub><mi>n</mi><mn>2</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>45</mn><mo>,</mo><mn>15</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">(n_1, n_2) = (45, 15)</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><msub><mi>n</mi><mn>1</mn></msub><mo>,</mo><msub><mi>n</mi><mn>2</mn></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mn>45</mn><mo>,</mo><mn>15</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(n_1, n_2) = (45, 15)</annotation></semantics></math>,
 with the second row of each plot using moving average smoothing. A
 selection of coverage probability plots for other sample size
 combinations and other contrasts can be found in the “plots” folder of
@@ -142,20 +142,19 @@ effect for RD as seen above. The one-sided coverage of MN for RR can be
 poor even in large samples with equal-sized groups, which means that the
 confidence interval tends to be located too close to 1:</p>
 <p><img src="images/binRR_95_100%2C100os_small.jpg"></p>
-<p>[Note: <span class="citation">(<a href="#ref-fagerland2011">Morten W.
-Fagerland, Lydersen, and Laake 2011</a>)</span> dismissed the MN method,
-saying that it can be somewhat liberal. In fact, based on reconstruction
-of their results, it appears that their evaluation was of the
-closely-related but inferior Mee method, which omits the N/(N-1)
-variance bias correction. This error was corrected in their 2017 book.
-Essentially, it seems they reject the MN method on the basis of some
-very small regions of the parameter space where coverage is slightly
-below nominal. These dips in coverage do occur, but fluctuate above and
-below the nominal level in a pattern of ridges and furrows aligned along
-the diagonal of a fixed value of
+<p>[Note: <span class="citation">(<a href="#ref-fagerland2011">Fagerland
+et al. 2011</a>)</span> dismissed the MN method, saying that it can be
+somewhat liberal. In fact, based on reconstruction of their results, it
+appears that their evaluation was of the closely-related but inferior
+Mee method, which omits the N/(N-1) variance bias correction. This error
+was corrected in their 2017 book. Essentially, it seems they reject the
+MN method on the basis of some very small regions of the parameter space
+where coverage is slightly below nominal. These dips in coverage do
+occur, but fluctuate above and below the nominal level in a pattern of
+ridges and furrows aligned along the diagonal of a fixed value of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>θ</mi><mrow><mi>R</mi><mi>D</mi></mrow></msub><annotation encoding="application/x-tex">\theta_{RD}</annotation></semantics></math>.
 The most severe dips tend to occur when sample sizes are multiples of 10
-(e.g. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>n</mi><mn>1</mn></msub><mo>,</mo><msub><mi>n</mi><mn>2</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>40</mn><mo>,</mo><mn>10</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">(n_1, n_2) = (40, 10)</annotation></semantics></math>),
+(e.g. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><msub><mi>n</mi><mn>1</mn></msub><mo>,</mo><msub><mi>n</mi><mn>2</mn></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mn>40</mn><mo>,</mo><mn>10</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(n_1, n_2) = (40, 10)</annotation></semantics></math>),
 which might be relatively rare in practice. The moving average smoothing
 in the above surface plots is designed to even out these fluctuations in
 coverage. The ‘N-1’ adjustment in the MN method elevates coverage
@@ -288,7 +287,7 @@ above would be obtained using:</p>
 <span><span class="co">#&gt;    "0.5"    "0.5"</span></span></code></pre></div>
 <p>The MOVER approach may be further modified by adapting the Jeffreys
 interval (which uses a non-informative
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mi>e</mi><mi>t</mi><mi>a</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0.5</mn><mo>,</mo><mn>0.5</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Beta(0.5, 0.5)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mi>e</mi><mi>t</mi><mi>a</mi><mo stretchy="false" form="prefix">(</mo><mn>0.5</mn><mo>,</mo><mn>0.5</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">Beta(0.5, 0.5)</annotation></semantics></math>
 prior for the group rates) to incorporate prior information about
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mn>1</mn></msub><annotation encoding="application/x-tex">p_1</annotation></semantics></math>
 and
@@ -296,7 +295,7 @@ and
 for an approximate Bayesian interval. For example, given data from a
 pilot study with 1/10 events in the first group and 0/10 in the second
 group, the non-informative
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mi>e</mi><mi>t</mi><mi>a</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0.5</mn><mo>,</mo><mn>0.5</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Beta(0.5, 0.5)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mi>e</mi><mi>t</mi><mi>a</mi><mo stretchy="false" form="prefix">(</mo><mn>0.5</mn><mo>,</mo><mn>0.5</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">Beta(0.5, 0.5)</annotation></semantics></math>
 prior distributions for
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mn>1</mn></msub><annotation encoding="application/x-tex">p_1</annotation></semantics></math>
 and
@@ -329,17 +328,17 @@ vs
 <li>in addition for OR, interchanging events and non-events produces
 reciprocal intervals, i.e. the lower and upper confidence limits for the
 odds ratio of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>n</mi><mn>1</mn></msub><mo>−</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><msub><mi>n</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">(n_1 - x_1)/n_1</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><msub><mi>n</mi><mn>1</mn></msub><mo>−</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo><mi>/</mi><msub><mi>n</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">(n_1 - x_1)/n_1</annotation></semantics></math>
 vs
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>n</mi><mn>2</mn></msub><mo>−</mo><msub><mi>x</mi><mn>2</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><msub><mi>n</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">(n_2 - x_2)/n_2</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><msub><mi>n</mi><mn>2</mn></msub><mo>−</mo><msub><mi>x</mi><mn>2</mn></msub><mo stretchy="false" form="postfix">)</mo><mi>/</mi><msub><mi>n</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">(n_2 - x_2)/n_2</annotation></semantics></math>
 are the reciprocal of the upper and lower limits for
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mi>/</mi><msub><mi>n</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">x_1/n_1</annotation></semantics></math>
 vs
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>2</mn></msub><mi>/</mi><msub><mi>n</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">x_2/n_2</annotation></semantics></math>.</li>
 </ol>
 <p>Unfortunately, the MOVER method for contrast = “OR”, as described in
-<span class="citation">(<a href="#ref-fagerland2012">Morten W. Fagerland
-and Newcombe 2012</a>)</span>, does not satisfy the second of these
+<span class="citation">(<a href="#ref-fagerland2012">Fagerland and
+Newcombe 2012</a>)</span>, does not satisfy the second of these
 requirements.</p>
 </div>
 </div>
@@ -378,10 +377,10 @@ non-inferiority. For further details, see <span class="citation">(<a href="#ref-
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-campbell2007" class="csl-entry">
 Campbell, Ian. 2007. <span>“Chi<span>-</span>Squared and
-Fisher<span></span>Irwin Tests of Two<span>-</span>by<span>-</span>Two
+Fisher<span></span>irwin Tests of Two<span>-</span>by<span>-</span>Two
 Tables with Small Sample Recommendations.”</span> <em>Statistics in
 Medicine</em> 26 (19): 3661–75. <a href="https://doi.org/10.1002/sim.2832" class="external-link">https://doi.org/10.1002/sim.2832</a>.
 </div>
@@ -414,11 +413,11 @@ of Two Rates.”</span> <em>Statistics in Medicine</em> 4 (2): 213–26. <a href
 <div id="ref-newcombe1998" class="csl-entry">
 Newcombe, Robert G. 1998. <span>“Interval Estimation for the Difference
 Between Independent Proportions: Comparison of Eleven Methods.”</span>
-<em>Statistics in Medicine</em> 17 (8): 873–90. <a href="https://doi.org/10.1002/(sici)1097-0258(19980430)17:8&lt;873::aid-sim779&gt;3.0.co;2-i" class="external-link">https://doi.org/10.1002/(sici)1097-0258(19980430)17:8&lt;873::aid-sim779&gt;3.0.co;2-i</a>.
+<em>Statistics in Medicine</em> 17 (8): 873–90. <a href="https://doi.org/10.1002/(sici)1097-0258(19980430)17:8%3C873::aid-sim779%3E3.0.co;2-i" class="external-link">https://doi.org/10.1002/(sici)1097-0258(19980430)17:8&lt;873::aid-sim779&gt;3.0.co;2-i</a>.
 </div>
 <div id="ref-newcombe2012" class="csl-entry">
-———. 2012. <em>Confidence Intervals for Proportions and Related Measures
-of Effect Size</em>. CRC Press. <a href="https://doi.org/10.1201/b12670" class="external-link">https://doi.org/10.1201/b12670</a>.
+Newcombe, Robert G. 2012. <em>Confidence Intervals for Proportions and
+Related Measures of Effect Size</em>. CRC Press. <a href="https://doi.org/10.1201/b12670" class="external-link">https://doi.org/10.1201/b12670</a>.
 </div>
 </div>
 </div>

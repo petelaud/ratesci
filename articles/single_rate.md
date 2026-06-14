@@ -1,13 +1,14 @@
 # 1: Single rate
 
 ``` r
+
 library(ratesci)
 ```
 
 ## Estimation of a single binomial or Poisson rate
 
 To calculate a confidence interval for a single binomial proportion
-($\widehat{p} = x/n$), the skewness-corrected asymptotic score (SCAS)
+($`\hat p = x/n`$), the skewness-corrected asymptotic score (SCAS)
 method is recommended, as one that succeeds, on average, at containing
 the true proportion p with the appropriate nominal probability
 (e.g. 95%), and has evenly distributed tail probabilities ([Laud
@@ -32,6 +33,7 @@ using closed-form calculation ([Laud 2017](#ref-laud2017), Appendix
 A.4):
 
 ``` r
+
 scaspci(x = 1, n = 29)
 #> $estimates
 #>        lower    est upper x  n
@@ -48,6 +50,7 @@ test](https://petelaud.github.io/ratesci/articles/tests.html), you could
 use:
 
 ``` r
+
 scoreci(x1 = 1, n1 = 29, contrast = "p")$estimates
 #>        lower    est upper level x1 n1  p1hat  p1mle
 #> [1,] 0.00199 0.0398 0.155  0.95  1 29 0.0345 0.0398
@@ -58,6 +61,7 @@ also provides two other confidence interval methods (Jeffreys and mid-p)
 with similar coverage properties ([Laud 2018](#ref-laud2018)):
 
 ``` r
+
 rateci(x = 1, n = 29)
 #> $scas
 #>        lower    est upper x  n
@@ -101,12 +105,13 @@ rateci(x = 1, n = 29)
 #>   "bin"  "0.95" "FALSE"  "TRUE"
 ```
 
-The Jeffreys interval can also incorporate prior information about $p$
+The Jeffreys interval can also incorporate prior information about $`p`$
 for an approximate Bayesian confidence interval. For example, a pilot
 study estimate of 1/10 could be used to update the non-informative
-$Beta(0.5,0.5)$ prior for $p$ to a $Beta(1.5,9.5)$ distribution:
+$`Beta(0.5, 0.5)`$ prior for $`p`$ to a $`Beta(1.5, 9.5)`$ distribution:
 
 ``` r
+
 jeffreysci(x = 1, n = 29, ai = 1.5, bi = 9.5)
 #> $estimates
 #>       lower    est upper x  n
@@ -122,6 +127,7 @@ be deployed with `cc`, as follows, giving continuity-adjusted SCAS or
 Jeffreys, and (if `cc` is TRUE or 0.5), the Clopper-Pearson method.
 
 ``` r
+
 rateci(x = 1, n = 29, cc = TRUE)
 #> $scas_cc
 #>         lower    est upper x  n
@@ -163,9 +169,10 @@ rateci(x = 1, n = 29, cc = TRUE)
 
 Such an adjustment is widely acknowledged to be over-conservative, so
 intermediate adjustments such as `cc = 0.25` give a more refined
-adjustment([Laud 2017](#ref-laud2017), Appendix S2 ($\gamma = cc$)).
+adjustment([Laud 2017](#ref-laud2017), Appendix S2 ($`\gamma = cc`$)).
 
 ``` r
+
 rateci(x = 1, n = 29, cc = 0.25)
 #> $scas_cc
 #>         lower    est upper x  n
@@ -224,6 +231,7 @@ estimate the effect of a treatment, rather than to estimate the
 underlying risk of an event.
 
 ``` r
+
 data(compress, package = "ratesci")
 strat_p <- scoreci(x1 = compress$event.control, 
                    n1 = compress$n.control, 
@@ -236,9 +244,10 @@ strat_p$estimates
 
 The function also outputs p-values for a two-sided hypothesis test
 against a default null hypothesis p = 0.5, and one-sided tests against a
-user-specified value of $\theta_{0}$:
+user-specified value of $`\theta_0`$:
 
 ``` r
+
 strat_p$pval
 #>      chisq pval2sided theta0 scorenull pval_left pval_right
 #> [1,]   208   4.05e-47    0.5     -14.4  2.02e-47          1
@@ -252,6 +261,7 @@ each study leading to different underlying risk. (Note this need not
 prevent the evaluation of stratified treatment comparisons):
 
 ``` r
+
 strat_p$Qtest
 #>            Q         Q_df     pval_het           I2         tau2           Qc 
 #>     6.37e+01     8.00e+00     8.84e-11     8.74e+01     1.74e-02     0.00e+00 
@@ -265,6 +275,7 @@ the 3rd and 8th study, with estimated proportions of 0.48 (95% CI: 0.34
 to 0.62) and 0.04 (95% CI: 0.01 to 0.10) respectively:
 
 ``` r
+
 strat_p$stratdata
 #>       x1j n1j p1hatj wt_fixed wtpct_fixed wtpct_rand theta_j lower_j upper_j
 #>  [1,]  37 103 0.3592    616.0       16.43      16.43  0.3597  0.2713   0.455
@@ -293,6 +304,7 @@ meaningful estimate of stratum variation if the number of strata is
 small.)
 
 ``` r
+
 strat_p_rand <- scoreci(x1 = compress$event.control, 
                         n1 = compress$n.control, 
                         contrast = "p", 
@@ -308,10 +320,11 @@ strat_p_rand$pval
 ```
 
 A prediction interval, representing an expected proportion in a new
-study ([Higgins, Thompson, and Spiegelhalter 2008](#ref-higgins2008)),
-can be obtained using `prediction = TRUE`:
+study ([Higgins et al. 2008](#ref-higgins2008)), can be obtained using
+`prediction = TRUE`:
 
 ``` r
+
 strat_p_rand$prediction
 #>      lower upper
 #> [1,]     0 0.571
@@ -321,11 +334,12 @@ strat_p_rand$prediction
 
 For clustered data, use
 [`clusterpci()`](https://petelaud.github.io/ratesci/reference/clusterpci.md),
-which applies the Wilson-based method proposed by ([Saha, Miller, and
-Wang 2015](#ref-saha2015)), and a skewness-corrected version. (This
-function currently only applies for binomial proportions.)
+which applies the Wilson-based method proposed by ([Saha et al.
+2015](#ref-saha2015)), and a skewness-corrected version. (This function
+currently only applies for binomial proportions.)
 
 ``` r
+
   # Data from Liang 1992
   x <- c(rep(c(0, 1), c(36, 12)),
           rep(c(0, 1, 2), c(15, 7, 1)),
@@ -368,35 +382,36 @@ function currently only applies for binomial proportions.)
 ## Technical details
 
 The SCAS method is an extension of the Wilson score method, using the
-same score function $S(p) = x/n - p$, where $x$ is the observed number
-of events from $n$ trials, and $p$ is the true proportion. The variance
-of $S(p)$ is $V = p(1 - p)/n$, and the 3rd central moment is
-$\mu_{3} = p(1 - p)(1 - 2p)/n^{2}$. The $100(1 - \alpha)\%$ confidence
-interval is found as the two solutions (solving for p) of the following
-equation, where $z$ is the $1 - \alpha/2$ percentile of the standard
-normal distribution:
+same score function $`S(p) = x / n - p`$, where $`x`$ is the observed
+number of events from $`n`$ trials, and $`p`$ is the true proportion.
+The variance of $`S(p)`$ is $`V = p(1 - p)/n`$, and the 3rd central
+moment is $`\mu_3 = p(1 - p)(1 - 2p)/n^2`$. The $`100(1 - \alpha)\%`$
+confidence interval is found as the two solutions (solving for p) of the
+following equation, where $`z`$ is the $`1 - \alpha / 2`$ percentile of
+the standard normal distribution:
 
-$$S(p)/V^{1/2} - \left( z^{2} - 1 \right)\mu_{3}/6V^{3/2} = \pm z$$
+``` math
+S(p)/V^{1/2} - (z^2 - 1)\mu_3/6V^{3/2} = \pm z
+```
 
 For unstratified datasets, this has a closed-form solution. The formula
 is extended in ([Laud 2017](#ref-laud2017)) to incorporate
-stratification using inverse variance weights, $w_{i} = 1/V_{i}$, or
-sample size, $w_{i} = n_{i}$, or any other weighting scheme as required,
-with the solution being found by iteration over
-$p \in \lbrack 0,1\rbrack$.
+stratification using inverse variance weights, $`w_i = 1 / V_i`$, or
+sample size, $`w_i = n_i`$, or any other weighting scheme as required,
+with the solution being found by iteration over $`p \in [0, 1]`$.
 
 The hypothesis tests are based on the same equation, but solving to find
 the value of the test statistic z for the given null proportion p.
 
-The Jeffreys interval is obtained as $\alpha/2$ and $1 - \alpha/2$
-quantiles of the $Beta(x + 0.5,n - x + 0.5)$ distribution, with boundary
-modifications when $x = 0$ or $x = n$([Brown, Cai, and DasGupta
-2001](#ref-brown2001)).
+The Jeffreys interval is obtained as $`\alpha / 2`$ and
+$`1 - \alpha / 2`$ quantiles of the $`Beta(x + 0.5, n - x + 0.5)`$
+distribution, with boundary modifications when $`x = 0`$ or
+$`x = n`$([Brown et al. 2001](#ref-brown2001)).
 
 A Clopper-Pearson interval may also be obtained as quantiles of a beta
-distribution ([Brown, Cai, and DasGupta 2001](#ref-brown2001)), using
-$Beta(x,n - x + 1)$ for the lower confidence limit, and
-$Beta(x + 1,n - x)$ for the upper limit.
+distribution ([Brown et al. 2001](#ref-brown2001)), using
+$`Beta(x, n - x + 1)`$ for the lower confidence limit, and
+$`Beta(x + 1, n - x)`$ for the upper limit.
 
 ## References
 
@@ -413,8 +428,8 @@ Laud, Peter J. 2017. “Equal-Tailed Confidence Intervals for Comparison
 of Rates.” *Pharmaceutical Statistics* 16 (5): 334–48.
 <https://doi.org/10.1002/pst.1813>.
 
-———. 2018. “Equal-Tailed Confidence Intervals for Comparison of Rates.”
-*Pharmaceutical Statistics* 17 (3): 290–93.
+Laud, Peter J. 2018. “Equal-Tailed Confidence Intervals for Comparison
+of Rates.” *Pharmaceutical Statistics* 17 (3): 290–93.
 <https://doi.org/10.1002/pst.1855>.
 
 Saha, Krishna K., Daniel Miller, and Suojin Wang. 2015. “A Comparison of

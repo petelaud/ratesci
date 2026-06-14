@@ -1,6 +1,7 @@
 # 3: Stratified contrasts
 
 ``` r
+
 library(ratesci)
 ```
 
@@ -17,6 +18,7 @@ postoperative deep vein thrombosis (DVT) (from [Roderick et al.
 2005](#ref-roderick2005)):
 
 ``` r
+
 data(compress, package = "ratesci")
 strat_rd <- scoreci(x1 = compress$event.gcs, 
                    n1 = compress$n.gcs, 
@@ -30,6 +32,7 @@ strat_rd$estimates
 ```
 
 ``` r
+
 strat_rd$pval
 #>      chisq pval2sided theta0 scorenull pval_left pval_right
 #> [1,]  42.2   8.25e-11      0      -6.5  4.12e-11          1
@@ -43,6 +46,7 @@ variance, for a consistent approach - see ([Laud 2017](#ref-laud2017)
 Supplementary Appendix S4).
 
 ``` r
+
 strat_rd$Qtest
 #>            Q         Q_df     pval_het           I2         tau2           Qc 
 #>     14.41529      8.00000      0.07156     44.50337      0.00176      0.00000 
@@ -58,6 +62,7 @@ stratum weights and contributions to the Q-statistic (these may be
 further examined using the `hetplot` argument).
 
 ``` r
+
 strat_rd$stratdata
 #>       x1j n1j x2j n2j p1hatj p2hatj wt_fixed wtpct_fixed wtpct_rand   theta_j
 #>  [1,]  15  97  37 103 0.1546 0.3592    49.95       15.62      15.62 -2.04e-01
@@ -83,11 +88,11 @@ strat_rd$stratdata
 
 ### Random effects
 
-In this instance, there is weak evidence ($p = 0.07$) that the treatment
-effect (on the RD scale) varies across strata. (Estimation on the RR
-contrast scale gives more consistency across strata.) For the sake of
-illustration, a random effects analysis of RD would be obtained as
-follows, giving a wider interval that incorporates the stratum
+In this instance, there is weak evidence ($`p = 0.07`$) that the
+treatment effect (on the RD scale) varies across strata. (Estimation on
+the RR contrast scale gives more consistency across strata.) For the
+sake of illustration, a random effects analysis of RD would be obtained
+as follows, giving a wider interval that incorporates the stratum
 variability. The `random = TRUE` option invokes the t-distribution
 asymptotic score (TDAS) method ([Laud 2017](#ref-laud2017)), which
 modifies the asymptotic score methodology using formulae from the
@@ -95,6 +100,7 @@ Hartung-Knapp-Sidik-Jonkman (HKSJ) random effects meta-analysis method
 (with superior performance compared to the DerSimonian-Laird method).
 
 ``` r
+
 strat_rd_rand <- scoreci(x1 = compress$event.gcs, 
                    n1 = compress$n.gcs, 
                    x2 = compress$event.control, 
@@ -112,11 +118,12 @@ Note that the TDAS method does not include a skewness correction, so
 when `random = TRUE`, the `skew` argument only affects the `stratdata`
 output element.
 
-A prediction interval for the treatment effect in a new study ([Higgins,
-Thompson, and Spiegelhalter 2008](#ref-higgins2008)) can be obtained
-using `prediction = TRUE`:
+A prediction interval for the treatment effect in a new study ([Higgins
+et al. 2008](#ref-higgins2008)) can be obtained using
+`prediction = TRUE`:
 
 ``` r
+
 strat_rd_rand$prediction
 #>       lower  upper
 #> [1,] -0.244 0.0158
@@ -137,9 +144,8 @@ Laud, Peter J. 2017. “Equal-Tailed Confidence Intervals for Comparison
 of Rates.” *Pharmaceutical Statistics* 16 (5): 334–48.
 <https://doi.org/10.1002/pst.1813>.
 
-Roderick, P, G Ferris, K Wilson, H Halls, D Jackson, R Collins, and C
-Baigent. 2005. “Towards Evidence-Based Guidelines for the Prevention of
-Venous Thromboembolism: Systematic Reviews of Mechanical Methods, Oral
-Anticoagulation, Dextran and Regional Anaesthesia as
-Thromboprophylaxis.” *Health Technology Assessment* 9 (49).
-<https://doi.org/10.3310/hta9490>.
+Roderick, P, G Ferris, K Wilson, et al. 2005. “Towards Evidence-Based
+Guidelines for the Prevention of Venous Thromboembolism: Systematic
+Reviews of Mechanical Methods, Oral Anticoagulation, Dextran and
+Regional Anaesthesia as Thromboprophylaxis.” *Health Technology
+Assessment* 9 (49). <https://doi.org/10.3310/hta9490>.

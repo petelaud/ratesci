@@ -1,4 +1,4 @@
-# Confidence intervals for comparisons of paired binomial rates.
+# Confidence intervals and tests for comparisons of paired binomial rates.
 
 Confidence intervals for the rate (or risk) difference ("RD"), rate
 ratio ("RR") or conditional odds ratio ("OR"), for paired binomial data.
@@ -239,7 +239,7 @@ Correlated Proportions" (2023). Statistics in Biosciences 2025;
 https://doi.org/10.1007/s12561-025-09479-4
 
 Laud PJ. Improved confidence intervals and tests for paired binomial
-proportions. (2025, Under review)
+proportions. (2026, Under review)
 
 ## Author
 

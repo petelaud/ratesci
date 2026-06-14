@@ -1,6 +1,7 @@
 # 5: Hypothesis tests
 
 ``` r
+
 library(ratesci)
 ```
 
@@ -9,8 +10,8 @@ library(ratesci)
 If you want to know whether the observed proportion in group 1 is
 “significantly different” from the proportion in group 2, then you need
 a test for association, or superiority test. Such a test is based on the
-null hypothesis that $p_{1} = p_{2}$ (i.e. $\theta_{RD} = 0$,
-$\theta_{RR} = 1$, or $\theta_{OR} = 1$). The superiority tests
+null hypothesis that $`p_1 = p_2`$ (i.e. $`\theta_{RD} = 0`$,
+$`\theta_{RR} = 1`$, or $`\theta_{OR} = 1`$). The superiority tests
 described below give consistent results whichever contrast is chosen
 (RD, RR or OR).
 
@@ -20,17 +21,17 @@ in group 2. For example, if you want to show that a new treatment is at
 least as effective as an established comparator. In this case you need a
 non-inferiority test. If the outcome measure is positive (e.g cure
 rate), the null hypothesis for such a test would be
-$\theta_{RD} \leq \theta_{0}$ (where $\theta_{0} < 0$), or
-$\theta_{RR} \leq \theta_{0}$ (where $\theta_{0} < 1$). $\theta_{0}$ is
+$`\theta_{RD} ≤ \theta_0`$ (where $`\theta_0 < 0`$), or
+$`\theta_{RR} ≤ \theta_0`$ (where $`\theta_0 < 1`$). $`\theta_0`$ is
 called the “non-inferiority margin”. The direction of the inequalities
 would be reversed for a negative outcome such as adverse event rate.
 
 To demonstrate equivalence (i.e. no difference in either direction), you
-would conduct two one-sided tests, e.g. with $\theta_{0} = - 0.1$ and
-$\theta_{0} = + 0.1$. If the tests are each conducted using a 2.5%
+would conduct two one-sided tests, e.g. with $`\theta_0 = -0.1`$ and
+$`\theta_0 = +0.1`$. If the tests are each conducted using a 2.5%
 significance level, the null hypothesis would be rejected if the
 corresponding 95% confidence interval falls entirely within
-$( - 0.1,0.1)$.
+$`(-0.1, 0.1)`$.
 
 ### Unstratified superiority test (2x2 test for association)
 
@@ -42,6 +43,7 @@ over the conventional Karl Pearson test ([Campbell
 2007](#ref-campbell2007)):
 
 ``` r
+
 scoreci(x1 = 7, n1 = 34, x2 = 1, n = 34, skew = FALSE)$pval[, 1:2]
 #>      chisq pval2sided 
 #>      5.025      0.025
@@ -63,6 +65,7 @@ below). If group sizes are unequal, then the SCAS two-sided test is an
 improved variant of the chi-squared test.
 
 ``` r
+
 scoreci(x1 = 7, n1 = 34, x2 = 1, n = 34, skew = TRUE)$pval[, 1:2]
 #>      chisq pval2sided 
 #>      5.025      0.025
@@ -75,19 +78,18 @@ severely violate the nominal significance level when group sample sizes
 differ by a factor of 4 or more. The SCAS test does not guarantee that
 the nominal significance level is never violated, but rather fluctuates
 around it, in a similar manner to the “lucky n” phenomenon for the
-single proportion described by ([Brown, Cai, and DasGupta
-2001](#ref-brown2001)). Violations are relatively infrequent (22%, vs
-44% for chi-squared), with significance level rarely exceeding 5.5% (3%,
-vs 11% for chi-squared), and converging towards the nominal 5% for
-larger sample sizes. The example case with $n_{1} = n_{2} = 25$ (solid
-black curve) plotted by ([Fagerland MW 2017, fig.
-4.4](#ref-fagerland2017)) is very unrepresentative, and remains an
-anomolous case for the SCAS test, while type I error rates for unequal
-sample sizes are generally shifted downwards. For further improved
-control of type I error, a small continuity adjustment ($\gamma = 0.05$)
-applied to the SCAS test achieves performance that is more successful
-than the Fisher mid-P test at approximating the Suissa-Shuster exact
-unconditional test.
+single proportion described by ([Brown et al. 2001](#ref-brown2001)).
+Violations are relatively infrequent (22%, vs 44% for chi-squared), with
+significance level rarely exceeding 5.5% (3%, vs 11% for chi-squared),
+and converging towards the nominal 5% for larger sample sizes. The
+example case with $`n_1 = n_2 = 25`$ (solid black curve) plotted by
+([Fagerland MW 2017, fig. 4.4](#ref-fagerland2017)) is very
+unrepresentative, and remains an anomolous case for the SCAS test, while
+type I error rates for unequal sample sizes are generally shifted
+downwards. For further improved control of type I error, a small
+continuity adjustment ($`\gamma = 0.05`$) applied to the SCAS test
+achieves performance that is more successful than the Fisher mid-P test
+at approximating the Suissa-Shuster exact unconditional test.
 
 ![](images/tiers50.jpg)
 
@@ -97,7 +99,7 @@ The `pval` item in the
 [`scoreci()`](https://petelaud.github.io/ratesci/reference/scoreci.md)
 output also includes `pval_left` and `pval_right`, for a pair of
 one-sided tests conducted against a user-specified value of the contrast
-parameter, $\theta_{0}$, to cater for non-zero or non-unity null
+parameter, $`\theta_0`$, to cater for non-zero or non-unity null
 hypotheses for equivalence or non-inferiority tests. Only one of these
 tests will be used in any given case - depending on whether the outcome
 is positive (e.g. cure rate) or negative (e.g. mortality rate). For
@@ -105,10 +107,10 @@ example, if the outcome measure is a cure rate, and you want to
 demonstrate non-inferiority of a new treatment, you might set a
 non-inferiority margin for RD as -0.1, and use `pval_right` (the
 probability of the observed data or a larger difference to the right, if
-the true difference is $\theta_{0}$) for the one-sided test. Whereas if
+the true difference is $`\theta_0`$) for the one-sided test. Whereas if
 the outcome measure was mortality rate, the direction of
 “non-inferiority” is reversed, so you would use a positive value for
-$\theta_{0}$ with `pval_left`.
+$`\theta_0`$ with `pval_left`.
 
 The one-sided test is analogous to the Farrington-Manning test, but not
 identical to it, due to the ‘N-1’ variance bias correction and skewness
@@ -124,6 +126,7 @@ established comparator treatment, with a non-inferiority margin of
 -12.5% ([Torres et al. 2018](#ref-torres2018)):
 
 ``` r
+
 reprove <- scoreci(x1 = 245, n1 = 356, x2 = 270, n2 = 370, theta0 = -0.125)
 reprove$estimates
 #>       lower     est  upper level  x1  n1  x2  n2 p1hat p2hat p1mle p2mle
@@ -162,6 +165,7 @@ For example, analysis of the above clinical trial is repeated with
 adjustment for a stratification factor (geographic region) as follows:
 
 ``` r
+
 x1 = c(21, 76, 73, 75) 
 n1 = c(29, 96, 124, 107) 
 x2 = c(19, 73, 91, 87) 
@@ -204,14 +208,15 @@ The two-sided test given by
 [`pairbinci()`](https://petelaud.github.io/ratesci/reference/pairbinci.md)
 (for any contrast) is an ‘N-1’ adjusted version of the McNemar test (the
 skewness correction term is zero at the null hypothesis value of
-$\theta$). In an extensive evaluation of many thousands of sample sizes
-and correlations, the paired SCAS two-sided test did not violate the
-nominal significance level at any point, suggesting that the
+$`\theta`$). In an extensive evaluation of many thousands of sample
+sizes and correlations, the paired SCAS two-sided test did not violate
+the nominal significance level at any point, suggesting that the
 over-conservative “continuity corrected” version given by default in
 [`mcnemar.test()`](https://rdrr.io/r/stats/mcnemar.test.html) is
 superfluous.
 
 ``` r
+
 pairbinci(x = c(1, 1, 7, 12), skew = TRUE)$pval
 #>      chisq pval2sided theta0 scorenull pval_left pval_right
 #> [1,]  4.29     0.0384      0     -2.07    0.0192      0.981
@@ -238,11 +243,12 @@ evaluation\].
 [`scoreci()`](https://petelaud.github.io/ratesci/reference/scoreci.md)
 with `contrast = "p"` also provides hypothesis tests for unstratified or
 stratified datasets, matching the confidence intervals. `pval2sided` is
-a two-sided test against the null hypothesis that $p = 0.5$. `pval_left`
-and `pval_right` are one-sided tests against a user-specified value of
-$\theta_{0}$.
+a two-sided test against the null hypothesis that $`p = 0.5`$.
+`pval_left` and `pval_right` are one-sided tests against a
+user-specified value of $`\theta_0`$.
 
 ``` r
+
 scoreci(x1 = 7, n1 = 34, contrast = "p", theta0 = 0.1)$pval
 #>      chisq pval2sided theta0 scorenull pval_left pval_right
 #> [1,]  11.8   0.000604    0.1      1.87     0.969     0.0309
@@ -254,7 +260,7 @@ Brown, Lawrence D., T. Tony Cai, and Anirban DasGupta. 2001. “Interval
 Estimation for a Binomial Proportion.” *Statistical Science* 16 (2).
 <https://doi.org/10.1214/ss/1009213286>.
 
-Campbell, Ian. 2007. “Chi-Squared and FisherIrwin Tests of Two-by-Two
+Campbell, Ian. 2007. “Chi-Squared and Fisherirwin Tests of Two-by-Two
 Tables with Small Sample Recommendations.” *Statistics in Medicine* 26
 (19): 3661–75. <https://doi.org/10.1002/sim.2832>.
 
@@ -283,9 +289,9 @@ Tang, Yongqiang. 2020. “Score Confidence Intervals and Sample Sizes for
 Stratified Comparisons of Binomial Proportions.” *Statistics in
 Medicine* 39 (24): 3427–57. <https://doi.org/10.1002/sim.8674>.
 
-Torres, Antoni, Nanshan Zhong, Jan Pachl, Jean-François Timsit, Marin
-Kollef, Zhangjing Chen, Jie Song, et al. 2018. “Ceftazidime-Avibactam
-Versus Meropenem in Nosocomial Pneumonia, Including
-Ventilator-Associated Pneumonia (REPROVE): A Randomised, Double-Blind,
-Phase 3 Non-Inferiority Trial.” *The Lancet Infectious Diseases* 18 (3):
-285–95. <https://doi.org/10.1016/s1473-3099(17)30747-8>.
+Torres, Antoni, Nanshan Zhong, Jan Pachl, et al. 2018.
+“Ceftazidime-Avibactam Versus Meropenem in Nosocomial Pneumonia,
+Including Ventilator-Associated Pneumonia (REPROVE): A Randomised,
+Double-Blind, Phase 3 Non-Inferiority Trial.” *The Lancet Infectious
+Diseases* 18 (3): 285–95.
+<https://doi.org/10.1016/s1473-3099(17)30747-8>.

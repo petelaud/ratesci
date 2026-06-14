@@ -4,13 +4,13 @@ ratesci is an [R](https://www.r-project.org) package to compute
 confidence intervals (‘CIs’) and tests for:
 
 - a single binomial proportion, or Poisson rate (‘p’)
-- a difference between binomial proportions or Poisson rates (risk
-  difference or rate difference, ‘RD’)
+- a difference between independent binomial proportions or Poisson rates
+  (risk difference or rate difference, ‘RD’)
 - a ratio of proportions or rates (relative risk or rate ratio, ‘RR’)
 - a binomial odds ratio (‘OR’)
 - stratified calculations for any of the above
-- paired binomial contrasts RD and RR
-- paired odds ratio using the conditional model
+- a difference (RD) or ratio (RR) for paired binomial proportions
+- odds ratio for paired proportions using the conditional model
 - a binomial proportion from clustered data
 
 A number of different methods are offered, but in each case, the
@@ -20,7 +20,7 @@ recommended default is based on asymptotic score methodology (from
 including skewness corrections following the principles of ([Gart and
 Nam 1988](#ref-gart1988)). The resulting family of skewness-corrected
 asymptotic score (SCAS) methods ([Laud 2017](#ref-laud2017)), (and Laud
-2025, under review) ensures equal-tailed coverage (also referred to as
+2026, under review) ensures equal-tailed coverage (also referred to as
 central location), in other words for a nominal 95% confidence interval,
 the one-sided non-coverage probability is (on average) close to 2.5% on
 each side. The equal-tailed property is particularly important for
@@ -65,9 +65,9 @@ In each case, the asymptotic score methods provide a matching 2-sided
 test for association, and also a 1-sided hypothesis test against any
 specified null parameter value for a non-inferiority test. Both tests
 are guaranteed to be coherent with the interval, so that a
-100(1-$\alpha$)% interval excludes the null hypothesis value if and only
-if the hypothesis test is significant at the $\alpha$ 2-sided or
-$\alpha$/2 1-sided significance level. The tests for association are
+100(1-$`\alpha`$)% interval excludes the null hypothesis value if and
+only if the hypothesis test is significant at the $`\alpha`$ 2-sided or
+$`\alpha`$/2 1-sided significance level. The tests for association are
 variants of (and in many cases directly equivalent to) a chi-squared
 test or CMH test, and the non-inferiority test is analogous to a
 Farrington-Manning test, all with improved control of type I error
@@ -94,7 +94,7 @@ particularly for the RR contrast, but does not match the performance of
 the SCAS method. As the Jeffreys interval is based on a Bayesian
 conjugate prior, the MOVER approach allows the option to incorporate
 prior beliefs about the rates in each group - by default, the
-non-informative Jeffreys $Beta(0.5,0.5)$ priors are used (or
+non-informative Jeffreys $`Beta(0.5, 0.5)`$ priors are used (or
 corresponding Gamma priors for Poisson rates). MOVER intervals are
 available in
 [`moverci()`](https://petelaud.github.io/ratesci/reference/moverci.md)
@@ -120,12 +120,14 @@ The current official
 installed within R with:
 
 ``` r
+
 install.packages("ratesci")
 ```
 
 The latest development version of the package can be installed with:
 
 ``` r
+
 # install.packages("pak")
 pak::pak("petelaud/ratesci")
 ```
@@ -152,6 +154,7 @@ score (“SCAS”) confidence interval. (For Miettinen-Nurminen, use
 `skew = FALSE`, for Gart-Nam, use `bcf = FALSE`.)
 
 ``` r
+
 library(ratesci)
 scoreci(x1 = 5, n1 = 56, x2 = 0, n2 = 29)
 #> $estimates
@@ -168,12 +171,13 @@ scoreci(x1 = 5, n1 = 56, x2 = 0, n2 = 29)
 ```
 
 An example of a paired analysis follows, using the data from Table II of
-([Fagerland, Lydersen, and Laake 2014](#ref-fagerland2014)). Here the
-bias and skewness corrections are again applied by default. Omitting
-both would produce the Tango asymptotic score interval for
-`contrast = "RD"`, or the Tang method for `contrast = "RR"`.
+([Fagerland et al. 2014](#ref-fagerland2014)). Here the bias and
+skewness corrections are again applied by default. Omitting both would
+produce the Tango asymptotic score interval for `contrast = "RD"`, or
+the Tang method for `contrast = "RR"`.
 
 ``` r
+
 pairbinci(x = c(1, 1, 7, 12))
 #> $data
 #>          Test_2
@@ -233,7 +237,7 @@ Association* 22 (158): 209–12.
 
 ## Core functions
 
-### Intervals for a contrast of two proportions or rates
+### Intervals and tests for a contrast of two proportions or rates
 
 - [`scoreci()`](https://petelaud.github.io/ratesci/reference/scoreci.md)
   : Score confidence intervals and tests for a single binomial or
@@ -243,9 +247,10 @@ Association* 22 (158): 209–12.
   : Method of Variance Estimates Recovery ("MOVER") confidence intervals
   for comparisons of independent binomial or Poisson rates.
 - [`pairbinci()`](https://petelaud.github.io/ratesci/reference/pairbinci.md)
-  : Confidence intervals for comparisons of paired binomial rates.
+  : Confidence intervals and tests for comparisons of paired binomial
+  rates.
 
-### Intervals for a single proportion or rate
+### Intervals and tests for a single proportion or rate
 
 - [`scaspci()`](https://petelaud.github.io/ratesci/reference/scaspci.md)
   : Skewness-corrected asymptotic score ("SCAS") confidence intervals
@@ -263,6 +268,20 @@ User-friendly convenience functions with restricted set of options
 
 - [`rateci()`](https://petelaud.github.io/ratesci/reference/rateci.md) :
   Selected confidence intervals for the single binomial or Poisson rate.
+- [`rdci()`](https://petelaud.github.io/ratesci/reference/rdci.md) :
+  Confidence intervals for rate difference (RD) with independent
+  binomial or Poisson rates.
+- [`rrci()`](https://petelaud.github.io/ratesci/reference/rrci.md) :
+  Confidence intervals for rate ratio (RR) with independent binomial or
+  Poisson rates.
+- [`orci()`](https://petelaud.github.io/ratesci/reference/orci.md) :
+  Confidence intervals for odds ratio with independent binomial
+  proportions.
+- [`rdpairci()`](https://petelaud.github.io/ratesci/reference/rdpairci.md)
+  : Confidence intervals for rate difference (RD) with paired binomial
+  rates.
+- [`rrpairci()`](https://petelaud.github.io/ratesci/reference/rrpairci.md)
+  : Confidence intervals for rate ratio (RR) with paired binomial rates.
 - [`scasci()`](https://petelaud.github.io/ratesci/reference/scasci.md) :
   Skewness-corrected asymptotic score ("SCAS") confidence intervals for
   comparisons of independent binomial or Poisson rates.
@@ -273,13 +292,6 @@ User-friendly convenience functions with restricted set of options
 - [`moverbci()`](https://petelaud.github.io/ratesci/reference/moverbci.md)
   : Approximate Bayesian ("MOVER-B") confidence intervals for
   comparisons of independent binomial or Poisson rates.
-- [`rdci()`](https://petelaud.github.io/ratesci/reference/rdci.md) :
-  Confidence intervals for rate difference (RD) with independent rates.
-- [`rrci()`](https://petelaud.github.io/ratesci/reference/rrci.md) :
-  Confidence intervals for rate ratio (RR) with independent binomial
-  rates.
-- [`orci()`](https://petelaud.github.io/ratesci/reference/orci.md) :
-  Confidence intervals for odds ratio.
 
 ## Datasets
 

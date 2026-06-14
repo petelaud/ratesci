@@ -12,8 +12,8 @@
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
 <script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="5: Hypothesis tests">
 </head>
@@ -117,13 +117,13 @@ inequalities would be reversed for a negative outcome such as adverse
 event rate.</p>
 <p>To demonstrate equivalence (i.e. no difference in either direction),
 you would conduct two one-sided tests, e.g. with
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>θ</mi><mn>0</mn></msub><mo>=</mo><mo>−</mo><mn>0.1</mn></mrow><annotation encoding="application/x-tex">\theta_0 = -0.1</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>θ</mi><mn>0</mn></msub><mo>=</mo><mi>−</mi><mn>0.1</mn></mrow><annotation encoding="application/x-tex">\theta_0 = -0.1</annotation></semantics></math>
 and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>θ</mi><mn>0</mn></msub><mo>=</mo><mo>+</mo><mn>0.1</mn></mrow><annotation encoding="application/x-tex">\theta_0 = +0.1</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>θ</mi><mn>0</mn></msub><mo>=</mo><mi>+</mi><mn>0.1</mn></mrow><annotation encoding="application/x-tex">\theta_0 = +0.1</annotation></semantics></math>.
 If the tests are each conducted using a 2.5% significance level, the
 null hypothesis would be rejected if the corresponding 95% confidence
 interval falls entirely within
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mn>0.1</mn><mo>,</mo><mn>0.1</mn><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(-0.1, 0.1)</annotation></semantics></math>.</p>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mi>−</mi><mn>0.1</mn><mo>,</mo><mn>0.1</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(-0.1, 0.1)</annotation></semantics></math>.</p>
 <div class="section level3">
 <h3 id="unstratified-superiority-test-2x2-test-for-association">Unstratified superiority test (2x2 test for association)<a class="anchor" aria-label="anchor" href="#unstratified-superiority-test-2x2-test-for-association"></a>
 </h3>
@@ -179,7 +179,7 @@ which can severely violate the nominal significance level when group
 sample sizes differ by a factor of 4 or more. The SCAS test does not
 guarantee that the nominal significance level is never violated, but
 rather fluctuates around it, in a similar manner to the “lucky n”
-phenomenon for the single proportion described by <span class="citation">(<a href="#ref-brown2001">Brown, Cai, and DasGupta
+phenomenon for the single proportion described by <span class="citation">(<a href="#ref-brown2001">Brown et al.
 2001</a>)</span>. Violations are relatively infrequent (22%, vs 44% for
 chi-squared), with significance level rarely exceeding 5.5% (3%, vs 11%
 for chi-squared), and converging towards the nominal 5% for larger
@@ -361,7 +361,7 @@ against a user-specified value of
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-brown2001" class="csl-entry">
 Brown, Lawrence D., T. Tony Cai, and Anirban DasGupta. 2001.
 <span>“Interval Estimation for a Binomial Proportion.”</span>
@@ -369,7 +369,7 @@ Brown, Lawrence D., T. Tony Cai, and Anirban DasGupta. 2001.
 </div>
 <div id="ref-campbell2007" class="csl-entry">
 Campbell, Ian. 2007. <span>“Chi<span>-</span>Squared and
-Fisher<span></span>Irwin Tests of Two<span>-</span>by<span>-</span>Two
+Fisher<span></span>irwin Tests of Two<span>-</span>by<span>-</span>Two
 Tables with Small Sample Recommendations.”</span> <em>Statistics in
 Medicine</em> 26 (19): 3661–75. <a href="https://doi.org/10.1002/sim.2832" class="external-link">https://doi.org/10.1002/sim.2832</a>.
 </div>
@@ -403,8 +403,7 @@ Sizes for Stratified Comparisons of Binomial Proportions.”</span>
 <em>Statistics in Medicine</em> 39 (24): 3427–57. <a href="https://doi.org/10.1002/sim.8674" class="external-link">https://doi.org/10.1002/sim.8674</a>.
 </div>
 <div id="ref-torres2018" class="csl-entry">
-Torres, Antoni, Nanshan Zhong, Jan Pachl, Jean-François Timsit, Marin
-Kollef, Zhangjing Chen, Jie Song, et al. 2018.
+Torres, Antoni, Nanshan Zhong, Jan Pachl, et al. 2018.
 <span>“Ceftazidime-Avibactam Versus Meropenem in Nosocomial Pneumonia,
 Including Ventilator-Associated Pneumonia (REPROVE): A Randomised,
 Double-Blind, Phase 3 Non-Inferiority Trial.”</span> <em>The Lancet

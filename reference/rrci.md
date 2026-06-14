@@ -1,4 +1,4 @@
-# Confidence intervals for rate ratio (RR) with independent binomial rates.
+# Confidence intervals for rate ratio (RR) with independent binomial or Poisson rates.
 
 Confidence intervals for comparisons of two binomial or Poisson rates.
 This convenience wrapper function produces a selection of the methods
