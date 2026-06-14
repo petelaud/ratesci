@@ -1,4 +1,4 @@
-#' Confidence intervals for comparisons of paired binomial rates.
+#' Confidence intervals and tests for comparisons of paired binomial rates.
 #'
 #' Confidence intervals for the rate (or risk) difference ("RD"), rate ratio
 #' ("RR") or conditional odds ratio ("OR"), for paired binomial data. (For

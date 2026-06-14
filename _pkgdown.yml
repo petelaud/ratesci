@@ -6,13 +6,13 @@ template:
 reference:
 - title: Core functions
 
-- subtitle: Intervals for a contrast of two proportions or rates
+- subtitle: Intervals and tests for a contrast of two proportions or rates
   contents:
   - scoreci
   - moverci
   - pairbinci
 
-- subtitle: Intervals for a single proportion or rate
+- subtitle: Intervals and tests for a single proportion or rate
   contents:
   - scaspci
   - jeffreysci
@@ -23,12 +23,12 @@ reference:
     User-friendly convenience functions with restricted set of options
   contents:
   - rateci
-  - scasci
-  - tdasci
-  - moverbci
   - rdci
   - rrci
   - orci
+  - scasci
+  - tdasci
+  - moverbci
 
 - title: Datasets
   contents:

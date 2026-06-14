@@ -20,13 +20,13 @@ ratesci is an [R](https://www.r-project.org) package to compute
 confidence intervals (‘CIs’) and tests for:
 
 - a single binomial proportion, or Poisson rate (‘p’)
-- a difference between binomial proportions or Poisson rates (risk
-  difference or rate difference, ‘RD’)
+- a difference between independent binomial proportions or Poisson rates
+  (risk difference or rate difference, ‘RD’)
 - a ratio of proportions or rates (relative risk or rate ratio, ‘RR’)
 - a binomial odds ratio (‘OR’)
 - stratified calculations for any of the above
-- paired binomial contrasts RD and RR
-- paired odds ratio using the conditional model
+- a difference (RD) or ratio (RR) for paired binomial proportions
+- odds ratio for paired proportions using the conditional model
 - a binomial proportion from clustered data
 
 A number of different methods are offered, but in each case, the
@@ -36,7 +36,7 @@ recommended default is based on asymptotic score methodology (from
 including skewness corrections following the principles of ([Gart and
 Nam 1988](#ref-gart1988)). The resulting family of skewness-corrected
 asymptotic score (SCAS) methods ([Laud 2017](#ref-laud2017)), (and Laud
-2025, under review) ensures equal-tailed coverage (also referred to as
+2026, under review) ensures equal-tailed coverage (also referred to as
 central location), in other words for a nominal 95% confidence interval,
 the one-sided non-coverage probability is (on average) close to 2.5% on
 each side. The equal-tailed property is particularly important for
@@ -172,10 +172,10 @@ scoreci(x1 = 5, n1 = 56, x2 = 0, n2 = 29)
 ```
 
 An example of a paired analysis follows, using the data from Table II of
-([Fagerland, Lydersen, and Laake 2014](#ref-fagerland2014)). Here the
-bias and skewness corrections are again applied by default. Omitting
-both would produce the Tango asymptotic score interval for
-`contrast = "RD"`, or the Tang method for `contrast = "RR"`.
+([Fagerland et al. 2014](#ref-fagerland2014)). Here the bias and
+skewness corrections are again applied by default. Omitting both would
+produce the Tango asymptotic score interval for `contrast = "RD"`, or
+the Tang method for `contrast = "RR"`.
 
 ``` r
 pairbinci(x = c(1, 1, 7, 12))
@@ -202,8 +202,7 @@ pairbinci(x = c(1, 1, 7, 12))
 
 ## References
 
-<div id="refs" class="references csl-bib-body hanging-indent"
-entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 
 <div id="ref-fagerland2014" class="csl-entry">
 
