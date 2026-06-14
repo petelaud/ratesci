@@ -340,11 +340,10 @@ pairbinci <- function(x,
       trans_th0 <- NULL
       if (is.null(theta0)) theta0 <- 1
       trans_th0 <- theta0 / (1 + theta0)
-      OR_ci <- scaspci(
+      trans_ci <- scaspci(
         x = x12, n = x12 + x21, distrib = "bin",
         level = level, cc = cc, bcf = bcf, bign = N
       )$estimates[, c(1:3), drop = FALSE]
-      estimates <- OR_ci / (1 - OR_ci)
       scorezero <- scoretheta(
         theta = 0.5, x1 = x12, n1 = x12 + x21, n2 = x[1] + x[4],
         contrast = "p", distrib = "bin", bcf = bcf,
@@ -364,19 +363,17 @@ pairbinci <- function(x,
         chisq = chisq_zero, pval2sided, theta0 = theta0,
         scorenull, pval_left, pval_right
       )
-      outlist <- list(xi, estimates = estimates, pval = pval)
     } else if (method == "midp") {
       trans_ci <- exactci(x = x12, n = x12 + x21, midp = 0.5 - cc, level = level)
-      estimates <- (trans_ci / (1 - trans_ci))
-      outlist <- list(xi, estimates = estimates)
     } else if (method == "wilson") {
       trans_ci <- wilsonci(x = x12, n = x12 + x21, cc = cc, level = level)
-      estimates <- (trans_ci / (1 - trans_ci))
-      outlist <- list(xi, estimates = estimates)
     } else if (method == "jeff") {
       trans_ci <- jeffreysci(x = x12, n = x12 + x21, cc = cc, level = level)$estimates[, c(1:3), drop = FALSE]
-      estimates <- (trans_ci / (1 - trans_ci))
-      outlist <- list(xi, estimates = estimates)
+    }
+    estimates <- (trans_ci / (1 - trans_ci))
+    outlist <- list(xi, estimates = estimates)
+    if (method == "SCASp") {
+      outlist <- append(outlist, list(pval = pval))
     }
   } else if (contrast != "OR") {
     # Iterative Score methods by Tango (for RD) & Tang (for RR):
