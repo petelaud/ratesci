@@ -435,14 +435,14 @@ pairbinci <- function(x,
     }
     # MOVER methods for RD and RR
     if (method == "MOVER") {
-      estimates <- moverpair(
+      estimates <- moverpairci(
         x = x, contrast = contrast, level = level,
         method = moverbase, cc = cc, corc = FALSE
       )
       outlist <- list(data = xi, estimates = estimates)
     }
     if (method == "MOVER_newc") {
-      estimates <- moverpair(
+      estimates <- moverpairci(
         x = x, contrast = contrast, level = level,
         method = moverbase, cc = cc, corc = TRUE
       )
@@ -1003,7 +1003,7 @@ tangci <- function(x,
 #'   to the correlation estimate from Newcombe.
 #'
 #' @noRd
-moverpair <- function(x,
+moverpairci <- function(x,
                       level = 0.95,
                       contrast = "RD",
                       method = "jeff",
