@@ -26,6 +26,8 @@ reference:
   - rdci
   - rrci
   - orci
+  - rdpairci
+  - rrpairci
   - scasci
   - tdasci
   - moverbci
