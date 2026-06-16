@@ -7,9 +7,10 @@
 #' adjustment (where available).
 #'
 #' - SCAS (skewness-corrected asymptotic score)
+#' - SCASu (omitting the 'N-1' adjustment)
 #' - Tango Asymptotic Score method
-#' - MOVER Wilson (aka Newcombe Hybrid Score or square-and-add)
-#' - MOVER Jeffreys
+#' - MOVER-NW Wilson (aka Newcombe Hybrid Score or square-and-add)
+#' - MOVER-NJ Jeffreys
 #' - Agresti-Min
 #' - Bonett-Price
 #' - Approximate normal (Wald) method
@@ -49,7 +50,6 @@ rdpairci <- function(x,
                      std_est = TRUE,
                      cc = FALSE,
                      precis = 8) {
-
   # Convert input data into 2x2 table to ease interpretation of output
   x1i <- rep(c("Success", "Success", "Failure", "Failure"), x)
   x2i <- rep(c("Success", "Failure", "Success", "Failure"), x)
@@ -93,6 +93,15 @@ rdpairci <- function(x,
     precis = precis
   )$estimates[, c(1:3), drop = FALSE]
 
+  ci_scasu <- scorepairci(
+    x = x,
+    contrast = contrast,
+    bcf = FALSE,
+    level = level,
+    cc = cc,
+    precis = precis
+  )$estimates[, c(1:3), drop = FALSE]
+
   ci_tango <- scorepairci(
     x = x,
     contrast = contrast,
@@ -124,15 +133,15 @@ rdpairci <- function(x,
   mydimnames <- dimnames(ci_scas)
 
   methodnames <- c(
-    "SCAS", "Tango score", "MOVER Wilson", "MOVER Jeffreys",
+    "SCAS", "SCASu", "Tango score", "MOVER-NW", "MOVER-NJ",
     "Wald", "Agresti-Min", "Bonett-Price"
   )
 
   mydimnames[[3]] <- methodnames
 
   outarr <- array(
-    c(ci_scas, ci_tango, ci_moverw, ci_moverj, ci_wald, ci_agrmin, ci_bp),
-    dim <- c(dim(ci_scas), 7)
+    c(ci_scas, ci_scasu, ci_tango, ci_moverw, ci_moverj, ci_wald, ci_agrmin, ci_bp),
+    dim <- c(dim(ci_scas), 8)
   )[drop = FALSE]
   dimnames(outarr) <- mydimnames
 
@@ -141,8 +150,8 @@ rdpairci <- function(x,
     if (cc != FALSE) methodnames <- paste("Continuity adjusted", methodnames)
     mydimnames[[3]] <- methodnames
     dimnames(outarr) <- mydimnames
-    outarr <- outarr[, , 1:5, drop = FALSE]
-    if (cc != TRUE) outarr <- outarr[, , 1:4, drop = FALSE]
+    outarr <- outarr[, , 1:6, drop = FALSE]
+    if (cc != TRUE) outarr <- outarr[, , 1:5, drop = FALSE]
   }
   # dimnames(outarr) <- mydimnames
   outarr <- aperm(round(outarr, precis), c(3, 2, 1))[, , 1]

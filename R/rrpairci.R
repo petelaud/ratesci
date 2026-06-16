@@ -7,9 +7,11 @@
 #' adjustment (where available).
 #'
 #' - SCAS (skewness-corrected asymptotic score)
+#' - SCASu (omitting the 'N-1' adjustment)
 #' - Tang Asymptotic Score method
-#' - MOVER Wilson (with or without Newcombe correlation adjustment)
-#' - MOVER Jeffreys
+#' - MOVER-W (based on Wilson method without Newcombe correlation adjustment)
+#' - MOVER-NW (based on Wilson method with Newcombe correlation adjustment)
+#' - MOVER-NJ (based on Jeffreys method with correlation adjustment)
 #' - Bonett-Price hybrid method
 #' - Approximate log-normal (Wald) method
 #'     (strongly advise this is not used for any purpose but included for reference)
@@ -48,7 +50,6 @@ rrpairci <- function(x,
                      std_est = TRUE,
                      cc = FALSE,
                      precis = 8) {
-
   # Convert input data into 2x2 table to ease interpretation of output
   x1i <- rep(c("Success", "Success", "Failure", "Failure"), x)
   x2i <- rep(c("Success", "Failure", "Success", "Failure"), x)
@@ -71,18 +72,25 @@ rrpairci <- function(x,
       cc = cc
     )
   }
-#  if (cc == FALSE) {
-    ci_bp <- bpci(
-      x = x,
-      contrast = contrast,
-      level = level,
-      cc = cc
-    )
-#  }
+  ci_bp <- bpci(
+    x = x,
+    contrast = contrast,
+    level = level,
+    cc = cc
+  )
 
   ci_scas <- scorepairci(
     x = x,
     contrast = contrast,
+    level = level,
+    cc = cc,
+    precis = precis
+  )$estimates[, c(1:3), drop = FALSE]
+
+  ci_scasu <- scorepairci(
+    x = x,
+    contrast = contrast,
+    bcf = FALSE,
     level = level,
     cc = cc,
     precis = precis
@@ -128,20 +136,23 @@ rrpairci <- function(x,
   mydimnames <- dimnames(ci_scas)
 
   methodnames <- c(
-    "SCAS", "Tang score", "MOVER Wilson (unadj)", "MOVER Wilson", "MOVER Jeffreys",
+    "SCAS", "SCASu", "Tang score", "MOVER-W", "MOVER-NW", "MOVER-NJ",
     "Wald", "Bonett-Price hybrid"
   )
 
   mydimnames[[3]] <- methodnames
 
   outarr <- array(
-    c(ci_scas,
+    c(
+      ci_scas,
+      ci_scasu,
       ci_tang,
       ci_moveruw,
       ci_moverw,
       ci_moverj,
-      ci_wald, ci_bp),
-    dim <- c(dim(ci_scas), 7)
+      ci_wald, ci_bp
+    ),
+    dim <- c(dim(ci_scas), 8)
   )[drop = FALSE]
   dimnames(outarr) <- mydimnames
 
@@ -150,8 +161,8 @@ rrpairci <- function(x,
     if (cc != FALSE) methodnames <- paste("Continuity adjusted", methodnames)
     mydimnames[[3]] <- methodnames
     dimnames(outarr) <- mydimnames
-    outarr <- outarr[, , c(1:5, 7), drop = FALSE]
-#    if (cc != TRUE) outarr <- outarr[, , 1:4, drop = FALSE]
+    outarr <- outarr[, , c(1:6, 8), drop = FALSE]
+    #    if (cc != TRUE) outarr <- outarr[, , 1:4, drop = FALSE]
   }
   # dimnames(outarr) <- mydimnames
   outarr <- aperm(round(outarr, precis), c(3, 2, 1))[, , 1]
@@ -164,4 +175,3 @@ rrpairci <- function(x,
   outlist <- list(xi, estimates = outarr, call = call)
   return(outlist)
 }
-

@@ -41,9 +41,11 @@ for the rate ratio (RR) contrast, with or without optional continuity
 adjustment (where available).
 \itemize{
 \item SCAS (skewness-corrected asymptotic score)
+\item SCASu (omitting the 'N-1' adjustment)
 \item Tang Asymptotic Score method
-\item MOVER Wilson (with or without Newcombe correlation adjustment)
-\item MOVER Jeffreys
+\item MOVER-W (based on Wilson method without Newcombe correlation adjustment)
+\item MOVER-NW (based on Wilson method with Newcombe correlation adjustment)
+\item MOVER-NJ (based on Jeffreys method with correlation adjustment)
 \item Bonett-Price hybrid method
 \item Approximate log-normal (Wald) method
 (strongly advise this is not used for any purpose but included for reference)

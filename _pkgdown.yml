@@ -10,9 +10,9 @@ reference:
   contents:
   - scoreci
   - moverci
-  - pairbinci
   - scorepairci
   - moverpairci
+  - pairbinci
 
 - subtitle: Intervals and tests for a single proportion or rate
   contents:

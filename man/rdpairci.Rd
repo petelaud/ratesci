@@ -41,9 +41,10 @@ for the rate difference (RD) contrast, with or without optional continuity
 adjustment (where available).
 \itemize{
 \item SCAS (skewness-corrected asymptotic score)
+\item SCASu (omitting the 'N-1' adjustment)
 \item Tango Asymptotic Score method
-\item MOVER Wilson (aka Newcombe Hybrid Score or square-and-add)
-\item MOVER Jeffreys
+\item MOVER-NW Wilson (aka Newcombe Hybrid Score or square-and-add)
+\item MOVER-NJ Jeffreys
 \item Agresti-Min
 \item Bonett-Price
 \item Approximate normal (Wald) method
