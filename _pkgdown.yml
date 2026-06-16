@@ -11,6 +11,8 @@ reference:
   - scoreci
   - moverci
   - pairbinci
+  - scorepairci
+  - moverpairci
 
 - subtitle: Intervals and tests for a single proportion or rate
   contents:
