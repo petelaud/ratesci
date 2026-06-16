@@ -47,13 +47,13 @@ is often overlooked in the literature, in favour of interval width.
 
 Most of the above list is covered by `scoreci()`, with the exception of
 clustered proportions (which are handled by `clusterpci()`) and paired
-contrasts (`pairbinci()`). Stratified calculations are also catered for
-(e.g. for analysis of a clinical trial with stratified randomisation, or
-for a meta-analysis, including random effects). Options are included for
-omitting the skewness correction to obtain legacy methods such as
-stratified or unstratified Miettinen-Nurminen and Wilson intervals,
-Tango intervals for paired data, or chi-squared, CMH, Farrington-Manning
-or McNemar tests.
+contrasts (`scorepairci()`). Stratified calculations are also catered
+for (e.g. for analysis of a clinical trial with stratified
+randomisation, or for a meta-analysis, including random effects).
+Options are included for omitting the skewness correction to obtain
+legacy methods such as stratified or unstratified Miettinen-Nurminen and
+Wilson intervals, Tango intervals for paired data, or chi-squared, CMH,
+Farrington-Manning or McNemar tests.
 
 Simplified functions producing a selection of different confidence
 interval methods for each contrast for independent binomial or Poisson
@@ -107,7 +107,7 @@ prior beliefs about the rates in each group - by default, the
 non-informative Jeffreys $Beta(0.5, 0.5)$ priors are used (or
 corresponding Gamma priors for Poisson rates). MOVER intervals are
 available in `moverci()` for all contrasts of independent binomial and
-Poisson rates, and in `pairbinci()` for the paired binomial contrasts.
+Poisson rates, and in `moverpairci()` for paired binomial RD and RR.
 
 For those wishing to achieve strictly conservative coverage, continuity
 adjustments are provided as approximations to “exact” methods, with the
@@ -140,7 +140,7 @@ pak::pak("petelaud/ratesci")
 This builds the package from source based on the current version on
 [GitHub](https://github.com/petelaud/ratesci)
 
-A SAS macro implementation of `scoreci()` and `pairbinci()` is also
+A SAS macro implementation of `scoreci()` and `scorepairci()` is also
 available at <https://github.com/petelaud/ratesci-sas>
 
 ## Example
@@ -175,10 +175,10 @@ An example of a paired analysis follows, using the data from Table II of
 ([Fagerland et al. 2014](#ref-fagerland2014)). Here the bias and
 skewness corrections are again applied by default. Omitting both would
 produce the Tango asymptotic score interval for `contrast = "RD"`, or
-the Tang method for `contrast = "RR"`.
+the Tang method if `contrast = "RR"`.
 
 ``` r
-pairbinci(x = c(1, 1, 7, 12))
+scorepairci(x = c(1, 1, 7, 12))
 #> $data
 #>          Test_2
 #> Test_1    Success Failure
@@ -196,8 +196,8 @@ pairbinci(x = c(1, 1, 7, 12))
 #> [1,] 4.286    0.03843      0     -2.07   0.01922     0.9808
 #> 
 #> $call
-#> contrast   method    level      bcf     skew       cc 
-#>     "RD"  "Score"   "0.95"   "TRUE"   "TRUE"  "FALSE"
+#> contrast    level      bcf     skew       cc 
+#>     "RD"   "0.95"   "TRUE"   "TRUE"  "FALSE"
 ```
 
 ## References

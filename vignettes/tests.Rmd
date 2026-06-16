@@ -21,7 +21,7 @@ options(digits = 3)
 library(ratesci)
 ```
 
-## Test for association and equivalence test produced by scoreci() and pairbinci()
+## Test for association and equivalence test produced by scoreci() and scorepairci()
 
 If you want to know whether the observed proportion in group 1 is "significantly different" from the proportion in group 2, then you need a test for association, or superiority test. Such a test is based on the null hypothesis that $p_1 = p_2$ (i.e. $\theta_{RD} = 0$, $\theta_{RR} = 1$, or $\theta_{OR} = 1$). The superiority tests described below give consistent results whichever contrast is chosen (RD, RR or OR).
 
@@ -117,12 +117,12 @@ Note that the type I error for a test of association is not affected by the choi
 
 ### Tests for paired binomial proportions
 
-The two-sided test given by `pairbinci()` (for any contrast) is an 'N-1' adjusted version of the McNemar test (the skewness correction term is zero at the null hypothesis value of $\theta$). In an extensive evaluation of many thousands of sample sizes and correlations, the paired SCAS two-sided test did not violate the nominal significance level at any point, suggesting that the over-conservative "continuity corrected" version given by default in `mcnemar.test()` is superfluous.
+The two-sided test given by `scorepairci()` (for any contrast) is an 'N-1' adjusted version of the McNemar test (the skewness correction term is zero at the null hypothesis value of $\theta$). In an extensive evaluation of many thousands of sample sizes and correlations, the paired SCAS two-sided test did not violate the nominal significance level at any point, suggesting that the over-conservative "continuity corrected" version given by default in `mcnemar.test()` is superfluous.
 
 ```{r}
-pairbinci(x = c(1, 1, 7, 12), skew = TRUE)$pval
-pairbinci(x = c(1, 1, 7, 12), skew = FALSE)$pval
-pairbinci(x = c(1, 1, 7, 12), skew = FALSE, contrast = "RR")$pval
+scorepairci(x = c(1, 1, 7, 12), skew = TRUE)$pval
+scorepairci(x = c(1, 1, 7, 12), skew = FALSE)$pval
+scorepairci(x = c(1, 1, 7, 12), skew = FALSE, contrast = "RR")$pval
 mcnem <- mcnemar.test(x = matrix(c(1, 1, 7, 12), nrow = 2), correct = FALSE)$statistic
 names(mcnem) <- NULL
 pchisq(mcnem * (21-1)/21, df = 1, lower.tail = FALSE)

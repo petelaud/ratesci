@@ -37,7 +37,7 @@ ratesci is an [R](https://www.r-project.org) package to compute confidence inter
 
 A number of different methods are offered, but in each case, the recommended default is based on asymptotic score methodology (from [@wilson1927], [@miettinen1985] and [@tango1998a]), but including skewness corrections following the principles of [@gart1988]. The resulting family of skewness-corrected asymptotic score (SCAS) methods [@laud2017], (and Laud 2026, under review) ensures equal-tailed coverage (also referred to as central location), in other words for a nominal 95% confidence interval, the one-sided non-coverage probability is (on average) close to 2.5% on each side. The equal-tailed property is particularly important for non-inferiority testing (as it ensures correct type I error rates for one-sided tests), but should be considered generally desirable for two-sided confidence intervals. Unfortunately this aspect of performance is often overlooked in the literature, in favour of interval width.
 
-Most of the above list is covered by `scoreci()`, with the exception of clustered proportions (which are handled by `clusterpci()`) and paired contrasts (`pairbinci()`). Stratified calculations are also catered for (e.g. for analysis of a clinical trial with stratified randomisation, or for a meta-analysis, including random effects). Options are included for omitting the skewness correction to obtain legacy methods such as stratified or unstratified Miettinen-Nurminen and Wilson intervals, Tango intervals for paired data, or chi-squared, CMH, Farrington-Manning or McNemar tests.
+Most of the above list is covered by `scoreci()`, with the exception of clustered proportions (which are handled by `clusterpci()`) and paired contrasts (`scorepairci()`). Stratified calculations are also catered for (e.g. for analysis of a clinical trial with stratified randomisation, or for a meta-analysis, including random effects). Options are included for omitting the skewness correction to obtain legacy methods such as stratified or unstratified Miettinen-Nurminen and Wilson intervals, Tango intervals for paired data, or chi-squared, CMH, Farrington-Manning or McNemar tests.
 
 Simplified functions producing a selection of different confidence interval methods for each contrast for independent binomial or Poisson rates (with or without continuity adjustment) are provided by `rdci()`, `rrci()` and `orci()`.
 
@@ -47,7 +47,7 @@ In each case, the asymptotic score methods provide a matching 2-sided test for a
 
 -   See the [hypothesis tests](https://petelaud.github.io/ratesci/articles/tests.html) vignette for further details of the relationships between SCAS tests and conventional chi-squared and CMH tests.
 
-Another family of methods offered by the package, with reasonable performance for large (single-stratum) sample sizes (but without a matching hypothesis test), uses the Method of Variance Estimates Recovery (MOVER), also known as Square-and-Add [@newcombe2012, chapter 7]. These methods combine intervals calculated separately for each proportion. The recommended default gives the MOVER-J method, using Jeffreys equal-tailed intervals instead of the Wilson method preferred by Newcombe. This improves on traditional approximate methods with respect to one-sided and two-sided coverage, particularly for the RR contrast, but does not match the performance of the SCAS method. As the Jeffreys interval is based on a Bayesian conjugate prior, the MOVER approach allows the option to incorporate prior beliefs about the rates in each group - by default, the non-informative Jeffreys $Beta(0.5, 0.5)$ priors are used (or corresponding Gamma priors for Poisson rates). MOVER intervals are available in `moverci()` for all contrasts of independent binomial and Poisson rates, and in `pairbinci()` for the paired binomial contrasts.
+Another family of methods offered by the package, with reasonable performance for large (single-stratum) sample sizes (but without a matching hypothesis test), uses the Method of Variance Estimates Recovery (MOVER), also known as Square-and-Add [@newcombe2012, chapter 7]. These methods combine intervals calculated separately for each proportion. The recommended default gives the MOVER-J method, using Jeffreys equal-tailed intervals instead of the Wilson method preferred by Newcombe. This improves on traditional approximate methods with respect to one-sided and two-sided coverage, particularly for the RR contrast, but does not match the performance of the SCAS method. As the Jeffreys interval is based on a Bayesian conjugate prior, the MOVER approach allows the option to incorporate prior beliefs about the rates in each group - by default, the non-informative Jeffreys $Beta(0.5, 0.5)$ priors are used (or corresponding Gamma priors for Poisson rates). MOVER intervals are available in `moverci()` for all contrasts of independent binomial and Poisson rates, and in `moverpairci()` for paired binomial RD and RR.
 
 For those wishing to achieve strictly conservative coverage, continuity adjustments are provided as approximations to "exact" methods, with the option to adjust the strength of the adjustment (as the Yates correction is widely recognised to be an over-conservative adjustment). The performance of these adjustments has not been extensively evaluated, but they appear to be more successful for SCAS than for MOVER, in terms of achieving conservative coverage.
 
@@ -70,7 +70,7 @@ pak::pak("petelaud/ratesci")
 
 This builds the package from source based on the current version on [GitHub](https://github.com/petelaud/ratesci)
 
-A SAS macro implementation of `scoreci()` and `pairbinci()` is also available at https://github.com/petelaud/ratesci-sas
+A SAS macro implementation of `scoreci()` and `scorepairci()` is also available at https://github.com/petelaud/ratesci-sas
 
 ## Example
 
@@ -81,10 +81,10 @@ library(ratesci)
 scoreci(x1 = 5, n1 = 56, x2 = 0, n2 = 29)
 ```
 
-An example of a paired analysis follows, using the data from Table II of [@fagerland2014]. Here the bias and skewness corrections are again applied by default. Omitting both would produce the Tango asymptotic score interval for `contrast = "RD"`, or the Tang method for `contrast = "RR"`.
+An example of a paired analysis follows, using the data from Table II of [@fagerland2014]. Here the bias and skewness corrections are again applied by default. Omitting both would produce the Tango asymptotic score interval for `contrast = "RD"`, or the Tang method if `contrast = "RR"`.
 
 ```{r example2}
-pairbinci(x = c(1, 1, 7, 12))
+scorepairci(x = c(1, 1, 7, 12))
 ```
 
 ## References
