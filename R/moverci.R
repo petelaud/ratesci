@@ -7,20 +7,18 @@
 #' equal-tailed Jeffreys intervals instead of the Wilson score method for the
 #' event rates.  Also allows more general Beta and Gamma priors for an
 #' approximate Bayesian confidence interval incorporating prior beliefs about
-#' the group event rates.
+#' the group event rates (including application for estimation of a single rate).
 #' This function is vectorised in x1, x2, n1, and n2.
 #'
 #' @param x1,x2 Numeric vectors of numbers of events in group 1 & group 2
 #'   respectively.
 #' @param n1,n2 Numeric vectors of sample sizes (for binomial rates) or exposure
 #'   times (for Poisson rates) in each group.
+#' @param level Number specifying confidence level (between 0 and 1, default
+#'   0.95).
 #' @param a1,b1,a2,b2 Numbers defining the Beta(ai,bi) prior distributions for
 #'   each group (default ai = bi = 0.5 for Jeffreys method). Gamma priors for
 #'   Poisson rates require only a1, a2.
-#' @param cc Number or logical specifying (amount of) continuity adjustment
-#'   (default FALSE). Numeric value is taken as the gamma parameter in Laud
-#'   2017, Appendix S2 (default 0.5 if `cc = TRUE`). Forced equal to 0.5 if
-#'   `type = "exact"`.
 #' @param contrast Character string indicating the contrast of interest: \cr
 #'  "RD" = rate difference (default); \cr
 #'  "RR" = rate ratio; \cr
@@ -43,6 +41,10 @@
 #' @param adj Logical (default FALSE) indicating whether to apply the boundary
 #'   adjustment for Jeffreys intervals recommended on p108 of Brown et al.
 #'   (`type = "jeff"` only: set to FALSE if using informative priors.)
+#' @param cc Number or logical specifying (amount of) continuity adjustment
+#'   (default FALSE). Numeric value is taken as the gamma parameter in Laud
+#'   2017, Appendix S2 (default 0.5 if `cc = TRUE`). Forced equal to 0.5 if
+#'   `type = "exact"`.
 #' @param ... Additional arguments.
 #' @inheritParams jeffreysci
 #' @importFrom stats pchisq pf pnorm pt qbeta qgamma qnorm qqnorm qt
@@ -195,12 +197,12 @@ moverci <- function(x1,
     j1 <- rateci(
       x = x1, n = n1, cc = cc, level = level,
       distrib = distrib
-    )[[1]]
+    )$scas
     if (contrast != "p") {
       j2 <- rateci(
         x = x2, n = n2, cc = cc, level = level,
         distrib = distrib
-      )[[1]]
+      )$scas
     } else {
       j2 <- NULL
     }
@@ -211,12 +213,12 @@ moverci <- function(x1,
     j1 <- rateci(
       x = x1, n = n1, cc = cc, level = level,
       distrib = distrib
-    )[[3]]
+    )$midp
     if (contrast != "p") {
       j2 <- rateci(
         x = x2, n = n2, cc = cc, level = level,
         distrib = distrib
-      )[[3]]
+      )$midp
     } else {
       j2 <- NULL
     }
