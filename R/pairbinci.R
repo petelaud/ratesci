@@ -1,5 +1,8 @@
 #' Confidence intervals and tests for comparisons of paired binomial rates.
 #'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
 #' Confidence intervals for the rate (or risk) difference ("RD"), rate ratio
 #' ("RR") or conditional odds ratio ("OR"), for paired binomial data. (For
 #' paired Poisson rates, suggest use the tdasci function with `distrib = "poi"`,
@@ -195,6 +198,11 @@ pairbinci <- function(x,
                       method_OR = NULL,
                       cctype = NULL,
                       ...) {
+
+  lifecycle::deprecate_warn("1.0.1",
+                            "pairbinci()",
+                            I("scorepairci(), moverpairci(), rdpairci(), rrpairci() or orpairci()"))
+
   if (!is.numeric(c(x))) {
     print("Non-numeric inputs!")
     stop()
@@ -432,14 +440,14 @@ pairbinci <- function(x,
     }
     # MOVER methods for RD and RR
     if (method == "MOVER") {
-      estimates <- moverpairci(
+      estimates <- xmoverpairci(
         x = x, contrast = contrast, level = level,
         method = moverbase, cc = cc, corc = FALSE
       )
       outlist <- list(data = xi, estimates = estimates)
     }
     if (method == "MOVER_newc") {
-      estimates <- moverpairci(
+      estimates <- xmoverpairci(
         x = x, contrast = contrast, level = level,
         method = moverbase, cc = cc, corc = TRUE
       )
@@ -1000,7 +1008,7 @@ tangci <- function(x,
 #'   to the correlation estimate from Newcombe.
 #'
 #' @noRd
-moverpairci <- function(x,
+xmoverpairci <- function(x,
                       level = 0.95,
                       contrast = "RD",
                       method = "jeff",
