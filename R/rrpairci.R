@@ -80,7 +80,7 @@ rrpairci <- function(x,
     )
 #  }
 
-  ci_scas <- pairbinci(
+  ci_scas <- scorepairci(
     x = x,
     contrast = contrast,
     level = level,
@@ -88,7 +88,7 @@ rrpairci <- function(x,
     precis = precis
   )$estimates[, c(1:3), drop = FALSE]
 
-  ci_tang <- pairbinci(
+  ci_tang <- scorepairci(
     x = x,
     contrast = contrast,
     skew = FALSE,
@@ -98,30 +98,30 @@ rrpairci <- function(x,
     precis = precis
   )$estimates[, c(1:3), drop = FALSE]
 
-  ci_moverw <- pairbinci(
+  ci_moveruw <- moverpairci(
     x = x,
     contrast = contrast,
     level = level,
-    method = "MOVER",
-    moverbase = "wilson",
+    corc = FALSE,
+    type = "wilson",
     cc = cc
   )$estimates[, c(1:3), drop = FALSE]
 
-  ci_moverwn <- pairbinci(
+  ci_moverw <- moverpairci(
     x = x,
     contrast = contrast,
     level = level,
-    method = "MOVER_newc",
-    moverbase = "wilson",
+    corc = TRUE,
+    type = "wilson",
     cc = cc
   )$estimates[, c(1:3), drop = FALSE]
 
-  ci_moverj <- pairbinci(
+  ci_moverj <- moverpairci(
     x = x,
     contrast = contrast,
     level = level,
-    method = "MOVER_newc",
-    moverbase = "jeff",
+    corc = TRUE,
+    type = "jeff",
     cc = cc
   )$estimates[, c(1:3), drop = FALSE]
 
@@ -135,7 +135,12 @@ rrpairci <- function(x,
   mydimnames[[3]] <- methodnames
 
   outarr <- array(
-    c(ci_scas, ci_tang, ci_moverw, ci_moverwn, ci_moverj, ci_wald, ci_bp),
+    c(ci_scas,
+      ci_tang,
+      ci_moveruw,
+      ci_moverw,
+      ci_moverj,
+      ci_wald, ci_bp),
     dim <- c(dim(ci_scas), 7)
   )[drop = FALSE]
   dimnames(outarr) <- mydimnames

@@ -85,7 +85,7 @@ rdpairci <- function(x,
     )
   }
 
-  ci_scas <- pairbinci(
+  ci_scas <- scorepairci(
     x = x,
     contrast = contrast,
     level = level,
@@ -93,7 +93,7 @@ rdpairci <- function(x,
     precis = precis
   )$estimates[, c(1:3), drop = FALSE]
 
-  ci_tango <- pairbinci(
+  ci_tango <- scorepairci(
     x = x,
     contrast = contrast,
     skew = FALSE,
@@ -103,21 +103,21 @@ rdpairci <- function(x,
     precis = precis
   )$estimates[, c(1:3), drop = FALSE]
 
-  ci_moverw <- pairbinci(
+  ci_moverw <- moverpairci(
     x = x,
     contrast = contrast,
     level = level,
-    method = "MOVER_newc",
-    moverbase = "wilson",
+    corc = TRUE,
+    type = "wilson",
     cc = cc
   )$estimates[, c(1:3), drop = FALSE]
 
-  ci_moverj <- pairbinci(
+  ci_moverj <- moverpairci(
     x = x,
     contrast = contrast,
     level = level,
-    method = "MOVER_newc",
-    moverbase = "jeff",
+    corc = TRUE,
+    type = "jeff",
     cc = cc
   )$estimates[, c(1:3), drop = FALSE]
 
