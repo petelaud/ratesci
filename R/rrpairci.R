@@ -11,7 +11,7 @@
 #' - MOVER Wilson (with or without Newcombe correlation adjustment)
 #' - MOVER Jeffreys
 #' - Bonett-Price hybrid method
-#' - Approximate normal (Wald) method
+#' - Approximate log-normal (Wald) method
 #'     (strongly advise this is not used for any purpose but included for reference)
 #'
 #' @param x A numeric vector object specified as c(a, b, c, d)

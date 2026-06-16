@@ -45,7 +45,7 @@ adjustment (where available).
 \item MOVER Wilson (with or without Newcombe correlation adjustment)
 \item MOVER Jeffreys
 \item Bonett-Price hybrid method
-\item Approximate normal (Wald) method
+\item Approximate log-normal (Wald) method
 (strongly advise this is not used for any purpose but included for reference)
 }
 }
