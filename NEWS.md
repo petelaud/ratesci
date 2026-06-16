@@ -2,9 +2,17 @@
 
 
 ## New features
-* New functions `rdci()`, `rrci()` and `orci()` for giving a selection of
+* New functions `rdci()`, `rrci()` and `orci()` give a selection of
   confidence intervals for each contrast for 2 independent binomial or Poisson
   rates.
+* New functions `rdpairci()`, `rrpairci()` and `orpairci()` give 
+  a selection of confidence intervals for each contrast for 2 paired binomial 
+  proportions. 
+* New separate dedicated functions `scorepairci()` and `moverpairci()` for the 
+  score and MOVER methods, respectively, for paired contrasts, mirroring 
+  `scoreci()` and `moverci()` for independent contrasts. 
+* Note the above new functions for paired contrasts replace `pairbinci()`,
+  which is deprecated.
 
 ### In `rateci()`:
 * New default point estimate is the "common sense" crude estimate `x / n`, 
@@ -20,10 +28,6 @@
 * New output object for the Blaker exact method (for both binomial and Poisson 
   rates)
 * `precis` for setting the precision of the exact and mid-p method.
-
-### In `pairbinci()`:
-* New `method` = "Wald" option to give approximate normal method - not recommended
-  but provided for reference and evaluation.
 
 ## Bug fixes
 ### In `rateci()` and `moverci()`:
