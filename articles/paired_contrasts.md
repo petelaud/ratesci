@@ -54,6 +54,12 @@ children before and after stem cell transplantation, as used in
 ``` r
 
 out <- pairbinci(x = c(1, 1, 7, 12))
+#> Warning: `pairbinci()` was deprecated in ratesci 1.0.1.
+#> ℹ Please use scorepairci(), moverpairci(), rdpairci(), rrpairci() or orpairci()
+#>   instead.
+#> This warning is displayed once per session.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+#> generated.
 out$estimates
 #>       lower    est   upper level  p1hat p2hat  p1mle p2mle phi_hat phi_c
 #> [1,] -0.528 -0.286 -0.0184  0.95 0.0952 0.381 0.0952 0.381  0.0795     0

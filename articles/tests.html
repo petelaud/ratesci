@@ -319,6 +319,12 @@ significance level at any point, suggesting that the over-conservative
 <code><a href="https://rdrr.io/r/stats/mcnemar.test.html" class="external-link">mcnemar.test()</a></code> is superfluous.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/pairbinci.html">pairbinci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, skew <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">pval</span></span>
+<span><span class="co">#&gt; Warning: `pairbinci()` was deprecated in ratesci 1.0.1.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use scorepairci(), moverpairci(), rdpairci(), rrpairci() or orpairci()</span></span>
+<span><span class="co">#&gt;   instead.</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once per session.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span>
 <span><span class="co">#&gt;      chisq pval2sided theta0 scorenull pval_left pval_right</span></span>
 <span><span class="co">#&gt; [1,]  4.29     0.0384      0     -2.07    0.0192      0.981</span></span>
 <span><span class="fu"><a href="../reference/pairbinci.html">pairbinci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, skew <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">$</span><span class="va">pval</span></span>

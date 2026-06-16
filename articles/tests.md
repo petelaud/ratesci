@@ -218,6 +218,12 @@ superfluous.
 ``` r
 
 pairbinci(x = c(1, 1, 7, 12), skew = TRUE)$pval
+#> Warning: `pairbinci()` was deprecated in ratesci 1.0.1.
+#> ℹ Please use scorepairci(), moverpairci(), rdpairci(), rrpairci() or orpairci()
+#>   instead.
+#> This warning is displayed once per session.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+#> generated.
 #>      chisq pval2sided theta0 scorenull pval_left pval_right
 #> [1,]  4.29     0.0384      0     -2.07    0.0192      0.981
 pairbinci(x = c(1, 1, 7, 12), skew = FALSE)$pval

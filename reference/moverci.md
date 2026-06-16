@@ -6,8 +6,9 @@ across different contrasts (RD, RR, OR) and distributions (binomial,
 Poisson) using equal-tailed Jeffreys intervals instead of the Wilson
 score method for the event rates. Also allows more general Beta and
 Gamma priors for an approximate Bayesian confidence interval
-incorporating prior beliefs about the group event rates. This function
-is vectorised in x1, x2, n1, and n2.
+incorporating prior beliefs about the group event rates (including
+application for estimation of a single rate). This function is
+vectorised in x1, x2, n1, and n2.
 
 ## Usage
 

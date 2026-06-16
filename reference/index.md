@@ -14,6 +14,11 @@
 - [`pairbinci()`](https://petelaud.github.io/ratesci/reference/pairbinci.md)
   : Confidence intervals and tests for comparisons of paired binomial
   rates.
+- [`scorepairci()`](https://petelaud.github.io/ratesci/reference/scorepairci.md)
+  : Score confidence intervals and tests for comparisons of paired
+  binomial rates.
+- [`moverpairci()`](https://petelaud.github.io/ratesci/reference/moverpairci.md)
+  : MOVER confidence intervals for comparisons of paired binomial rates.
 
 ### Intervals and tests for a single proportion or rate
 

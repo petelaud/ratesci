@@ -178,6 +178,12 @@ children before and after stem cell transplantation, as used in <span class="cit
 2014</a>)</span>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pairbinci.html">pairbinci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: `pairbinci()` was deprecated in ratesci 1.0.1.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use scorepairci(), moverpairci(), rdpairci(), rrpairci() or orpairci()</span></span>
+<span><span class="co">#&gt;   instead.</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once per session.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span>
 <span><span class="va">out</span><span class="op">$</span><span class="va">estimates</span></span>
 <span><span class="co">#&gt;       lower    est   upper level  p1hat p2hat  p1mle p2mle phi_hat phi_c</span></span>
 <span><span class="co">#&gt; [1,] -0.528 -0.286 -0.0184  0.95 0.0952 0.381 0.0952 0.381  0.0795     0</span></span>

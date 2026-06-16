@@ -7,9 +7,27 @@
 - New functions
   [`rdci()`](https://petelaud.github.io/ratesci/reference/rdci.md),
   [`rrci()`](https://petelaud.github.io/ratesci/reference/rrci.md) and
-  [`orci()`](https://petelaud.github.io/ratesci/reference/orci.md) for
-  giving a selection of confidence intervals for each contrast for 2
+  [`orci()`](https://petelaud.github.io/ratesci/reference/orci.md) give
+  a selection of confidence intervals for each contrast for 2
   independent binomial or Poisson rates.
+- New functions
+  [`rdpairci()`](https://petelaud.github.io/ratesci/reference/rdpairci.md),
+  [`rrpairci()`](https://petelaud.github.io/ratesci/reference/rrpairci.md)
+  and `orpairci()` give a selection of confidence intervals for each
+  contrast for 2 paired binomial proportions.
+- New separate dedicated functions
+  [`scorepairci()`](https://petelaud.github.io/ratesci/reference/scorepairci.md)
+  and
+  [`moverpairci()`](https://petelaud.github.io/ratesci/reference/moverpairci.md)
+  for the score and MOVER methods, respectively, for paired contrasts,
+  mirroring
+  [`scoreci()`](https://petelaud.github.io/ratesci/reference/scoreci.md)
+  and
+  [`moverci()`](https://petelaud.github.io/ratesci/reference/moverci.md)
+  for independent contrasts.
+- Note the above new functions for paired contrasts replace
+  [`pairbinci()`](https://petelaud.github.io/ratesci/reference/pairbinci.md),
+  which is deprecated.
 
 #### In `rateci()`:
 
@@ -29,11 +47,6 @@
 - New output object for the Blaker exact method (for both binomial and
   Poisson rates)
 - `precis` for setting the precision of the exact and mid-p method.
-
-#### In `pairbinci()`:
-
-- New `method` = “Wald” option to give approximate normal method - not
-  recommended but provided for reference and evaluation.
 
 ### Bug fixes
 
