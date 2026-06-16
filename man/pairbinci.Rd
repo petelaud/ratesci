@@ -123,6 +123,8 @@ as specified.}
 \item{call}{details of the function call.}}
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
 Confidence intervals for the rate (or risk) difference ("RD"), rate ratio
 ("RR") or conditional odds ratio ("OR"), for paired binomial data. (For
 paired Poisson rates, suggest use the tdasci function with \code{distrib = "poi"},
