@@ -5,7 +5,7 @@
 library(ratesci)
 ```
 
-## Test for association and equivalence test produced by scoreci() and pairbinci()
+## Test for association and equivalence test produced by scoreci() and scorepairci()
 
 If you want to know whether the observed proportion in group 1 is
 “significantly different” from the proportion in group 2, then you need
@@ -205,7 +205,7 @@ update.
 ### Tests for paired binomial proportions
 
 The two-sided test given by
-[`pairbinci()`](https://petelaud.github.io/ratesci/reference/pairbinci.md)
+[`scorepairci()`](https://petelaud.github.io/ratesci/reference/scorepairci.md)
 (for any contrast) is an ‘N-1’ adjusted version of the McNemar test (the
 skewness correction term is zero at the null hypothesis value of
 $`\theta`$). In an extensive evaluation of many thousands of sample
@@ -217,19 +217,13 @@ superfluous.
 
 ``` r
 
-pairbinci(x = c(1, 1, 7, 12), skew = TRUE)$pval
-#> Warning: `pairbinci()` was deprecated in ratesci 1.0.1.
-#> ℹ Please use scorepairci(), moverpairci(), rdpairci(), rrpairci() or orpairci()
-#>   instead.
-#> This warning is displayed once per session.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-#> generated.
+scorepairci(x = c(1, 1, 7, 12), skew = TRUE)$pval
 #>      chisq pval2sided theta0 scorenull pval_left pval_right
 #> [1,]  4.29     0.0384      0     -2.07    0.0192      0.981
-pairbinci(x = c(1, 1, 7, 12), skew = FALSE)$pval
+scorepairci(x = c(1, 1, 7, 12), skew = FALSE)$pval
 #>      chisq pval2sided theta0 scorenull pval_left pval_right
 #> [1,]  4.29     0.0384      0     -2.07    0.0192      0.981
-pairbinci(x = c(1, 1, 7, 12), skew = FALSE, contrast = "RR")$pval
+scorepairci(x = c(1, 1, 7, 12), skew = FALSE, contrast = "RR")$pval
 #>      chisq pval2sided theta0 scorenull pval_left pval_right
 #> [1,]  4.29     0.0384      1     -2.07    0.0192      0.981
 mcnem <- mcnemar.test(x = matrix(c(1, 1, 7, 12), nrow = 2), correct = FALSE)$statistic

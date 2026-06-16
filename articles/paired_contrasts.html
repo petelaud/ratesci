@@ -149,7 +149,7 @@ the skewness-corrected asymptotic score (SCAS) method is recommended, as
 one that succeeds, on average, at containing the true parameter
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math>
 with the appropriate nominal probability (e.g. 95%), and has evenly
-distributed tail probabilities (Laud 2025, under review). It is a
+distributed tail probabilities (Laud 2026, under review). It is a
 modified version of the asymptotic score methods by <span class="citation">(<a href="#ref-tango1998">Tango 1998</a>)</span> for
 RD, and <span class="citation">(<a href="#ref-nam2002">Nam and
 Blackwelder 2002</a>)</span> and <span class="citation">(<a href="#ref-tang2003">Tang et al. 2003</a>)</span> for RR, incorporating
@@ -169,7 +169,7 @@ probability plots for other sample sizes and correlations can be found
 in the “plots” folder of the <a href="https://github.com/petelaud/cpplot/tree/master/plots" class="external-link">cpplot
 GitHub repository</a>.</p>
 <p><img src="images/RRpair40_95_0.25_small.jpg"></p>
-<p><code><a href="../reference/pairbinci.html">pairbinci()</a></code> takes input in the form of a vector of
+<p><code><a href="../reference/scorepairci.html">scorepairci()</a></code> takes input in the form of a vector of
 length 4, comprising the four values <code>c(a, b, c, d)</code> from the
 above table, which are the number of paired observations having each of
 the four possible pairs of outcomes.</p>
@@ -177,13 +177,7 @@ the four possible pairs of outcomes.</p>
 children before and after stem cell transplantation, as used in <span class="citation">(<a href="#ref-fagerland2014">Fagerland et al.
 2014</a>)</span>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pairbinci.html">pairbinci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: `pairbinci()` was deprecated in ratesci 1.0.1.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use scorepairci(), moverpairci(), rdpairci(), rrpairci() or orpairci()</span></span>
-<span><span class="co">#&gt;   instead.</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once per session.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span>
+<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scorepairci.html">scorepairci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">out</span><span class="op">$</span><span class="va">estimates</span></span>
 <span><span class="co">#&gt;       lower    est   upper level  p1hat p2hat  p1mle p2mle phi_hat phi_c</span></span>
 <span><span class="co">#&gt; [1,] -0.528 -0.286 -0.0184  0.95 0.0952 0.381 0.0952 0.381  0.0795     0</span></span>
@@ -203,7 +197,7 @@ e.g. for non-inferiority testing (<code>pval_left</code> and
 <span><span class="co">#&gt; [1,]  4.29     0.0384      0     -2.07    0.0192      0.981</span></span></code></pre></div>
 <p>For a confidence interval for paired RR, use:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pairbinci.html">pairbinci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, contrast <span class="op">=</span> <span class="st">"RR"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scorepairci.html">scorepairci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, contrast <span class="op">=</span> <span class="st">"RR"</span><span class="op">)</span></span>
 <span><span class="va">out</span><span class="op">$</span><span class="va">estimates</span></span>
 <span><span class="co">#&gt;       lower   est upper level  p1hat p2hat  p1mle p2mle phi_hat phi_c psi_hat</span></span>
 <span><span class="co">#&gt; [1,] 0.0429 0.263 0.928  0.95 0.0952 0.381 0.0994 0.379  0.0795     0    1.71</span></span>
@@ -223,23 +217,23 @@ iteration).</p>
 <p>For application of the MOVER method to paired RD or RR, an estimate
 of the correlation coefficient is included in the formula. A correction
 to the correlation estimate, introduced by Newcombe, is recommended,
-obtained with <code>method = "MOVER_newc"</code>. As for unpaired MOVER
-methods, the default base method used for the individual (marginal)
-proportions is the equal-tailed Jeffreys interval, rather than the
-Wilson Score as originally proposed by Newcombe (obtained using
-<code>moverbase = "wilson"</code>). The combination of the Newcombe
+obtained with <code>corc = TRUE</code>. As for unpaired MOVER methods,
+the default base method used for the individual (marginal) proportions
+is the equal-tailed Jeffreys interval, rather than the Wilson Score as
+originally proposed by Newcombe (obtained using
+<code>type = "wilson"</code>). The combination of the Newcombe
 correlation estimate and the Jeffreys intervals gives the designation
 “MOVER-NJ”. This method is less computationally intensive than SCAS, but
 coverage properties are inferior, and there is no corresponding
 hypothesis test.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/pairbinci.html">pairbinci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, contrast <span class="op">=</span> <span class="st">"RD"</span>, method <span class="op">=</span> <span class="st">"MOVER_newc"</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/moverpairci.html">moverpairci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, contrast <span class="op">=</span> <span class="st">"RD"</span>, corc <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
 <span><span class="co">#&gt;       lower    est   upper level  p1hat p2hat phi_hat</span></span>
 <span><span class="co">#&gt; [1,] -0.511 -0.286 -0.0324  0.95 0.0952 0.381       0</span></span></code></pre></div>
 <p>For cross-checking against published example in <span class="citation">(<a href="#ref-fagerland2014">Fagerland et al.
 2014</a>)</span></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/pairbinci.html">pairbinci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, contrast <span class="op">=</span> <span class="st">"RD"</span>, method <span class="op">=</span> <span class="st">"MOVER_newc"</span>, moverbase <span class="op">=</span> <span class="st">"wilson"</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/moverpairci.html">moverpairci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, contrast <span class="op">=</span> <span class="st">"RD"</span>, corc <span class="op">=</span> <span class="cn">TRUE</span>, type <span class="op">=</span> <span class="st">"wilson"</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
 <span><span class="co">#&gt;       lower    est   upper level  p1hat p2hat phi_hat</span></span>
 <span><span class="co">#&gt; [1,] -0.507 -0.286 -0.0256  0.95 0.0952 0.381       0</span></span></code></pre></div>
 </div>
@@ -252,10 +246,10 @@ for the proportion
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mi>/</mi><mo stretchy="false" form="prefix">(</mo><mi>b</mi><mo>+</mo><mi>c</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">b / (b+c)</annotation></semantics></math>.
 Transformed SCAS (with or without a variance bias correction, to ensure
 consistency with the above SCAS hypothesis tests for RD and RR) or
-transformed mid-p intervals are recommended (Laud 2025, under
+transformed mid-p intervals are recommended (Laud 2026, under
 review).</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pairbinci.html">pairbinci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, contrast <span class="op">=</span> <span class="st">"OR"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scorepairci.html">scorepairci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, contrast <span class="op">=</span> <span class="st">"OR"</span><span class="op">)</span></span>
 <span><span class="va">out</span><span class="op">$</span><span class="va">estimates</span></span>
 <span><span class="co">#&gt;       lower   est upper</span></span>
 <span><span class="co">#&gt; [1,] 0.0077 0.162 0.912</span></span>
@@ -264,9 +258,13 @@ review).</p>
 <span><span class="co">#&gt; [1,]  4.29     0.0384      1     -2.07    0.0192      0.981</span></span></code></pre></div>
 <p>To select an alternative method, for example transformed mid-p:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/pairbinci.html">pairbinci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, contrast <span class="op">=</span> <span class="st">"OR"</span>, method <span class="op">=</span> <span class="st">"midp"</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
-<span><span class="co">#&gt;        lower  est upper   x     n</span></span>
-<span><span class="co">#&gt; [1,] 0.00629 0.16 0.924 Inf -1.14</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/orpairci.html">orpairci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
+<span><span class="co">#&gt;                        lower   est upper</span></span>
+<span><span class="co">#&gt; Transformed SCASp    0.00770 0.143 0.912</span></span>
+<span><span class="co">#&gt; Transformed mid-P    0.00629 0.143 0.924</span></span>
+<span><span class="co">#&gt; Transformed Wilson   0.02293 0.143 0.890</span></span>
+<span><span class="co">#&gt; Transformed Jeffreys 0.01403 0.143 0.831</span></span>
+<span><span class="co">#&gt; Wald                 0.01758 0.143 1.161</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2 unnumbered">

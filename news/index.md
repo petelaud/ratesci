@@ -13,8 +13,10 @@
 - New functions
   [`rdpairci()`](https://petelaud.github.io/ratesci/reference/rdpairci.md),
   [`rrpairci()`](https://petelaud.github.io/ratesci/reference/rrpairci.md)
-  and `orpairci()` give a selection of confidence intervals for each
-  contrast for 2 paired binomial proportions.
+  and
+  [`orpairci()`](https://petelaud.github.io/ratesci/reference/orpairci.md)
+  give a selection of confidence intervals for each contrast for 2
+  paired binomial proportions.
 - New separate dedicated functions
   [`scorepairci()`](https://petelaud.github.io/ratesci/reference/scorepairci.md)
   and

@@ -12,8 +12,8 @@
   : Method of Variance Estimates Recovery ("MOVER") confidence intervals
   for comparisons of independent binomial or Poisson rates.
 - [`pairbinci()`](https://petelaud.github.io/ratesci/reference/pairbinci.md)
-  : Confidence intervals and tests for comparisons of paired binomial
-  rates.
+  **\[deprecated\]** : Confidence intervals and tests for comparisons of
+  paired binomial rates.
 - [`scorepairci()`](https://petelaud.github.io/ratesci/reference/scorepairci.md)
   : Score confidence intervals and tests for comparisons of paired
   binomial rates.
@@ -52,6 +52,9 @@ User-friendly convenience functions with restricted set of options
   rates.
 - [`rrpairci()`](https://petelaud.github.io/ratesci/reference/rrpairci.md)
   : Confidence intervals for rate ratio (RR) with paired binomial rates.
+- [`orpairci()`](https://petelaud.github.io/ratesci/reference/orpairci.md)
+  : Confidence intervals for conditional odds ratio (OR) with paired
+  binomial rates.
 - [`scasci()`](https://petelaud.github.io/ratesci/reference/scasci.md) :
   Skewness-corrected asymptotic score ("SCAS") confidence intervals for
   comparisons of independent binomial or Poisson rates.

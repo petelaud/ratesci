@@ -27,7 +27,7 @@ $`\hat p_1 = (a+b)/N`$, $`\hat p_2 = (a+c)/N`$), or relative risk
 asymptotic score (SCAS) method is recommended, as one that succeeds, on
 average, at containing the true parameter $`\theta`$ with the
 appropriate nominal probability (e.g. 95%), and has evenly distributed
-tail probabilities (Laud 2025, under review). It is a modified version
+tail probabilities (Laud 2026, under review). It is a modified version
 of the asymptotic score methods by ([Tango 1998](#ref-tango1998)) for
 RD, and ([Nam and Blackwelder 2002](#ref-nam2002)) and ([Tang et al.
 2003](#ref-tang2003)) for RR, incorporating both a skewness correction
@@ -42,7 +42,7 @@ repository](https://github.com/petelaud/cpplot/tree/master/plots).
 
 ![](images/RRpair40_95_0.25_small.jpg)
 
-[`pairbinci()`](https://petelaud.github.io/ratesci/reference/pairbinci.md)
+[`scorepairci()`](https://petelaud.github.io/ratesci/reference/scorepairci.md)
 takes input in the form of a vector of length 4, comprising the four
 values `c(a, b, c, d)` from the above table, which are the number of
 paired observations having each of the four possible pairs of outcomes.
@@ -53,13 +53,7 @@ children before and after stem cell transplantation, as used in
 
 ``` r
 
-out <- pairbinci(x = c(1, 1, 7, 12))
-#> Warning: `pairbinci()` was deprecated in ratesci 1.0.1.
-#> ℹ Please use scorepairci(), moverpairci(), rdpairci(), rrpairci() or orpairci()
-#>   instead.
-#> This warning is displayed once per session.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-#> generated.
+out <- scorepairci(x = c(1, 1, 7, 12))
 out$estimates
 #>       lower    est   upper level  p1hat p2hat  p1mle p2mle phi_hat phi_c
 #> [1,] -0.528 -0.286 -0.0184  0.95 0.0952 0.381 0.0952 0.381  0.0795     0
@@ -85,7 +79,7 @@ For a confidence interval for paired RR, use:
 
 ``` r
 
-out <- pairbinci(x = c(1, 1, 7, 12), contrast = "RR")
+out <- scorepairci(x = c(1, 1, 7, 12), contrast = "RR")
 out$estimates
 #>       lower   est upper level  p1hat p2hat  p1mle p2mle phi_hat phi_c psi_hat
 #> [1,] 0.0429 0.263 0.928  0.95 0.0952 0.381 0.0994 0.379  0.0795     0    1.71
@@ -105,18 +99,18 @@ solved by iteration).
 For application of the MOVER method to paired RD or RR, an estimate of
 the correlation coefficient is included in the formula. A correction to
 the correlation estimate, introduced by Newcombe, is recommended,
-obtained with `method = "MOVER_newc"`. As for unpaired MOVER methods,
-the default base method used for the individual (marginal) proportions
-is the equal-tailed Jeffreys interval, rather than the Wilson Score as
-originally proposed by Newcombe (obtained using `moverbase = "wilson"`).
-The combination of the Newcombe correlation estimate and the Jeffreys
+obtained with `corc = TRUE`. As for unpaired MOVER methods, the default
+base method used for the individual (marginal) proportions is the
+equal-tailed Jeffreys interval, rather than the Wilson Score as
+originally proposed by Newcombe (obtained using `type = "wilson"`). The
+combination of the Newcombe correlation estimate and the Jeffreys
 intervals gives the designation “MOVER-NJ”. This method is less
 computationally intensive than SCAS, but coverage properties are
 inferior, and there is no corresponding hypothesis test.
 
 ``` r
 
-pairbinci(x = c(1, 1, 7, 12), contrast = "RD", method = "MOVER_newc")$estimates
+moverpairci(x = c(1, 1, 7, 12), contrast = "RD", corc = TRUE)$estimates
 #>       lower    est   upper level  p1hat p2hat phi_hat
 #> [1,] -0.511 -0.286 -0.0324  0.95 0.0952 0.381       0
 ```
@@ -126,7 +120,7 @@ For cross-checking against published example in ([Fagerland et al.
 
 ``` r
 
-pairbinci(x = c(1, 1, 7, 12), contrast = "RD", method = "MOVER_newc", moverbase = "wilson")$estimates
+moverpairci(x = c(1, 1, 7, 12), contrast = "RD", corc = TRUE, type = "wilson")$estimates
 #>       lower    est   upper level  p1hat p2hat phi_hat
 #> [1,] -0.507 -0.286 -0.0256  0.95 0.0952 0.381       0
 ```
@@ -138,11 +132,11 @@ the number of discordant pairs, by transforming a confidence interval
 for the proportion $`b / (b+c)`$. Transformed SCAS (with or without a
 variance bias correction, to ensure consistency with the above SCAS
 hypothesis tests for RD and RR) or transformed mid-p intervals are
-recommended (Laud 2025, under review).
+recommended (Laud 2026, under review).
 
 ``` r
 
-out <- pairbinci(x = c(1, 1, 7, 12), contrast = "OR")
+out <- scorepairci(x = c(1, 1, 7, 12), contrast = "OR")
 out$estimates
 #>       lower   est upper
 #> [1,] 0.0077 0.162 0.912
@@ -155,9 +149,13 @@ To select an alternative method, for example transformed mid-p:
 
 ``` r
 
-pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method = "midp")$estimates
-#>        lower  est upper   x     n
-#> [1,] 0.00629 0.16 0.924 Inf -1.14
+orpairci(x = c(1, 1, 7, 12))$estimates
+#>                        lower   est upper
+#> Transformed SCASp    0.00770 0.143 0.912
+#> Transformed mid-P    0.00629 0.143 0.924
+#> Transformed Wilson   0.02293 0.143 0.890
+#> Transformed Jeffreys 0.01403 0.143 0.831
+#> Wald                 0.01758 0.143 1.161
 ```
 
 ## References

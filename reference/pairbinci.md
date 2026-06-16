@@ -1,5 +1,7 @@
 # Confidence intervals and tests for comparisons of paired binomial rates.
 
+**\[deprecated\]**
+
 Confidence intervals for the rate (or risk) difference ("RD"), rate
 ratio ("RR") or conditional odds ratio ("OR"), for paired binomial data.
 (For paired Poisson rates, suggest use the tdasci function with

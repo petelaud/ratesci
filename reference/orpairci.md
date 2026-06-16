@@ -1,27 +1,24 @@
-# Confidence intervals for rate ratio (RR) with paired binomial rates.
+# Confidence intervals for conditional odds ratio (OR) with paired binomial rates.
 
 Confidence intervals for comparisons of two binomial rates from paired
 data. This convenience wrapper function produces a selection of the
-methods below for the rate ratio (RR) contrast, with or without optional
-continuity adjustment (where available).
+methods below for the conditional odds ratio (OR) contrast, with or
+without optional continuity adjustment (where available).
 
-- SCAS (skewness-corrected asymptotic score)
+- Transformed SCAS (skewness-corrected asymptotic score)
 
-- Tang Asymptotic Score method
+- Transformed Wilson Score method
 
-- MOVER Wilson (with or without Newcombe correlation adjustment)
+- Transformed mid-P
 
-- MOVER Jeffreys
+- Transformed Jeffreys
 
-- Bonett-Price hybrid method
-
-- Approximate log-normal (Wald) method (strongly advise this is not used
-  for any purpose but included for reference)
+- Approximate log-normal (Wald) method
 
 ## Usage
 
 ``` r
-rrpairci(x, level = 0.95, std_est = TRUE, cc = FALSE, precis = 8)
+orpairci(x, level = 0.95, std_est = TRUE, cc = FALSE, precis = 8)
 ```
 
 ## Arguments
@@ -57,10 +54,8 @@ rrpairci(x, level = 0.95, std_est = TRUE, cc = FALSE, precis = 8)
 
 - precis:
 
-  Number (default 8) specifying precision (i.e. number of decimal
-  places) to be used in root-finding subroutine for the score confidence
-  intervals. (Note other methods use closed-form calculations so are not
-  affected.)
+  Number (default 6) specifying precision (i.e. number of decimal
+  places) to be used in output.
 
 ## References
 

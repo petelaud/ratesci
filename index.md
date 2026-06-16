@@ -34,7 +34,7 @@ Most of the above list is covered by
 with the exception of clustered proportions (which are handled by
 [`clusterpci()`](https://petelaud.github.io/ratesci/reference/clusterpci.md))
 and paired contrasts
-([`pairbinci()`](https://petelaud.github.io/ratesci/reference/pairbinci.md)).
+([`scorepairci()`](https://petelaud.github.io/ratesci/reference/scorepairci.md)).
 Stratified calculations are also catered for (e.g. for analysis of a
 clinical trial with stratified randomisation, or for a meta-analysis,
 including random effects). Options are included for omitting the
@@ -99,8 +99,8 @@ corresponding Gamma priors for Poisson rates). MOVER intervals are
 available in
 [`moverci()`](https://petelaud.github.io/ratesci/reference/moverci.md)
 for all contrasts of independent binomial and Poisson rates, and in
-[`pairbinci()`](https://petelaud.github.io/ratesci/reference/pairbinci.md)
-for the paired binomial contrasts.
+[`moverpairci()`](https://petelaud.github.io/ratesci/reference/moverpairci.md)
+for paired binomial RD and RR.
 
 For those wishing to achieve strictly conservative coverage, continuity
 adjustments are provided as approximations to “exact” methods, with the
@@ -138,7 +138,7 @@ This builds the package from source based on the current version on
 A SAS macro implementation of
 [`scoreci()`](https://petelaud.github.io/ratesci/reference/scoreci.md)
 and
-[`pairbinci()`](https://petelaud.github.io/ratesci/reference/pairbinci.md)
+[`scorepairci()`](https://petelaud.github.io/ratesci/reference/scorepairci.md)
 is also available at <https://github.com/petelaud/ratesci-sas>
 
 ## Example
@@ -174,11 +174,11 @@ An example of a paired analysis follows, using the data from Table II of
 ([Fagerland et al. 2014](#ref-fagerland2014)). Here the bias and
 skewness corrections are again applied by default. Omitting both would
 produce the Tango asymptotic score interval for `contrast = "RD"`, or
-the Tang method for `contrast = "RR"`.
+the Tang method if `contrast = "RR"`.
 
 ``` r
 
-pairbinci(x = c(1, 1, 7, 12))
+scorepairci(x = c(1, 1, 7, 12))
 #> $data
 #>          Test_2
 #> Test_1    Success Failure
@@ -196,8 +196,8 @@ pairbinci(x = c(1, 1, 7, 12))
 #> [1,] 4.286    0.03843      0     -2.07   0.01922     0.9808
 #> 
 #> $call
-#> contrast   method    level      bcf     skew       cc 
-#>     "RD"  "Score"   "0.95"   "TRUE"   "TRUE"  "FALSE"
+#> contrast    level      bcf     skew       cc 
+#>     "RD"   "0.95"   "TRUE"   "TRUE"  "FALSE"
 ```
 
 ## References

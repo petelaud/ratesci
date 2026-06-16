@@ -84,8 +84,8 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/petelaud/ratesci" class="external-link">ratesci</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
-<h2 id="test-for-association-and-equivalence-test-produced-by-scoreci-and-pairbinci">Test for association and equivalence test produced by scoreci() and
-pairbinci()<a class="anchor" aria-label="anchor" href="#test-for-association-and-equivalence-test-produced-by-scoreci-and-pairbinci"></a>
+<h2 id="test-for-association-and-equivalence-test-produced-by-scoreci-and-scorepairci">Test for association and equivalence test produced by scoreci() and
+scorepairci()<a class="anchor" aria-label="anchor" href="#test-for-association-and-equivalence-test-produced-by-scoreci-and-scorepairci"></a>
 </h2>
 <p>If you want to know whether the observed proportion in group 1 is
 “significantly different” from the proportion in group 2, then you need
@@ -308,7 +308,7 @@ Note that the type I error for a test of association is not affected by the choi
 <div class="section level3">
 <h3 id="tests-for-paired-binomial-proportions">Tests for paired binomial proportions<a class="anchor" aria-label="anchor" href="#tests-for-paired-binomial-proportions"></a>
 </h3>
-<p>The two-sided test given by <code><a href="../reference/pairbinci.html">pairbinci()</a></code> (for any
+<p>The two-sided test given by <code><a href="../reference/scorepairci.html">scorepairci()</a></code> (for any
 contrast) is an ‘N-1’ adjusted version of the McNemar test (the skewness
 correction term is zero at the null hypothesis value of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math>).
@@ -318,19 +318,13 @@ significance level at any point, suggesting that the over-conservative
 “continuity corrected” version given by default in
 <code><a href="https://rdrr.io/r/stats/mcnemar.test.html" class="external-link">mcnemar.test()</a></code> is superfluous.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/pairbinci.html">pairbinci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, skew <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">pval</span></span>
-<span><span class="co">#&gt; Warning: `pairbinci()` was deprecated in ratesci 1.0.1.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use scorepairci(), moverpairci(), rdpairci(), rrpairci() or orpairci()</span></span>
-<span><span class="co">#&gt;   instead.</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once per session.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/scorepairci.html">scorepairci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, skew <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">pval</span></span>
 <span><span class="co">#&gt;      chisq pval2sided theta0 scorenull pval_left pval_right</span></span>
 <span><span class="co">#&gt; [1,]  4.29     0.0384      0     -2.07    0.0192      0.981</span></span>
-<span><span class="fu"><a href="../reference/pairbinci.html">pairbinci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, skew <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">$</span><span class="va">pval</span></span>
+<span><span class="fu"><a href="../reference/scorepairci.html">scorepairci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, skew <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">$</span><span class="va">pval</span></span>
 <span><span class="co">#&gt;      chisq pval2sided theta0 scorenull pval_left pval_right</span></span>
 <span><span class="co">#&gt; [1,]  4.29     0.0384      0     -2.07    0.0192      0.981</span></span>
-<span><span class="fu"><a href="../reference/pairbinci.html">pairbinci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, skew <span class="op">=</span> <span class="cn">FALSE</span>, contrast <span class="op">=</span> <span class="st">"RR"</span><span class="op">)</span><span class="op">$</span><span class="va">pval</span></span>
+<span><span class="fu"><a href="../reference/scorepairci.html">scorepairci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, skew <span class="op">=</span> <span class="cn">FALSE</span>, contrast <span class="op">=</span> <span class="st">"RR"</span><span class="op">)</span><span class="op">$</span><span class="va">pval</span></span>
 <span><span class="co">#&gt;      chisq pval2sided theta0 scorenull pval_left pval_right</span></span>
 <span><span class="co">#&gt; [1,]  4.29     0.0384      1     -2.07    0.0192      0.981</span></span>
 <span><span class="va">mcnem</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/mcnemar.test.html" class="external-link">mcnemar.test</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>, correct <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">$</span><span class="va">statistic</span></span>
