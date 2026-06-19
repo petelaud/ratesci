@@ -7,11 +7,13 @@ optional continuity adjustment (where available).
 
 - SCAS (skewness-corrected asymptotic score)
 
+- SCASu (omitting the 'N-1' adjustment)
+
 - Tango Asymptotic Score method
 
-- MOVER Wilson (aka Newcombe Hybrid Score or square-and-add)
+- MOVER-NW Wilson (aka Newcombe Hybrid Score or square-and-add)
 
-- MOVER Jeffreys
+- MOVER-NJ Jeffreys
 
 - Agresti-Min
 

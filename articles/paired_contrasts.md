@@ -21,9 +21,9 @@ compared with the data for independent proportions:
 ### SCAS and other asymptotic score methods for RD and RR
 
 To calculate a confidence interval (CI) for a paired risk difference
-($`\hat \theta_{RD} = \hat p_1 - \hat p_2`$, where
-$`\hat p_1 = (a+b)/N`$, $`\hat p_2 = (a+c)/N`$), or relative risk
-($`\hat \theta_{RR} = \hat p_1 / \hat p_2`$), the skewness-corrected
+($`\hat{\theta}_{RD} = \hat{p}_1 - \hat{p}_2`$, where
+$`\hat{p}_1 = (a+b)/N`$, $`\hat{p}_2 = (a+c)/N`$), or relative risk
+($`\hat{\theta}_{RR} = \hat{p}_1 / \hat{p}_2`$), the skewness-corrected
 asymptotic score (SCAS) method is recommended, as one that succeeds, on
 average, at containing the true parameter $`\theta`$ with the
 appropriate nominal probability (e.g. 95%), and has evenly distributed

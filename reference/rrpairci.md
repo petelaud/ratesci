@@ -7,11 +7,16 @@ continuity adjustment (where available).
 
 - SCAS (skewness-corrected asymptotic score)
 
+- SCASu (omitting the 'N-1' adjustment)
+
 - Tang Asymptotic Score method
 
-- MOVER Wilson (with or without Newcombe correlation adjustment)
+- MOVER-W (based on Wilson method without Newcombe correlation
+  adjustment)
 
-- MOVER Jeffreys
+- MOVER-NW (based on Wilson method with Newcombe correlation adjustment)
+
+- MOVER-NJ (based on Jeffreys method with correlation adjustment)
 
 - Bonett-Price hybrid method
 
