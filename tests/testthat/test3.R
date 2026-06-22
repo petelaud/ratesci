@@ -381,30 +381,30 @@ test_that("legacy & new methods match published examples", {
   # RD: Tango 1998 Table VII
   # closed form
   expect_equal(
-    unname(round(pairbinci(x = c(4, 9, 3, 16), contrast = "RD",
-                           method = "Score_closed", skew = FALSE,
+    unname(round(scorepairci(x = c(4, 9, 3, 16), contrast = "RD",
+                           closedform = TRUE, skew = FALSE,
                            bcf = FALSE)$estimates[, c(1, 3)], 3)),
     c(-0.027, 0.390)
   )
   # iterative
   expect_equal(
-    unname(round(pairbinci(x = c(4, 9, 3, 16), contrast = "RD",
-                           method = "Score", skew = FALSE,
+    unname(round(scorepairci(x = c(4, 9, 3, 16), contrast = "RD",
+                           skew = FALSE,
                            bcf = FALSE)$estimates[, c(1, 3)], 3)),
     c(-0.027, 0.390)
   )
   # Tango 1998 Table V
   # closed form
   expect_equal(
-    unname(round(pairbinci(x = c(43, 0, 1, 0), contrast = "RD",
-                           method = "Score_closed", skew = FALSE, bcf = FALSE,
+    unname(round(scorepairci(x = c(43, 0, 1, 0), contrast = "RD",
+                           closedform = TRUE, skew = FALSE, bcf = FALSE,
                            level = 0.90)$estimates[, c(1, 3)], 3)),
     c(-0.096, 0.037)
   )
   # iterative
   expect_equal(
-    unname(round(pairbinci(x = c(43, 0, 1, 0), contrast = "RD",
-                           method = "Score", skew = FALSE, bcf = FALSE,
+    unname(round(scorepairci(x = c(43, 0, 1, 0), contrast = "RD",
+                           skew = FALSE, bcf = FALSE,
                            level = 0.90)$estimates[, c(1, 3)], 3)),
     c(-0.096, 0.037)
   )
@@ -412,49 +412,48 @@ test_that("legacy & new methods match published examples", {
   # RR: Tang(NS) 2003 Table II
   # closed form
   expect_equal(
-    unname(round(pairbinci(x = c(446, 5, 16, 690), contrast = "RR",
-                           method = "Score_closed", skew = FALSE, bcf = FALSE,
+    unname(round(scorepairci(x = c(446, 5, 16, 690), contrast = "RR",
+                           closedform = TRUE, skew = FALSE, bcf = FALSE,
                            level = 0.9)$estimates[, c(1, 3)], 3)),
     c(0.958, 0.992) # Tang et al appear to have rounded down to 0.991
   )
   # iterative
   expect_equal(
-    unname(round(pairbinci(x = c(446, 5, 16, 690), contrast = "RR",
-                           method = "Score", skew = FALSE, bcf = FALSE,
+    unname(round(scorepairci(x = c(446, 5, 16, 690), contrast = "RR",
+                           skew = FALSE, bcf = FALSE,
                            level = 0.9)$estimates[, c(1, 3)], 3)),
     c(0.958, 0.992)
   )
   # closed form
   expect_equal(
-    unname(round(pairbinci(x = c(43, 0, 1, 0), contrast = "RR",
-                           method = "Score_closed", skew = FALSE, bcf = FALSE,
+    unname(round(scorepairci(x = c(43, 0, 1, 0), contrast = "RR",
+                           closedform = TRUE, skew = FALSE, bcf = FALSE,
                            level = 0.9)$estimates[, c(1, 3)], 3)),
     c(0.904, 1.039) # Tang et al appear to have rounded down to 1.038
   )
   # iterative
   expect_equal(
-    unname(round(pairbinci(x = c(43, 0, 1, 0), contrast = "RR",
-                           method = "Score", skew = FALSE, bcf = FALSE,
+    unname(round(scorepairci(x = c(43, 0, 1, 0), contrast = "RR",
+                           skew = FALSE, bcf = FALSE,
                            level = 0.9)$estimates[, c(1, 3)], 3)),
     c(0.904, 1.039)
   )
 
   # paired methods examples from Agresti & Min 2005
   expect_equal(
-    unname(round(pairbinci(x = c(53, 16, 8, 9), contrast = "RD",
-                           method = "Score_closed", skew = FALSE,
+    unname(round(scorepairci(x = c(53, 16, 8, 9), contrast = "RD",
+                           closedform = TRUE, skew = FALSE,
                            bcf = FALSE)$estimates[, c(1, 3)], 3)),
     c(-0.020, 0.207)
   )
   expect_equal(
-    unname(round(pairbinci(x = c(53, 16, 8, 9), contrast = "RD",
-                           method = "Score", skew = FALSE,
+    unname(round(scorepairci(x = c(53, 16, 8, 9), contrast = "RD",
+                           skew = FALSE,
                            bcf = FALSE)$estimates[, c(1, 3)], 3)),
     c(-0.020, 0.207)
   )
   expect_equal(
-    unname(round(pairbinci(x = c(53, 16, 8, 9), contrast = "OR",
-                           method = "SCASp",
+    unname(round(scorepairci(x = c(53, 16, 8, 9), contrast = "OR",
                            bcf = FALSE)$estimates[, c(1, 3)], 4)),
     c(0.8718, 4.8816)
   )
@@ -462,128 +461,121 @@ test_that("legacy & new methods match published examples", {
   # paired methods examples from Fagerland et al 2014
   # Tango RD
   expect_equal(
-    unname(round(pairbinci(x = c(1, 1, 7, 12), contrast = "RD",
-                           method = "Score_closed", skew = FALSE,
+    unname(round(scorepairci(x = c(1, 1, 7, 12), contrast = "RD",
+                           closedform = TRUE, skew = FALSE,
                            bcf = FALSE)$estimates[, c(1, 3)], 3)),
     c(-0.517, -0.026)
   )
   # MOVER Wilson - Fagerland use Newcombe's correlation-corrected 'method 10'
   expect_equal(
-    unname(round(pairbinci(x = c(1, 1, 7, 12), contrast = "RD",
-                           method = "MOVER_newc",
-                           moverbase = "wilson")$estimates[, c(1, 3)], 3)),
+    unname(round(moverpairci(x = c(1, 1, 7, 12), contrast = "RD",
+                           corc = TRUE,
+                           type = "wilson")$estimates[, c(1, 3)], 3)),
     c(-0.507, -0.026)
   )
   # Wald RD
   expect_equal(
-    unname(round(pairbinci(x = c(1, 1, 7, 12), contrast = "RD",
-                           method = "Wald")$estimates[, c(1, 3)], 3)),
+    unname(round(rdpairci(x = c(1, 1, 7, 12))$estimates["Wald", c(1, 3)], 3)),
     c(-0.520, -0.052)
   )
   # Wald-cc RD
   expect_equal(
-    unname(round(pairbinci(x = c(1, 1, 7, 12), contrast = "RD",
-                           method = "Wald", cc = TRUE)$estimates[, c(1, 3)], 3)),
+    unname(round(rdpairci(x = c(1, 1, 7, 12), cc = TRUE)$estimates["Continuity adjusted Wald", c(1, 3)], 3)),
     c(-0.529, -0.042)
   )
   # Bonett-Price RD
   expect_equal(
-    unname(round(pairbinci(x = c(1, 1, 7, 12), contrast = "RD",
-                           method = "BP")$estimates[, c(1, 3)], 3)),
+    unname(round(rdpairci(x = c(1, 1, 7, 12))$estimates["Bonett-Price", c(1, 3)], 3)),
     c(-0.508, -0.013)
   )
   # Wald RR
   expect_equal(
-    unname(round(pairbinci(x = c(1, 1, 7, 12), contrast = "RR",
-                           method = "Wald")$estimates[, c(1, 3)], 3)),
+    unname(round(rrpairci(x = c(1, 1, 7, 12))$estimates["Wald", c(1, 3)], 3)),
     c(0.063, 1.000)
   )
   # Bonett-Price RR
   expect_equal(
-    unname(round(pairbinci(x = c(1, 1, 7, 12), contrast = "RR",
-                           method = "BP", moverbase="wilson")$estimates[, c(1, 3)], 3)),
+    unname(round(rrpairci(x = c(1, 1, 7, 12))$estimates["Bonett-Price hybrid", c(1, 3)], 3)),
     c(0.068, 0.923)
   )
 
   # example from Newcombe, against Newcombe's method 8 result
   expect_equal(
-    unname(round(pairbinci(x = c(20, 12, 2, 16), contrast = "RD", method = "MOVER", moverbase = "wilson")$estimates[, c(1, 3)], 4)),
+    unname(round(moverpairci(x = c(20, 12, 2, 16), contrast = "RD", type = "wilson", corc = FALSE)$estimates[, c(1, 3)], 4)),
     c(0.0618, 0.3242)
   )
   # and against Newcombe's method 10 result
   expect_equal(
-    unname(round(pairbinci(x = c(20, 12, 2, 16), contrast = "RD", method = "MOVER_newc", moverbase = "wilson")$estimates[, c(1, 3)], 4)),
+    unname(round(moverpairci(x = c(20, 12, 2, 16), contrast = "RD", type = "wilson", corc = TRUE)$estimates[, c(1, 3)], 4)),
     c(0.0562, 0.3292)
   )
 
   # RD: Tang(ML) 2010 example - MOVER-wilson matches:
   expect_equal(
-    unname(round(pairbinci(x = c(8, 3, 1, 2), contrast = "RD",
-                           method = "MOVER_newc",
-                           moverbase = "wilson")$estimates[, c(1, 3)], 4)),
+    unname(round(moverpairci(x = c(8, 3, 1, 2), contrast = "RD",
+                           corc = TRUE,
+                           type = "wilson")$estimates[, c(1, 3)], 4)),
     c(-0.1574, 0.4136)
   )
 # ... but MOVER-jeffreys doesnt:
 #  expect_equal(
-#    unname(round(pairbinci(x = c(8, 3, 1, 2), contrast = "RD",
-#                           method = "MOVER_newc",
-#                           moverbase = "jeff")$estimates[, c(1, 3)], 4)),
+#    unname(round(moverpairci(x = c(8, 3, 1, 2), contrast = "RD",
+#                           corc = TRUE,
+#                           type = "jeff")$estimates[, c(1, 3)], 4)),
 #    c(-0.1574, 0.4136)
 #  )
   # RD: Tang(ML) 2010 example - Tango matches
   expect_equal(
-    unname(round(pairbinci(x = c(8, 3, 1, 2), contrast = "RD",
-                           method = "Score_closed", skew = FALSE,
+    unname(round(scorepairci(x = c(8, 3, 1, 2), contrast = "RD",
+                           closedform = TRUE, skew = FALSE,
                            bcf = FALSE)$estimates[, c(1, 3)], 4)),
     c(-0.1670, 0.4327)
   )
 
   # RR: Tang(ML) 2010 - score method doesn't quite match, only to 2dps
   expect_equal(
-    unname(round(pairbinci(x = c(8, 3, 1, 2), contrast = "RR",
-                           method = "Score_closed", skew = FALSE,
+    unname(round(scorepairci(x = c(8, 3, 1, 2), contrast = "RR",
+                           closedform = TRUE, skew = FALSE,
                            bcf = FALSE)$estimates[, c(1, 3)], 4)),
     c(0.776, 2.033)
   )
   # MOVER-wilson matches
   expect_equal(
-    unname(round(pairbinci(x = c(8, 3, 1, 2), contrast = "RR",
-                           method = "MOVER",
-                           moverbase = "wilson")$estimates[, c(1, 3)], 4)),
+    unname(round(moverpairci(x = c(8, 3, 1, 2), contrast = "RR", corc = FALSE,
+                           type = "wilson")$estimates[, c(1, 3)], 4)),
     c(0.8234, 1.9539)
   )
   # MOVER-jeffreys doesn't match - I've been unable to contact the authors
   # to request code to investigate the discrepancy
   #  expect_equal(
-  #    unname(round(pairbinci(x = c(8, 3, 1, 2), contrast = "RR",
-  #          method = "MOVER", moverbase = "jeff")$estimates[, c(1, 3)], 4)),
+  #    unname(round(moverpairci(x = c(8, 3, 1, 2), contrast = "RR", corc = FALSE,
+  #          type = "jeff")$estimates[, c(1, 3)], 4)),
   #    c(0.8101, 2.0236)
   #  )
   # Try including Newcombe adjusted correlation estimate - still no match
   #  expect_equal(
-  #    unname(round(pairbinci(x = c(8, 3, 1, 2), contrast = "RR",
-  #          method = "MOVER_newc", moverbase = "jeff")$estimates[, c(1, 3)], 4)),
+  #    unname(round(moverpairci(x = c(8, 3, 1, 2), contrast = "RR", corc = TRUE,
+  #          type = "jeff")$estimates[, c(1, 3)], 4)),
   #    c(0.8101, 2.0236)
   #  )
 
   # DelRocco 2022 RR example
   expect_equal(
-    unname(round(pairbinci(x = c(1, 1, 7, 12), contrast = "RR",
-                           method = "Score_closed", skew = FALSE,
+    unname(round(scorepairci(x = c(1, 1, 7, 12), contrast = "RR",
+                           closedform = TRUE, skew = FALSE,
                            bcf = FALSE)$estimates[, c(1, 3)], 4)),
     c(0.0653, 0.9069)
   )
   expect_equal(
-    unname(round(pairbinci(x = c(1, 1, 7, 12), contrast = "RR",
-                           method = "MOVER",
-                           moverbase = "wilson")$estimates[, c(1, 3)], 4)),
+    unname(round(moverpairci(x = c(1, 1, 7, 12), contrast = "RR", corc = FALSE,
+                           type = "wilson")$estimates[, c(1, 3)], 4)),
     c(0.0686, 0.8695)
   )
 
   # Chang 2024 RD example
   expect_equal(
-    unname(round(pairbinci(x = c(7, 25, 2, 68), contrast = "RD",
-                           method = "Score_closed", skew = FALSE,
+    unname(round(scorepairci(x = c(7, 25, 2, 68), contrast = "RD",
+                           closedform = TRUE, skew = FALSE,
                            bcf = FALSE)$estimates[, c(1, 3)], 3)),
     c(0.139, 0.321)
   )
@@ -591,9 +583,8 @@ test_that("legacy & new methods match published examples", {
   # although they don't mention it in the text
   # (and didn't use it in the DelRocco paper)
   expect_equal(
-    unname(round(pairbinci(x = c(7, 25, 2, 68), contrast = "RD",
-                           method = "MOVER_newc",
-                           moverbase = "wilson")$estimates[, c(1, 3)], 3)),
+    unname(round(moverpairci(x = c(7, 25, 2, 68), contrast = "RD", corc = TRUE,
+                           type = "wilson")$estimates[, c(1, 3)], 3)),
     c(0.133, 0.318)
   )
 
@@ -601,20 +592,17 @@ test_that("legacy & new methods match published examples", {
   # paired OR from Fagerland
   # midp
   expect_equal(
-    unname(round(pairbinci(x = c(1, 1, 7, 12), contrast = "OR",
-                           method = "midp")$estimates, 3)[, c(1, 3)]),
+    unname(round(orpairci(x = c(1, 1, 7, 12))$estimates["Transformed mid-P", c(1, 3)], 3)),
     c(0.006, 0.924)
   )
   # C-P exact
   expect_equal(
-    unname(round(pairbinci(x = c(1, 1, 7, 12), contrast = "OR",
-                           method = "midp", cc = 0.5)$estimates, 3)[, c(1, 3)]),
+    unname(round(orpairci(x = c(1, 1, 7, 12), cc = 0.5)$estimates["Transformed Clopper-Pearson", c(1, 3)], 3)),
     c(0.003, 1.112)
   )
   # Wilson
   expect_equal(
-    unname(round(pairbinci(x = c(1, 1, 7, 12), contrast = "OR",
-                           method = "wilson")$estimates, 3)[, c(1, 3)]),
+    unname(round(orpairci(x = c(1, 1, 7, 12))$estimates["Transformed Wilson", c(1, 3)], 3)),
     c(0.023, 0.890)
   )
 

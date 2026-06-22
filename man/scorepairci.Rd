@@ -10,6 +10,7 @@ scorepairci(
   contrast = "RD",
   bcf = TRUE,
   skew = TRUE,
+  closedform = FALSE,
   cc = FALSE,
   theta0 = NULL,
   precis = 6,
@@ -40,10 +41,10 @@ bias correction in the score denominator. (Under evaluation, manuscript
 under review.)}
 
 \item{skew}{Logical (default TRUE) indicating whether to apply skewness
-correction or not. (Under evaluation, manuscript under review.)
-\itemize{
-\item Only applies for the iterative \code{method = "Score"}.
-}}
+correction or not. (Under evaluation, manuscript under review.)}
+
+\item{closedform}{Logical (default FALSE) indicating whether to use closed
+form calculation (only available if \code{skew = FALSE})}
 
 \item{cc}{Number or logical (default FALSE) specifying (amount of) continuity
 adjustment. cc = 0.5 corresponds to the continuity-corrected McNemar test.}

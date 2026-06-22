@@ -151,7 +151,7 @@ rdpairci <- function(x,
     mydimnames[[3]] <- methodnames
     dimnames(outarr) <- mydimnames
     outarr <- outarr[, , 1:6, drop = FALSE]
-    if (cc != TRUE) outarr <- outarr[, , 1:5, drop = FALSE]
+#    if (cc != TRUE) outarr <- outarr[, , 1:5, drop = FALSE]
   }
   # dimnames(outarr) <- mydimnames
   outarr <- aperm(round(outarr, precis), c(3, 2, 1))[, , 1]

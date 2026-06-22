@@ -132,13 +132,13 @@ test_that("RD p-values consistent with paired confidence interval", {
   expect_equal(
     (sapply(
       1:dim(combos)[1],
-      function(i) pairbinci(x = combos[i, ], contrast = "RD",
-                            method = "Score")$estimates[1] > 0
+      function(i) scorepairci(x = combos[i, ], contrast = "RD",
+                            )$estimates[1] > 0
     )),
     (sapply(
       1:dim(combos)[1],
-      function(i) pairbinci(x = combos[i, ], contrast = "RD",
-                            method = "Score")$pval[, "pval_right"] < 0.025
+      function(i) scorepairci(x = combos[i, ], contrast = "RD",
+                            )$pval[, "pval_right"] < 0.025
     ))
   )
 })
@@ -146,13 +146,13 @@ test_that("RR p-values consistent with paired confidence interval", {
   expect_equal(
     (sapply(
       1:dim(combos)[1],
-      function(i) pairbinci(x = combos[i, ], contrast = "RR",
-                            method = "Score")$estimates[1] > 1
+      function(i) scorepairci(x = combos[i, ], contrast = "RR",
+                            )$estimates[1] > 1
     )),
     (sapply(
       1:dim(combos)[1],
-      function(i) pairbinci(x = combos[i, ], contrast = "RR",
-                            method = "Score")$pval[, "pval_right"] < 0.025
+      function(i) scorepairci(x = combos[i, ], contrast = "RR",
+                            )$pval[, "pval_right"] < 0.025
     ))
   )
 })
@@ -161,18 +161,16 @@ test_that("OR p-values consistent with paired confidence interval", {
     unname(sapply(
       1:dim(combos)[1],
       function(i) {
-        pairbinci(
-          x = combos[i, ], contrast = "OR",
-          method = "SCASp"
+        scorepairci(
+          x = combos[i, ], contrast = "OR"
         )$estimates[, "lower", drop = FALSE] > 1
       }
     )),
     unname(sapply(
       1:dim(combos)[1],
       function(i) {
-        pairbinci(
-          x = combos[i, ], contrast = "OR",
-          method = "SCASp"
+        scorepairci(
+          x = combos[i, ], contrast = "OR"
         )$pval[, "pval_right", drop = FALSE] < 0.025
       }
     ))
@@ -183,9 +181,9 @@ test_that("paired confidence interval (with bcf=FALSE) consistent with McNemar t
     (sapply(
       1:dim(combos)[1],
       function(i) {
-        pairbinci(x = combos[i, ], contrast = "RD", method = "Score",
+        scorepairci(x = combos[i, ], contrast = "RD",
                   bcf = FALSE)$estimates[1] > 0 |
-          pairbinci(x = combos[i, ], contrast = "RD", method = "Score",
+          scorepairci(x = combos[i, ], contrast = "RD",
                     bcf = FALSE)$estimates[3] < 0
       }
     )),

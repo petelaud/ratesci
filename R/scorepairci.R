@@ -31,13 +31,14 @@
 #'   under review.)
 #' @param skew Logical (default TRUE) indicating whether to apply skewness
 #'   correction or not. (Under evaluation, manuscript under review.)
-#'   - Only applies for the iterative `method = "Score"`.
 #' @param cc Number or logical (default FALSE) specifying (amount of) continuity
 #'   adjustment. cc = 0.5 corresponds to the continuity-corrected McNemar test.
 #' @param theta0 Number to be used in a one-sided significance test (e.g.
 #'   non-inferiority margin). 1-sided p-value will be < 0.025 iff 2-sided 95\% CI
 #'   excludes theta0. NB: can also be used for a superiority test by setting
 #'   theta0 = 0.
+#' @param closedform Logical (default FALSE) indicating whether to use closed
+#'   form calculation (only available if `skew = FALSE`)
 #' @param precis Number (default 6) specifying precision (i.e. number of decimal
 #'   places) to be used in optimisation subroutine for the confidence interval.
 #' @param warn Logical (default TRUE) giving the option to suppress warnings.
@@ -122,9 +123,9 @@
 scorepairci <- function(x,
                       level = 0.95,
                       contrast = "RD",
-#                      method = ifelse(contrast == "OR", "SCASp", "Score"),
                       bcf = TRUE,
                       skew = TRUE,
+                      closedform = FALSE,
                       cc = FALSE,
                       theta0 = NULL,
                       precis = 6,
@@ -150,21 +151,21 @@ scorepairci <- function(x,
     print("Contrast must be one of 'RD', 'RR' or 'OR'")
     stop()
   }
-#  if (contrast %in% c("RD", "RR")) {
+  if (contrast %in% c("RD", "RR")) {
 #    if (!(tolower(substr(method, 1, 4)) %in%
 #      c("scor"))) {
 #      print("Method must be one of 'Score_closed', 'Score' for contrast = 'RD' or 'RR'")
 #      stop()
 #    }
-#    if (skew == TRUE &&
-#      (tolower(substr(method, 1, 12)) == "score_closed")) {
-#      method <- "Score"
-#      if (warn == TRUE) {
-#        print(paste("Closed-form calculation not available with skewness correction -
-#         method is set to 'Score' instead"))
-#      }
-#    }
-#  }
+    if (skew == TRUE &&
+      (closedform == TRUE)) {
+      closedform <- FALSE
+      if (warn == TRUE) {
+        print(paste("Closed-form calculation not available with skewness correction -
+         closedform is set to FALSE instead"))
+      }
+    }
+  }
 #  if (contrast == "OR") {
 #    if (!(tolower(substr(method, 1, 4)) %in%
 #      c("scas", "wils"))) {
@@ -271,8 +272,9 @@ scorepairci <- function(x,
 #      outlist <- append(outlist, list(pval = pval))
 #    }
   } else if (contrast != "OR") {
-    # Iterative Score methods by Tango (for RD) & Tang (for RR):
-#    if (method == "Score") {
+    # Iterative Score methods by Tango (for RD) & Tang (for RR)
+    # & proposed skewness-corrected versions:
+    if (closedform == FALSE) {
       myfun <- function(theta) {
         scorepair(
           theta = theta, x = x, contrast = contrast, cc = cc,
@@ -316,15 +318,15 @@ scorepairci <- function(x,
         p1mle = at_MLE$p1d, p2mle = at_MLE$p2d,
         phi_hat = phi_hat, phi_c = phi_c, psi_hat = psi_hat
       )
-      # Closed-form versions of Score methods by Chang (for RD Tango method)
-      #  & DelRocco (for RR Tang method):
-#    } else if (contrast == "RD" && method == "Score_closed") {
-#      estimates <- tangoci(x = x, level = level, cc = cc, bcf = bcf)
-#    } else if (contrast == "RR" && method == "Score_closed") {
-#      estimates <- tangci(
-#        x = x, level = level, cc = cc, bcf = bcf
-#      )
-#    }
+    # Closed-form versions of Score methods by Chang (for RD Tango method)
+    #  & DelRocco (for RR Tang method):
+    } else if (contrast == "RD" && closedform == TRUE) {
+      estimates <- tangoci(x = x, level = level, cc = cc, bcf = bcf)
+    } else if (contrast == "RR" && closedform == TRUE) {
+      estimates <- tangci(
+        x = x, level = level, cc = cc, bcf = bcf
+      )
+    }
 
 #    if ((method == "Score") || (method == "Score_closed")) {
       # optionally add p-value for a test of null hypothesis: theta<=theta0
@@ -359,13 +361,12 @@ scorepairci <- function(x,
 #    }
   }
   outlist <- list(data = xi, estimates = round(estimates, precis))
-  # p-values to be added for Wilson method
 #  if (!(method %in% c("wilson"))) {
     outlist <- append(outlist, list(pval = pval))
 #  }
   call <- c(
-    contrast = contrast, #method = method,
-    level = level, bcf = bcf, skew = skew, cc = cc
+    contrast = contrast,
+    level = level, bcf = bcf, skew = skew, cc = cc, closedform = closedform
   )
   outlist <- append(outlist, list(call = call))
   return(outlist)
