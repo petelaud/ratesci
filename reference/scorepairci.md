@@ -20,6 +20,7 @@ scorepairci(
   contrast = "RD",
   bcf = TRUE,
   skew = TRUE,
+  closedform = FALSE,
   cc = FALSE,
   theta0 = NULL,
   precis = 6,
@@ -64,7 +65,10 @@ scorepairci(
   Logical (default TRUE) indicating whether to apply skewness correction
   or not. (Under evaluation, manuscript under review.)
 
-  - Only applies for the iterative `method = "Score"`.
+- closedform:
+
+  Logical (default FALSE) indicating whether to use closed form
+  calculation (only available if `skew = FALSE`)
 
 - cc:
 
@@ -171,7 +175,7 @@ Pete Laud, <p.j.laud@sheffield.ac.uk>
 ## Examples
 
 ``` r
-# Example from Fagerland et al 2014
+# Example data from Fagerland et al 2014
 # SCAS method for RD
 scorepairci(x = c(1, 1, 7, 12), contrast = "RD")
 #> $data
@@ -191,8 +195,8 @@ scorepairci(x = c(1, 1, 7, 12), contrast = "RD")
 #> [1,] 4.285714 0.03843393      0 -2.070197 0.01921697   0.980783
 #> 
 #> $call
-#> contrast    level      bcf     skew       cc 
-#>     "RD"   "0.95"   "TRUE"   "TRUE"  "FALSE" 
+#>   contrast      level        bcf       skew         cc closedform 
+#>       "RD"     "0.95"     "TRUE"     "TRUE"    "FALSE"    "FALSE" 
 #> 
 # Tango method
 scorepairci(x = c(1, 1, 7, 12), contrast = "RD", skew = FALSE, bcf = FALSE)
@@ -213,8 +217,8 @@ scorepairci(x = c(1, 1, 7, 12), contrast = "RD", skew = FALSE, bcf = FALSE)
 #> [1,]   4.5 0.03389485      0  -2.12132 0.01694743  0.9830526
 #> 
 #> $call
-#> contrast    level      bcf     skew       cc 
-#>     "RD"   "0.95"  "FALSE"  "FALSE"  "FALSE" 
+#>   contrast      level        bcf       skew         cc closedform 
+#>       "RD"     "0.95"    "FALSE"    "FALSE"    "FALSE"    "FALSE" 
 #> 
 # SCAS for RR
 scorepairci(x = c(1, 1, 7, 12), contrast = "RR")
@@ -235,8 +239,8 @@ scorepairci(x = c(1, 1, 7, 12), contrast = "RR")
 #> [1,] 4.285714 0.03843393      1 -2.070197 0.01921697   0.980783
 #> 
 #> $call
-#> contrast    level      bcf     skew       cc 
-#>     "RR"   "0.95"   "TRUE"   "TRUE"  "FALSE" 
+#>   contrast      level        bcf       skew         cc closedform 
+#>       "RR"     "0.95"     "TRUE"     "TRUE"    "FALSE"    "FALSE" 
 #> 
 # Tang method
 scorepairci(x = c(1, 1, 7, 12), contrast = "RR", skew = FALSE, bcf = FALSE)
@@ -257,8 +261,8 @@ scorepairci(x = c(1, 1, 7, 12), contrast = "RR", skew = FALSE, bcf = FALSE)
 #> [1,]   4.5 0.03389485      1  -2.12132 0.01694743  0.9830526
 #> 
 #> $call
-#> contrast    level      bcf     skew       cc 
-#>     "RR"   "0.95"  "FALSE"  "FALSE"  "FALSE" 
+#>   contrast      level        bcf       skew         cc closedform 
+#>       "RR"     "0.95"    "FALSE"    "FALSE"    "FALSE"    "FALSE" 
 #> 
 # Transformed SCASp method for OR
 scorepairci(x = c(1, 1, 7, 12), contrast = "OR")
@@ -277,8 +281,8 @@ scorepairci(x = c(1, 1, 7, 12), contrast = "OR")
 #> [1,] 4.285714 0.03843393      1 -2.070197 0.01921697   0.980783
 #> 
 #> $call
-#> contrast    level      bcf     skew       cc 
-#>     "OR"   "0.95"   "TRUE"   "TRUE"  "FALSE" 
+#>   contrast      level        bcf       skew         cc closedform 
+#>       "OR"     "0.95"     "TRUE"     "TRUE"    "FALSE"    "FALSE" 
 #> 
 # Transformed Wilson score method
 scorepairci(x = c(1, 1, 7, 12), contrast = "OR", skew = FALSE, bcf = FALSE)
@@ -297,7 +301,7 @@ scorepairci(x = c(1, 1, 7, 12), contrast = "OR", skew = FALSE, bcf = FALSE)
 #> [1,]   4.5 0.03389485      1  -2.12132 0.01694743  0.9830526
 #> 
 #> $call
-#> contrast    level      bcf     skew       cc 
-#>     "OR"   "0.95"  "FALSE"  "FALSE"  "FALSE" 
+#>   contrast      level        bcf       skew         cc closedform 
+#>       "OR"     "0.95"    "FALSE"    "FALSE"    "FALSE"    "FALSE" 
 #> 
 ```

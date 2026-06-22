@@ -51,7 +51,9 @@ scaspci(
 
   Sample size N to be used in the calculation of bcf, if different
   from n. (Used by transformed SCASp method for paired conditional OR in
-  [`pairbinci()`](https://petelaud.github.io/ratesci/reference/pairbinci.md).)
+  [`orpairci()`](https://petelaud.github.io/ratesci/reference/orpairci.md)
+  and
+  [`scorepairci()`](https://petelaud.github.io/ratesci/reference/scorepairci.md).)
 
 - xihat:
 

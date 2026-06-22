@@ -12,9 +12,10 @@ Miettinen and Nurminen (1985)
 [doi:10.1002/sim.4780040211](https://doi.org/10.1002/sim.4780040211) and
 Gart and Nam (1988)
 [doi:10.2307/2531848](https://doi.org/10.2307/2531848) , and in Laud
-(2025, under review) for paired proportions. The same score produces
-hypothesis tests that are improved versions of the non-inferiority test
-for binomial RD and RR by Farrington and Manning (1990)
+(2026, under review) for paired proportions. In each case, the same
+score produces hypothesis tests that are improved versions of the
+non-inferiority test for binomial RD and RR by Farrington and Manning
+(1990)
 [doi:10.1002/sim.4780091208](https://doi.org/10.1002/sim.4780091208) ,
 or a generalisation of the McNemar test for paired data. The package
 also includes MOVER methods (Method Of Variance Estimates Recovery) for
@@ -28,26 +29,37 @@ methods for stratified calculations (e.g. meta-analysis), either with
 fixed effect assumption (matching the CMH test) or incorporating stratum
 heterogeneity.
 
-## ratesci functions
+## ratesci core functions
 
 - scoreci(): for score-based confidence intervals
+
+- scorepairci(): for score-based confidence intervals for paired data
+
+- moverci(): for the MOVER methods
+
+- moverpairci(): for the MOVER methods for paired data
+
+- pairbinci(): (deprecated) for paired binomial data (includes
+  asymptotic score and MOVER options for RD and RR, plus a selection of
+  methods for OR)
+
+- scaspci(): non-iterative SCAS method for a single rate
+
+- jeffreysci(): function to compute Jeffreys interval for a single rate
+
+- clusterpci(): for estimation of binomial proportions based on
+  clustered data
+
+## ratesci wrapper functions
 
 - scasci(): wrapper function to compute SCAS interval
 
 - tdasci(): wrapper function to compute TDAS random effects stratified
   interval
 
-- moverci(): for the MOVER and MOVER-R methods
-
 - moverbci(): wrapper function to compute MOVER-B interval
 
-- jeffreysci(): wrapper function to compute Jeffreys interval for a
-  single rate
-
-- scaspci(): non-iterative SCAS method for a single rate
-
-- rateci(): wrapper function for SCAS, Jeffreys or 'exact' methods for a
-  single rate
+- rateci(): wrapper function for various intervals for a single rate
 
 - rdci(): wrapper function for various intervals for RD
 
@@ -55,11 +67,11 @@ heterogeneity.
 
 - orci(): wrapper function for various intervals for OR
 
-- pairbinci(): for paired binomial data (includes asymptotic score and
-  MOVER options for RD and RR, plus a selection of methods for OR)
+- rdpairci(): wrapper function for various intervals for RD
 
-- clusterpci(): for estimation of binomial proportions based on
-  clustered data
+- rrpairci(): wrapper function for various intervals for RR
+
+- orpairci(): wrapper function for various intervals for OR
 
 ## References
 

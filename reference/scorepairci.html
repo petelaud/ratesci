@@ -88,6 +88,7 @@ adjustment can be customised.</p>
 <span>  contrast <span class="op">=</span> <span class="st">"RD"</span>,</span>
 <span>  bcf <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  skew <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  closedform <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  cc <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  theta0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  precis <span class="op">=</span> <span class="fl">6</span>,</span>
@@ -131,8 +132,12 @@ under review.)</p></dd>
 
 <dt id="arg-skew">skew<a class="anchor" aria-label="anchor" href="#arg-skew"></a></dt>
 <dd><p>Logical (default TRUE) indicating whether to apply skewness
-correction or not. (Under evaluation, manuscript under review.)</p><ul><li><p>Only applies for the iterative <code>method = "Score"</code>.</p></li>
-</ul></dd>
+correction or not. (Under evaluation, manuscript under review.)</p></dd>
+
+
+<dt id="arg-closedform">closedform<a class="anchor" aria-label="anchor" href="#arg-closedform"></a></dt>
+<dd><p>Logical (default FALSE) indicating whether to use closed
+form calculation (only available if <code>skew = FALSE</code>)</p></dd>
 
 
 <dt id="arg-cc">cc<a class="anchor" aria-label="anchor" href="#arg-cc"></a></dt>
@@ -226,7 +231,7 @@ proportions. (2026, Under review)</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Example from Fagerland et al 2014</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Example data from Fagerland et al 2014</span></span></span>
 <span class="r-in"><span><span class="co"># SCAS method for RD</span></span></span>
 <span class="r-in"><span><span class="fu">scorepairci</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, contrast <span class="op">=</span> <span class="st">"RD"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $data</span>
@@ -246,8 +251,8 @@ proportions. (2026, Under review)</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 4.285714 0.03843393      0 -2.070197 0.01921697   0.980783</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $call</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> contrast    level      bcf     skew       cc </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     "RD"   "0.95"   "TRUE"   "TRUE"  "FALSE" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   contrast      level        bcf       skew         cc closedform </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       "RD"     "0.95"     "TRUE"     "TRUE"    "FALSE"    "FALSE" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="co"># Tango method</span></span></span>
 <span class="r-in"><span><span class="fu">scorepairci</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, contrast <span class="op">=</span> <span class="st">"RD"</span>, skew <span class="op">=</span> <span class="cn">FALSE</span>, bcf <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
@@ -268,8 +273,8 @@ proportions. (2026, Under review)</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]   4.5 0.03389485      0  -2.12132 0.01694743  0.9830526</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $call</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> contrast    level      bcf     skew       cc </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     "RD"   "0.95"  "FALSE"  "FALSE"  "FALSE" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   contrast      level        bcf       skew         cc closedform </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       "RD"     "0.95"    "FALSE"    "FALSE"    "FALSE"    "FALSE" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="co"># SCAS for RR</span></span></span>
 <span class="r-in"><span><span class="fu">scorepairci</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, contrast <span class="op">=</span> <span class="st">"RR"</span><span class="op">)</span></span></span>
@@ -290,8 +295,8 @@ proportions. (2026, Under review)</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 4.285714 0.03843393      1 -2.070197 0.01921697   0.980783</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $call</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> contrast    level      bcf     skew       cc </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     "RR"   "0.95"   "TRUE"   "TRUE"  "FALSE" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   contrast      level        bcf       skew         cc closedform </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       "RR"     "0.95"     "TRUE"     "TRUE"    "FALSE"    "FALSE" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="co"># Tang method</span></span></span>
 <span class="r-in"><span><span class="fu">scorepairci</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, contrast <span class="op">=</span> <span class="st">"RR"</span>, skew <span class="op">=</span> <span class="cn">FALSE</span>, bcf <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
@@ -312,8 +317,8 @@ proportions. (2026, Under review)</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]   4.5 0.03389485      1  -2.12132 0.01694743  0.9830526</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $call</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> contrast    level      bcf     skew       cc </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     "RR"   "0.95"  "FALSE"  "FALSE"  "FALSE" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   contrast      level        bcf       skew         cc closedform </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       "RR"     "0.95"    "FALSE"    "FALSE"    "FALSE"    "FALSE" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="co"># Transformed SCASp method for OR</span></span></span>
 <span class="r-in"><span><span class="fu">scorepairci</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, contrast <span class="op">=</span> <span class="st">"OR"</span><span class="op">)</span></span></span>
@@ -332,8 +337,8 @@ proportions. (2026, Under review)</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 4.285714 0.03843393      1 -2.070197 0.01921697   0.980783</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $call</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> contrast    level      bcf     skew       cc </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     "OR"   "0.95"   "TRUE"   "TRUE"  "FALSE" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   contrast      level        bcf       skew         cc closedform </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       "OR"     "0.95"     "TRUE"     "TRUE"    "FALSE"    "FALSE" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="co"># Transformed Wilson score method</span></span></span>
 <span class="r-in"><span><span class="fu">scorepairci</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, contrast <span class="op">=</span> <span class="st">"OR"</span>, skew <span class="op">=</span> <span class="cn">FALSE</span>, bcf <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
@@ -352,8 +357,8 @@ proportions. (2026, Under review)</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]   4.5 0.03389485      1  -2.12132 0.01694743  0.9830526</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $call</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> contrast    level      bcf     skew       cc </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     "OR"   "0.95"  "FALSE"  "FALSE"  "FALSE" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   contrast      level        bcf       skew         cc closedform </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       "OR"     "0.95"    "FALSE"    "FALSE"    "FALSE"    "FALSE" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

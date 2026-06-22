@@ -140,12 +140,9 @@ Pete Laud, <p.j.laud@sheffield.ac.uk>
 ## Examples
 
 ``` r
-# Example from Fagerland et al 2014
+# Example data from Fagerland et al 2014
 # MOVER-NJ method
-pairbinci(x = c(1, 1, 7, 12), contrast = "RD", method = "MOVER_newc", type = "jeff")
-#> Warning: `pairbinci()` was deprecated in ratesci 1.0.1.
-#> ℹ Please use scorepairci(), moverpairci(), rdpairci(), rrpairci() or orpairci()
-#>   instead.
+moverpairci(x = c(1, 1, 7, 12), contrast = "RD", corc = TRUE, type = "jeff")
 #> $data
 #>          Test_2
 #> Test_1    Success Failure
@@ -157,13 +154,11 @@ pairbinci(x = c(1, 1, 7, 12), contrast = "RD", method = "MOVER_newc", type = "je
 #> [1,] -0.510506 -0.285714 -0.032389  0.95 0.095238 0.380952       0
 #> 
 #> $call
-#>     contrast       method    moverbase        level          bcf         skew 
-#>         "RD" "MOVER_newc"       "jeff"       "0.95"       "TRUE"       "TRUE" 
-#>           cc 
-#>      "FALSE" 
+#> contrast     type    level       cc 
+#>     "RD"   "jeff"   "0.95"  "FALSE" 
 #> 
 # MOVER-NJ
-pairbinci(x = c(1, 1, 7, 12), contrast = "RR", method = "MOVER_newc", type = "jeff")
+moverpairci(x = c(1, 1, 7, 12), contrast = "RR", corc = TRUE, type = "jeff")
 #> $data
 #>          Test_2
 #> Test_1    Success Failure
@@ -175,9 +170,7 @@ pairbinci(x = c(1, 1, 7, 12), contrast = "RR", method = "MOVER_newc", type = "je
 #> [1,] 0.051297 0.25 0.873051  0.95 0.095238 0.380952       0
 #> 
 #> $call
-#>     contrast       method    moverbase        level          bcf         skew 
-#>         "RR" "MOVER_newc"       "jeff"       "0.95"       "TRUE"       "TRUE" 
-#>           cc 
-#>      "FALSE" 
+#> contrast     type    level       cc 
+#>     "RR"   "jeff"   "0.95"  "FALSE" 
 #> 
 ```

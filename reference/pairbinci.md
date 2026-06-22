@@ -253,6 +253,9 @@ Pete Laud, <p.j.laud@sheffield.ac.uk>
 # Example from Fagerland et al 2014
 # SCAS method for RD
 pairbinci(x = c(1, 1, 7, 12), contrast = "RD", method = "Score")
+#> Warning: `pairbinci()` was deprecated in ratesci 1.1.0.
+#> ℹ Please use scorepairci(), moverpairci(), rdpairci(), rrpairci() or orpairci()
+#>   instead.
 #> $data
 #>          Test_2
 #> Test_1    Success Failure

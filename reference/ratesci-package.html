@@ -3,12 +3,12 @@
 Computes confidence intervals for binomial or Poisson rates and their differences or ratios. Including the rate (or risk) difference ('RD') or rate ratio (or relative risk, 'RR') for binomial proportions or Poisson rates, and odds ratio ('OR', binomial only). Also confidence intervals for RD, RR or OR for paired binomial data, and estimation of a proportion from clustered binomial data. Includes skewness-corrected asymptotic score ('SCAS') methods, which have been developed in Laud (2017) doi:10.1002/pst.1813
  from Miettinen and Nurminen (1985) doi:10.1002/sim.4780040211
  and Gart and Nam (1988) doi:10.2307/2531848
-, and in Laud (2025, under review) for paired proportions. The same score produces hypothesis tests that are improved versions of the non-inferiority test for binomial RD and RR by Farrington and Manning (1990) doi:10.1002/sim.4780091208
+, and in Laud (2026, under review) for paired proportions. In each case, the same score produces hypothesis tests that are improved versions of the non-inferiority test for binomial RD and RR by Farrington and Manning (1990) doi:10.1002/sim.4780091208
 , or a generalisation of the McNemar test for paired data. The package also includes MOVER methods (Method Of Variance Estimates Recovery) for all contrasts, derived from the Newcombe method but with options to use equal-tailed intervals in place of the Wilson score method, and generalised for Bayesian applications incorporating prior information. So-called 'exact' methods for strictly conservative coverage are approximated using continuity adjustments, and the amount of adjustment can be selected to avoid over-conservative coverage. Also includes methods for stratified calculations (e.g. meta-analysis), either with fixed effect assumption (matching the CMH test) or incorporating stratum heterogeneity."><meta property="og:description" content="
 Computes confidence intervals for binomial or Poisson rates and their differences or ratios. Including the rate (or risk) difference ('RD') or rate ratio (or relative risk, 'RR') for binomial proportions or Poisson rates, and odds ratio ('OR', binomial only). Also confidence intervals for RD, RR or OR for paired binomial data, and estimation of a proportion from clustered binomial data. Includes skewness-corrected asymptotic score ('SCAS') methods, which have been developed in Laud (2017) doi:10.1002/pst.1813
  from Miettinen and Nurminen (1985) doi:10.1002/sim.4780040211
  and Gart and Nam (1988) doi:10.2307/2531848
-, and in Laud (2025, under review) for paired proportions. The same score produces hypothesis tests that are improved versions of the non-inferiority test for binomial RD and RR by Farrington and Manning (1990) doi:10.1002/sim.4780091208
+, and in Laud (2026, under review) for paired proportions. In each case, the same score produces hypothesis tests that are improved versions of the non-inferiority test for binomial RD and RR by Farrington and Manning (1990) doi:10.1002/sim.4780091208
 , or a generalisation of the McNemar test for paired data. The package also includes MOVER methods (Method Of Variance Estimates Recovery) for all contrasts, derived from the Newcombe method but with options to use equal-tailed intervals in place of the Wilson score method, and generalised for Bayesian applications incorporating prior information. So-called 'exact' methods for strictly conservative coverage are approximated using continuity adjustments, and the amount of adjustment can be selected to avoid over-conservative coverage. Also includes methods for stratified calculations (e.g. meta-analysis), either with fixed effect assumption (matching the CMH test) or incorporating stratum heterogeneity."><meta property="og:image" content="https://petelaud.github.io/ratesci/logo.png"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
@@ -61,33 +61,42 @@ Computes confidence intervals for binomial or Poisson rates and their difference
 <p>Computes confidence intervals for binomial or Poisson rates and their differences or ratios. Including the rate (or risk) difference ('RD') or rate ratio (or relative risk, 'RR') for binomial proportions or Poisson rates, and odds ratio ('OR', binomial only). Also confidence intervals for RD, RR or OR for paired binomial data, and estimation of a proportion from clustered binomial data. Includes skewness-corrected asymptotic score ('SCAS') methods, which have been developed in Laud (2017) <a href="https://doi.org/10.1002/pst.1813" class="external-link">doi:10.1002/pst.1813</a>
  from Miettinen and Nurminen (1985) <a href="https://doi.org/10.1002/sim.4780040211" class="external-link">doi:10.1002/sim.4780040211</a>
  and Gart and Nam (1988) <a href="https://doi.org/10.2307/2531848" class="external-link">doi:10.2307/2531848</a>
-, and in Laud (2025, under review) for paired proportions. The same score produces hypothesis tests that are improved versions of the non-inferiority test for binomial RD and RR by Farrington and Manning (1990) <a href="https://doi.org/10.1002/sim.4780091208" class="external-link">doi:10.1002/sim.4780091208</a>
+, and in Laud (2026, under review) for paired proportions. In each case, the same score produces hypothesis tests that are improved versions of the non-inferiority test for binomial RD and RR by Farrington and Manning (1990) <a href="https://doi.org/10.1002/sim.4780091208" class="external-link">doi:10.1002/sim.4780091208</a>
 , or a generalisation of the McNemar test for paired data. The package also includes MOVER methods (Method Of Variance Estimates Recovery) for all contrasts, derived from the Newcombe method but with options to use equal-tailed intervals in place of the Wilson score method, and generalised for Bayesian applications incorporating prior information. So-called 'exact' methods for strictly conservative coverage are approximated using continuity adjustments, and the amount of adjustment can be selected to avoid over-conservative coverage. Also includes methods for stratified calculations (e.g. meta-analysis), either with fixed effect assumption (matching the CMH test) or incorporating stratum heterogeneity.</p>
     </div>
 
 
     <div class="section level2">
-    <h2 id="ratesci-functions">ratesci functions<a class="anchor" aria-label="anchor" href="#ratesci-functions"></a></h2>
+    <h2 id="ratesci-core-functions">ratesci core functions<a class="anchor" aria-label="anchor" href="#ratesci-core-functions"></a></h2>
 
 
 <ul><li><p>scoreci(): for score-based confidence intervals</p></li>
-<li><p>scasci(): wrapper function to compute SCAS interval</p></li>
+<li><p>scorepairci(): for score-based confidence intervals for paired data</p></li>
+<li><p>moverci(): for the MOVER methods</p></li>
+<li><p>moverpairci(): for the MOVER methods for paired data</p></li>
+<li><p>pairbinci(): (deprecated) for paired binomial data (includes asymptotic
+score and MOVER options for RD and RR, plus a selection of methods for OR)</p></li>
+<li><p>scaspci(): non-iterative SCAS method for a single rate</p></li>
+<li><p>jeffreysci(): function to compute Jeffreys interval for a
+single rate</p></li>
+<li><p>clusterpci(): for estimation of binomial proportions based on
+clustered data</p></li>
+</ul></div>
+    <div class="section level2">
+    <h2 id="ratesci-wrapper-functions">ratesci wrapper functions<a class="anchor" aria-label="anchor" href="#ratesci-wrapper-functions"></a></h2>
+
+
+<ul><li><p>scasci(): wrapper function to compute SCAS interval</p></li>
 <li><p>tdasci(): wrapper function to compute TDAS random effects stratified
 interval</p></li>
-<li><p>moverci(): for the MOVER and MOVER-R methods</p></li>
 <li><p>moverbci(): wrapper function to compute MOVER-B interval</p></li>
-<li><p>jeffreysci(): wrapper function to compute Jeffreys interval for a
-single rate</p></li>
-<li><p>scaspci(): non-iterative SCAS method for a single rate</p></li>
-<li><p>rateci(): wrapper function for SCAS, Jeffreys or 'exact' methods
-for a single rate</p></li>
+<li><p>rateci(): wrapper function for various intervals for a single rate</p></li>
 <li><p>rdci(): wrapper function for various intervals for RD</p></li>
 <li><p>rrci(): wrapper function for various intervals for RR</p></li>
 <li><p>orci(): wrapper function for various intervals for OR</p></li>
-<li><p>pairbinci(): for paired binomial data (includes asymptotic score and
-MOVER options for RD and RR, plus a selection of methods for OR)</p></li>
-<li><p>clusterpci(): for estimation of binomial proportions based on
-clustered data</p></li>
+<li><p>rdpairci(): wrapper function for various intervals for RD</p></li>
+<li><p>rrpairci(): wrapper function for various intervals for RR</p></li>
+<li><p>orpairci(): wrapper function for various intervals for OR</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
