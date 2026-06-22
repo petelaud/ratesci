@@ -78,6 +78,13 @@ rrpairci <- function(x,
     level = level,
     cc = cc
   )
+  ci_bpj <- bpci(
+    x = x,
+    contrast = contrast,
+    method = "jeff",
+    level = level,
+    cc = cc
+  )
 
   ci_scas <- scorepairci(
     x = x,
@@ -137,7 +144,7 @@ rrpairci <- function(x,
 
   methodnames <- c(
     "SCAS", "SCASu", "Tang score", "MOVER-W", "MOVER-NW", "MOVER-NJ",
-    "Wald", "Bonett-Price hybrid"
+    "Wald", "Bonett-Price hybrid",  "Bonett-Price Jeffreys hybrid"
   )
 
   mydimnames[[3]] <- methodnames
@@ -150,9 +157,11 @@ rrpairci <- function(x,
       ci_moveruw,
       ci_moverw,
       ci_moverj,
-      ci_wald, ci_bp
+      ci_wald,
+      ci_bp,
+      ci_bpj
     ),
-    dim <- c(dim(ci_scas), 8)
+    dim <- c(dim(ci_scas), 9)
   )[drop = FALSE]
   dimnames(outarr) <- mydimnames
 
