@@ -121,16 +121,16 @@
 #'
 #' @export
 scorepairci <- function(x,
-                      level = 0.95,
-                      contrast = "RD",
-                      bcf = TRUE,
-                      skew = TRUE,
-                      closedform = FALSE,
-                      cc = FALSE,
-                      theta0 = NULL,
-                      precis = 6,
-                      warn = TRUE,
-                      ...) {
+                        level = 0.95,
+                        contrast = "RD",
+                        bcf = TRUE,
+                        skew = TRUE,
+                        closedform = FALSE,
+                        cc = FALSE,
+                        theta0 = NULL,
+                        precis = 6,
+                        warn = TRUE,
+                        ...) {
   if (!is.numeric(c(x))) {
     print("Non-numeric inputs!")
     stop()
@@ -152,11 +152,11 @@ scorepairci <- function(x,
     stop()
   }
   if (contrast %in% c("RD", "RR")) {
-#    if (!(tolower(substr(method, 1, 4)) %in%
-#      c("scor"))) {
-#      print("Method must be one of 'Score_closed', 'Score' for contrast = 'RD' or 'RR'")
-#      stop()
-#    }
+    #    if (!(tolower(substr(method, 1, 4)) %in%
+    #      c("scor"))) {
+    #      print("Method must be one of 'Score_closed', 'Score' for contrast = 'RD' or 'RR'")
+    #      stop()
+    #    }
     if (skew == TRUE &&
       (closedform == TRUE)) {
       closedform <- FALSE
@@ -166,14 +166,14 @@ scorepairci <- function(x,
       }
     }
   }
-#  if (contrast == "OR") {
-#    if (!(tolower(substr(method, 1, 4)) %in%
-#      c("scas", "wils"))) {
-#      print("Method must be one of 'SCASp' or 'wilson' for
-#              contrast = 'OR'")
-#      stop()
-#    }
-#  }
+  #  if (contrast == "OR") {
+  #    if (!(tolower(substr(method, 1, 4)) %in%
+  #      c("scas", "wils"))) {
+  #      print("Method must be one of 'SCASp' or 'wilson' for
+  #              contrast = 'OR'")
+  #      stop()
+  #    }
+  #  }
 
   if (as.character(cc) == "TRUE") cc <- 0.5
   # Default correction aligned with cc'd McNemar test
@@ -187,8 +187,10 @@ scorepairci <- function(x,
   # Convert input data into 2x2 table to ease interpretation
   x1i <- rep(c("Success", "Success", "Failure", "Failure"), x)
   x2i <- rep(c("Success", "Failure", "Success", "Failure"), x)
-  xi <- table(Test_1 = factor(x1i, levels = c("Success", "Failure")),
-              Test_2 = factor(x2i, levels = c("Success", "Failure")))
+  xi <- table(
+    Test_1 = factor(x1i, levels = c("Success", "Failure")),
+    Test_2 = factor(x2i, levels = c("Success", "Failure"))
+  )
   x1 <- x[1] + x[2]
   x2 <- x[1] + x[3]
   N <- sum(x)
@@ -197,9 +199,9 @@ scorepairci <- function(x,
 
   # correlation estimate for reporting
   phi_hat <- (x[1] * x[4] - x[2] * x[3]) / sqrt(x1 * (N - x1) * x2 * (N - x2))
-  #if (is.na(phi_hat) | is.infinite(phi_hat)) {
-  if (is.na(phi_hat) ) {
-      phi_hat <- 0
+  # if (is.na(phi_hat) | is.infinite(phi_hat)) {
+  if (is.na(phi_hat)) {
+    phi_hat <- 0
   }
   # Newcombe's adjusted correlation estimate
   phi_c <- phi_hat
@@ -221,56 +223,56 @@ scorepairci <- function(x,
     # This gives a p-value matching that for other bias-corrected methods
     x12 <- x[2]
     x21 <- x[3]
-#    if (method == "SCASp" || (method == "wilson")) {
-      trans_th0 <- NULL
-      if (is.null(theta0)) theta0 <- 1
-      trans_th0 <- theta0 / (1 + theta0)
-#      if (method == "SCASp") {
-#        trans_ci <- scaspci(
-#          x = x12, n = x12 + x21, distrib = "bin",
-#          level = level, cc = cc, bcf = bcf, bign = N
-#        )$estimates[, c(1:3), drop = FALSE]
-#        myskew <- TRUE
-#      } else if (method == "wilson") {
-#        trans_ci <- wilsonci(x = x12, n = x12 + x21, cc = cc, level = level)
-#        myskew <- FALSE
-#      }
+    #    if (method == "SCASp" || (method == "wilson")) {
+    trans_th0 <- NULL
+    if (is.null(theta0)) theta0 <- 1
+    trans_th0 <- theta0 / (1 + theta0)
+    #      if (method == "SCASp") {
+    #        trans_ci <- scaspci(
+    #          x = x12, n = x12 + x21, distrib = "bin",
+    #          level = level, cc = cc, bcf = bcf, bign = N
+    #        )$estimates[, c(1:3), drop = FALSE]
+    #        myskew <- TRUE
+    #      } else if (method == "wilson") {
+    #        trans_ci <- wilsonci(x = x12, n = x12 + x21, cc = cc, level = level)
+    #        myskew <- FALSE
+    #      }
 
-      # No need to add bign argument to scoreci(, contrast = "p")
-      trans_ci <- scoreci(
-        x1 = x12, n1 = x12 + x21, n2 = x[1] + x[4],
-        contrast = "p", distrib = "bin", bcf = bcf,
-        skew = skew, cc = cc, level = level
-      )$estimates[, c(1:3), drop = FALSE]
-      # No need to add bign argument to scoretheta() - using n2 instead
-      scorezero <- scoretheta(
-        theta = 0.5, x1 = x12, n1 = x12 + x21, n2 = x[1] + x[4],
-        contrast = "p", distrib = "bin", bcf = bcf,
-        skew = skew, cc = cc, level = level
-      )
-      chisq_zero <- scorezero$score^2
-      pval2sided <- pchisq(chisq_zero, 1, lower.tail = FALSE)
-      scoreth0 <- scoretheta(
-        theta = trans_th0, x1 = x12, n1 = x12 + x21, n2 = x[1] + x[4],
-        contrast = "p", distrib = "bin", bcf = bcf,
-        skew = skew, cc = cc, level = level
-      )
-      pval_left <- scoreth0$pval
-      pval_right <- 1 - pval_left
-      scorenull <- scoreth0$score
-      pval <- cbind(
-        chisq = chisq_zero, pval2sided, theta0 = theta0,
-        scorenull, pval_left, pval_right
-      )
-#    } else if (method == "wilson" || (method == "Score" & skew == FALSE)) {
-      # NOTE: need to add test output for this option using scoretheta function
-#      trans_ci <- wilsonci(x = x12, n = x12 + x21, cc = cc, level = level)
-#    }
+    # No need to add bign argument to scoreci(, contrast = "p")
+    trans_ci <- scoreci(
+      x1 = x12, n1 = x12 + x21, n2 = x[1] + x[4],
+      contrast = "p", distrib = "bin", bcf = bcf,
+      skew = skew, cc = cc, level = level
+    )$estimates[, c(1:3), drop = FALSE]
+    # No need to add bign argument to scoretheta() - using n2 instead
+    scorezero <- scoretheta(
+      theta = 0.5, x1 = x12, n1 = x12 + x21, n2 = x[1] + x[4],
+      contrast = "p", distrib = "bin", bcf = bcf,
+      skew = skew, cc = cc, level = level
+    )
+    chisq_zero <- scorezero$score^2
+    pval2sided <- pchisq(chisq_zero, 1, lower.tail = FALSE)
+    scoreth0 <- scoretheta(
+      theta = trans_th0, x1 = x12, n1 = x12 + x21, n2 = x[1] + x[4],
+      contrast = "p", distrib = "bin", bcf = bcf,
+      skew = skew, cc = cc, level = level
+    )
+    pval_left <- scoreth0$pval
+    pval_right <- 1 - pval_left
+    scorenull <- scoreth0$score
+    pval <- cbind(
+      chisq = chisq_zero, pval2sided, theta0 = theta0,
+      scorenull, pval_left, pval_right
+    )
+    #    } else if (method == "wilson" || (method == "Score" & skew == FALSE)) {
+    # NOTE: need to add test output for this option using scoretheta function
+    #      trans_ci <- wilsonci(x = x12, n = x12 + x21, cc = cc, level = level)
+    #    }
     estimates <- (trans_ci / (1 - trans_ci))
-#    outlist <- list(xi, estimates = estimates)
-#    if (method == "SCASp") {
-#      outlist <- append(outlist, list(pval = pval))
-#    }
+    #    outlist <- list(xi, estimates = estimates)
+    #    if (method == "SCASp") {
+    #      outlist <- append(outlist, list(pval = pval))
+    #    }
   } else if (contrast != "OR") {
     # Iterative Score methods by Tango (for RD) & Tang (for RR)
     # & proposed skewness-corrected versions:
@@ -318,8 +320,8 @@ scorepairci <- function(x,
         p1mle = at_MLE$p1d, p2mle = at_MLE$p2d,
         phi_hat = phi_hat, phi_c = phi_c, psi_hat = psi_hat
       )
-    # Closed-form versions of Score methods by Chang (for RD Tango method)
-    #  & DelRocco (for RR Tang method):
+      # Closed-form versions of Score methods by Chang (for RD Tango method)
+      #  & DelRocco (for RR Tang method):
     } else if (contrast == "RD" && closedform == TRUE) {
       estimates <- tangoci(x = x, level = level, cc = cc, bcf = bcf)
     } else if (contrast == "RR" && closedform == TRUE) {
@@ -328,42 +330,42 @@ scorepairci <- function(x,
       )
     }
 
-#    if ((method == "Score") || (method == "Score_closed")) {
-      # optionally add p-value for a test of null hypothesis: theta<=theta0
-      # default value of theta0 depends on contrast
-      if (contrast == "RD") {
-        theta00 <- 0
-      } else {
-        theta00 <- 1
-      }
-      if (is.null(theta0)) {
-        # If null value for theta is not provided, use 0 for RD or 1 for RR
-        theta0 <- theta00
-      }
-      scorezero <- scorepair(
-        theta = theta00, x = x, contrast = contrast,
-        cc = cc, skew = skew, bcf = bcf
-      )
-      scorenull <- scorepair(
-        theta = theta0, x = x, contrast = contrast,
-        cc = cc, skew = skew, bcf = bcf
-      )
-      pval_left <- scorenull$pval
-      pval_right <- 1 - pval_left
-      chisq_zero <- scorezero$score^2
-      pval2sided <- pchisq(chisq_zero, 1, lower.tail = FALSE)
-      pval <- cbind(
-        chisq = chisq_zero, pval2sided, theta0 = theta0,
-        scorenull = scorenull$score, pval_left, pval_right
-      )
+    #    if ((method == "Score") || (method == "Score_closed")) {
+    # optionally add p-value for a test of null hypothesis: theta<=theta0
+    # default value of theta0 depends on contrast
+    if (contrast == "RD") {
+      theta00 <- 0
+    } else {
+      theta00 <- 1
+    }
+    if (is.null(theta0)) {
+      # If null value for theta is not provided, use 0 for RD or 1 for RR
+      theta0 <- theta00
+    }
+    scorezero <- scorepair(
+      theta = theta00, x = x, contrast = contrast,
+      cc = cc, skew = skew, bcf = bcf
+    )
+    scorenull <- scorepair(
+      theta = theta0, x = x, contrast = contrast,
+      cc = cc, skew = skew, bcf = bcf
+    )
+    pval_left <- scorenull$pval
+    pval_right <- 1 - pval_left
+    chisq_zero <- scorezero$score^2
+    pval2sided <- pchisq(chisq_zero, 1, lower.tail = FALSE)
+    pval <- cbind(
+      chisq = chisq_zero, pval2sided, theta0 = theta0,
+      scorenull = scorenull$score, pval_left, pval_right
+    )
 
-#      outlist <- list(data = xi, estimates = estimates, pval = pval)
-#    }
+    #      outlist <- list(data = xi, estimates = estimates, pval = pval)
+    #    }
   }
   outlist <- list(data = xi, estimates = round(estimates, precis))
-#  if (!(method %in% c("wilson"))) {
-    outlist <- append(outlist, list(pval = pval))
-#  }
+  #  if (!(method %in% c("wilson"))) {
+  outlist <- append(outlist, list(pval = pval))
+  #  }
   call <- c(
     contrast = contrast,
     level = level, bcf = bcf, skew = skew, cc = cc, closedform = closedform
@@ -457,7 +459,7 @@ scorepair <- function(theta,
 
     # Equivariant continuity adjustment for RR, aligned with McNemar cc.
     # replaces previous 'delrocco' and 'constant' cctype options
-      corr <- cc * (1 + theta) * sign(Stheta) / N
+    corr <- cc * (1 + theta) * sign(Stheta) / N
 
     q12num <- (q21 + (theta - 1) * (1 - x[4] / N))
     q12 <- ifelse(q12num < 1E-10, 0, q12num / theta)
@@ -579,7 +581,8 @@ tangoci <- function(x,
     } else if (cc > 0 & x12 == x21 & x12 == N / 2) {
       # Rare special case fails to find solution to the quartic
       # and we have to resort to iterative method
-      root <- scorepairci(x = x, contrast = "RD", level = level, cc = cc, bcf = bcf, skew = FALSE)$estimates[c(1, 3)]
+      root <- scorepairci(x = x, contrast = "RD", level = level, cc = cc,
+                          bcf = bcf, skew = FALSE)$estimates[c(1, 3)]
       # Alternative method using polynomial()
       #    lowertheta <- solve(polynom::polynomial(c(u4, u3, u2, u1, 1)))
       #    root1 <- min(as.numeric(ifelse(Im(lowertheta) == 0, Re(lowertheta), NA)), na.rm = TRUE)
@@ -831,5 +834,3 @@ tangci <- function(x,
   result <- cbind(lower = lower, est = estimate, upper = upper)
   return(result)
 }
-
-
