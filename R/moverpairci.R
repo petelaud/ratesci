@@ -44,11 +44,11 @@
 #'   corrected).}
 #'   \item{call}{details of the function call.}}
 #' @examples
-#' # Example from Fagerland et al 2014
+#' # Example data from Fagerland et al 2014
 #' # MOVER-NJ method
-#' pairbinci(x = c(1, 1, 7, 12), contrast = "RD", method = "MOVER_newc", type = "jeff")
+#' moverpairci(x = c(1, 1, 7, 12), contrast = "RD", corc = TRUE, type = "jeff")
 #' # MOVER-NJ
-#' pairbinci(x = c(1, 1, 7, 12), contrast = "RR", method = "MOVER_newc", type = "jeff")
+#' moverpairci(x = c(1, 1, 7, 12), contrast = "RR", corc = TRUE, type = "jeff")
 #'
 #' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
 #' @references

@@ -199,7 +199,7 @@ pairbinci <- function(x,
                       cctype = NULL,
                       ...) {
 
-  lifecycle::deprecate_warn("1.0.1",
+  lifecycle::deprecate_warn("1.1.0",
                             "pairbinci()",
                             I("scorepairci(), moverpairci(), rdpairci(), rrpairci() or orpairci()"))
 

@@ -3,25 +3,32 @@
 #' ratesci: A package for computing confidence intervals for various
 #' comparisons of binomial and Poisson rates.
 #'
-#' @section ratesci functions:
+#' @section ratesci core functions:
 #'   * scoreci(): for score-based confidence intervals
+#'   * scorepairci(): for score-based confidence intervals for paired data
+#'   * moverci(): for the MOVER methods
+#'   * moverpairci(): for the MOVER methods for paired data
+#'   * pairbinci(): (deprecated) for paired binomial data (includes asymptotic
+#'   score and MOVER options for RD and RR, plus a selection of methods for OR)
+#'   * scaspci(): non-iterative SCAS method for a single rate
+#'   * jeffreysci(): function to compute Jeffreys interval for a
+#'   single rate
+#'   * clusterpci(): for estimation of binomial proportions based on
+#'   clustered data
+#'
+#' @section ratesci wrapper functions:
 #'   * scasci(): wrapper function to compute SCAS interval
 #'   * tdasci(): wrapper function to compute TDAS random effects stratified
 #'    interval
-#'   * moverci(): for the MOVER and MOVER-R methods
 #'   * moverbci(): wrapper function to compute MOVER-B interval
-#'   * jeffreysci(): wrapper function to compute Jeffreys interval for a
-#'   single rate
-#'   * scaspci(): non-iterative SCAS method for a single rate
-#'   * rateci(): wrapper function for SCAS, Jeffreys or 'exact' methods
-#'   for a single rate
+#'   * rateci(): wrapper function for various intervals for a single rate
 #'   * rdci(): wrapper function for various intervals for RD
 #'   * rrci(): wrapper function for various intervals for RR
 #'   * orci(): wrapper function for various intervals for OR
-#'   * pairbinci(): for paired binomial data (includes asymptotic score and
-#'   MOVER options for RD and RR, plus a selection of methods for OR)
-#'   * clusterpci(): for estimation of binomial proportions based on
-#'   clustered data
+#'   * rdpairci(): wrapper function for various intervals for RD
+#'   * rrpairci(): wrapper function for various intervals for RR
+#'   * orpairci(): wrapper function for various intervals for OR
+#'
 #' @name ratesci-package
 #' @references
 #' Laud PJ. Equal-tailed confidence intervals for comparison of

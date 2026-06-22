@@ -87,7 +87,7 @@ Includes options for continuity adjustment, where the magnitude of
 adjustment can be customised.
 }
 \examples{
-# Example from Fagerland et al 2014
+# Example data from Fagerland et al 2014
 # SCAS method for RD
 scorepairci(x = c(1, 1, 7, 12), contrast = "RD")
 # Tango method

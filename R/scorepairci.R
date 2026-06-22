@@ -55,7 +55,7 @@
 #'   as specified.}
 #'   \item{call}{details of the function call.}}
 #' @examples
-#' # Example from Fagerland et al 2014
+#' # Example data from Fagerland et al 2014
 #' # SCAS method for RD
 #' scorepairci(x = c(1, 1, 7, 12), contrast = "RD")
 #' # Tango method
@@ -394,7 +394,7 @@ scorepairci <- function(x,
 #'   relative risk for matched-pair design.
 #'   Statistics in Medicine 2003; 22:1217-1233
 #'
-#' @inheritParams pairbinci
+#' @inheritParams scorepairci
 #' @param theta Numeric value for the contrast parameter, at which the score
 #'   function is to be evaluated.
 #'
@@ -519,7 +519,7 @@ scorepair <- function(theta,
 #'   difference in proportions in paired data.
 #'   Journal of Applied Statistics 2024; 51-1:139-152
 #'
-#' @inheritParams pairbinci
+#' @inheritParams scorepairci
 #'
 #' @noRd
 tangoci <- function(x,
@@ -578,7 +578,7 @@ tangoci <- function(x,
     } else if (cc > 0 & x12 == x21 & x12 == N / 2) {
       # Rare special case fails to find solution to the quartic
       # and we have to resort to iterative method
-      root <- pairbinci(x = x, contrast = "RD", method = "Score", level = level, cc = cc, bcf = bcf, skew = FALSE)$estimates[c(1, 3)]
+      root <- scorepairci(x = x, contrast = "RD", level = level, cc = cc, bcf = bcf, skew = FALSE)$estimates[c(1, 3)]
       # Alternative method using polynomial()
       #    lowertheta <- solve(polynom::polynomial(c(u4, u3, u2, u1, 1)))
       #    root1 <- min(as.numeric(ifelse(Im(lowertheta) == 0, Re(lowertheta), NA)), na.rm = TRUE)
@@ -694,7 +694,7 @@ tangoci <- function(x,
 #'   Correlated Proportions" (2023).
 #'   Statistics in Biosciences 2025; https://doi.org/10.1007/s12561-025-09479-4
 #'
-#' @inheritParams pairbinci
+#' @inheritParams scorepairci
 #'
 #' @noRd
 tangci <- function(x,

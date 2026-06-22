@@ -18,7 +18,7 @@
 #'   in the score denominator. Applicable to `distrib = "bin"` only.
 #' @param bign Sample size N to be used in the calculation of bcf, if different
 #'   from n. (Used by transformed SCASp method for paired conditional OR in
-#'   `pairbinci()`.)
+#'   `orpairci()` and `scorepairci()`.)
 #' @param xihat Number specifying estimated variance inflation factor for a
 #'   skewness corrected version of the Saha Wilson Score interval for clustered
 #'   binomial proportions. Need to calculate using BMS and WMS as per Saha 2016.
