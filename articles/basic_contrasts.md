@@ -159,12 +159,13 @@ details see chapter 7 of [Newcombe 2012](#ref-newcombe2012)). Originally
 labelled as a “Score” method ([Newcombe 1998](#ref-newcombe1998)) due to
 the involvement of the Wilson Score interval, this involves a
 combination of intervals calculated separately for $`p_1`$ and $`p_2`$.
-Newcombe based his method on Wilson intervals, but coverage can be
-slightly improved by using equal-tailed Jeffreys intervals instead
-(“MOVER-J”) ([Laud 2017](#ref-laud2017))[^3]. Coverage properties remain
-generally inferior to SCAS - with larger sample sizes, MOVER-J has
-two-sided coverage close to (but slightly below) the nominal level, but
-central location is not achieved (except for the RR contrast).
+Newcombe based his method on Wilson intervals (this version is labelled
+as “MOVER-W” in the ratesci package), but coverage can be slightly
+improved by using equal-tailed Jeffreys intervals instead (“MOVER-J”)
+([Laud 2017](#ref-laud2017))[^3]. Coverage properties remain generally
+inferior to SCAS - with larger sample sizes, MOVER-J has two-sided
+coverage close to (but slightly below) the nominal level, but central
+location is not achieved (except for the RR contrast).
 
 There is no corresponding hypothesis test for the MOVER methods.
 

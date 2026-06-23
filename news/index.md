@@ -47,7 +47,7 @@
   Garwood precisely when `cc` is `TRUE`, and approximately match the
   corresponding mid-p intervals when `cc` is `FALSE`.
 - New output object for the Blaker exact method (for both binomial and
-  Poisson rates)
+  Poisson rates).
 - `precis` for setting the precision of the exact and mid-p method.
 
 ### Bug fixes
@@ -55,12 +55,19 @@
 #### In `rateci()` and `moverci()`:
 
 - Permit n=0 to produce output interval as \[0, 1\] for binomial, or
-  \[0, Inf\] for Poisson with point estimate displayed as NaN (prevents
-  error in
-  [`pairbinci()`](https://petelaud.github.io/ratesci/reference/pairbinci.md)
-  with `method` = “BP”). \### In
-  [`moverci()`](https://petelaud.github.io/ratesci/reference/moverci.md):
-- Present NaN MOVER-R Wilson upper limits for RR and OR as Inf.
+  \[0, Inf\] for Poisson with point estimate displayed as NaN. (prevents
+  error for Bonett-Price method in
+  [`rdpairci()`](https://petelaud.github.io/ratesci/reference/rdpairci.md)
+  with no discordant pairs).
+
+#### In `exactci()`:
+
+- Improve precision (avoid rounding errors) for iterative
+  Clopper-Pearson method.
+
+#### In `moverci()`:
+
+- Present NaN MOVER-W upper limits for RR and OR as Inf.
 
 ## ratesci 1.0.0 (2025-06-20)
 

@@ -152,7 +152,7 @@ To select an alternative method, for example transformed mid-p:
 orpairci(x = c(1, 1, 7, 12))$estimates
 #>                        lower   est upper
 #> Transformed SCASp    0.00770 0.143 0.912
-#> Transformed mid-P    0.00629 0.143 0.924
+#> Transformed midp     0.00629 0.143 0.924
 #> Transformed Wilson   0.02293 0.143 0.890
 #> Transformed Jeffreys 0.01403 0.143 0.831
 #> Wald                 0.01758 0.143 1.161
@@ -179,7 +179,7 @@ Difference in Proportions for the Paired-Sample Design.” *Statistics in
 Medicine* 17 (8): 891–908.
 <https://doi.org/10.1002/(sici)1097-0258(19980430)17:8%3C891::aid-sim780%3E3.0.co;2-b>.
 
-[^1]: SCASu = SCAS omitting variance bias correction; AS = Tang;
+[^1]: SCASu = SCAS omitting ‘N-1’ variance bias correction; AS = Tang;
     MOVER-NJ = Method of Variance Estimates Recovery, based on
     Newcombe’s correlation adjustment but using Jeffreys equal-tailed
     intervals instead of Wilson; MOVER-W = MOVER using Wilson intervals,

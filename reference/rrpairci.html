@@ -10,6 +10,7 @@ MOVER-W (based on Wilson method without Newcombe correlation adjustment)
 MOVER-NW (based on Wilson method with Newcombe correlation adjustment)
 MOVER-NJ (based on Jeffreys method with correlation adjustment)
 Bonett-Price hybrid method
+Bonett-Price-J variant using Jeffreys intervals
 Approximate log-normal (Wald) method
 (strongly advise this is not used for any purpose but included for reference)
 
@@ -24,6 +25,7 @@ MOVER-W (based on Wilson method without Newcombe correlation adjustment)
 MOVER-NW (based on Wilson method with Newcombe correlation adjustment)
 MOVER-NJ (based on Jeffreys method with correlation adjustment)
 Bonett-Price hybrid method
+Bonett-Price-J variant using Jeffreys intervals
 Approximate log-normal (Wald) method
 (strongly advise this is not used for any purpose but included for reference)
 
@@ -85,6 +87,7 @@ adjustment (where available).</p><ul><li><p>SCAS (skewness-corrected asymptotic 
 <li><p>MOVER-NW (based on Wilson method with Newcombe correlation adjustment)</p></li>
 <li><p>MOVER-NJ (based on Jeffreys method with correlation adjustment)</p></li>
 <li><p>Bonett-Price hybrid method</p></li>
+<li><p>Bonett-Price-J variant using Jeffreys intervals</p></li>
 <li><p>Approximate log-normal (Wald) method
 (strongly advise this is not used for any purpose but included for reference)</p></li>
 </ul></div>
@@ -136,8 +139,26 @@ affected.)</p></dd>
 
 </dl></div>
     <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>A list containing the following components:</p><dl><dt>data</dt>
+<dd><p>the input data in 2x2 matrix form.</p></dd>
+
+<dt>estimates</dt>
+<dd><p>an array containing the confidence interval for paired RR
+using various methods. The methods shown depends on the cc argument
+(if cc = TRUE then the continuity-adjusted methods are given).</p></dd>
+
+<dt>call</dt>
+<dd><p>details of the function call.</p></dd>
+
+
+</dl></div>
+    <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
-    <p>Laud PJ. Improved confidence intervals and tests for paired binomial
+    <p>Fagerland MW, Lydersen S, Laake P. Recommended tests and
+confidence intervals for paired binomial proportions.
+Statistics in Medicine 2014; 33(16):2850-2875</p>
+<p>Laud PJ. Improved confidence intervals and tests for paired binomial
 proportions. (2026, Under review)</p>
     </div>
     <div class="section level2">
@@ -145,6 +166,79 @@ proportions. (2026, Under review)</p>
     <p>Pete Laud, <a href="mailto:p.j.laud@sheffield.ac.uk">p.j.laud@sheffield.ac.uk</a></p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Example data from Fagerland et al 2014</span></span></span>
+<span class="r-in"><span><span class="fu">rrpairci</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, precis <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          Test_2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test_1    Success Failure</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Success       1       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Failure       7      12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                lower  est upper</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SCAS           0.043 0.25 0.928</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SCASu          0.043 0.25 0.898</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Tang score     0.065 0.25 0.907</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-W        0.069 0.25 0.869</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-NW       0.066 0.25 0.905</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-NJ       0.051 0.25 0.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Wald           0.063 0.25 1.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bonett-Price   0.068 0.25 0.923</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bonett-Price-J 0.054 0.25 0.885</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $call</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> level    cc </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  0.95  0.00 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="co"># with conventional continuity adjustment</span></span></span>
+<span class="r-in"><span><span class="fu">rrpairci</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, precis <span class="op">=</span> <span class="fl">3</span>, cc <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          Test_2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test_1    Success Failure</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Success       1       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Failure       7      12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 lower  est upper</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SCAS_cc         0.022 0.25 1.166</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SCASu_cc        0.022 0.25 1.131</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Tang score_cc   0.040 0.25 1.120</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-W_cc      0.044 0.25 0.986</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-NW_cc     0.042 0.25 1.032</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-NJ_cc     0.030 0.25 1.013</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bonett-Price_cc 0.042 0.25 1.127</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $call</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> level    cc </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  0.95  0.50 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="co"># with intermediate continuity adjustment</span></span></span>
+<span class="r-in"><span><span class="fu">rrpairci</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, precis <span class="op">=</span> <span class="fl">3</span>, cc <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          Test_2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test_1    Success Failure</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Success       1       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Failure       7      12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                       lower  est upper</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SCAS_cc(0.25)         0.031 0.25 1.042</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SCASu_cc(0.25)        0.032 0.25 1.010</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Tang score_cc(0.25)   0.052 0.25 1.009</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-W_cc(0.25)      0.056 0.25 0.927</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-NW_cc(0.25)     0.054 0.25 0.967</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-NJ_cc(0.25)     0.040 0.25 0.942</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bonett-Price_cc(0.25) 0.055 0.25 1.020</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $call</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> level    cc </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  0.95  0.25 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

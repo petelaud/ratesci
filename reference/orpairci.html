@@ -122,8 +122,26 @@ places) to be used in output.</p></dd>
 
 </dl></div>
     <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>A list containing the following components:</p><dl><dt>data</dt>
+<dd><p>the input data in 2x2 matrix form.</p></dd>
+
+<dt>estimates</dt>
+<dd><p>an array containing the confidence interval for paired OR
+using various methods. The methods shown depends on the cc argument
+(if cc = TRUE then the continuity-adjusted methods are given).</p></dd>
+
+<dt>call</dt>
+<dd><p>details of the function call.</p></dd>
+
+
+</dl></div>
+    <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
-    <p>Laud PJ. Improved confidence intervals and tests for paired binomial
+    <p>Fagerland MW, Lydersen S, Laake P. Recommended tests and
+confidence intervals for paired binomial proportions.
+Statistics in Medicine 2014; 33(16):2850-2875</p>
+<p>Laud PJ. Improved confidence intervals and tests for paired binomial
 proportions. (2026, Under review)</p>
     </div>
     <div class="section level2">
@@ -131,6 +149,69 @@ proportions. (2026, Under review)</p>
     <p>Pete Laud, <a href="mailto:p.j.laud@sheffield.ac.uk">p.j.laud@sheffield.ac.uk</a></p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Example data from Fagerland et al 2014</span></span></span>
+<span class="r-in"><span><span class="fu">orpairci</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, precis <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          Test_2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test_1    Success Failure</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Success       1       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Failure       7      12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                      lower   est upper</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed SCASp    0.008 0.143 0.912</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed midp     0.006 0.143 0.924</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed Wilson   0.023 0.143 0.890</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed Jeffreys 0.014 0.143 0.831</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Wald                 0.018 0.143 1.161</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $call</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> level    cc </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  0.95  0.00 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="co"># with conventional continuity adjustment</span></span></span>
+<span class="r-in"><span><span class="fu">orpairci</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, precis <span class="op">=</span> <span class="fl">3</span>, cc <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          Test_2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test_1    Success Failure</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Success       1       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Failure       7      12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                             lower   est upper</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed SCASp_cc        0.000 0.143 1.204</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed Clopper-Pearson 0.003 0.143 1.112</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed Wilson_cc       0.007 0.143 1.142</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed Jeffreys_cc     0.003 0.143 1.112</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $call</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> level    cc </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  0.95  0.50 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="co"># with intermediate continuity adjustment</span></span></span>
+<span class="r-in"><span><span class="fu">orpairci</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, precis <span class="op">=</span> <span class="fl">3</span>, cc <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          Test_2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test_1    Success Failure</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Success       1       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Failure       7      12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                               lower   est upper</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed SCASp_cc(0.25)    0.002 0.143 1.052</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed midp_cc(0.25)     0.004 0.143 1.029</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed Wilson_cc(0.25)   0.014 0.143 1.009</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed Jeffreys_cc(0.25) 0.008 0.143 0.966</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $call</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> level    cc </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  0.95  0.25 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

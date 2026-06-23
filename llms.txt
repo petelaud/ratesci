@@ -44,11 +44,17 @@ for paired data, or chi-squared, CMH, Farrington-Manning or McNemar
 tests.
 
 Simplified functions producing a selection of different confidence
-interval methods for each contrast for independent binomial or Poisson
-rates (with or without continuity adjustment) are provided by
+interval methods for each contrasts (with or without continuity
+adjustment) are provided by
 [`rdci()`](https://petelaud.github.io/ratesci/reference/rdci.md),
 [`rrci()`](https://petelaud.github.io/ratesci/reference/rrci.md) and
-[`orci()`](https://petelaud.github.io/ratesci/reference/orci.md).
+[`orci()`](https://petelaud.github.io/ratesci/reference/orci.md) for
+independent binomial or Poisson rates, and
+[`rdpairci()`](https://petelaud.github.io/ratesci/reference/rdpairci.md),
+[`rrpairci()`](https://petelaud.github.io/ratesci/reference/rrpairci.md)
+and
+[`orpairci()`](https://petelaud.github.io/ratesci/reference/orpairci.md)
+for paired binomial proportions.
 
 - See the vignettes for further details and examples of the SCAS and
   other intervals, including plots illustrating the impact of the
@@ -196,8 +202,8 @@ scorepairci(x = c(1, 1, 7, 12))
 #> [1,] 4.286    0.03843      0     -2.07   0.01922     0.9808
 #> 
 #> $call
-#> contrast    level      bcf     skew       cc 
-#>     "RD"   "0.95"   "TRUE"   "TRUE"  "FALSE"
+#>   contrast      level        bcf       skew         cc closedform 
+#>       "RD"     "0.95"     "TRUE"     "TRUE"    "FALSE"    "FALSE"
 ```
 
 ## References

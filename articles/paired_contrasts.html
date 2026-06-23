@@ -157,8 +157,8 @@ both a skewness correction and a correction in the variance
 estimate.</p>
 <p>The plots below illustrate the one-sided and two-sided interval
 coverage probabilities achieved by SCAS compared to some other popular
-methods<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;SCASu = SCAS omitting variance bias correction; AS =
-Tang; MOVER-NJ = Method of Variance Estimates Recovery, based on
+methods<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;SCASu = SCAS omitting ‘N-1’ variance bias correction; AS
+= Tang; MOVER-NJ = Method of Variance Estimates Recovery, based on
 Newcombe’s correlation adjustment but using Jeffreys equal-tailed
 intervals instead of Wilson; MOVER-W = MOVER using Wilson intervals, and
 omitting Newcombe’s correlation correction; BP = Bonett-Price&lt;/p&gt;"><sup>1</sup></a>,
@@ -261,7 +261,7 @@ review).</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/orpairci.html">orpairci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
 <span><span class="co">#&gt;                        lower   est upper</span></span>
 <span><span class="co">#&gt; Transformed SCASp    0.00770 0.143 0.912</span></span>
-<span><span class="co">#&gt; Transformed mid-P    0.00629 0.143 0.924</span></span>
+<span><span class="co">#&gt; Transformed midp     0.00629 0.143 0.924</span></span>
 <span><span class="co">#&gt; Transformed Wilson   0.02293 0.143 0.890</span></span>
 <span><span class="co">#&gt; Transformed Jeffreys 0.01403 0.143 0.831</span></span>
 <span><span class="co">#&gt; Wald                 0.01758 0.143 1.161</span></span></code></pre></div>

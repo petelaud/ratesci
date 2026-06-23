@@ -4,9 +4,9 @@ This convenience wrapper function produces a selection of the methods below
 as appropriate for the selected distribution (binomial or Poisson) for the
 rate ratio (/relative risk) contrast (RR), with or without continuity adjustment.
 SCAS (skewness-corrected asymptotic score)
-Miettinen-Nurminen,Koopman, Gart-Nam Asymptotic Score methods
-MOVER-R Wilson
-MOVER-R Jeffreys
+Miettinen-Nurminen, Koopman, Gart-Nam Asymptotic Score methods
+MOVER-W
+MOVER-J (based on Jeffreys intervals)
 Approximate normal (Katz log) methods
 (strongly advise this is not used for any purpose but included for reference)
 
@@ -15,9 +15,9 @@ This convenience wrapper function produces a selection of the methods below
 as appropriate for the selected distribution (binomial or Poisson) for the
 rate ratio (/relative risk) contrast (RR), with or without continuity adjustment.
 SCAS (skewness-corrected asymptotic score)
-Miettinen-Nurminen,Koopman, Gart-Nam Asymptotic Score methods
-MOVER-R Wilson
-MOVER-R Jeffreys
+Miettinen-Nurminen, Koopman, Gart-Nam Asymptotic Score methods
+MOVER-W
+MOVER-J (based on Jeffreys intervals)
 Approximate normal (Katz log) methods
 (strongly advise this is not used for any purpose but included for reference)
 
@@ -73,9 +73,9 @@ Approximate normal (Katz log) methods
 This convenience wrapper function produces a selection of the methods below
 as appropriate for the selected distribution (binomial or Poisson) for the
 rate ratio (/relative risk) contrast (RR), with or without continuity adjustment.</p><ul><li><p>SCAS (skewness-corrected asymptotic score)</p></li>
-<li><p>Miettinen-Nurminen,Koopman, Gart-Nam Asymptotic Score methods</p></li>
-<li><p>MOVER-R Wilson</p></li>
-<li><p>MOVER-R Jeffreys</p></li>
+<li><p>Miettinen-Nurminen, Koopman, Gart-Nam Asymptotic Score methods</p></li>
+<li><p>MOVER-W</p></li>
+<li><p>MOVER-J (based on Jeffreys intervals)</p></li>
 <li><p>Approximate normal (Katz log) methods
 (strongly advise this is not used for any purpose but included for reference)</p></li>
 </ul></div>
@@ -91,7 +91,7 @@ rate ratio (/relative risk) contrast (RR), with or without continuity adjustment
 <span>  level <span class="op">=</span> <span class="fl">0.95</span>,</span>
 <span>  std_est <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  cc <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  precis <span class="op">=</span> <span class="fl">8</span></span>
+<span>  precis <span class="op">=</span> <span class="fl">6</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -136,22 +136,141 @@ Yates adjustment). <br></p></dd>
 
 
 <dt id="arg-precis">precis<a class="anchor" aria-label="anchor" href="#arg-precis"></a></dt>
-<dd><p>Number (default 8) specifying precision (i.e. number of decimal
+<dd><p>Number (default 6) specifying precision (i.e. number of decimal
 places) to be used in root-finding subroutine for the score confidence
 intervals. (Note other methods use closed-form calculations so are not
 affected.)</p></dd>
 
 </dl></div>
     <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>A list containing the following components:</p><dl><dt>estimates</dt>
+<dd><p>an array containing the confidence interval for RR
+using various methods. The methods shown depends on the cc argument
+(if cc = TRUE then the continuity-adjusted methods are given).</p></dd>
+
+<dt>call</dt>
+<dd><p>details of the function call.</p></dd>
+
+
+</dl></div>
+    <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>Laud PJ. Equal-tailed confidence intervals for comparison of
-rates. Pharmaceutical Statistics 2017; 16:334-348. (Appendix A.4)</p>
+rates. Pharmaceutical Statistics 2017; 16:334-348.</p>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
     <p>Pete Laud, <a href="mailto:p.j.laud@sheffield.ac.uk">p.j.laud@sheffield.ac.uk</a></p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Selected example datasets from Newcombe 1998 and Fagerland et al. 2011</span></span></span>
+<span class="r-in"><span><span class="co"># (note Fagerland et al. appear to have the Miettinen-Nurminen method</span></span></span>
+<span class="r-in"><span><span class="co">#  labelled as Koopman)</span></span></span>
+<span class="r-in"><span><span class="fu">rrci</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  x1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span>, n1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">56</span>, <span class="fl">34</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  x2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, n2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">29</span>, <span class="fl">34</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  precis <span class="op">=</span> <span class="fl">4</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> , , 5/56 vs 0/29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     lower est    upper</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SCAS               0.7696 Inf      Inf</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Gart-Nam           0.7822 Inf      Inf</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Miettinen-Nurminen 0.7175 Inf      Inf</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Koopman            0.7257 Inf      Inf</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-W            0.6292 Inf      Inf</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-J            0.8753 Inf      Inf</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Katz log           0.0000 Inf      Inf</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Adjusted log       0.3287 Inf 100.3502</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> , , 7/34 vs 1/34</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     lower est    upper</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SCAS               1.2383   7 129.3294</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Gart-Nam           1.2532   7 130.8308</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Miettinen-Nurminen 1.2086   7  43.0330</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Koopman            1.2209   7  42.5757</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-W            1.1537   7  41.9763</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-J            1.2771   7  67.1689</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Katz log           0.9096   7  53.8695</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Adjusted log       0.9241   7  27.0523</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $call</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> distrib   level      cc </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   "bin"  "0.95" "FALSE" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="co"># With conventional continuity adjustment</span></span></span>
+<span class="r-in"><span><span class="fu">rrci</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  x1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span>, n1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">56</span>, <span class="fl">34</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  x2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, n2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">29</span>, <span class="fl">34</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  precis <span class="op">=</span> <span class="fl">4</span>, cc <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> , , 5/56 vs 0/29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        lower est upper</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SCAS_cc               0.4628 Inf   Inf</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Gart-Nam_cc           0.4678 Inf   Inf</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Miettinen-Nurminen_cc 0.4765 Inf   Inf</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Koopman_cc            0.4810 Inf   Inf</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-W_cc            0.4779 Inf   Inf</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-J_cc            0.5654 Inf   Inf</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> , , 7/34 vs 1/34</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        lower est      upper</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SCAS_cc               0.9360   7 27593.3534</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Gart-Nam_cc           0.9456   7 43279.8893</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Miettinen-Nurminen_cc 0.9424   7   149.5435</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Koopman_cc            0.9512   7   147.7432</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-W_cc            0.9712   7   136.6421</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-J_cc            1.0356   7   282.5531</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $call</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> distrib   level      cc </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   "bin"  "0.95"   "0.5" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="co"># With intermediate continuity adjustment</span></span></span>
+<span class="r-in"><span><span class="fu">rrci</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  x1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span>, n1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">56</span>, <span class="fl">34</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  x2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, n2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">29</span>, <span class="fl">34</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  precis <span class="op">=</span> <span class="fl">4</span>, cc <span class="op">=</span> <span class="fl">0.25</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> , , 5/56 vs 0/29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                              lower est upper</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SCAS_cc(0.25)               0.5853 Inf   Inf</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Gart-Nam_cc(0.25)           0.5928 Inf   Inf</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Miettinen-Nurminen_cc(0.25) 0.5788 Inf   Inf</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Koopman_cc(0.25)            0.5847 Inf   Inf</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-W_cc(0.25)            0.5444 Inf   Inf</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-J_cc(0.25)            0.6838 Inf   Inf</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> , , 7/34 vs 1/34</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                              lower est    upper</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SCAS_cc(0.25)               1.0724   7 422.9320</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Gart-Nam_cc(0.25)           1.0843   7 437.4584</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Miettinen-Nurminen_cc(0.25) 1.0643   7  71.7594</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Koopman_cc(0.25)            1.0746   7  70.9530</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-W_cc(0.25)            1.0563   7  66.8112</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-J_cc(0.25)            1.1453   7 121.2444</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $call</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> distrib   level      cc </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   "bin"  "0.95"  "0.25" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 
