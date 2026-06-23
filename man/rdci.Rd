@@ -63,7 +63,8 @@ rate difference (RD) contrast, with or without continuity adjustment.
 \itemize{
 \item SCAS (skewness-corrected asymptotic score)
 \item Miettinen-Nurminen, Mee, Koopman, Gart-Nam Asymptotic Score methods
-\item MOVER-W (aka Newcombe Hybrid Score for binomial RD)
+\item MOVER-W (Method of Variance Estimates Recovery based on Wilson intervals,
+aka Newcombe Hybrid Score or 'square-and-add')
 \item MOVER-J (based on Jeffreys intervals)
 \item Agresti-Caffo (binomial RD only)
 \item Approximate normal (Wald) method

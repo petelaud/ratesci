@@ -46,7 +46,7 @@ data:\cr
 
 \item{a1, b1, a2, b2}{Numbers defining the Beta(ai,bi) prior distributions for
 each group (default ai = bi = 0.5 for Jeffreys method). Gamma priors for
-Poisson rates require only a1, a2.}
+Poisson rates require only a1, a2. Only applies for \code{type = "jeff"}.}
 
 \item{type}{Character string indicating the method used for the intervals for
 the individual group rates. \cr
