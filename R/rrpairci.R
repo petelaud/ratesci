@@ -13,6 +13,7 @@
 #' - MOVER-NW (based on Wilson method with Newcombe correlation adjustment)
 #' - MOVER-NJ (based on Jeffreys method with correlation adjustment)
 #' - Bonett-Price hybrid method
+#' - Bonett-Price-J variant using Jeffreys intervals
 #' - Approximate log-normal (Wald) method
 #'     (strongly advise this is not used for any purpose but included for reference)
 #'
@@ -144,7 +145,7 @@ rrpairci <- function(x,
 
   methodnames <- c(
     "SCAS", "SCASu", "Tang score", "MOVER-W", "MOVER-NW", "MOVER-NJ",
-    "Wald", "Bonett-Price hybrid",  "Bonett-Price Jeffreys hybrid"
+    "Wald", "Bonett-Price",  "Bonett-Price-J"
   )
 
   mydimnames[[3]] <- methodnames
@@ -167,11 +168,11 @@ rrpairci <- function(x,
 
   if (std_est) outarr[, 2, ] <- est
   if (cc != FALSE) {
-    if (cc != FALSE) methodnames <- paste("Continuity adjusted", methodnames)
+    methodnames <- paste0(methodnames, "_cc")
+    if (cc != 0.5) methodnames <- paste0(methodnames, "(", cc, ")")
     mydimnames[[3]] <- methodnames
     dimnames(outarr) <- mydimnames
     outarr <- outarr[, , c(1:6, 8), drop = FALSE]
-    #    if (cc != TRUE) outarr <- outarr[, , 1:4, drop = FALSE]
   }
   # dimnames(outarr) <- mydimnames
   outarr <- aperm(round(outarr, precis), c(3, 2, 1))[, , 1]

@@ -9,8 +9,8 @@
 #' - SCAS (skewness-corrected asymptotic score)
 #' - SCASu (omitting the 'N-1' adjustment)
 #' - Tango Asymptotic Score method
-#' - MOVER-NW Wilson (aka Newcombe Hybrid Score or square-and-add)
-#' - MOVER-NJ Jeffreys
+#' - MOVER-NW (aka Newcombe Hybrid Score or square-and-add)
+#' - MOVER-NJ (based on Jeffreys intervals)
 #' - Agresti-Min
 #' - Bonett-Price
 #' - Approximate normal (Wald) method
@@ -147,11 +147,11 @@ rdpairci <- function(x,
 
   if (std_est) outarr[, 2, ] <- est
   if (cc != FALSE) {
-    if (cc != FALSE) methodnames <- paste("Continuity adjusted", methodnames)
+    methodnames <- paste0(methodnames, "_cc")
+    if (cc != 0.5) methodnames <- paste0(methodnames, "(", cc, ")")
     mydimnames[[3]] <- methodnames
     dimnames(outarr) <- mydimnames
     outarr <- outarr[, , 1:6, drop = FALSE]
-#    if (cc != TRUE) outarr <- outarr[, , 1:5, drop = FALSE]
   }
   # dimnames(outarr) <- mydimnames
   outarr <- aperm(round(outarr, precis), c(3, 2, 1))[, , 1]

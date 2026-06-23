@@ -125,7 +125,7 @@ scaspci <- function(x,
 #' probability close to the nominal levels (see Laud 2017 and Laud 2018):
 #' - SCAS (skewness-corrected asymptotic score)
 #' - Jeffreys
-#' - mid-p (two versions, using exact calculation or approximation via
+#' - midp (two versions, using exact calculation or approximation via
 #' Beta/Gamma distribution, see p.115 of Brown et al.))
 #' The following more approximate methods are included for users wishing to use
 #' a more established or commonly used method:
@@ -330,7 +330,7 @@ rateci <- function(x,
     if (cc != 0.5) outarr <- outarr[, , 1:6, drop=FALSE]
   }
   if (cc == 0) {
-    mydimnames[[3]] <- c("SCAS", "Jeffreys", "mid-p", "mid-p(beta)",
+    mydimnames[[3]] <- c("SCAS", "Jeffreys", "midp", "midp(beta)",
                          "Wilson", "Wald", "Agresti-Coull")
     if (distrib == "bin") {
       outlist <- list(scas = ci_scas, jeff = ci_jeff, midp = ci_exact,
@@ -338,10 +338,10 @@ rateci <- function(x,
     } else if (distrib == "poi") {
       outlist <- list(scas = ci_scas, jeff = ci_jeff, midp = ci_exact,
                       midp_gamma = ci_beta)
-      mydimnames[[3]][4] <- "mid-p(gamma)"
+      mydimnames[[3]][4] <- "midp(gamma)"
     }
   } else if (cc == 0.5) {
-    mydimnames[[3]] <- c("SCAS_cc", "Jeffreys_cc", "Clopper-Pearson", "CP(beta)",
+    mydimnames[[3]] <- c("SCAS_cc", "Jeffreys_cc", "Clopper-Pearson", "Clopper-Pearson(beta)",
                          "Wilson_cc", "Wald_cc", "Blaker")
     if (distrib == "bin") {
       outlist <- list(scas_cc = ci_scas, jeff_cc = ci_jeff, cp = ci_exact,
@@ -352,20 +352,20 @@ rateci <- function(x,
       mydimnames[[3]][c(3,4)] <- c("Garwood", "Garwood(gamma)")
     }
   } else {
-    mydimnames[[3]] <- c("SCAS_cc", "Jeffreys_cc", "mid-p_cc", "mid-p(beta)_cc",
-                         "Wilson_cc", "Wald_cc")
+    mydimnames[[3]] <- paste0(c("SCAS_cc(", "Jeffreys_cc(", "midp_cc(", "midp(beta)_cc(",
+                         "Wilson_cc(", "Wald_cc("), cc, ")")
     if (distrib == "bin") {
       outlist <- list(scas_cc = ci_scas, jeff_cc = ci_jeff, beta_cc = ci_beta)
     } else if (distrib == "poi") {
       outlist <- list(scas_cc = ci_scas, jeff_cc = ci_jeff, gamma_cc = ci_beta)
-      mydimnames[[3]][4] <- "mid-p(gamma)_cc"
+      mydimnames[[3]][4] <- "midp(gamma)_cc"
     }
     # exact method not applicable if using a compromise value of cc
     # - but experimental beta/gamma distribution version included
   }
   if (distrib == "poi") mydimnames[[3]] <- mydimnames[[3]][mydimnames[[3]] != "Agresti-Coull"]
   dimnames(outarr) <- mydimnames
-  outarr <- aperm(outarr, c(3,2,1))
+  outarr <- aperm(round(outarr, precis), c(3,2,1))
 
   call <- c(
     distrib = distrib, level = level, cc = cc, std_est = std_est

@@ -39,7 +39,7 @@ To calculate a confidence interval (CI) for a paired risk difference ($\hat{\the
 
 The plots below illustrate the one-sided and two-sided interval coverage probabilities achieved by SCAS compared to some other popular methods[^1], when $N=40$ and the correlation coefficient is 0.25. A selection of coverage probability plots for other sample sizes and correlations can be found in the "plots" folder of the [cpplot GitHub repository](https://github.com/petelaud/cpplot/tree/master/plots).
 
-[^1]: SCASu = SCAS omitting variance bias correction; AS = Tang; MOVER-NJ = Method of Variance Estimates Recovery, based on Newcombe's correlation adjustment but using Jeffreys equal-tailed intervals instead of Wilson; MOVER-W = MOVER using Wilson intervals, and omitting Newcombe's correlation correction; BP = Bonett-Price
+[^1]: SCASu = SCAS omitting 'N-1' variance bias correction; AS = Tang; MOVER-NJ = Method of Variance Estimates Recovery, based on Newcombe's correlation adjustment but using Jeffreys equal-tailed intervals instead of Wilson; MOVER-W = MOVER using Wilson intervals, and omitting Newcombe's correlation correction; BP = Bonett-Price
 
 ![](images/RRpair40_95_0.25_small.jpg)
 

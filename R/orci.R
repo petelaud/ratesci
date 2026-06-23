@@ -8,8 +8,8 @@
 #'
 #' - SCAS (skewness-corrected asymptotic score)
 #' - Miettinen-Nurminen, Gart and unadjusted Asymptotic Score methods
-#' - MOVER-R Wilson
-#' - MOVER-R Jeffreys
+#' - MOVER-W
+#' - MOVER-J (based on Jeffreys intervalse)
 #' - Approximate normal (Woolf/Gart) methods
 #'     (strongly advise this is not used for any purpose but included for reference)
 #'
@@ -173,10 +173,10 @@ orci <- function(x1,
   mydimnames[[1]] <- paste0(x1, "/", n1, " vs ", x2, "/", n2)
 
   methodnames <- c(
-    "SCAS", "Gart Asymptotic Score", "Miettinen-Nurminen",
+    "SCAS", "Gart", "Miettinen-Nurminen",
     "Uncorrected Asymptotic Score",
-    "MOVER-R Wilson",
-    "MOVER-R Jeffreys",
+    "MOVER-W",
+    "MOVER-J",
     "Woolf logit",
     "Gart adjusted logit"
   )
@@ -193,7 +193,8 @@ orci <- function(x1,
 
   if (std_est) outarr[, 2, ] <- est
   if (cc != FALSE) {
-    methodnames <- paste("Continuity adjusted", methodnames)
+    methodnames <- paste0(methodnames, "_cc")
+    if (cc != 0.5) methodnames <- paste0(methodnames, "(", cc, ")")
     mydimnames[[3]] <- methodnames
     dimnames(outarr) <- mydimnames
     outarr <- outarr[, , 1:6, drop = FALSE]

@@ -83,7 +83,7 @@ orpairci <- function(x,
   mydimnames <- dimnames(ci_scasp)
 
   methodnames <- c(
-    "Transformed SCASp", "Transformed mid-P", "Transformed Wilson", "Transformed Jeffreys",
+    "Transformed SCASp", "Transformed midp", "Transformed Wilson", "Transformed Jeffreys",
     "Wald"
   )
 
@@ -103,10 +103,11 @@ orpairci <- function(x,
 
   if (std_est) outarr[, 2, ] <- est
   if (cc != FALSE) {
-    if (cc != FALSE) methodnames <- paste("Continuity adjusted", methodnames)
+    methodnames <- paste0(methodnames, "_cc")
+    if (cc != 0.5) methodnames <- paste0(methodnames, "(", cc, ")")
     mydimnames[[3]] <- methodnames
     dimnames(outarr) <- mydimnames
-    if (cc == TRUE || cc == 0.5) methodnames[2] <- "Transformed Clopper-Pearson"
+    if (cc == 0.5) methodnames[2] <- "Transformed Clopper-Pearson"
     mydimnames[[3]] <- methodnames
     dimnames(outarr) <- mydimnames
     outarr <- outarr[, , c(1:4), drop = FALSE]

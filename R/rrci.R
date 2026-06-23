@@ -7,9 +7,9 @@
 #' rate ratio (/relative risk) contrast (RR), with or without continuity adjustment.
 #'
 #' - SCAS (skewness-corrected asymptotic score)
-#' - Miettinen-Nurminen,Koopman, Gart-Nam Asymptotic Score methods
-#' - MOVER-R Wilson
-#' - MOVER-R Jeffreys
+#' - Miettinen-Nurminen, Koopman, Gart-Nam Asymptotic Score methods
+#' - MOVER-W
+#' - MOVER-J (based on Jeffreys intervals)
 #' - Approximate normal (Katz log) methods
 #'     (strongly advise this is not used for any purpose but included for reference)
 #'
@@ -178,7 +178,7 @@ rrci <- function(x1,
 
   methodnames <- c(
     "SCAS", "Gart-Nam", "Miettinen-Nurminen", "Koopman",
-    "MOVER-R Wilson", "MOVER-R Jeffreys",
+    "MOVER-W", "MOVER-J",
     "Katz log", "Adjusted log"
   )
   if (distrib == "poi") methodnames[7] <- "Approximate Lognormal"
@@ -193,7 +193,8 @@ rrci <- function(x1,
 
   if (std_est) outarr[, 2, ] <- est
   if (cc != FALSE) {
-    methodnames <- paste("Continuity adjusted", methodnames)
+    methodnames <- paste0(methodnames, "_cc")
+    if (cc != 0.5) methodnames <- paste0(methodnames, "(", cc, ")")
     mydimnames[[3]] <- methodnames
     dimnames(outarr) <- mydimnames
     outarr <- outarr[, , 1:6, drop = FALSE]

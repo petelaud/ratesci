@@ -53,9 +53,9 @@ as appropriate for the selected distribution (binomial or Poisson) for the
 rate ratio (/relative risk) contrast (RR), with or without continuity adjustment.
 \itemize{
 \item SCAS (skewness-corrected asymptotic score)
-\item Miettinen-Nurminen,Koopman, Gart-Nam Asymptotic Score methods
-\item MOVER-R Wilson
-\item MOVER-R Jeffreys
+\item Miettinen-Nurminen, Koopman, Gart-Nam Asymptotic Score methods
+\item MOVER-W
+\item MOVER-J (based on Jeffreys intervals)
 \item Approximate normal (Katz log) methods
 (strongly advise this is not used for any purpose but included for reference)
 }

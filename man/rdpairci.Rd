@@ -43,8 +43,8 @@ adjustment (where available).
 \item SCAS (skewness-corrected asymptotic score)
 \item SCASu (omitting the 'N-1' adjustment)
 \item Tango Asymptotic Score method
-\item MOVER-NW Wilson (aka Newcombe Hybrid Score or square-and-add)
-\item MOVER-NJ Jeffreys
+\item MOVER-NW (aka Newcombe Hybrid Score or square-and-add)
+\item MOVER-NJ (based on Jeffreys intervals)
 \item Agresti-Min
 \item Bonett-Price
 \item Approximate normal (Wald) method

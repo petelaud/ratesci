@@ -9,10 +9,10 @@
 #'
 #' - SCAS (skewness-corrected asymptotic score)
 #' - Miettinen-Nurminen, Mee, Koopman, Gart-Nam Asymptotic Score methods
-#' - MOVER Wilson (aka Newcombe Hybrid Score for binomial RD)
-#' - MOVER Jeffreys
+#' - MOVER-W (aka Newcombe Hybrid Score for binomial RD)
+#' - MOVER-J (based on Jeffreys intervals)
 #' - Agresti-Caffo (binomial RD only)
-#' - Approximate normal (Wald) methods
+#' - Approximate normal (Wald) method
 #'     (strongly advise this is not used for any purpose but included for reference)
 #'
 #' @param x1,x2 Numeric vectors of numbers of events in group 1 & group 2
@@ -190,11 +190,11 @@ rdci <- function(x1,
 
   methodnames <- c(
     "SCAS", "Gart-Nam", "Miettinen-Nurminen",
-    "Mee", "MOVER Wilson", "MOVER Jeffreys",
+    "Mee", "MOVER-W", "MOVER-J",
     "Wald", "Agresti-Caffo"
   )
   if (distrib == "poi") methodnames[7] <- "Approximate Normal"
-  if (cc == TRUE) methodnames[8] <- "Hauck-Anderson"
+  if (cc == 0.5) methodnames[8] <- "Hauck-Anderson"
 
   mydimnames[[3]] <- methodnames
 
@@ -206,10 +206,14 @@ rdci <- function(x1,
 
   if (std_est) outarr[, 2, ] <- est
   if (cc != FALSE || distrib == "poi") {
-    if (cc != FALSE) methodnames <- paste("Continuity adjusted", methodnames)
+    if (cc != FALSE) {
+      methodnames <- paste0(methodnames, "_cc")
+      if (cc == 0.5) methodnames[8] <- "Hauck-Anderson"
+      if (cc != 0.5) methodnames <- paste0(methodnames, "(", cc, ")")
+    }
     mydimnames[[3]] <- methodnames
     dimnames(outarr) <- mydimnames
-    if (cc != TRUE || distrib == "poi") outarr <- outarr[, , 1:7, drop = FALSE]
+    if (cc != 0.5 || distrib == "poi") outarr <- outarr[, , 1:7, drop = FALSE]
   }
   if (distrib == "poi") outarr <- outarr[, , -c(2, 4), drop = FALSE]
   # dimnames(outarr) <- mydimnames

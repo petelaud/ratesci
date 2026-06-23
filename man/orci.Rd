@@ -39,8 +39,8 @@ contrast (OR), with or without continuity adjustment.
 \itemize{
 \item SCAS (skewness-corrected asymptotic score)
 \item Miettinen-Nurminen, Gart and unadjusted Asymptotic Score methods
-\item MOVER-R Wilson
-\item MOVER-R Jeffreys
+\item MOVER-W
+\item MOVER-J (based on Jeffreys intervalse)
 \item Approximate normal (Woolf/Gart) methods
 (strongly advise this is not used for any purpose but included for reference)
 }

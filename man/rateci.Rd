@@ -43,13 +43,12 @@ affected.)}
 A list containing, for each method, a matrix containing lower and
 upper confidence limits and point estimate of p for each value of x and n.
 Methods shown depend on the cc parameter, which specifies whether the
-continuity adjustment is applied to the SCAS and Jeffreys methods. The
-corresponding 'exact' method is Clopper-Pearson/Garwood if cc = TRUE and
-mid-p if cc = FALSE.
+continuity adjustment is applied. The corresponding 'exact' method is
+Clopper-Pearson/Garwood if cc = TRUE and mid-p if cc = FALSE.
 An additional output object 'estimates' is provided for a side-by-side
-comparison of all methods. These are grouped depending on the cc argument
-(if cc = TRUE then the continuity-adjusted and exact strictly conservative
-methods are included)
+comparison of all methods. These are also grouped depending on the cc
+argument (if cc = TRUE then the continuity-adjusted and exact strictly
+conservative methods are included)
 The last list item contains details of the function call.
 }
 \description{
@@ -60,7 +59,7 @@ probability close to the nominal levels (see Laud 2017 and Laud 2018):
 \itemize{
 \item SCAS (skewness-corrected asymptotic score)
 \item Jeffreys
-\item mid-p (two versions, using exact calculation or approximation via
+\item midp (two versions, using exact calculation or approximation via
 Beta/Gamma distribution, see p.115 of Brown et al.))
 The following more approximate methods are included for users wishing to use
 a more established or commonly used method:
