@@ -18,7 +18,7 @@
 #'   0.95).
 #' @param a1,b1,a2,b2 Numbers defining the Beta(ai,bi) prior distributions for
 #'   each group (default ai = bi = 0.5 for Jeffreys method). Gamma priors for
-#'   Poisson rates require only a1, a2.
+#'   Poisson rates require only a1, a2. Only applies for `type = "jeff"`.
 #' @param contrast Character string indicating the contrast of interest: \cr
 #'  "RD" = rate difference (default); \cr
 #'  "RR" = rate ratio; \cr
@@ -287,8 +287,9 @@ moverci <- function(x1,
   row.names(estimates) <- NULL
   call <- c(
     distrib = distrib, contrast = contrast, level = level, type = type, adj = adj,
-    cc = cc, a1 = a1, b1 = b1, a2 = a2, b2 = b2
+    cc = cc
   )
+  if (type == "jeff") call <- c(call, a1 = a1, b1 = b1, a2 = a2, b2 = b2)
   outlist <-list(estimates = estimates, call = call)
   return(outlist)
 }
