@@ -480,7 +480,7 @@ test_that("legacy & new methods match published examples", {
   )
   # Wald-cc RD
   expect_equal(
-    unname(round(rdpairci(x = c(1, 1, 7, 12), cc = TRUE)$estimates["Continuity adjusted Wald", c(1, 3)], 3)),
+    unname(round(rdpairci(x = c(1, 1, 7, 12), cc = TRUE)$estimates["Wald_cc", c(1, 3)], 3)),
     c(-0.529, -0.042)
   )
   # Bonett-Price RD
@@ -495,7 +495,7 @@ test_that("legacy & new methods match published examples", {
   )
   # Bonett-Price RR
   expect_equal(
-    unname(round(rrpairci(x = c(1, 1, 7, 12))$estimates["Bonett-Price hybrid", c(1, 3)], 3)),
+    unname(round(rrpairci(x = c(1, 1, 7, 12))$estimates["Bonett-Price", c(1, 3)], 3)),
     c(0.068, 0.923)
   )
 
@@ -592,7 +592,7 @@ test_that("legacy & new methods match published examples", {
   # paired OR from Fagerland
   # midp
   expect_equal(
-    unname(round(orpairci(x = c(1, 1, 7, 12))$estimates["Transformed mid-P", c(1, 3)], 3)),
+    unname(round(orpairci(x = c(1, 1, 7, 12))$estimates["Transformed midp", c(1, 3)], 3)),
     c(0.006, 0.924)
   )
   # C-P exact
