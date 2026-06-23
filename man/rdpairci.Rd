@@ -34,6 +34,15 @@ places) to be used in root-finding subroutine for the score confidence
 intervals. (Note other methods use closed-form calculations so are not
 affected.)}
 }
+\value{
+A list containing the following components: \describe{
+\item{data}{the input data in 2x2 matrix form.}
+\item{estimates}{an array containing the confidence interval for paired RD
+using various methods. The methods shown depends on the cc argument
+(if cc = TRUE then the continuity-adjusted methods are given).}
+\item{call}{details of the function call.}
+}
+}
 \description{
 Confidence intervals for comparisons of two binomial rates from paired data.
 This convenience wrapper function produces a selection of the methods below
@@ -51,7 +60,20 @@ adjustment (where available).
 (strongly advise this is not used for any purpose but included for reference)
 }
 }
+\examples{
+# Example data from Fagerland et al 2014
+rdpairci(x = c(1, 1, 7, 12), precis = 3)
+# with conventional continuity adjustment
+rdpairci(x = c(1, 1, 7, 12), precis = 3, cc = TRUE)
+# with intermediate continuity adjustment
+rdpairci(x = c(1, 1, 7, 12), precis = 3, cc = 0.25)
+
+}
 \references{
+Fagerland MW, Lydersen S, Laake P. Recommended tests and
+confidence intervals for paired binomial proportions.
+Statistics in Medicine 2014; 33(16):2850-2875
+
 Laud PJ. Improved confidence intervals and tests for paired binomial
 proportions. (2026, Under review)
 }

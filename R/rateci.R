@@ -181,14 +181,30 @@ scaspci <- function(x,
 #' @return A list containing, for each method, a matrix containing lower and
 #'   upper confidence limits and point estimate of p for each value of x and n.
 #'   Methods shown depend on the cc parameter, which specifies whether the
-#'   continuity adjustment is applied to the SCAS and Jeffreys methods. The
-#'   corresponding 'exact' method is Clopper-Pearson/Garwood if cc = TRUE and
-#'   mid-p if cc = FALSE.
+#'   continuity adjustment is applied. The corresponding 'exact' method is
+#'   Clopper-Pearson/Garwood if cc = TRUE and mid-p if cc = FALSE.
 #'   An additional output object 'estimates' is provided for a side-by-side
-#'   comparison of all methods. These are grouped depending on the cc argument
-#'   (if cc = TRUE then the continuity-adjusted and exact strictly conservative
-#'   methods are included)
+#'   comparison of all methods. These are also grouped depending on the cc
+#'   argument (if cc = TRUE then the continuity-adjusted and exact strictly
+#'   conservative methods are included)
 #'   The last list item contains details of the function call.
+#' @examples
+#' # Selected example datasets from Newcombe 1998
+#' rateci(
+#'   x = c(15, 1), n = c(148, 29),
+#'   precis = 4
+#' )
+#' # With conventional continuity adjustment
+#' rateci(
+#'   x = c(15, 1), n = c(148, 29),
+#'   precis = 4, cc = TRUE
+#' )
+#' # With intermediate continuity adjustment
+#' rateci(
+#'   x = c(15, 1), n = c(148, 29),
+#'   precis = 4, cc = 0.25
+#' )
+#'
 #' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
 #' @references
 #'   Laud PJ. Equal-tailed confidence intervals for comparison of

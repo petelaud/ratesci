@@ -47,6 +47,14 @@ places) to be used in root-finding subroutine for the score confidence
 intervals. (Note other methods use closed-form calculations so are not
 affected.)}
 }
+\value{
+A list containing the following components: \describe{
+\item{estimates}{an array containing the confidence interval for RD
+using various methods. The methods shown depends on the cc argument
+(if cc = TRUE then the continuity-adjusted methods are given).}
+\item{call}{details of the function call.}
+}
+}
 \description{
 Confidence intervals for comparisons of two binomial or Poisson rates.
 This convenience wrapper function produces a selection of the methods below
@@ -62,9 +70,35 @@ rate difference (RD) contrast, with or without continuity adjustment.
 (strongly advise this is not used for any purpose but included for reference)
 }
 }
+\examples{
+# Selected example datasets from Newcombe 1998 and Fagerland et al. 2011
+# (note Fagerland et al. have the Mee method labelled as Miettinen-Nurminen)
+rdci(
+  x1 = c(5, 7), n1 = c(56, 34),
+  x2 = c(0, 1), n2 = c(29, 34),
+  precis = 4
+)
+# With conventional continuity adjustment
+rdci(
+  x1 = c(5, 7), n1 = c(56, 34),
+  x2 = c(0, 1), n2 = c(29, 34),
+  precis = 4, cc = TRUE
+)
+# With intermediate continuity adjustment
+rdci(
+  x1 = c(5, 7), n1 = c(56, 34),
+  x2 = c(0, 1), n2 = c(29, 34),
+  precis = 4, cc = 0.25
+)
+
+}
 \references{
 Laud PJ. Equal-tailed confidence intervals for comparison of
-rates. Pharmaceutical Statistics 2017; 16:334-348. (Appendix A.4)
+rates. Pharmaceutical Statistics 2017; 16:334-348.
+
+Newcombe RG. Interval estimation for the difference between independent
+proportions: comparison of eleven methods. Statistics in Medicine 1998;
+17(8):873-890.
 }
 \author{
 Pete Laud, \email{p.j.laud@sheffield.ac.uk}

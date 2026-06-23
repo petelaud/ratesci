@@ -35,7 +35,7 @@
   Poisson with point estimate displayed as NaN
   (prevents error in `pairbinci()` with `method` = "BP").
 ### In `moverci()`:
-* Present NaN MOVER-R Wilson upper limits for RR and OR as Inf. 
+* Present NaN MOVER-W upper limits for RR and OR as Inf. 
 
 
 # ratesci 1.0.0 (2025-06-20)

@@ -32,9 +32,27 @@
 #'   interval (FALSE).
 #' @param precis Number (default 6) specifying precision (i.e. number of decimal
 #'   places) to be used in output.
+#' @return A list containing the following components: \describe{
+#'   \item{data}{the input data in 2x2 matrix form.}
+#'   \item{estimates}{an array containing the confidence interval for paired OR
+#'   using various methods. The methods shown depends on the cc argument
+#'   (if cc = TRUE then the continuity-adjusted methods are given).}
+#'   \item{call}{details of the function call.}
+#'   }
+#' @examples
+#' # Example data from Fagerland et al 2014
+#' orpairci(x = c(1, 1, 7, 12), precis = 3)
+#' # with conventional continuity adjustment
+#' orpairci(x = c(1, 1, 7, 12), precis = 3, cc = TRUE)
+#' # with intermediate continuity adjustment
+#' orpairci(x = c(1, 1, 7, 12), precis = 3, cc = 0.25)
 #'
 #' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
 #' @references
+#'   Fagerland MW, Lydersen S, Laake P. Recommended tests and
+#'   confidence intervals for paired binomial proportions.
+#'   Statistics in Medicine 2014; 33(16):2850-2875
+#'
 #'   Laud PJ. Improved confidence intervals and tests for paired binomial
 #'   proportions. (2026, Under review)
 #'

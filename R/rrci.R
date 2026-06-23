@@ -35,11 +35,38 @@
 #'   places) to be used in root-finding subroutine for the score confidence
 #'   intervals. (Note other methods use closed-form calculations so are not
 #'   affected.)
+#' @return A list containing the following components: \describe{
+#'   \item{estimates}{an array containing the confidence interval for RR
+#'   using various methods. The methods shown depends on the cc argument
+#'   (if cc = TRUE then the continuity-adjusted methods are given).}
+#'   \item{call}{details of the function call.}
+#'   }
+#' @examples
+#' # Selected example datasets from Newcombe 1998 and Fagerland et al. 2011
+#' # (note Fagerland et al. appear to have the Miettinen-Nurminen method
+#' #  labelled as Koopman)
+#' rrci(
+#'   x1 = c(5, 7), n1 = c(56, 34),
+#'   x2 = c(0, 1), n2 = c(29, 34),
+#'   precis = 4
+#' )
+#' # With conventional continuity adjustment
+#' rrci(
+#'   x1 = c(5, 7), n1 = c(56, 34),
+#'   x2 = c(0, 1), n2 = c(29, 34),
+#'   precis = 4, cc = TRUE
+#' )
+#' # With intermediate continuity adjustment
+#' rrci(
+#'   x1 = c(5, 7), n1 = c(56, 34),
+#'   x2 = c(0, 1), n2 = c(29, 34),
+#'   precis = 4, cc = 0.25
+#' )
 #'
 #' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
 #' @references
 #'   Laud PJ. Equal-tailed confidence intervals for comparison of
-#'   rates. Pharmaceutical Statistics 2017; 16:334-348. (Appendix A.4)
+#'   rates. Pharmaceutical Statistics 2017; 16:334-348.
 #'
 #' @export
 rrci <- function(x1,

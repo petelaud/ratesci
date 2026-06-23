@@ -98,6 +98,24 @@ has not (to the best of my knowledge) been published.
 
 This function is vectorised in x, n.
 }
+\examples{
+# Selected example datasets from Newcombe 1998
+rateci(
+  x = c(15, 1), n = c(148, 29),
+  precis = 4
+)
+# With conventional continuity adjustment
+rateci(
+  x = c(15, 1), n = c(148, 29),
+  precis = 4, cc = TRUE
+)
+# With intermediate continuity adjustment
+rateci(
+  x = c(15, 1), n = c(148, 29),
+  precis = 4, cc = 0.25
+)
+
+}
 \references{
 Laud PJ. Equal-tailed confidence intervals for comparison of
 rates. Pharmaceutical Statistics 2017; 16:334-348. (Appendix A.4)

@@ -34,6 +34,15 @@ places) to be used in root-finding subroutine for the score confidence
 intervals. (Note other methods use closed-form calculations so are not
 affected.)}
 }
+\value{
+A list containing the following components: \describe{
+\item{data}{the input data in 2x2 matrix form.}
+\item{estimates}{an array containing the confidence interval for paired RR
+using various methods. The methods shown depends on the cc argument
+(if cc = TRUE then the continuity-adjusted methods are given).}
+\item{call}{details of the function call.}
+}
+}
 \description{
 Confidence intervals for comparisons of two binomial rates from paired data.
 This convenience wrapper function produces a selection of the methods below
