@@ -164,9 +164,7 @@ moverci(x1 = 5, n1 = 56, x2 = 0, n2 = 29, type = "wilson")
 #> [1,] -0.03813715 0.08928571 0.19256  0.95  5 56  0 29 0.08928571     0
 #> 
 #> $call
-#>  distrib contrast    level     type      adj       cc       a1       b1 
-#>    "bin"     "RD"   "0.95" "wilson"  "FALSE"  "FALSE"    "0.5"    "0.5" 
-#>       a2       b2 
-#>    "0.5"    "0.5" 
+#>  distrib contrast    level     type      adj       cc 
+#>    "bin"     "RD"   "0.95" "wilson"  "FALSE"  "FALSE" 
 #> 
 ```

@@ -274,7 +274,7 @@ scorepairci(x = c(1, 1, 7, 12), contrast = "OR")
 #> 
 #> $estimates
 #>         lower      est    upper
-#> [1,] 0.007702 0.161862 0.912315
+#> [1,] 0.007702 0.161863 0.912316
 #> 
 #> $pval
 #>         chisq pval2sided theta0 scorenull  pval_left pval_right
@@ -293,8 +293,8 @@ scorepairci(x = c(1, 1, 7, 12), contrast = "OR", skew = FALSE, bcf = FALSE)
 #>   Failure       7      12
 #> 
 #> $estimates
-#>         lower      est   upper
-#> [1,] 0.022932 0.142857 0.88996
+#>         lower      est    upper
+#> [1,] 0.022931 0.142857 0.889959
 #> 
 #> $pval
 #>      chisq pval2sided theta0 scorenull  pval_left pval_right

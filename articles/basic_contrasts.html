@@ -164,21 +164,23 @@ coverage when group sizes are unequal.]</p>
 <p><code><a href="../reference/scoreci.html">scoreci()</a></code> is used as follows, for example to obtain a
 SCAS 95% CI for the difference <code>5/56 - 0/29</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">5</span>, n1 <span class="op">=</span> <span class="fl">56</span>, x2 <span class="op">=</span> <span class="fl">0</span>, n <span class="op">=</span> <span class="fl">29</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">5</span>, n1 <span class="op">=</span> <span class="fl">56</span>, x2 <span class="op">=</span> <span class="fl">0</span>, n2 <span class="op">=</span> <span class="fl">29</span>, precis <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="va">out</span><span class="op">$</span><span class="va">estimates</span></span>
-<span><span class="co">#&gt;        lower    est upper level x1 n1 x2 n2  p1hat p2hat  p1mle p2mle</span></span>
-<span><span class="co">#&gt; [1,] -0.0186 0.0917 0.187  0.95  5 56  0 29 0.0893     0 0.0917     0</span></span></code></pre></div>
+<span><span class="co">#&gt;        lower    est  upper level x1 n1 x2 n2  p1hat p2hat  p1mle p2mle</span></span>
+<span><span class="co">#&gt; [1,] -0.0186 0.0917 0.1867  0.95  5 56  0 29 0.0893     0 0.0917     0</span></span></code></pre></div>
 <!---
 For a Miettinen-Nurminen interval, set the argument `skew = FALSE`. For the closely-related Mee method, the variance bias correction would also be omitted:
 
 
 ``` r
-scoreci(x1 = 5, n1 = 56, x2 = 0, n = 29, skew = FALSE)$estimates
-#>        lower    est upper level x1 n1 x2 n2  p1hat p2hat  p1mle p2mle
-#> [1,] -0.0326 0.0893 0.193  0.95  5 56  0 29 0.0893     0 0.0893     0
-scoreci(x1 = 5, n1 = 56, x2 = 0, n = 29, skew = FALSE, bcf = FALSE)$estimates
-#>        lower    est upper level x1 n1 x2 n2  p1hat p2hat  p1mle p2mle
-#> [1,] -0.0313 0.0893 0.193  0.95  5 56  0 29 0.0893     0 0.0893     0
+scoreci(x1 = 5, n1 = 56, x2 = 0, n2 = 29, skew = FALSE)$estimates
+#>          lower      est    upper level x1 n1 x2 n2    p1hat p2hat    p1mle
+#> [1,] -0.032597 0.089286 0.193331  0.95  5 56  0 29 0.089286     0 0.089286
+#>      p2mle
+#> [1,]     0
+scoreci(x1 = 5, n1 = 56, x2 = 0, n2 = 29, skew = FALSE, bcf = FALSE)$estimates
+#>          lower      est   upper level x1 n1 x2 n2    p1hat p2hat    p1mle p2mle
+#> [1,] -0.031327 0.089286 0.19256  0.95  5 56  0 29 0.089286     0 0.089286     0
 ```
 --->
 <p>The underlying z-statistic is used to obtain a two-sided hypothesis
@@ -194,8 +196,8 @@ e.g. for non-inferiority testing (<code>pval_left</code> and
 vignette</a> for more details.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">out</span><span class="op">$</span><span class="va">pval</span></span>
-<span><span class="co">#&gt;      chisq pval2sided theta0 scorenull pval_left pval_right</span></span>
-<span><span class="co">#&gt; [1,]  3.02      0.082      0      1.74     0.959      0.041</span></span></code></pre></div>
+<span><span class="co">#&gt;         chisq pval2sided theta0 scorenull pval_left pval_right</span></span>
+<span><span class="co">#&gt; [1,] 3.024862 0.08199729      0  1.739213 0.9590014 0.04099865</span></span></code></pre></div>
 <p>The <code><a href="../reference/scoreci.html">scoreci()</a></code> function provides options to omit the
 skewness correction (<code>skew = FALSE</code> for the MN method) and
 the variance bias correction (<code>bcf = FALSE</code> for the Mee
@@ -204,19 +206,19 @@ chi-squared test). To keep things simple when choosing the SCAS method,
 you may instead use the <code><a href="../reference/scasci.html">scasci()</a></code> wrapper function instead
 of <code><a href="../reference/scoreci.html">scoreci()</a></code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/scasci.html">scasci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">5</span>, n1 <span class="op">=</span> <span class="fl">56</span>, x2 <span class="op">=</span> <span class="fl">0</span>, n <span class="op">=</span> <span class="fl">29</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
-<span><span class="co">#&gt;        lower    est upper level x1 n1 x2 n2  p1hat p2hat  p1mle p2mle</span></span>
-<span><span class="co">#&gt; [1,] -0.0186 0.0917 0.187  0.95  5 56  0 29 0.0893     0 0.0917     0</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/scasci.html">scasci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">5</span>, n1 <span class="op">=</span> <span class="fl">56</span>, x2 <span class="op">=</span> <span class="fl">0</span>, n2 <span class="op">=</span> <span class="fl">29</span>, precis <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
+<span><span class="co">#&gt;        lower    est  upper level x1 n1 x2 n2  p1hat p2hat  p1mle p2mle</span></span>
+<span><span class="co">#&gt; [1,] -0.0186 0.0917 0.1867  0.95  5 56  0 29 0.0893     0 0.0917     0</span></span></code></pre></div>
 <p>For analysis of relative risk, use:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/scasci.html">scasci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">5</span>, n1 <span class="op">=</span> <span class="fl">56</span>, x2 <span class="op">=</span> <span class="fl">0</span>, n <span class="op">=</span> <span class="fl">29</span>, contrast <span class="op">=</span> <span class="st">"RR"</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
-<span><span class="co">#&gt;      lower  est upper level x1 n1 x2 n2  p1hat p2hat  p1mle  p2mle</span></span>
-<span><span class="co">#&gt; [1,]  0.77 16.4   Inf  0.95  5 56  0 29 0.0893     0 0.0868 0.0053</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/scasci.html">scasci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">5</span>, n1 <span class="op">=</span> <span class="fl">56</span>, x2 <span class="op">=</span> <span class="fl">0</span>, n2 <span class="op">=</span> <span class="fl">29</span>, contrast <span class="op">=</span> <span class="st">"RR"</span>, precis <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
+<span><span class="co">#&gt;       lower     est upper level x1 n1 x2 n2  p1hat p2hat  p1mle  p2mle</span></span>
+<span><span class="co">#&gt; [1,] 0.7696 16.3634   Inf  0.95  5 56  0 29 0.0893     0 0.0868 0.0053</span></span></code></pre></div>
 <p>And for odds ratio:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/scasci.html">scasci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">5</span>, n1 <span class="op">=</span> <span class="fl">56</span>, x2 <span class="op">=</span> <span class="fl">0</span>, n <span class="op">=</span> <span class="fl">29</span>, contrast <span class="op">=</span> <span class="st">"OR"</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
-<span><span class="co">#&gt;      lower  est upper level x1 n1 x2 n2  p1hat p2hat  p1mle   p2mle</span></span>
-<span><span class="co">#&gt; [1,] 0.759 17.7   Inf  0.95  5 56  0 29 0.0893     0 0.0865 0.00533</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/scasci.html">scasci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">5</span>, n1 <span class="op">=</span> <span class="fl">56</span>, x2 <span class="op">=</span> <span class="fl">0</span>, n2 <span class="op">=</span> <span class="fl">29</span>, contrast <span class="op">=</span> <span class="st">"OR"</span>, precis <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
+<span><span class="co">#&gt;       lower    est upper level x1 n1 x2 n2  p1hat p2hat  p1mle  p2mle</span></span>
+<span><span class="co">#&gt; [1,] 0.7587 17.665   Inf  0.95  5 56  0 29 0.0893     0 0.0865 0.0053</span></span></code></pre></div>
 <p>For analysis of Poisson incidence rates, for example
 exposure-adjusted adverse event rates, the same methodology is adapted
 for the Poisson distribution, with the <code>distrib</code> argument.
@@ -224,9 +226,9 @@ So, for example if the denominators 56 and 29 represent the number of
 patient-years at risk in each group, instead of the number of
 patients:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/scasci.html">scasci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">5</span>, n1 <span class="op">=</span> <span class="fl">56</span>, x2 <span class="op">=</span> <span class="fl">0</span>, n <span class="op">=</span> <span class="fl">29</span>, contrast <span class="op">=</span> <span class="st">"RR"</span>, distrib <span class="op">=</span> <span class="st">"poi"</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
-<span><span class="co">#&gt;      lower  est upper level x1 n1 x2 n2  p1hat p2hat  p1mle   p2mle</span></span>
-<span><span class="co">#&gt; [1,] 0.726 16.1   Inf  0.95  5 56  0 29 0.0893     0 0.0865 0.00539</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/scasci.html">scasci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">5</span>, n1 <span class="op">=</span> <span class="fl">56</span>, x2 <span class="op">=</span> <span class="fl">0</span>, n2 <span class="op">=</span> <span class="fl">29</span>, contrast <span class="op">=</span> <span class="st">"RR"</span>, distrib <span class="op">=</span> <span class="st">"poi"</span>, precis <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
+<span><span class="co">#&gt;       lower     est upper level x1 n1 x2 n2  p1hat p2hat  p1mle  p2mle</span></span>
+<span><span class="co">#&gt; [1,] 0.7264 16.0536   Inf  0.95  5 56  0 29 0.0893     0 0.0865 0.0054</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="mover-methods">MOVER methods<a class="anchor" aria-label="anchor" href="#mover-methods"></a>
@@ -264,28 +266,14 @@ contrast).</p>
 <p>A MOVER-J interval for binomial RD from the same observed data as
 above would be obtained using:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/moverci.html">moverci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">5</span>, n1 <span class="op">=</span> <span class="fl">56</span>, x2 <span class="op">=</span> <span class="fl">0</span>, n <span class="op">=</span> <span class="fl">29</span><span class="op">)</span></span>
-<span><span class="co">#&gt; $estimates</span></span>
-<span><span class="co">#&gt;         lower   est upper level x1 n1 x2 n2  p1hat   p2hat</span></span>
-<span><span class="co">#&gt; [1,] -0.00973 0.084 0.177  0.95  5 56  0 29 0.0918 0.00775</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $call</span></span>
-<span><span class="co">#&gt;  distrib contrast    level     type      adj       cc       a1       b1 </span></span>
-<span><span class="co">#&gt;    "bin"     "RD"   "0.95"   "jeff"  "FALSE"  "FALSE"    "0.5"    "0.5" </span></span>
-<span><span class="co">#&gt;       a2       b2 </span></span>
-<span><span class="co">#&gt;    "0.5"    "0.5"</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/moverci.html">moverci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">5</span>, n1 <span class="op">=</span> <span class="fl">56</span>, x2 <span class="op">=</span> <span class="fl">0</span>, n2 <span class="op">=</span> <span class="fl">29</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
+<span><span class="co">#&gt;             lower        est     upper level x1 n1 x2 n2      p1hat       p2hat</span></span>
+<span><span class="co">#&gt; [1,] -0.009734968 0.08403347 0.1772258  0.95  5 56  0 29 0.09177968 0.007746206</span></span></code></pre></div>
 <p>For comparison, Newcombe’s version using Wilson intervals is:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/moverci.html">moverci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">5</span>, n1 <span class="op">=</span> <span class="fl">56</span>, x2 <span class="op">=</span> <span class="fl">0</span>, n <span class="op">=</span> <span class="fl">29</span>, type <span class="op">=</span> <span class="st">"wilson"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; $estimates</span></span>
-<span><span class="co">#&gt;        lower    est upper level x1 n1 x2 n2  p1hat p2hat</span></span>
-<span><span class="co">#&gt; [1,] -0.0381 0.0893 0.193  0.95  5 56  0 29 0.0893     0</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $call</span></span>
-<span><span class="co">#&gt;  distrib contrast    level     type      adj       cc       a1       b1 </span></span>
-<span><span class="co">#&gt;    "bin"     "RD"   "0.95" "wilson"  "FALSE"  "FALSE"    "0.5"    "0.5" </span></span>
-<span><span class="co">#&gt;       a2       b2 </span></span>
-<span><span class="co">#&gt;    "0.5"    "0.5"</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/moverci.html">moverci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">5</span>, n1 <span class="op">=</span> <span class="fl">56</span>, x2 <span class="op">=</span> <span class="fl">0</span>, n2 <span class="op">=</span> <span class="fl">29</span>, type <span class="op">=</span> <span class="st">"wilson"</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
+<span><span class="co">#&gt;            lower        est   upper level x1 n1 x2 n2      p1hat p2hat</span></span>
+<span><span class="co">#&gt; [1,] -0.03813715 0.08928571 0.19256  0.95  5 56  0 29 0.08928571     0</span></span></code></pre></div>
 <p>The MOVER approach may be further modified by adapting the Jeffreys
 interval (which uses a non-informative
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mi>e</mi><mi>t</mi><mi>a</mi><mo stretchy="false" form="prefix">(</mo><mn>0.5</mn><mo>,</mo><mn>0.5</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">Beta(0.5, 0.5)</annotation></semantics></math>
@@ -303,10 +291,10 @@ and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mn>2</mn></msub><annotation encoding="application/x-tex">p_2</annotation></semantics></math>
 might be updated as follows:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/moverbci.html">moverbci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">5</span>, n1 <span class="op">=</span> <span class="fl">56</span>, x2 <span class="op">=</span> <span class="fl">0</span>, n <span class="op">=</span> <span class="fl">29</span>, a1 <span class="op">=</span> <span class="fl">1.5</span>, b1 <span class="op">=</span> <span class="fl">9.5</span>, a2 <span class="op">=</span> <span class="fl">0.5</span>, b2 <span class="op">=</span> <span class="fl">10.5</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/moverbci.html">moverbci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">5</span>, n1 <span class="op">=</span> <span class="fl">56</span>, x2 <span class="op">=</span> <span class="fl">0</span>, n2 <span class="op">=</span> <span class="fl">29</span>, a1 <span class="op">=</span> <span class="fl">1.5</span>, b1 <span class="op">=</span> <span class="fl">9.5</span>, a2 <span class="op">=</span> <span class="fl">0.5</span>, b2 <span class="op">=</span> <span class="fl">10.5</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $estimates</span></span>
-<span><span class="co">#&gt;        lower    est upper level x1 n1 x2 n2 p1hat   p2hat</span></span>
-<span><span class="co">#&gt; [1,] 0.00917 0.0872 0.172  0.95  5 56  0 29 0.093 0.00578</span></span>
+<span><span class="co">#&gt;            lower        est     upper level x1 n1 x2 n2     p1hat       p2hat</span></span>
+<span><span class="co">#&gt; [1,] 0.009168536 0.08723163 0.1722089  0.95  5 56  0 29 0.0930101 0.005778473</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $call</span></span>
 <span><span class="co">#&gt;  distrib contrast    level     type      adj       cc       a1       b1 </span></span>
@@ -340,7 +328,33 @@ vs
 <p>Unfortunately, the MOVER method for contrast = “OR”, as described in
 <span class="citation">(<a href="#ref-fagerland2012">Fagerland and
 Newcombe 2012</a>)</span>, does not satisfy the second of these
-requirements.</p>
+requirements, unlike the asymptotic score and other methods:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/orci.html">orci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">5</span>, n1 <span class="op">=</span> <span class="fl">56</span>, x2 <span class="op">=</span> <span class="fl">1</span>, n2 <span class="op">=</span> <span class="fl">29</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
+<span><span class="co">#&gt; , , 5/56 vs 1/29</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;                                 lower      est    upper</span></span>
+<span><span class="co">#&gt; SCAS                         0.385475 2.745098 56.08070</span></span>
+<span><span class="co">#&gt; Gart                         0.389345 2.745098 56.59553</span></span>
+<span><span class="co">#&gt; Miettinen-Nurminen           0.392931 2.745098 18.56785</span></span>
+<span><span class="co">#&gt; Uncorrected Asymptotic Score 0.396590 2.745098 18.40530</span></span>
+<span><span class="co">#&gt; MOVER-W                      0.363784 2.745098 18.78207</span></span>
+<span><span class="co">#&gt; MOVER-J                      0.399469 2.745098 28.76882</span></span>
+<span><span class="co">#&gt; Woolf logit                  0.305395 2.745098 24.67482</span></span>
+<span><span class="co">#&gt; Gart adjusted logit          0.315100 2.745098 13.06682</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fl">1</span> <span class="op">/</span> <span class="fu"><a href="../reference/orci.html">orci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">51</span>, n1 <span class="op">=</span> <span class="fl">56</span>, x2 <span class="op">=</span> <span class="fl">28</span>, n2 <span class="op">=</span> <span class="fl">29</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
+<span><span class="co">#&gt; , , 51/56 vs 28/29</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;                                 lower      est     upper</span></span>
+<span><span class="co">#&gt; SCAS                         56.08210 2.745096 0.3854748</span></span>
+<span><span class="co">#&gt; Gart                         56.59630 2.745096 0.3893453</span></span>
+<span><span class="co">#&gt; Miettinen-Nurminen           18.56769 2.745096 0.3929306</span></span>
+<span><span class="co">#&gt; Uncorrected Asymptotic Score 18.40536 2.745096 0.3965898</span></span>
+<span><span class="co">#&gt; MOVER-W                      20.71423 2.745096 0.4012105</span></span>
+<span><span class="co">#&gt; MOVER-J                      32.91856 2.745096 0.4219566</span></span>
+<span><span class="co">#&gt; Woolf logit                  24.67491 2.745096 0.3053949</span></span>
+<span><span class="co">#&gt; Gart adjusted logit          13.06677 2.745096 0.3150998</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">

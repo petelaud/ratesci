@@ -78,10 +78,10 @@ difference `5/56 - 0/29`:
 
 ``` r
 
-out <- scoreci(x1 = 5, n1 = 56, x2 = 0, n = 29)
+out <- scoreci(x1 = 5, n1 = 56, x2 = 0, n2 = 29, precis = 4)
 out$estimates
-#>        lower    est upper level x1 n1 x2 n2  p1hat p2hat  p1mle p2mle
-#> [1,] -0.0186 0.0917 0.187  0.95  5 56  0 29 0.0893     0 0.0917     0
+#>        lower    est  upper level x1 n1 x2 n2  p1hat p2hat  p1mle p2mle
+#> [1,] -0.0186 0.0917 0.1867  0.95  5 56  0 29 0.0893     0 0.0917     0
 ```
 
 The underlying z-statistic is used to obtain a two-sided hypothesis test
@@ -97,8 +97,8 @@ more details.
 ``` r
 
 out$pval
-#>      chisq pval2sided theta0 scorenull pval_left pval_right
-#> [1,]  3.02      0.082      0      1.74     0.959      0.041
+#>         chisq pval2sided theta0 scorenull pval_left pval_right
+#> [1,] 3.024862 0.08199729      0  1.739213 0.9590014 0.04099865
 ```
 
 The
@@ -114,27 +114,27 @@ wrapper function instead of
 
 ``` r
 
-scasci(x1 = 5, n1 = 56, x2 = 0, n = 29)$estimates
-#>        lower    est upper level x1 n1 x2 n2  p1hat p2hat  p1mle p2mle
-#> [1,] -0.0186 0.0917 0.187  0.95  5 56  0 29 0.0893     0 0.0917     0
+scasci(x1 = 5, n1 = 56, x2 = 0, n2 = 29, precis = 4)$estimates
+#>        lower    est  upper level x1 n1 x2 n2  p1hat p2hat  p1mle p2mle
+#> [1,] -0.0186 0.0917 0.1867  0.95  5 56  0 29 0.0893     0 0.0917     0
 ```
 
 For analysis of relative risk, use:
 
 ``` r
 
-scasci(x1 = 5, n1 = 56, x2 = 0, n = 29, contrast = "RR")$estimates
-#>      lower  est upper level x1 n1 x2 n2  p1hat p2hat  p1mle  p2mle
-#> [1,]  0.77 16.4   Inf  0.95  5 56  0 29 0.0893     0 0.0868 0.0053
+scasci(x1 = 5, n1 = 56, x2 = 0, n2 = 29, contrast = "RR", precis = 4)$estimates
+#>       lower     est upper level x1 n1 x2 n2  p1hat p2hat  p1mle  p2mle
+#> [1,] 0.7696 16.3634   Inf  0.95  5 56  0 29 0.0893     0 0.0868 0.0053
 ```
 
 And for odds ratio:
 
 ``` r
 
-scasci(x1 = 5, n1 = 56, x2 = 0, n = 29, contrast = "OR")$estimates
-#>      lower  est upper level x1 n1 x2 n2  p1hat p2hat  p1mle   p2mle
-#> [1,] 0.759 17.7   Inf  0.95  5 56  0 29 0.0893     0 0.0865 0.00533
+scasci(x1 = 5, n1 = 56, x2 = 0, n2 = 29, contrast = "OR", precis = 4)$estimates
+#>       lower    est upper level x1 n1 x2 n2  p1hat p2hat  p1mle  p2mle
+#> [1,] 0.7587 17.665   Inf  0.95  5 56  0 29 0.0893     0 0.0865 0.0053
 ```
 
 For analysis of Poisson incidence rates, for example exposure-adjusted
@@ -145,9 +145,9 @@ each group, instead of the number of patients:
 
 ``` r
 
-scasci(x1 = 5, n1 = 56, x2 = 0, n = 29, contrast = "RR", distrib = "poi")$estimates
-#>      lower  est upper level x1 n1 x2 n2  p1hat p2hat  p1mle   p2mle
-#> [1,] 0.726 16.1   Inf  0.95  5 56  0 29 0.0893     0 0.0865 0.00539
+scasci(x1 = 5, n1 = 56, x2 = 0, n2 = 29, contrast = "RR", distrib = "poi", precis = 4)$estimates
+#>       lower     est upper level x1 n1 x2 n2  p1hat p2hat  p1mle  p2mle
+#> [1,] 0.7264 16.0536   Inf  0.95  5 56  0 29 0.0893     0 0.0865 0.0054
 ```
 
 ### MOVER methods
@@ -174,32 +174,18 @@ would be obtained using:
 
 ``` r
 
-moverci(x1 = 5, n1 = 56, x2 = 0, n = 29)
-#> $estimates
-#>         lower   est upper level x1 n1 x2 n2  p1hat   p2hat
-#> [1,] -0.00973 0.084 0.177  0.95  5 56  0 29 0.0918 0.00775
-#> 
-#> $call
-#>  distrib contrast    level     type      adj       cc       a1       b1 
-#>    "bin"     "RD"   "0.95"   "jeff"  "FALSE"  "FALSE"    "0.5"    "0.5" 
-#>       a2       b2 
-#>    "0.5"    "0.5"
+moverci(x1 = 5, n1 = 56, x2 = 0, n2 = 29)$estimates
+#>             lower        est     upper level x1 n1 x2 n2      p1hat       p2hat
+#> [1,] -0.009734968 0.08403347 0.1772258  0.95  5 56  0 29 0.09177968 0.007746206
 ```
 
 For comparison, Newcombe’s version using Wilson intervals is:
 
 ``` r
 
-moverci(x1 = 5, n1 = 56, x2 = 0, n = 29, type = "wilson")
-#> $estimates
-#>        lower    est upper level x1 n1 x2 n2  p1hat p2hat
-#> [1,] -0.0381 0.0893 0.193  0.95  5 56  0 29 0.0893     0
-#> 
-#> $call
-#>  distrib contrast    level     type      adj       cc       a1       b1 
-#>    "bin"     "RD"   "0.95" "wilson"  "FALSE"  "FALSE"    "0.5"    "0.5" 
-#>       a2       b2 
-#>    "0.5"    "0.5"
+moverci(x1 = 5, n1 = 56, x2 = 0, n2 = 29, type = "wilson")$estimates
+#>            lower        est   upper level x1 n1 x2 n2      p1hat p2hat
+#> [1,] -0.03813715 0.08928571 0.19256  0.95  5 56  0 29 0.08928571     0
 ```
 
 The MOVER approach may be further modified by adapting the Jeffreys
@@ -212,10 +198,10 @@ $`p_1`$ and $`p_2`$ might be updated as follows:
 
 ``` r
 
-moverbci(x1 = 5, n1 = 56, x2 = 0, n = 29, a1 = 1.5, b1 = 9.5, a2 = 0.5, b2 = 10.5)
+moverbci(x1 = 5, n1 = 56, x2 = 0, n2 = 29, a1 = 1.5, b1 = 9.5, a2 = 0.5, b2 = 10.5)
 #> $estimates
-#>        lower    est upper level x1 n1 x2 n2 p1hat   p2hat
-#> [1,] 0.00917 0.0872 0.172  0.95  5 56  0 29 0.093 0.00578
+#>            lower        est     upper level x1 n1 x2 n2     p1hat       p2hat
+#> [1,] 0.009168536 0.08723163 0.1722089  0.95  5 56  0 29 0.0930101 0.005778473
 #> 
 #> $call
 #>  distrib contrast    level     type      adj       cc       a1       b1 
@@ -239,7 +225,40 @@ equivariant, in the sense that:
 
 Unfortunately, the MOVER method for contrast = “OR”, as described in
 ([Fagerland and Newcombe 2012](#ref-fagerland2012)), does not satisfy
-the second of these requirements.
+the second of these requirements, unlike the asymptotic score and other
+methods:
+
+``` r
+
+orci(x1 = 5, n1 = 56, x2 = 1, n2 = 29)$estimates
+#> , , 5/56 vs 1/29
+#> 
+#>                                 lower      est    upper
+#> SCAS                         0.385475 2.745098 56.08070
+#> Gart                         0.389345 2.745098 56.59553
+#> Miettinen-Nurminen           0.392931 2.745098 18.56785
+#> Uncorrected Asymptotic Score 0.396590 2.745098 18.40530
+#> MOVER-W                      0.363784 2.745098 18.78207
+#> MOVER-J                      0.399469 2.745098 28.76882
+#> Woolf logit                  0.305395 2.745098 24.67482
+#> Gart adjusted logit          0.315100 2.745098 13.06682
+```
+
+``` r
+
+1 / orci(x1 = 51, n1 = 56, x2 = 28, n2 = 29)$estimates
+#> , , 51/56 vs 28/29
+#> 
+#>                                 lower      est     upper
+#> SCAS                         56.08210 2.745096 0.3854748
+#> Gart                         56.59630 2.745096 0.3893453
+#> Miettinen-Nurminen           18.56769 2.745096 0.3929306
+#> Uncorrected Asymptotic Score 18.40536 2.745096 0.3965898
+#> MOVER-W                      20.71423 2.745096 0.4012105
+#> MOVER-J                      32.91856 2.745096 0.4219566
+#> Woolf logit                  24.67491 2.745096 0.3053949
+#> Gart adjusted logit          13.06677 2.745096 0.3150998
+```
 
 ## Technical details
 

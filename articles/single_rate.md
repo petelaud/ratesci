@@ -36,8 +36,8 @@ A.4):
 
 scaspci(x = 1, n = 29)
 #> $estimates
-#>        lower    est upper x  n
-#> [1,] 0.00199 0.0398 0.155 1 29
+#>            lower        est     upper x  n
+#> [1,] 0.001991554 0.03977273 0.1548909 1 29
 #> 
 #> $call
 #> distrib   level     bcf      cc 
@@ -51,58 +51,31 @@ use:
 
 ``` r
 
-scoreci(x1 = 1, n1 = 29, contrast = "p")$estimates
-#>        lower    est upper level x1 n1  p1hat  p1mle
-#> [1,] 0.00199 0.0398 0.155  0.95  1 29 0.0345 0.0398
+scoreci(x1 = 1, n1 = 29, contrast = "p", precis = 4)$estimates
+#>      lower    est  upper level x1 n1  p1hat  p1mle
+#> [1,] 0.002 0.0398 0.1549  0.95  1 29 0.0345 0.0398
 ```
 
 [`rateci()`](https://petelaud.github.io/ratesci/reference/rateci.md)
-also provides two other confidence interval methods (Jeffreys and mid-p)
-with similar coverage properties ([Laud 2018](#ref-laud2018)):
+also provides a number of other confidence interval methods for
+reference: Jeffreys and (two versions of) mid-p intervals have similar
+coverage properties to SCAS ([Laud 2018](#ref-laud2018)), while the
+Wilson, Wald and Agresti-Coull intervals are provided for comparison but
+are not recommended:
 
 ``` r
 
-rateci(x = 1, n = 29)
-#> $scas
-#>        lower    est upper x  n
-#> [1,] 0.00199 0.0345 0.155 1 29
-#> 
-#> $jeff
-#>        lower    est upper x  n
-#> [1,] 0.00375 0.0345  0.15 1 29
-#> 
-#> $midp
-#>        lower    est upper x  n
-#> [1,] 0.00172 0.0345 0.159 1 29
-#> 
-#> $midp_beta
-#>        lower    est upper x  n
-#> [1,] 0.00467 0.0345 0.149 1 29
-#> 
-#> $wilson
-#>        lower    est upper x  n
-#> [1,] 0.00611 0.0345 0.172 1 29
-#> 
-#> $wald
-#>                           x  n
-#> [1,] -0.0319 0.0345 0.101 1 29
-#> 
-#> $estimates
+rateci(x = 1, n = 29, precis = 4)$estimates
 #> , , 1
 #> 
-#>                  lower    est upper x  n
-#> SCAS           0.00199 0.0345 0.155 1 29
-#> Jeffreys       0.00375 0.0345 0.150 1 29
-#> midp           0.00172 0.0345 0.159 1 29
-#> midp(beta)     0.00467 0.0345 0.149 1 29
-#> Wilson         0.00611 0.0345 0.172 1 29
-#> Wald          -0.03193 0.0345 0.101 1 29
-#> Agresti-Coull -0.00842 0.0345 0.186 1 29
-#> 
-#> 
-#> $call
-#> distrib   level      cc std_est 
-#>   "bin"  "0.95" "FALSE"  "TRUE"
+#>                 lower    est  upper x  n
+#> SCAS           0.0020 0.0345 0.1549 1 29
+#> Jeffreys       0.0037 0.0345 0.1501 1 29
+#> midp           0.0017 0.0345 0.1585 1 29
+#> midp(beta)     0.0047 0.0345 0.1485 1 29
+#> Wilson         0.0061 0.0345 0.1718 1 29
+#> Wald          -0.0319 0.0345 0.1009 1 29
+#> Agresti-Coull -0.0084 0.0345 0.1863 1 29
 ```
 
 The Jeffreys interval can also incorporate prior information about $`p`$
@@ -114,8 +87,8 @@ $`Beta(0.5, 0.5)`$ prior for $`p`$ to a $`Beta(1.5, 9.5)`$ distribution:
 
 jeffreysci(x = 1, n = 29, ai = 1.5, bi = 9.5)
 #> $estimates
-#>       lower    est upper x  n
-#> [1,] 0.0108 0.0553 0.154 1 29
+#>           lower        est     upper x  n
+#> [1,] 0.01080849 0.05530734 0.1544908 1 29
 #> 
 #> $call
 #> distrib   level      cc     adj      ai      bi 
@@ -128,43 +101,17 @@ Jeffreys, and (if `cc` is TRUE or 0.5), the Clopper-Pearson method.
 
 ``` r
 
-rateci(x = 1, n = 29, cc = TRUE)
-#> $scas_cc
-#>         lower    est upper x  n
-#> [1,] 6.19e-06 0.0345 0.182 1 29
-#> 
-#> $jeff_cc
-#>         lower    est upper x  n
-#> [1,] 0.000873 0.0345 0.178 1 29
-#> 
-#> $cp
-#>         lower    est upper x  n
-#> [1,] 0.000873 0.0345 0.178 1 29
-#> 
-#> $cp_beta
-#>         lower    est upper x  n
-#> [1,] 0.000873 0.0345 0.178 1 29
-#> 
-#> $blaker
-#>        lower    est upper x  n
-#> [1,] 0.00177 0.0345 0.166 1 29
-#> 
-#> $estimates
+rateci(x = 1, n = 29, cc = TRUE, precis = 4)$estimates
 #> , , 1
 #> 
-#>                           lower    est upper x  n
-#> SCAS_cc                6.19e-06 0.0345 0.182 1 29
-#> Jeffreys_cc            8.73e-04 0.0345 0.178 1 29
-#> Clopper-Pearson        8.73e-04 0.0345 0.178 1 29
-#> Clopper-Pearson(beta)  8.73e-04 0.0345 0.178 1 29
-#> Wilson_cc              1.80e-03 0.0345 0.196 1 29
-#> Wald_cc               -4.92e-02 0.0345 0.118 1 29
-#> Blaker                 1.77e-03 0.0345 0.166 1 29
-#> 
-#> 
-#> $call
-#> distrib   level      cc std_est 
-#>   "bin"  "0.95"   "0.5"  "TRUE"
+#>                         lower    est  upper x  n
+#> SCAS_cc                0.0000 0.0345 0.1817 1 29
+#> Jeffreys_cc            0.0009 0.0345 0.1776 1 29
+#> Clopper-Pearson        0.0009 0.0345 0.1776 1 29
+#> Clopper-Pearson(beta)  0.0009 0.0345 0.1776 1 29
+#> Wilson_cc              0.0018 0.0345 0.1963 1 29
+#> Wald_cc               -0.0492 0.0345 0.1181 1 29
+#> Blaker                 0.0017 0.0345 0.1660 1 29
 ```
 
 Such an adjustment is widely acknowledged to be over-conservative, so
@@ -173,34 +120,16 @@ adjustment([Laud 2017](#ref-laud2017), Appendix S2 ($`\gamma = cc`$)).
 
 ``` r
 
-rateci(x = 1, n = 29, cc = 0.25)
-#> $scas_cc
-#>         lower    est upper x  n
-#> [1,] 0.000605 0.0345 0.169 1 29
-#> 
-#> $jeff_cc
-#>        lower    est upper x  n
-#> [1,] 0.00205 0.0345 0.164 1 29
-#> 
-#> $beta_cc
-#>        lower    est upper x  n
-#> [1,] 0.00277 0.0345 0.163 1 29
-#> 
-#> $estimates
+rateci(x = 1, n = 29, cc = 0.25, precis = 4)$estimates
 #> , , 1
 #> 
-#>                         lower    est upper x  n
-#> SCAS_cc(0.25)        0.000605 0.0345 0.169 1 29
-#> Jeffreys_cc(0.25)    0.002052 0.0345 0.164 1 29
-#> midp_cc(0.25)        0.001162 0.0345 0.169 1 29
-#> midp(beta)_cc(0.25)  0.002770 0.0345 0.163 1 29
-#> Wilson_cc(0.25)      0.003766 0.0345 0.184 1 29
-#> Wald_cc(0.25)       -0.040547 0.0345 0.110 1 29
-#> 
-#> 
-#> $call
-#> distrib   level      cc std_est 
-#>   "bin"  "0.95"  "0.25"  "TRUE"
+#>                       lower    est  upper x  n
+#> SCAS_cc(0.25)        0.0006 0.0345 0.1685 1 29
+#> Jeffreys_cc(0.25)    0.0021 0.0345 0.1641 1 29
+#> midp_cc(0.25)        0.0012 0.0345 0.1694 1 29
+#> midp(beta)_cc(0.25)  0.0028 0.0345 0.1631 1 29
+#> Wilson_cc(0.25)      0.0038 0.0345 0.1841 1 29
+#> Wald_cc(0.25)       -0.0405 0.0345 0.1095 1 29
 ```
 
 ### Stratified datasets
@@ -236,10 +165,11 @@ data(compress, package = "ratesci")
 strat_p <- scoreci(x1 = compress$event.control, 
                    n1 = compress$n.control, 
                    contrast = "p", 
-                   stratified = TRUE)
+                   stratified = TRUE,
+                   precis = 4)
 strat_p$estimates
-#>      lower   est upper level p1hat p1mle
-#> [1,] 0.181 0.212 0.245  0.95 0.212 0.212
+#>       lower    est  upper level  p1hat  p1mle
+#> [1,] 0.1815 0.2123 0.2454  0.95 0.2121 0.2123
 ```
 
 The function also outputs p-values for a two-sided hypothesis test
@@ -249,8 +179,8 @@ user-specified value of $`\theta_0`$:
 ``` r
 
 strat_p$pval
-#>      chisq pval2sided theta0 scorenull pval_left pval_right
-#> [1,]   208   4.05e-47    0.5     -14.4  2.02e-47          1
+#>         chisq   pval2sided theta0 scorenull    pval_left pval_right
+#> [1,] 207.8485 4.048337e-47    0.5 -14.41695 2.024169e-47          1
 ```
 
 The `Qtest` output object provides a heterogeneity test and related
@@ -264,9 +194,9 @@ prevent the evaluation of stratified treatment comparisons):
 
 strat_p$Qtest
 #>            Q         Q_df     pval_het           I2         tau2           Qc 
-#>     6.37e+01     8.00e+00     8.84e-11     8.74e+01     1.74e-02     0.00e+00 
+#> 6.367071e+01 8.000000e+00 8.834566e-11 8.743535e+01 1.739866e-02 0.000000e+00 
 #> pval_qualhet 
-#>     9.96e-01
+#> 9.960938e-01
 ```
 
 Per-stratum estimates are produced, including stratum weights and
@@ -278,25 +208,25 @@ to 0.62) and 0.04 (95% CI: 0.01 to 0.10) respectively:
 
 strat_p$stratdata
 #>       x1j n1j p1hatj wt_fixed wtpct_fixed wtpct_rand theta_j lower_j upper_j
-#>  [1,]  37 103 0.3592    616.0       16.43      16.43  0.3597  0.2713   0.455
-#>  [2,]   5  10 0.5000     59.8        1.59       1.59  0.5000  0.2175   0.782
-#>  [3,]  23  48 0.4792    287.1        7.66       7.66  0.4793  0.3419   0.619
-#>  [4,]  16 110 0.1455    657.8       17.54      17.54  0.1465  0.0888   0.221
-#>  [5,]   7  32 0.2188    191.4        5.10       5.10  0.2216  0.1021   0.384
-#>  [6,]   8  25 0.3200    149.5        3.99       3.99  0.3224  0.1626   0.517
-#>  [7,]  17 126 0.1349    753.5       20.10      20.10  0.1359  0.0835   0.203
-#>  [8,]   4  92 0.0435    550.2       14.67      14.67  0.0451  0.0143   0.101
-#>  [9,]  16  81 0.1975    484.4       12.92      12.92  0.1988  0.1219   0.294
-#>           V_j Stheta_j      Q_j
-#>  [1,] 0.00162  0.14695 13.30145
-#>  [2,] 0.01672  0.28773  4.95092
-#>  [3,] 0.00348  0.26689 20.44757
-#>  [4,] 0.00152 -0.06682  2.93717
-#>  [5,] 0.00523  0.00648  0.00803
-#>  [6,] 0.00669  0.10773  1.73503
-#>  [7,] 0.00133 -0.07735  4.50878
-#>  [8,] 0.00182 -0.16880 15.67615
-#>  [9,] 0.00206 -0.01474  0.10529
+#>  [1,]  37 103 0.3592 615.9809     16.4274    16.4274  0.3597  0.2713  0.4550
+#>  [2,]   5  10 0.5000  59.8040      1.5949     1.5949  0.5000  0.2175  0.7825
+#>  [3,]  23  48 0.4792 287.0591      7.6555     7.6555  0.4793  0.3419  0.6189
+#>  [4,]  16 110 0.1455 657.8437     17.5439    17.5439  0.1465  0.0888  0.2205
+#>  [5,]   7  32 0.2188 191.3727      5.1037     5.1037  0.2216  0.1021  0.3838
+#>  [6,]   8  25 0.3200 149.5099      3.9872     3.9872  0.3224  0.1626  0.5165
+#>  [7,]  17 126 0.1349 753.5301     20.0957    20.0957  0.1359  0.0835  0.2029
+#>  [8,]   4  92 0.0435 550.1966     14.6730    14.6730  0.0451  0.0143  0.1009
+#>  [9,]  16  81 0.1975 484.4122     12.9187    12.9187  0.1988  0.1219  0.2944
+#>          V_j Stheta_j     Q_j
+#>  [1,] 0.0016   0.1470 13.3018
+#>  [2,] 0.0167   0.2877  4.9510
+#>  [3,] 0.0035   0.2669 20.4479
+#>  [4,] 0.0015  -0.0668  2.9370
+#>  [5,] 0.0052   0.0065  0.0080
+#>  [6,] 0.0067   0.1077  1.7351
+#>  [7,] 0.0013  -0.0774  4.5086
+#>  [8,] 0.0018  -0.1688 15.6759
+#>  [9,] 0.0021  -0.0147  0.1053
 ```
 
 For a random effects analysis, use `random = TRUE`. (This may not give a
@@ -310,13 +240,14 @@ strat_p_rand <- scoreci(x1 = compress$event.control,
                         contrast = "p", 
                         stratified = TRUE, 
                         random = TRUE,
-                        prediction = TRUE)
+                        prediction = TRUE,
+                        precis = 4)
 strat_p_rand$estimates
-#>      lower  est upper level p1hat p1mle
-#> [1,] 0.136 0.25 0.364  0.95  0.25  0.25
+#>      lower    est  upper level  p1hat  p1mle
+#> [1,] 0.136 0.2498 0.3639  0.95 0.2498 0.2498
 strat_p_rand$pval
-#>      chisq pval2sided theta0 scorenull pval_left pval_right
-#> [1,]  25.2    0.00102    0.5     -5.02  0.000511      0.999
+#>         chisq  pval2sided theta0 scorenull    pval_left pval_right
+#> [1,] 25.23654 0.001022283    0.5 -5.023598 0.0005111417  0.9994889
 ```
 
 A prediction interval, representing an expected proportion in a new
@@ -326,8 +257,8 @@ study ([Higgins et al. 2008](#ref-higgins2008)), can be obtained using
 ``` r
 
 strat_p_rand$prediction
-#>      lower upper
-#> [1,]     0 0.571
+#>      lower  upper
+#> [1,]     0 0.5705
 ```
 
 ### Clustered datasets
@@ -352,31 +283,13 @@ currently only applies for binomial proportions.)
           rep(4, 7),
           rep(6, 5))
   # Wilson-based interval as per Saha et al.
-  clusterpci(x, n, skew = FALSE)
-#> $estimates
+  clusterpci(x, n, skew = FALSE)$estimates
 #>       lower    est  upper totx totn xihat    icc
 #> [1,] 0.2285 0.2956 0.3728   60  203 1.349 0.1855
-#> 
-#> $pval
-#>      theta0 scorenull pval_left pval_right
-#> [1,]    0.5    -5.015 2.647e-07          1
-#> 
-#> $call
-#>   level    skew      cc 
-#>  "0.95" "FALSE" "FALSE"
   # Skewness-corrected version
-  clusterpci(x, n, skew = TRUE)
-#> $estimates
+  clusterpci(x, n, skew = TRUE)$estimates
 #>       lower    est  upper  x   n totx totn xihat    icc
 #> [1,] 0.2276 0.2958 0.3724 60 203   60  203 1.349 0.1855
-#> 
-#> $pval
-#>      theta0 scorenull pval_left pval_right
-#> [1,]    0.5    -5.015 2.647e-07          1
-#> 
-#> $call
-#>   level    skew      cc 
-#>  "0.95"  "TRUE" "FALSE"
 ```
 
 ## Technical details
