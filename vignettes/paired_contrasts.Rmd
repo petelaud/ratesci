@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-options(digits = 3)
+#options(digits = 3)
 ```
 
 ```{r setup}
@@ -48,11 +48,11 @@ The plots below illustrate the one-sided and two-sided interval coverage probabi
 For example, using the dataset from a study of airway reactivity in children before and after stem cell transplantation, as used in [@fagerland2014]:
 
 ```{r}
-out <- scorepairci(x = c(1, 1, 7, 12))
+out <- scorepairci(x = c(1, 1, 7, 12), precis = 4)
 out$estimates
 ```
 
-The underlying z-statistic is used to obtain a two-sided hypothesis test against the null hypothesis of no difference (`pval2sided`). Note that this is equivalent to an 'N-1' adjusted version of the McNemar test. The facility is also provided for a custom one-sided test against any specified null hypothesis value $\theta_0$, e.g. for non-inferiority testing (`pval_left` and `pval_right`).
+The underlying z-statistic is used to obtain a two-sided hypothesis test against the null hypothesis of no difference (`pval2sided`). Note that this is equivalent to an 'N-1' adjusted version of the McNemar test. The facility is also provided for a custom one-sided test against any specified null hypothesis value $\theta_0$, e.g. for non-inferiority testing (`pval_left` and `pval_right`). See the [tests vignette](https://petelaud.github.io/ratesci/articles/tests.html) for more details.
 
 ```{r}
 out$pval
@@ -61,7 +61,7 @@ out$pval
 For a confidence interval for paired RR, use:
 
 ```{r}
-out <- scorepairci(x = c(1, 1, 7, 12), contrast = "RR")
+out <- scorepairci(x = c(1, 1, 7, 12), contrast = "RR", precis = 4)
 out$estimates
 out$pval
 ```
