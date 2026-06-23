@@ -210,7 +210,7 @@ vignette</a> for more details.</p>
 <p>To obtain the legacy Tango and Tang intervals for RD and RR
 respectively, you may set the <code>skew</code> and <code>bcf</code>
 arguments to <code>FALSE</code>. Also switching to
-<code>method = "Score_closed"</code> takes advantage of closed-form
+<code>closedform = TRUE</code> takes advantage of closed-form
 calculations for these methods (whereas the SCAS method is solved by
 iteration).</p>
 </div>
@@ -222,23 +222,23 @@ of the correlation coefficient is included in the formula. A correction
 to the correlation estimate, introduced by Newcombe, is recommended,
 obtained with <code>corc = TRUE</code>. As for unpaired MOVER methods,
 the default base method used for the individual (marginal) proportions
-is the equal-tailed Jeffreys interval, rather than the Wilson Score as
-originally proposed by Newcombe (obtained using
+is the equal-tailed Jeffreys interval, rather than the Wilson Score
+interval as originally proposed by Newcombe (obtained using
 <code>type = "wilson"</code>). The combination of the Newcombe
 correlation estimate and the Jeffreys intervals gives the designation
 “MOVER-NJ”. This method is less computationally intensive than SCAS, but
 coverage properties are inferior, and there is no corresponding
 hypothesis test.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/moverpairci.html">moverpairci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, contrast <span class="op">=</span> <span class="st">"RD"</span>, corc <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
-<span><span class="co">#&gt;          lower       est     upper level    p1hat    p2hat phi_hat</span></span>
-<span><span class="co">#&gt; [1,] -0.510506 -0.285714 -0.032389  0.95 0.095238 0.380952       0</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/moverpairci.html">moverpairci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, contrast <span class="op">=</span> <span class="st">"RD"</span>, corc <span class="op">=</span> <span class="cn">TRUE</span>, precis <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
+<span><span class="co">#&gt;        lower     est   upper level  p1hat p2hat phi_hat</span></span>
+<span><span class="co">#&gt; [1,] -0.5105 -0.2857 -0.0324  0.95 0.0952 0.381       0</span></span></code></pre></div>
 <p>For cross-checking against published example in <span class="citation">(<a href="#ref-fagerland2014">Fagerland et al.
 2014</a>)</span></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/moverpairci.html">moverpairci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, contrast <span class="op">=</span> <span class="st">"RD"</span>, corc <span class="op">=</span> <span class="cn">TRUE</span>, type <span class="op">=</span> <span class="st">"wilson"</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
-<span><span class="co">#&gt;         lower       est     upper level    p1hat    p2hat phi_hat</span></span>
-<span><span class="co">#&gt; [1,] -0.50692 -0.285714 -0.025559  0.95 0.095238 0.380952       0</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/moverpairci.html">moverpairci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, contrast <span class="op">=</span> <span class="st">"RD"</span>, corc <span class="op">=</span> <span class="cn">TRUE</span>, type <span class="op">=</span> <span class="st">"wilson"</span>, precis <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
+<span><span class="co">#&gt;        lower     est   upper level  p1hat p2hat phi_hat</span></span>
+<span><span class="co">#&gt; [1,] -0.5069 -0.2857 -0.0256  0.95 0.0952 0.381       0</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="conditional-odds-ratio">Conditional odds ratio<a class="anchor" aria-label="anchor" href="#conditional-odds-ratio"></a>

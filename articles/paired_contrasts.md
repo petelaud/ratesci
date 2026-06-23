@@ -94,9 +94,9 @@ out$pval
 
 To obtain the legacy Tango and Tang intervals for RD and RR
 respectively, you may set the `skew` and `bcf` arguments to `FALSE`.
-Also switching to `method = "Score_closed"` takes advantage of
-closed-form calculations for these methods (whereas the SCAS method is
-solved by iteration).
+Also switching to `closedform = TRUE` takes advantage of closed-form
+calculations for these methods (whereas the SCAS method is solved by
+iteration).
 
 ### MOVER methods
 
@@ -105,7 +105,7 @@ the correlation coefficient is included in the formula. A correction to
 the correlation estimate, introduced by Newcombe, is recommended,
 obtained with `corc = TRUE`. As for unpaired MOVER methods, the default
 base method used for the individual (marginal) proportions is the
-equal-tailed Jeffreys interval, rather than the Wilson Score as
+equal-tailed Jeffreys interval, rather than the Wilson Score interval as
 originally proposed by Newcombe (obtained using `type = "wilson"`). The
 combination of the Newcombe correlation estimate and the Jeffreys
 intervals gives the designation “MOVER-NJ”. This method is less
@@ -114,9 +114,9 @@ inferior, and there is no corresponding hypothesis test.
 
 ``` r
 
-moverpairci(x = c(1, 1, 7, 12), contrast = "RD", corc = TRUE)$estimates
-#>          lower       est     upper level    p1hat    p2hat phi_hat
-#> [1,] -0.510506 -0.285714 -0.032389  0.95 0.095238 0.380952       0
+moverpairci(x = c(1, 1, 7, 12), contrast = "RD", corc = TRUE, precis = 4)$estimates
+#>        lower     est   upper level  p1hat p2hat phi_hat
+#> [1,] -0.5105 -0.2857 -0.0324  0.95 0.0952 0.381       0
 ```
 
 For cross-checking against published example in ([Fagerland et al.
@@ -124,9 +124,9 @@ For cross-checking against published example in ([Fagerland et al.
 
 ``` r
 
-moverpairci(x = c(1, 1, 7, 12), contrast = "RD", corc = TRUE, type = "wilson")$estimates
-#>         lower       est     upper level    p1hat    p2hat phi_hat
-#> [1,] -0.50692 -0.285714 -0.025559  0.95 0.095238 0.380952       0
+moverpairci(x = c(1, 1, 7, 12), contrast = "RD", corc = TRUE, type = "wilson", precis = 4)$estimates
+#>        lower     est   upper level  p1hat p2hat phi_hat
+#> [1,] -0.5069 -0.2857 -0.0256  0.95 0.0952 0.381       0
 ```
 
 ### Conditional odds ratio
