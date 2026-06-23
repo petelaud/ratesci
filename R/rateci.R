@@ -428,16 +428,16 @@ exactci <- function(x,
       uproot <- function(p) ppois(x, p) - midp * dpois(x, p) - alpha / 2
     }
     lower <- bisect(
-      ftn = lowroot, precis = precis, uplow = "low",
+      ftn = lowroot, precis = precis + 1, uplow = "low",
       contrast = "p", distrib = distrib
     )
     est <- bisect(
-      ftn = midroot, precis = precis, uplow = "low",
+      ftn = midroot, precis = precis + 1, uplow = "low",
       contrast = "p", distrib = distrib
     )
     est[x == 0 & n == 0] <- NaN
     upper <- bisect(
-      ftn = uproot, precis = precis, uplow = "up", contrast = "p",
+      ftn = uproot, precis = precis + 1, uplow = "up", contrast = "p",
       distrib = distrib
     )
   } else if (beta == TRUE) {

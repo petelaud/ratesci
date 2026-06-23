@@ -34,6 +34,9 @@
 * Permit n=0 to produce output interval as [0, 1] for binomial, or [0, Inf] for 
   Poisson with point estimate displayed as NaN
   (prevents error in `pairbinci()` with `method` = "BP").
+### In  `exactci()`:  
+* Improve precision (avoid rounding errors) for iterative Clopper-Pearson method.
+
 ### In `moverci()`:
 * Present NaN MOVER-W upper limits for RR and OR as Inf. 
 
