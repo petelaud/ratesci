@@ -88,14 +88,14 @@
 #'
 #' @export
 moverpairci <- function(x,
-                      level = 0.95,
-                      contrast = "RD",
-                      type = "jeff",
-                      corc = TRUE,
-                      cc = FALSE,
-                      precis = 6,
-                      warn = TRUE,
-                      ...) {
+                        level = 0.95,
+                        contrast = "RD",
+                        type = "jeff",
+                        corc = TRUE,
+                        cc = FALSE,
+                        precis = 6,
+                        warn = TRUE,
+                        ...) {
   if (!is.numeric(c(x))) {
     print("Non-numeric inputs!")
     stop()
@@ -116,11 +116,11 @@ moverpairci <- function(x,
     print("Contrast must be one of 'RD', 'RR' or 'OR'")
     stop()
   }
-    if (!(tolower(substr(type, 1, 4)) %in%
-        c("scas", "wils", "midp", "jeff"))) {
-      print("type must be one of 'SCASp', 'wilson', 'midp' or 'jeff'")
-      stop()
-    }
+  if (!(tolower(substr(type, 1, 4)) %in%
+    c("scas", "wils", "midp", "jeff"))) {
+    print("type must be one of 'SCASp', 'wilson', 'midp' or 'jeff'")
+    stop()
+  }
 
   if (as.character(cc) == "TRUE") cc <- 0.5
   # Default correction aligned with cc'd McNemar test
@@ -134,8 +134,10 @@ moverpairci <- function(x,
   # Convert input data into 2x2 table to ease interpretation
   x1i <- rep(c("Success", "Success", "Failure", "Failure"), x)
   x2i <- rep(c("Success", "Failure", "Success", "Failure"), x)
-  xi <- table(Test_1 = factor(x1i, levels = c("Success", "Failure")),
-              Test_2 = factor(x2i, levels = c("Success", "Failure")))
+  xi <- table(
+    Test_1 = factor(x1i, levels = c("Success", "Failure")),
+    Test_2 = factor(x2i, levels = c("Success", "Failure"))
+  )
   x1 <- x[1] + x[2]
   x2 <- x[1] + x[3]
   N <- sum(x)
@@ -144,9 +146,9 @@ moverpairci <- function(x,
 
   # correlation estimate for reporting
   phi_hat <- (x[1] * x[4] - x[2] * x[3]) / sqrt(x1 * (N - x1) * x2 * (N - x2))
-  #if (is.na(phi_hat) | is.infinite(phi_hat)) {
-  if (is.na(phi_hat) ) {
-      phi_hat <- 0
+  # if (is.na(phi_hat) | is.infinite(phi_hat)) {
+  if (is.na(phi_hat)) {
+    phi_hat <- 0
   }
   # Newcombe's adjusted correlation estimate
   phi_c <- phi_hat
@@ -159,23 +161,23 @@ moverpairci <- function(x,
   psi_hat <- x[1] * x[4] / (x[2] * x[3])
   if (is.na(psi_hat)) psi_hat <- 0
 
-if (FALSE) {
+  if (FALSE) {
     # MOVER methods for RD and RR
     if (method == "MOVER") {
       estimates <- moverpairci(
         x = x, contrast = contrast, level = level,
         method = type, cc = cc, corc = FALSE
       )
-#      outlist <- list(data = xi, estimates = estimates)
+      #      outlist <- list(data = xi, estimates = estimates)
     }
     if (method == "MOVER_newc") {
       estimates <- moverpairci(
         x = x, contrast = contrast, level = level,
         method = type, cc = cc, corc = TRUE
       )
-#      outlist <- list(data = xi, estimates = estimates)
+      #      outlist <- list(data = xi, estimates = estimates)
     }
-}
+  }
 
   x1p <- x[1] + x[2]
   xp1 <- x[1] + x[3]
@@ -211,7 +213,7 @@ if (FALSE) {
   if (corc == TRUE) {
     if (x[1] * x[4] - x[2] * x[3] > 0) {
       cor_hat <- (max(x[1] * x[4] - x[2] * x[3] - N / 2, 0) /
-                    sqrt(x1p * n2p * xp1 * np2))
+        sqrt(x1p * n2p * xp1 * np2))
     }
   }
   if (is.na(cor_hat) | is.infinite(cor_hat)) {
@@ -223,12 +225,12 @@ if (FALSE) {
     A <- (p1phat - l1) * (u2 - pp1hat) * cor_hat
     B <- (u1 - p1phat) * (pp1hat - l2) * cor_hat
     lower <- (A - p1phat * pp1hat +
-                sqrt(pmax(0, (A - p1phat * pp1hat)^2 -
-                            l1 * (2 * p1phat - l1) * u2 * (2 * pp1hat - u2)))) /
+      sqrt(pmax(0, (A - p1phat * pp1hat)^2 -
+        l1 * (2 * p1phat - l1) * u2 * (2 * pp1hat - u2)))) /
       (u2 * (u2 - 2 * pp1hat))
     upper <- (B - p1phat * pp1hat -
-                sqrt(pmax(0, (B - p1phat * pp1hat)^2 -
-                            u1 * (2 * p1phat - u1) * l2 * (2 * pp1hat - l2)))) /
+      sqrt(pmax(0, (B - p1phat * pp1hat)^2 -
+        u1 * (2 * p1phat - u1) * l2 * (2 * pp1hat - l2)))) /
       (l2 * (l2 - 2 * pp1hat))
     if (is.na(upper) | upper < 0) {
       upper <- Inf
@@ -237,10 +239,10 @@ if (FALSE) {
     estimate <- p1phat - pp1hat
     lower <- p1phat - pp1hat -
       sqrt((p1phat - l1)^2 + (u2 - pp1hat)^2 -
-             2 * (p1phat - l1) * (u2 - pp1hat) * cor_hat)
+        2 * (p1phat - l1) * (u2 - pp1hat) * cor_hat)
     upper <- p1phat - pp1hat +
       sqrt((u1 - p1phat)^2 + (pp1hat - l2)^2 -
-             2 * (u1 - p1phat) * (pp1hat - l2) * cor_hat)
+        2 * (u1 - p1phat) * (pp1hat - l2) * cor_hat)
   }
 
   estimates <- cbind(
@@ -249,19 +251,17 @@ if (FALSE) {
   )
   row.names(estimates) <- NULL
 
-#  outlist <- list(data = xi, estimates = round(estimates, precis))
+  #  outlist <- list(data = xi, estimates = round(estimates, precis))
 
   call <- c(
     contrast = contrast, type = type,
     level = level, cc = cc
   )
-#  outlist <- append(outlist, list(call = call))
+  #  outlist <- append(outlist, list(call = call))
   outlist <- list(data = xi, estimates = round(estimates, precis), call = call)
 
   return(outlist)
 }
-
-
 
 
 #' MOVER interval for paired RR or RD (binomial only)
@@ -291,11 +291,11 @@ if (FALSE) {
 #'
 #' @noRd
 xmoverpairci <- function(x,
-                      level = 0.95,
-                      contrast = "RD",
-                      method = "jeff",
-                      corc = TRUE,
-                      cc = FALSE) {
+                         level = 0.95,
+                         contrast = "RD",
+                         method = "jeff",
+                         corc = TRUE,
+                         cc = FALSE) {
   if (!is.numeric(c(x))) {
     print("Non-numeric inputs!")
     stop()
@@ -375,5 +375,3 @@ xmoverpairci <- function(x,
   row.names(estimates) <- NULL
   return(estimates)
 }
-
-
