@@ -66,20 +66,20 @@ out$estimates
 out$pval
 ```
 
-To obtain the legacy Tango and Tang intervals for RD and RR respectively, you may set the `skew` and `bcf` arguments to `FALSE`. Also switching to `method = "Score_closed"` takes advantage of closed-form calculations for these methods (whereas the SCAS method is solved by iteration).
+To obtain the legacy Tango and Tang intervals for RD and RR respectively, you may set the `skew` and `bcf` arguments to `FALSE`. Also switching to `closedform = TRUE` takes advantage of closed-form calculations for these methods (whereas the SCAS method is solved by iteration).
 
 ### MOVER methods
 
-For application of the MOVER method to paired RD or RR, an estimate of the correlation coefficient is included in the formula. A correction to the correlation estimate, introduced by Newcombe, is recommended, obtained with `corc = TRUE`. As for unpaired MOVER methods, the default base method used for the individual (marginal) proportions is the equal-tailed Jeffreys interval, rather than the Wilson Score as originally proposed by Newcombe (obtained using `type = "wilson"`). The combination of the Newcombe correlation estimate and the Jeffreys intervals gives the designation "MOVER-NJ". This method is less computationally intensive than SCAS, but coverage properties are inferior, and there is no corresponding hypothesis test.
+For application of the MOVER method to paired RD or RR, an estimate of the correlation coefficient is included in the formula. A correction to the correlation estimate, introduced by Newcombe, is recommended, obtained with `corc = TRUE`. As for unpaired MOVER methods, the default base method used for the individual (marginal) proportions is the equal-tailed Jeffreys interval, rather than the Wilson Score interval as originally proposed by Newcombe (obtained using `type = "wilson"`). The combination of the Newcombe correlation estimate and the Jeffreys intervals gives the designation "MOVER-NJ". This method is less computationally intensive than SCAS, but coverage properties are inferior, and there is no corresponding hypothesis test.
 
 ```{r}
-moverpairci(x = c(1, 1, 7, 12), contrast = "RD", corc = TRUE)$estimates
+moverpairci(x = c(1, 1, 7, 12), contrast = "RD", corc = TRUE, precis = 4)$estimates
 ```
 
 For cross-checking against published example in [@fagerland2014]
 
 ```{r}
-moverpairci(x = c(1, 1, 7, 12), contrast = "RD", corc = TRUE, type = "wilson")$estimates
+moverpairci(x = c(1, 1, 7, 12), contrast = "RD", corc = TRUE, type = "wilson", precis = 4)$estimates
 ```
 
 ### Conditional odds ratio
