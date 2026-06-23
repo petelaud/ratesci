@@ -505,21 +505,21 @@ blakerci <- function(x,
   est <- x / n
   if (distrib == 'bin') {
     upper <- ifelse(x == n, 1, qbeta(1 - alpha / 2, x + 1, n - x))
-    for (i in 4:0) {
+    for (i in (min(precis-1, 4)):0) {
       while(acceptbin(x, n, upper - tiny*10^i) < alpha) upper <- upper - tiny*10^i
     }
     lower <- ifelse(x == 0, 0, qbeta(alpha / 2, x, n - x + 1))
-    for (i in 4:0) {
+    for (i in (min(precis-1, 4)):0) {
       while(acceptbin(x, n, lower + tiny*10^i) < alpha) lower <- lower + tiny*10^i
     }
   }
   if (distrib == 'poi') {
     upper <- qgamma(1 - alpha / 2, x + 1, scale = 1 / n)
-    for (i in 4:0) {
+    for (i in (min(precis-1, 4)):0) {
       while(acceptpoi(x, n, upper - tiny*10^i) < alpha) upper <- upper - tiny*10^i
     }
     lower <- ifelse(x == 0, 0, qgamma(alpha / 2, x, scale = 1 / n))
-    for (i in 4:0) {
+    for (i in (min(precis-1, 4)):0) {
       while(acceptpoi(x, n, lower + tiny*10^i) < alpha) lower <- lower + tiny*10^i
     }
   }
