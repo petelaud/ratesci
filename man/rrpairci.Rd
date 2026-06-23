@@ -61,7 +61,20 @@ adjustment (where available).
 (strongly advise this is not used for any purpose but included for reference)
 }
 }
+\examples{
+# Example data from Fagerland et al 2014
+rrpairci(x = c(1, 1, 7, 12), precis = 3)
+# with conventional continuity adjustment
+rrpairci(x = c(1, 1, 7, 12), precis = 3, cc = TRUE)
+# with intermediate continuity adjustment
+rrpairci(x = c(1, 1, 7, 12), precis = 3, cc = 0.25)
+
+}
 \references{
+Fagerland MW, Lydersen S, Laake P. Recommended tests and
+confidence intervals for paired binomial proportions.
+Statistics in Medicine 2014; 33(16):2850-2875
+
 Laud PJ. Improved confidence intervals and tests for paired binomial
 proportions. (2026, Under review)
 }

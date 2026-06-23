@@ -4,7 +4,7 @@
 \alias{orci}
 \title{Confidence intervals for odds ratio with independent binomial proportions.}
 \usage{
-orci(x1, n1, x2, n2, level = 0.95, std_est = TRUE, cc = FALSE, precis = 8)
+orci(x1, n1, x2, n2, level = 0.95, std_est = TRUE, cc = FALSE, precis = 6)
 }
 \arguments{
 \item{x1, x2}{Numeric vectors of numbers of events in group 1 & group 2
@@ -26,7 +26,7 @@ adjustment. Numeric value between 0 and 0.5 is taken as the gamma parameter
 in Laud 2017, Appendix S2 (\code{cc = TRUE} translates to 0.5 for 'conventional'
 Yates adjustment). \cr}
 
-\item{precis}{Number (default 8) specifying precision (i.e. number of decimal
+\item{precis}{Number (default 6) specifying precision (i.e. number of decimal
 places) to be used in root-finding subroutine for the score confidence
 intervals. (Note other methods use closed-form calculations so are not
 affected.)}

@@ -31,7 +31,7 @@
 #'   contrast value should be returned (TRUE, default) or the
 #'   method-specific alternative point estimate consistent with a 0% confidence
 #'   interval (FALSE).
-#' @param precis Number (default 8) specifying precision (i.e. number of decimal
+#' @param precis Number (default 6) specifying precision (i.e. number of decimal
 #'   places) to be used in root-finding subroutine for the score confidence
 #'   intervals. (Note other methods use closed-form calculations so are not
 #'   affected.)
@@ -77,7 +77,7 @@ rrci <- function(x1,
                  level = 0.95,
                  std_est = TRUE,
                  cc = FALSE,
-                 precis = 8) {
+                 precis = 6) {
   if (length(x1) != length(x2)) {
     print("x1 and x2 must be the same length")
     stop()
