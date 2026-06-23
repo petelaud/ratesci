@@ -235,7 +235,7 @@ pchisq(mcnem * (21-1)/21, df = 1, lower.tail = FALSE)
 The paired one-sided test is a skewness-corrected and ‘N-1’ adjusted
 version of Nam’s score test ([Nam 1997](#ref-nam1997)). Type I error
 rates for this test, represented by one-sided confidence interval
-non-coverage probabilities, are examined in \[Laud2025, under
+non-coverage probabilities, are examined in \[Laud 2026, under
 evaluation\].
 
 ### Test for a single proportion

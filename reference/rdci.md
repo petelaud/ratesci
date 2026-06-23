@@ -10,7 +10,8 @@ adjustment.
 
 - Miettinen-Nurminen, Mee, Koopman, Gart-Nam Asymptotic Score methods
 
-- MOVER-W (aka Newcombe Hybrid Score for binomial RD)
+- MOVER-W (Method of Variance Estimates Recovery based on Wilson
+  intervals, aka Newcombe Hybrid Score or 'square-and-add')
 
 - MOVER-J (based on Jeffreys intervals)
 

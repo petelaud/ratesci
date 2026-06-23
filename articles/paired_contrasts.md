@@ -53,12 +53,12 @@ children before and after stem cell transplantation, as used in
 
 ``` r
 
-out <- scorepairci(x = c(1, 1, 7, 12))
+out <- scorepairci(x = c(1, 1, 7, 12), precis = 4)
 out$estimates
-#>       lower    est   upper level  p1hat p2hat  p1mle p2mle phi_hat phi_c
-#> [1,] -0.528 -0.286 -0.0184  0.95 0.0952 0.381 0.0952 0.381  0.0795     0
+#>        lower     est   upper level  p1hat p2hat  p1mle  p2mle phi_hat phi_c
+#> [1,] -0.5281 -0.2859 -0.0184  0.95 0.0952 0.381 0.0952 0.3811  0.0795     0
 #>      psi_hat
-#> [1,]    1.71
+#> [1,]  1.7143
 ```
 
 The underlying z-statistic is used to obtain a two-sided hypothesis test
@@ -66,26 +66,30 @@ against the null hypothesis of no difference (`pval2sided`). Note that
 this is equivalent to an ‘N-1’ adjusted version of the McNemar test. The
 facility is also provided for a custom one-sided test against any
 specified null hypothesis value $`\theta_0`$, e.g. for non-inferiority
-testing (`pval_left` and `pval_right`).
+testing (`pval_left` and `pval_right`). See the [tests
+vignette](https://petelaud.github.io/ratesci/articles/tests.html) for
+more details.
 
 ``` r
 
 out$pval
-#>      chisq pval2sided theta0 scorenull pval_left pval_right
-#> [1,]  4.29     0.0384      0     -2.07    0.0192      0.981
+#>         chisq pval2sided theta0 scorenull  pval_left pval_right
+#> [1,] 4.285714 0.03843393      0 -2.070197 0.01921697   0.980783
 ```
 
 For a confidence interval for paired RR, use:
 
 ``` r
 
-out <- scorepairci(x = c(1, 1, 7, 12), contrast = "RR")
+out <- scorepairci(x = c(1, 1, 7, 12), contrast = "RR", precis = 4)
 out$estimates
-#>       lower   est upper level  p1hat p2hat  p1mle p2mle phi_hat phi_c psi_hat
-#> [1,] 0.0429 0.263 0.928  0.95 0.0952 0.381 0.0994 0.379  0.0795     0    1.71
+#>       lower    est  upper level  p1hat p2hat  p1mle  p2mle phi_hat phi_c
+#> [1,] 0.0429 0.2627 0.9282  0.95 0.0952 0.381 0.0994 0.3785  0.0795     0
+#>      psi_hat
+#> [1,]  1.7143
 out$pval
-#>      chisq pval2sided theta0 scorenull pval_left pval_right
-#> [1,]  4.29     0.0384      1     -2.07    0.0192      0.981
+#>         chisq pval2sided theta0 scorenull  pval_left pval_right
+#> [1,] 4.285714 0.03843393      1 -2.070197 0.01921697   0.980783
 ```
 
 To obtain the legacy Tango and Tang intervals for RD and RR
@@ -111,8 +115,8 @@ inferior, and there is no corresponding hypothesis test.
 ``` r
 
 moverpairci(x = c(1, 1, 7, 12), contrast = "RD", corc = TRUE)$estimates
-#>       lower    est   upper level  p1hat p2hat phi_hat
-#> [1,] -0.511 -0.286 -0.0324  0.95 0.0952 0.381       0
+#>          lower       est     upper level    p1hat    p2hat phi_hat
+#> [1,] -0.510506 -0.285714 -0.032389  0.95 0.095238 0.380952       0
 ```
 
 For cross-checking against published example in ([Fagerland et al.
@@ -121,8 +125,8 @@ For cross-checking against published example in ([Fagerland et al.
 ``` r
 
 moverpairci(x = c(1, 1, 7, 12), contrast = "RD", corc = TRUE, type = "wilson")$estimates
-#>       lower    est   upper level  p1hat p2hat phi_hat
-#> [1,] -0.507 -0.286 -0.0256  0.95 0.0952 0.381       0
+#>         lower       est     upper level    p1hat    p2hat phi_hat
+#> [1,] -0.50692 -0.285714 -0.025559  0.95 0.095238 0.380952       0
 ```
 
 ### Conditional odds ratio
@@ -138,11 +142,11 @@ recommended (Laud 2026, under review).
 
 out <- scorepairci(x = c(1, 1, 7, 12), contrast = "OR")
 out$estimates
-#>       lower   est upper
-#> [1,] 0.0077 0.162 0.912
+#>         lower      est    upper
+#> [1,] 0.007702 0.161863 0.912316
 out$pval
-#>      chisq pval2sided theta0 scorenull pval_left pval_right
-#> [1,]  4.29     0.0384      1     -2.07    0.0192      0.981
+#>         chisq pval2sided theta0 scorenull  pval_left pval_right
+#> [1,] 4.285714 0.03843393      1 -2.070197 0.01921697   0.980783
 ```
 
 To select an alternative method, for example transformed mid-p:
@@ -150,12 +154,12 @@ To select an alternative method, for example transformed mid-p:
 ``` r
 
 orpairci(x = c(1, 1, 7, 12))$estimates
-#>                        lower   est upper
-#> Transformed SCASp    0.00770 0.143 0.912
-#> Transformed midp     0.00629 0.143 0.924
-#> Transformed Wilson   0.02293 0.143 0.890
-#> Transformed Jeffreys 0.01403 0.143 0.831
-#> Wald                 0.01758 0.143 1.161
+#>                           lower       est     upper
+#> Transformed SCASp    0.00770217 0.1428571 0.9123154
+#> Transformed midp     0.00629101 0.1428571 0.9241027
+#> Transformed Wilson   0.02293156 0.1428571 0.8899597
+#> Transformed Jeffreys 0.01403242 0.1428571 0.8305608
+#> Wald                 0.01757637 0.1428571 1.1611135
 ```
 
 ## References

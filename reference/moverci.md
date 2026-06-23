@@ -66,7 +66,7 @@ moverci(
 
   Numbers defining the Beta(ai,bi) prior distributions for each group
   (default ai = bi = 0.5 for Jeffreys method). Gamma priors for Poisson
-  rates require only a1, a2.
+  rates require only a1, a2. Only applies for `type = "jeff"`.
 
 - type:
 
