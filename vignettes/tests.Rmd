@@ -128,7 +128,7 @@ names(mcnem) <- NULL
 pchisq(mcnem * (21-1)/21, df = 1, lower.tail = FALSE)
 ```
 
-The paired one-sided test is a skewness-corrected and 'N-1' adjusted version of Nam's score test [@nam1997]. Type I error rates for this test, represented by one-sided confidence interval non-coverage probabilities, are examined in [Laud2025, under evaluation].
+The paired one-sided test is a skewness-corrected and 'N-1' adjusted version of Nam's score test [@nam1997]. Type I error rates for this test, represented by one-sided confidence interval non-coverage probabilities, are examined in [Laud 2026, under evaluation].
 
 ```{=html}
 <!-- In each case, the asymptotic score methods provide corresponding hypothesis tests against any specified null parameter value, for a superiority test (analogous to a chi-squared test) or non-inferiority test (analogous to the Farrington-Manning test). Both having guaranteed coherence between the test and interval. The superiority test is a variant of () chi-squared test, which are either identical to, or an improved variant of, an E. Pearson 'N-1' chi-squared test (for unstratified data) or CMH test (for stratified data).
