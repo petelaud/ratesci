@@ -56,9 +56,10 @@ Wilson intervals, Tango intervals for paired data, or chi-squared, CMH,
 Farrington-Manning or McNemar tests.
 
 Simplified functions producing a selection of different confidence
-interval methods for each contrast for independent binomial or Poisson
-rates (with or without continuity adjustment) are provided by `rdci()`,
-`rrci()` and `orci()`.
+interval methods for each contrasts (with or without continuity
+adjustment) are provided by `rdci()`, `rrci()` and `orci()` for
+independent binomial or Poisson rates, and `rdpairci()`, `rrpairci()`
+and `orpairci()` for paired binomial proportions.
 
 - See the vignettes for further details and examples of the SCAS and
   other intervals, including plots illustrating the impact of the
@@ -196,8 +197,8 @@ scorepairci(x = c(1, 1, 7, 12))
 #> [1,] 4.286    0.03843      0     -2.07   0.01922     0.9808
 #> 
 #> $call
-#> contrast    level      bcf     skew       cc 
-#>     "RD"   "0.95"   "TRUE"   "TRUE"  "FALSE"
+#>   contrast      level        bcf       skew         cc closedform 
+#>       "RD"     "0.95"     "TRUE"     "TRUE"    "FALSE"    "FALSE"
 ```
 
 ## References
