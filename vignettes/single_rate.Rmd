@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-options(digits = 3)
+#options(digits = 3)
 ```
 
 ```{r setup}
@@ -38,13 +38,13 @@ scaspci(x = 1, n = 29)
 If you prefer the slightly slower iterative calculation, or want to perform a corresponding [hypothesis test](https://petelaud.github.io/ratesci/articles/tests.html), you could use:
 
 ```{r}
-scoreci(x1 = 1, n1 = 29, contrast = "p")$estimates
+scoreci(x1 = 1, n1 = 29, contrast = "p", precis = 4)$estimates
 ```
 
-`rateci()` also provides two other confidence interval methods (Jeffreys and mid-p) with similar coverage properties [@laud2018]:
+`rateci()` also provides a number of other confidence interval methods for reference: Jeffreys and (two versions of) mid-p intervals have similar coverage properties to SCAS [@laud2018], while the Wilson, Wald and Agresti-Coull intervals are provided for comparison but are not recommended:
 
 ```{r}
-rateci(x = 1, n = 29)
+rateci(x = 1, n = 29, precis = 4)$estimates
 ```
 
 The Jeffreys interval can also incorporate prior information about $p$ for an approximate Bayesian confidence interval. For example, a pilot study estimate of 1/10 could be used to update the non-informative $Beta(0.5, 0.5)$ prior for $p$ to a $Beta(1.5, 9.5)$ distribution:
@@ -56,13 +56,13 @@ jeffreysci(x = 1, n = 29, ai = 1.5, bi = 9.5)
 If more conservative coverage is required, a continuity adjustment may be deployed with `cc`, as follows, giving continuity-adjusted SCAS or Jeffreys, and (if `cc` is TRUE or 0.5), the Clopper-Pearson method.
 
 ```{r}
-rateci(x = 1, n = 29, cc = TRUE)
+rateci(x = 1, n = 29, cc = TRUE, precis = 4)$estimates
 ```
 
 Such an adjustment is widely acknowledged to be over-conservative, so intermediate adjustments such as `cc = 0.25` give a more refined adjustment[@laud2017, Appendix S2 ($\gamma = cc$)].
 
 ```{r}
-rateci(x = 1, n = 29, cc = 0.25)
+rateci(x = 1, n = 29, cc = 0.25, precis = 4)$estimates
 ```
 
 ### Stratified datasets
@@ -78,7 +78,8 @@ data(compress, package = "ratesci")
 strat_p <- scoreci(x1 = compress$event.control, 
                    n1 = compress$n.control, 
                    contrast = "p", 
-                   stratified = TRUE)
+                   stratified = TRUE,
+                   precis = 4)
 strat_p$estimates
 ```
 
@@ -108,7 +109,8 @@ strat_p_rand <- scoreci(x1 = compress$event.control,
                         contrast = "p", 
                         stratified = TRUE, 
                         random = TRUE,
-                        prediction = TRUE)
+                        prediction = TRUE,
+                        precis = 4)
 strat_p_rand$estimates
 strat_p_rand$pval
 ```
@@ -140,9 +142,9 @@ options(digits = 4)
           rep(4, 7),
           rep(6, 5))
   # Wilson-based interval as per Saha et al.
-  clusterpci(x, n, skew = FALSE)
+  clusterpci(x, n, skew = FALSE)$estimates
   # Skewness-corrected version
-  clusterpci(x, n, skew = TRUE)
+  clusterpci(x, n, skew = TRUE)$estimates
 ```
 
 ## Technical details
