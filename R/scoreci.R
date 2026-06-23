@@ -1139,7 +1139,7 @@ scoreci <- function(x1,
     }
   }
 
-  outlist <- list(estimates = estimates, pval = pval)
+  outlist <- list(estimates = round(estimates, precis), pval = pval)
   if (stratified == TRUE && nstrat > 1) {
     Qtest <- c(
       Q = Q_FE, Q_df = Q_df, pval_het = pval_het, I2 = I2, tau2 = tau2_FE, Qc = Qc,
@@ -1159,13 +1159,15 @@ scoreci <- function(x1,
       outlist,
       list(
         Qtest = Qtest, weighting = weighting, # dtflag = dtflag, anydtflag = anydtflag,
-        stratdata = cbind(
+        stratdata = round(
+          cbind(
           x1j = x1, n1j = n1, x2j = x2, n2j = n2,
           p1hatj = p1hat, p2hatj = p2hat, wt_fixed = wt_FE,
           wtpct_fixed = wt1pct, wtpct_rand = wtpct,
           theta_j = point_FE_unstrat, lower_j = lower_unstrat,
           upper_j = upper_unstrat, V_j = V_FE, Stheta_j = Stheta_FE,
           Q_j = Q_each
+          ), precis
         )
       )
     )
