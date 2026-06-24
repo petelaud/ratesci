@@ -48,7 +48,8 @@ The plots below illustrate the one-sided and two-sided interval coverage probabi
 For example, using the dataset from a study of airway reactivity in children before and after stem cell transplantation, as used in [@fagerland2014]:
 
 ```{r}
-out <- scorepairci(x = c(1, 1, 7, 12), precis = 4)
+out <- scorepairci(x = c(1, 1, 7, 12), 
+                   precis = 4)
 out$estimates
 ```
 
@@ -61,7 +62,9 @@ out$pval
 For a confidence interval for paired RR, use:
 
 ```{r}
-out <- scorepairci(x = c(1, 1, 7, 12), contrast = "RR", precis = 4)
+out <- scorepairci(x = c(1, 1, 7, 12), 
+                   contrast = "RR", 
+                   precis = 4)
 out$estimates
 out$pval
 ```
@@ -73,13 +76,22 @@ To obtain the legacy Tango and Tang intervals for RD and RR respectively, you ma
 For application of the MOVER method to paired RD or RR, an estimate of the correlation coefficient is included in the formula. A correction to the correlation estimate, introduced by Newcombe, is recommended, obtained with `corc = TRUE`. As for unpaired MOVER methods, the default base method used for the individual (marginal) proportions is the equal-tailed Jeffreys interval, rather than the Wilson Score interval as originally proposed by Newcombe (obtained using `type = "wilson"`). The combination of the Newcombe correlation estimate and the Jeffreys intervals gives the designation "MOVER-NJ". This method is less computationally intensive than SCAS, but coverage properties are inferior, and there is no corresponding hypothesis test.
 
 ```{r}
-moverpairci(x = c(1, 1, 7, 12), contrast = "RD", corc = TRUE, precis = 4)$estimates
+moverpairci(x = c(1, 1, 7, 12), 
+            contrast = "RD", 
+            corc = TRUE, 
+            precis = 4
+            )$estimates
 ```
 
 For cross-checking against published example in [@fagerland2014]
 
 ```{r}
-moverpairci(x = c(1, 1, 7, 12), contrast = "RD", corc = TRUE, type = "wilson", precis = 4)$estimates
+moverpairci(x = c(1, 1, 7, 12), 
+            contrast = "RD", 
+            corc = TRUE, 
+            type = "wilson", 
+            precis = 4
+            )$estimates
 ```
 
 ### Conditional odds ratio
@@ -87,7 +99,8 @@ moverpairci(x = c(1, 1, 7, 12), contrast = "RD", corc = TRUE, type = "wilson", p
 Confidence intervals for paired odds ratio are obtained conditional on the number of discordant pairs, by transforming a confidence interval for the proportion $b / (b+c)$. Transformed SCAS (with or without a variance bias correction, to ensure consistency with the above SCAS hypothesis tests for RD and RR) or transformed mid-p intervals are recommended (Laud 2026, under review).
 
 ```{r}
-out <- scorepairci(x = c(1, 1, 7, 12), contrast = "OR")
+out <- scorepairci(x = c(1, 1, 7, 12), 
+                   contrast = "OR")
 out$estimates
 out$pval
 ```
@@ -97,6 +110,22 @@ To select an alternative method, for example transformed mid-p:
 ```{r}
 orpairci(x = c(1, 1, 7, 12))$estimates
 ```
+
+### Other methods
+
+Convenience wrapper functions `rdpairci()`, `rrpairci()` and `orpairci()` produce side-by-side output for the various methods described above, plus some other legacy methods for reference.
+
+```{r}
+rdpairci(x = c(1, 1, 7, 12),
+             precis = 4)$estimates
+```
+
+As for the independent contrasts, continuity adjustments may also be applied to some methods for analysis of paired proportions:
+
+```{r}
+rdpairci(x = c(1, 1, 7, 12),
+         cc = TRUE,
+         precis = 4)$estimates
+```
+
 ## References
-
-

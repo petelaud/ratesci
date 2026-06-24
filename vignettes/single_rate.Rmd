@@ -32,37 +32,56 @@ Similar patterns of coverage are seen for the corresponding methods for a Poisso
 For a worked example, the SCAS 95% interval for the binomial proportion 1/29 is obtained with `scaspci()`, using closed-form calculation [@laud2017, Appendix A.4]:
 
 ```{r}
-scaspci(x = 1, n = 29)
+scaspci(x = 1, 
+        n = 29)
 ```
 
 If you prefer the slightly slower iterative calculation, or want to perform a corresponding [hypothesis test](https://petelaud.github.io/ratesci/articles/tests.html), you could use:
 
 ```{r}
-scoreci(x1 = 1, n1 = 29, contrast = "p", precis = 4)$estimates
+scoreci(x1 = 1, 
+        n1 = 29, 
+        contrast = "p", 
+        precis = 4
+        )$estimates
 ```
 
 `rateci()` also provides a number of other confidence interval methods for reference: Jeffreys and (two versions of) mid-p intervals have similar coverage properties to SCAS [@laud2018], while the Wilson, Wald and Agresti-Coull intervals are provided for comparison but are not recommended:
 
 ```{r}
-rateci(x = 1, n = 29, precis = 4)$estimates
+rateci(x = 1, 
+       n = 29, 
+       precis = 4
+       )$estimates
 ```
 
 The Jeffreys interval can also incorporate prior information about $p$ for an approximate Bayesian confidence interval. For example, a pilot study estimate of 1/10 could be used to update the non-informative $Beta(0.5, 0.5)$ prior for $p$ to a $Beta(1.5, 9.5)$ distribution:
 
 ```{r}
-jeffreysci(x = 1, n = 29, ai = 1.5, bi = 9.5)
+jeffreysci(x = 1, 
+           n = 29, 
+           ai = 1.5, 
+           bi = 9.5)
 ```
 
 If more conservative coverage is required, a continuity adjustment may be deployed with `cc`, as follows, giving continuity-adjusted SCAS or Jeffreys, and (if `cc` is TRUE or 0.5), the Clopper-Pearson method.
 
 ```{r}
-rateci(x = 1, n = 29, cc = TRUE, precis = 4)$estimates
+rateci(x = 1, 
+       n = 29, 
+       cc = TRUE, 
+       precis = 4
+       )$estimates
 ```
 
 Such an adjustment is widely acknowledged to be over-conservative, so intermediate adjustments such as `cc = 0.25` give a more refined adjustment[@laud2017, Appendix S2 ($\gamma = cc$)].
 
 ```{r}
-rateci(x = 1, n = 29, cc = 0.25, precis = 4)$estimates
+rateci(x = 1, 
+       n = 29, 
+       cc = 0.25, 
+       precis = 4
+       )$estimates
 ```
 
 ### Stratified datasets
@@ -142,18 +161,22 @@ options(digits = 4)
           rep(4, 7),
           rep(6, 5))
   # Wilson-based interval as per Saha et al.
-  clusterpci(x, n, skew = FALSE)$estimates
+  clusterpci(x = x, 
+             n = n, 
+             skew = FALSE
+             )$estimates
   # Skewness-corrected version
-  clusterpci(x, n, skew = TRUE)$estimates
+  clusterpci(x = x, 
+             n = n, 
+             skew = TRUE
+             )$estimates
 ```
 
 ## Technical details
 
 The SCAS method is an extension of the Wilson score method, using the same score function $S(p) = x / n - p$, where $x$ is the observed number of events from $n$ trials, and $p$ is the true proportion. The variance of $S(p)$ is $V = p(1 - p)/n$, and the 3rd central moment is $\mu_3 = p(1 - p)(1 - 2p)/n^2$. The $100(1 - \alpha)\%$ confidence interval is found as the two solutions (solving for p) of the following equation, where $z$ is the $1 - \alpha / 2$ percentile of the standard normal distribution:
 
-$$
-S(p)/V^{1/2} - (z^2 - 1)\mu_3/6V^{3/2} = \pm z
-$$
+$$S(p)/V^{1/2} - (z^2 - 1)\mu_3/6V^{3/2} = \pm z$$
 
 For unstratified datasets, this has a closed-form solution. The formula is extended in [@laud2017] to incorporate stratification using inverse variance weights, $w_i = 1 / V_i$, or sample size, $w_i = n_i$, or any other weighting scheme as required, with the solution being found by iteration over $p \in [0, 1]$.
 

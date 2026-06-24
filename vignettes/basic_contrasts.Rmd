@@ -57,7 +57,11 @@ The skewness correction, introduced by [@gart1988] should be considered essentia
 `scoreci()` is used as follows, for example to obtain a SCAS 95% CI for the difference `5/56 - 0/29`:
 
 ```{r}
-out <- scoreci(x1 = 5, n1 = 56, x2 = 0, n2 = 29, precis = 4)
+out <- scoreci(x1 = 5, 
+               n1 = 56, 
+               x2 = 0, 
+               n2 = 29, 
+               precis = 4)
 out$estimates
 ```
 
@@ -81,25 +85,49 @@ out$pval
 The `scoreci()` function provides options to omit the skewness correction (`skew = FALSE` for the MN method) and the variance bias correction (`bcf = FALSE` for the Mee method, which would be consistent with the Karl Pearson unadjusted chi-squared test). To keep things simple when choosing the SCAS method, you may instead use the `scasci()` wrapper function instead of `scoreci()`:
 
 ```{r}
-scasci(x1 = 5, n1 = 56, x2 = 0, n2 = 29, precis = 4)$estimates
+scasci(x1 = 5, 
+       n1 = 56, 
+       x2 = 0, 
+       n2 = 29, 
+       precis = 4
+       )$estimates
 ```
 
 For analysis of relative risk, use:
 
 ```{r}
-scasci(x1 = 5, n1 = 56, x2 = 0, n2 = 29, contrast = "RR", precis = 4)$estimates
+scasci(x1 = 5, 
+       n1 = 56, 
+       x2 = 0, 
+       n2 = 29, 
+       contrast = "RR", 
+       precis = 4
+       )$estimates
 ```
 
 And for odds ratio:
 
 ```{r}
-scasci(x1 = 5, n1 = 56, x2 = 0, n2 = 29, contrast = "OR", precis = 4)$estimates
+scasci(x1 = 5, 
+       n1 = 56, 
+       x2 = 0, 
+       n2 = 29, 
+       contrast = "OR", 
+       precis = 4
+       )$estimates
 ```
 
 For analysis of Poisson incidence rates, for example exposure-adjusted adverse event rates, the same methodology is adapted for the Poisson distribution, with the `distrib` argument. So, for example if the denominators 56 and 29 represent the number of patient-years at risk in each group, instead of the number of patients:
 
 ```{r}
-scasci(x1 = 5, n1 = 56, x2 = 0, n2 = 29, contrast = "RR", distrib = "poi", precis = 4)$estimates
+scasci(x1 = 5, 
+       n1 = 56, 
+       x2 = 0, 
+       n2 = 29, 
+       contrast = "RR", 
+       distrib = "poi", 
+       precis = 4
+       )$estimates
 ```
 
 ### MOVER methods
@@ -113,19 +141,35 @@ There is no corresponding hypothesis test for the MOVER methods.
 A MOVER-J interval for binomial RD from the same observed data as above would be obtained using:
 
 ```{r}
-moverci(x1 = 5, n1 = 56, x2 = 0, n2 = 29)$estimates
+moverci(x1 = 5, 
+        n1 = 56, 
+        x2 = 0, 
+        n2 = 29
+        )$estimates
 ```
 
 For comparison, Newcombe's version using Wilson intervals is:
 
 ```{r}
-moverci(x1 = 5, n1 = 56, x2 = 0, n2 = 29, type = "wilson")$estimates
+moverci(x1 = 5, 
+        n1 = 56, 
+        x2 = 0, 
+        n2 = 29, 
+        type = "wilson"
+        )$estimates
 ```
 
 The MOVER approach may be further modified by adapting the Jeffreys interval (which uses a non-informative $Beta(0.5, 0.5)$ prior for the group rates) to incorporate prior information about $p_1$ and $p_2$ for an approximate Bayesian interval. For example, given data from a pilot study with 1/10 events in the first group and 0/10 in the second group, the non-informative $Beta(0.5, 0.5)$ prior distributions for $p_1$ and $p_2$ might be updated as follows:
 
 ```{r}
-moverbci(x1 = 5, n1 = 56, x2 = 0, n2 = 29, a1 = 1.5, b1 = 9.5, a2 = 0.5, b2 = 10.5)
+moverbci(x1 = 5, 
+         n1 = 56, 
+         x2 = 0, 
+         n2 = 29, 
+         a1 = 1.5, 
+         b1 = 9.5, 
+         a2 = 0.5, 
+         b2 = 10.5)
 ```
 
 WARNING: Note that confidence intervals for ratio measures should be equivariant, in the sense that:
@@ -133,16 +177,60 @@ WARNING: Note that confidence intervals for ratio measures should be equivariant
 1.  interchanging the groups produces reciprocal intervals for RR or OR, i.e. the lower and upper confidence limits for $x_1/n_1$ vs $x_2/n_2$ are the reciprocal of the upper and lower limits for $x_2/n_2$ vs $x_1/n_1$
 2.  in addition for OR, interchanging events and non-events produces reciprocal intervals, i.e. the lower and upper confidence limits for the odds ratio of $(n_1 - x_1)/n_1$ vs $(n_2 - x_2)/n_2$ are the reciprocal of the upper and lower limits for $x_1/n_1$ vs $x_2/n_2$.
 
-Unfortunately, the MOVER method for contrast = "OR", as described in [@fagerland2012], does not satisfy the second of these requirements, unlike the asymptotic score and other methods: 
+Unfortunately, the MOVER method for contrast = "OR", as described in [@fagerland2012], does not satisfy the second of these requirements, unlike the asymptotic score and other methods:
 
 ```{r}
-orci(x1 = 5, n1 = 56, x2 = 1, n2 = 29)$estimates
+orci(x1 = 5, 
+     n1 = 56, 
+     x2 = 1, 
+     n2 = 29
+     )$estimates
 ```
 
 ```{r}
-1 / orci(x1 = 51, n1 = 56, x2 = 28, n2 = 29)$estimates
+1 / orci(x1 = 51, 
+         n1 = 56, 
+         x2 = 28, 
+         n2 = 29
+         )$estimates
 ```
 
+### Other methods
+
+Convenience wrapper functions `rdci()`, `rrci()` and `orci()` produce side-by-side output for the various methods described above, plus some other legacy methods for reference.
+
+```{r}
+rdci(x1 = 5, 
+     n1 = 56, 
+     x2 = 0, 
+     n2 = 29, 
+     precis = 4
+     )$estimates
+```
+
+If more conservative coverage is required, a continuity adjustment may be deployed with `cc` in any of the above functions, illustrated here for `rdci()`:
+
+```{r}
+rdci(x1 = 5, 
+     n1 = 56, 
+     x2 = 0, 
+     n2 = 29, 
+     precis = 4,
+     cc = TRUE
+     )$estimates
+```
+
+Such an adjustment is widely acknowledged to be over-conservative, so intermediate adjustments such as cc = 0.25 give a more refined adjustment[@laud2017, Appendix S2 ($\gamma = cc$)].
+
+```{r}
+rdci(x1 = 5, 
+     n1 = 56, 
+     x2 = 0, 
+     n2 = 29, 
+     precis = 4,
+     cc = 0.25
+     )$estimates
+```
 
 ## Technical details
 

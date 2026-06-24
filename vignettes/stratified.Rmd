@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-options(digits = 3)
+#options(digits = 3)
 ```
 
 ```{r setup}
@@ -32,7 +32,8 @@ strat_rd <- scoreci(x1 = compress$event.gcs,
                    x2 = compress$event.control, 
                    n2 = compress$n.control, 
                    contrast = "RD", 
-                   stratified = TRUE)
+                   stratified = TRUE,
+                   precis = 4)
 strat_rd$estimates
 ```
 
@@ -78,7 +79,8 @@ strat_rd_rand <- scoreci(x1 = compress$event.gcs,
                    contrast = "RD", 
                    stratified = TRUE,
                    random = TRUE,
-                   prediction = TRUE)
+                   prediction = TRUE,
+                   precis = 4)
 strat_rd_rand$estimates
 ```
 

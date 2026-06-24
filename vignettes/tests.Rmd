@@ -46,17 +46,49 @@ pchisq(k_pearson * ((56+29-1)/(56+29)), df = 1, lower.tail = FALSE)
 ````
 
 ```{r}
-scoreci(x1 = 7, n1 = 34, x2 = 1, n = 34, skew = FALSE)$pval[, 1:2]
-scoreci(x1 = 7, n1 = 34, x2 = 1, n = 34, skew = FALSE, contrast = "RR")$pval[, 1:2]
-scoreci(x1 = 7, n1 = 34, x2 = 1, n = 34, skew = FALSE, contrast = "OR")$pval[, 1:2]
-suppressWarnings(k_pearson <- chisq.test(x = matrix(c(7, 1, 27, 33), nrow = 2), correct = FALSE)$statistic)
-pchisq(k_pearson * ((34+34-1)/(34+34)), df = 1, lower.tail = FALSE)
+scoreci(x1 = 7, 
+        n1 = 34, 
+        x2 = 1, 
+        n2 = 34, 
+        skew = FALSE
+        )$pval[, 1:2]
+
+scoreci(x1 = 7, 
+        n1 = 34, 
+        x2 = 1, 
+        n2 = 34, 
+        skew = FALSE, 
+        contrast = "RR"
+        )$pval[, 1:2]
+
+scoreci(x1 = 7, 
+        n1 = 34, 
+        x2 = 1, 
+        n2 = 34, 
+        skew = FALSE, 
+        contrast = "OR"
+        )$pval[, 1:2]
+
+# Applying 'N-1' adjustment to output of the conventional chi-square test:
+suppressWarnings(
+  k_pearson <- chisq.test(x = matrix(c(7, 1, 27, 33), nrow = 2), 
+                          correct = FALSE
+                          )$statistic
+  )
+pchisq(k_pearson * ((34 + 34 - 1)/(34 + 34)), 
+       df = 1, 
+       lower.tail = FALSE)
 ```
 
 The direct equivalence with the 'N-1' chi-squared test also holds when the skewness correction is included, if group sizes are equal (see below). If group sizes are unequal, then the SCAS two-sided test is an improved variant of the chi-squared test.
 
 ```{r}
-scoreci(x1 = 7, n1 = 34, x2 = 1, n = 34, skew = TRUE)$pval[, 1:2]
+scoreci(x1 = 7, 
+        n1 = 34, 
+        x2 = 1, 
+        n2 = 34, 
+        skew = TRUE
+        )$pval[, 1:2]
 ```
 
 The plot below illustrates the type I error rates achieved by different tests for small to medium equal and unequal sample sizes. The skewness corrected test fixes a deficiency of the chi-squared test, which can severely violate the nominal significance level when group sample sizes differ by a factor of 4 or more. The SCAS test does not guarantee that the nominal significance level is never violated, but rather fluctuates around it, in a similar manner to the "lucky n" phenomenon for the single proportion described by [@brown2001]. Violations are relatively infrequent (22%, vs 44% for chi-squared), with significance level rarely exceeding 5.5% (3%, vs 11% for chi-squared), and converging towards the nominal 5% for larger sample sizes. The example case with $n_1 = n_2 = 25$ (solid black curve) plotted by [@fagerland2017, Figure 4.4] is very unrepresentative, and remains an anomolous case for the SCAS test, while type I error rates for unequal sample sizes are generally shifted downwards. For further improved control of type I error, a small continuity adjustment ($\gamma = 0.05$) applied to the SCAS test achieves performance that is more successful than the Fisher mid-P test at approximating the Suissa-Shuster exact unconditional test.
@@ -72,7 +104,11 @@ The one-sided test is analogous to the Farrington-Manning test, but not identica
 See below for an example analysis of a clinical trial testing the non-inferiority of cure rates for a new antibiotic against an established comparator treatment, with a non-inferiority margin of -12.5% [@torres2018]:
 
 ```{r}
-reprove <- scoreci(x1 = 245, n1 = 356, x2 = 270, n2 = 370, theta0 = -0.125)
+reprove <- scoreci(x1 = 245, 
+                   n1 = 356, 
+                   x2 = 270, 
+                   n2 = 370, 
+                   theta0 = -0.125)
 reprove$estimates
 reprove$pval[, 3:6]
 ```
@@ -92,7 +128,10 @@ x1 = c(21, 76, 73, 75)
 n1 = c(29, 96, 124, 107) 
 x2 = c(19, 73, 91, 87) 
 n2 = c(27, 95, 130, 118)
-data_array <- aperm(array(c(x1, x2, n1 - x1, n2 - x2), dim = c(4, 2, 2)), c(2, 3, 1))
+data_array <- aperm(array(c(x1, x2, n1 - x1, n2 - x2), 
+                          dim = c(4, 2, 2)
+                          ), 
+                    c(2, 3, 1))
 
 reprove_strat <- scoreci(x1 = c(21, 76, 73, 75), 
                          n1 = c(29, 96, 124, 107), 
@@ -110,22 +149,37 @@ reprove_cmh$p.value
 
 The CMH test (obtained as a test for RD or RR with MH weights, or a test for OR with INV weights) has been shown to be optimal if the treatment effect is constant over strata on the odds ratio scale (see [@radhakrishna1965]). If instead the treatment effect is constant on the difference scale, then INV weighting for RD is optimal. If the treatment effect is constant across strata on the relative risk scale, then the optimal test is produced by a test for RR = 1 with `weighting = "INV"`, and `rr_tang = TRUE`, which applies the modified score function in [@tang2020]. Naturally, one does not know in advance which one of these assumptions might hold. Mehrotra and Railkar proposed 'Minimum Risk' weighting as a compromise between INV and MH weighting, which may be implemented in a future update.
 
+```{=html}
 <!--
 [Needs further thought, and possibly a separate vignette]
 Note that the type I error for a test of association is not affected by the choice of weights, since the null hypothesis is that the rates are equal in all strata, which would imply equal null values on all contrast scales. The same is not the case for a non-inferiority test - for example, a null hypothesis of RD = -0.1 in all strata would not necessarily translate to homogeneity on the odds ratio scale, if there is variability in the control group rates across strata. Therefore the choice of weights might affect the performance of the test. The skewness correction is also particularly relevant for 
 -->
+```
 
 ### Tests for paired binomial proportions
 
 The two-sided test given by `scorepairci()` (for any contrast) is an 'N-1' adjusted version of the McNemar test (the skewness correction term is zero at the null hypothesis value of $\theta$). In an extensive evaluation of many thousands of sample sizes and correlations, the paired SCAS two-sided test did not violate the nominal significance level at any point, suggesting that the over-conservative "continuity corrected" version given by default in `mcnemar.test()` is superfluous.
 
 ```{r}
-scorepairci(x = c(1, 1, 7, 12), skew = TRUE)$pval
-scorepairci(x = c(1, 1, 7, 12), skew = FALSE)$pval
-scorepairci(x = c(1, 1, 7, 12), skew = FALSE, contrast = "RR")$pval
-mcnem <- mcnemar.test(x = matrix(c(1, 1, 7, 12), nrow = 2), correct = FALSE)$statistic
+scorepairci(x = c(1, 1, 7, 12), 
+            skew = TRUE
+            )$pval
+scorepairci(x = c(1, 1, 7, 12), 
+            skew = FALSE
+            )$pval
+scorepairci(x = c(1, 1, 7, 12), 
+            skew = FALSE, 
+            contrast = "RR"
+            )$pval
+
+# Applying 'N-1' adjustment to output of the conventional McNemar test:
+mcnem <- mcnemar.test(x = matrix(c(1, 1, 7, 12), nrow = 2), 
+                      correct = FALSE
+                      )$statistic
 names(mcnem) <- NULL
-pchisq(mcnem * (21-1)/21, df = 1, lower.tail = FALSE)
+pchisq(mcnem * (21 - 1) / 21, 
+       df = 1, 
+       lower.tail = FALSE)
 ```
 
 The paired one-sided test is a skewness-corrected and 'N-1' adjusted version of Nam's score test [@nam1997]. Type I error rates for this test, represented by one-sided confidence interval non-coverage probabilities, are examined in [Laud 2026, under evaluation].
@@ -143,7 +197,11 @@ when the skewness correction is omitted. The direct equivalence also holds when 
 `scoreci()` with `contrast = "p"` also provides hypothesis tests for unstratified or stratified datasets, matching the confidence intervals. `pval2sided` is a two-sided test against the null hypothesis that $p = 0.5$. `pval_left` and `pval_right` are one-sided tests against a user-specified value of $\theta_0$.
 
 ```{r}
-scoreci(x1 = 7, n1 = 34, contrast = "p", theta0 = 0.1)$pval
+scoreci(x1 = 7, 
+        n1 = 34, 
+        contrast = "p", 
+        theta0 = 0.1
+        )$pval
 ```
 
 ## References
