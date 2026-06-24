@@ -102,14 +102,15 @@ postoperative deep vein thrombosis (DVT) <span class="citation">(from <a href="#
 <span>                   x2 <span class="op">=</span> <span class="va">compress</span><span class="op">$</span><span class="va">event.control</span>, </span>
 <span>                   n2 <span class="op">=</span> <span class="va">compress</span><span class="op">$</span><span class="va">n.control</span>, </span>
 <span>                   contrast <span class="op">=</span> <span class="st">"RD"</span>, </span>
-<span>                   stratified <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>                   stratified <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                   precis <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="va">strat_rd</span><span class="op">$</span><span class="va">estimates</span></span>
-<span><span class="co">#&gt;       lower    est   upper level  p1hat p2hat  p1mle p2mle</span></span>
-<span><span class="co">#&gt; [1,] -0.163 -0.124 -0.0866  0.95 0.0858  0.21 0.0936 0.218</span></span></code></pre></div>
+<span><span class="co">#&gt;        lower     est   upper level  p1hat p2hat  p1mle  p2mle</span></span>
+<span><span class="co">#&gt; [1,] -0.1632 -0.1242 -0.0866  0.95 0.0858  0.21 0.0936 0.2179</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">strat_rd</span><span class="op">$</span><span class="va">pval</span></span>
-<span><span class="co">#&gt;      chisq pval2sided theta0 scorenull pval_left pval_right</span></span>
-<span><span class="co">#&gt; [1,]  42.2   8.25e-11      0      -6.5  4.12e-11          1</span></span></code></pre></div>
+<span><span class="co">#&gt;         chisq  pval2sided theta0 scorenull   pval_left pval_right</span></span>
+<span><span class="co">#&gt; [1,] 42.19806 8.24816e-11      0 -6.496004 4.12408e-11          1</span></span></code></pre></div>
 <p>The Qtest object provides a heterogeneity test and related
 quantities, including an assessment of qualitative heterogeneity
 (indicating whether treatment effects are in opposite directions in
@@ -119,9 +120,9 @@ Appendix S4)</span>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">strat_rd</span><span class="op">$</span><span class="va">Qtest</span></span>
 <span><span class="co">#&gt;            Q         Q_df     pval_het           I2         tau2           Qc </span></span>
-<span><span class="co">#&gt;     14.41529      8.00000      0.07156     44.50337      0.00176      0.00000 </span></span>
+<span><span class="co">#&gt; 14.415376544  8.000000000  0.071560846 44.503704254  0.001756709  0.000000000 </span></span>
 <span><span class="co">#&gt; pval_qualhet </span></span>
-<span><span class="co">#&gt;      0.99609</span></span></code></pre></div>
+<span><span class="co">#&gt;  0.996093750</span></span></code></pre></div>
 <!--
 
 ``` r
@@ -133,9 +134,9 @@ strat_rr <- scoreci(x1 = compress$event.gcs,
                    stratified = TRUE)
 strat_rr$Qtest
 #>            Q         Q_df     pval_het           I2         tau2           Qc 
-#>     1.01e+01     8.00e+00     2.56e-01     2.10e+01     1.02e-04     0.00e+00 
+#> 1.013018e+01 8.000000e+00 2.560079e-01 2.102803e+01 1.023765e-04 0.000000e+00 
 #> pval_qualhet 
-#>     9.96e-01
+#> 9.960938e-01
 ```
 -->
 <p>It is important to note that heterogeneity tests often have low
@@ -148,25 +149,25 @@ the <code>hetplot</code> argument).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">strat_rd</span><span class="op">$</span><span class="va">stratdata</span></span>
 <span><span class="co">#&gt;       x1j n1j x2j n2j p1hatj p2hatj wt_fixed wtpct_fixed wtpct_rand theta_j</span></span>
-<span><span class="co">#&gt;  [1,]  15  97  37 103 0.1546 0.3592    49.95       15.62      15.62 -0.2044</span></span>
-<span><span class="co">#&gt;  [2,]   0   8   5  10 0.0000 0.5000     4.44        1.39       1.39 -0.5000</span></span>
-<span><span class="co">#&gt;  [3,]  11  50  23  48 0.2200 0.4792    24.49        7.66       7.66 -0.2585</span></span>
-<span><span class="co">#&gt;  [4,]   4 110  16 110 0.0364 0.1455    55.00       17.19      17.19 -0.1096</span></span>
-<span><span class="co">#&gt;  [5,]   7  65   7  32 0.1077 0.2188    21.44        6.70       6.70 -0.1129</span></span>
-<span><span class="co">#&gt;  [6,]   8  25   8  25 0.3200 0.3200    12.50        3.91       3.91  0.0000</span></span>
-<span><span class="co">#&gt;  [7,]   5 126  17 126 0.0397 0.1349    63.00       19.69      19.69 -0.0957</span></span>
-<span><span class="co">#&gt;  [8,]   0 104   4  92 0.0000 0.0435    48.82       15.26      15.26 -0.0451</span></span>
-<span><span class="co">#&gt;  [9,]   7  80  16  81 0.0875 0.1975    40.25       12.58      12.58 -0.1103</span></span>
-<span><span class="co">#&gt;       lower_j  upper_j     V_j Stheta_j    Q_j</span></span>
-<span><span class="co">#&gt;  [1,]  -0.321 -0.08495 0.00369  -0.0804 1.7506</span></span>
-<span><span class="co">#&gt;  [2,]  -0.787 -0.10319 0.04111  -0.3758 3.4351</span></span>
-<span><span class="co">#&gt;  [3,]  -0.435 -0.07103 0.00914  -0.1350 1.9917</span></span>
-<span><span class="co">#&gt;  [4,]  -0.190 -0.03530 0.00151   0.0151 0.1517</span></span>
-<span><span class="co">#&gt;  [5,]  -0.290  0.04065 0.00704   0.0132 0.0246</span></span>
-<span><span class="co">#&gt;  [6,]  -0.260  0.25979 0.01763   0.1242 0.8753</span></span>
-<span><span class="co">#&gt;  [7,]  -0.169 -0.02700 0.00132   0.0290 0.6349</span></span>
-<span><span class="co">#&gt;  [8,]  -0.101 -0.00470 0.00119   0.0807 5.4843</span></span>
-<span><span class="co">#&gt;  [9,]  -0.221 -0.00172 0.00300   0.0142 0.0671</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1,]  15  97  37 103 0.1546 0.3592  49.9550     15.6159    15.6159 -0.2044</span></span>
+<span><span class="co">#&gt;  [2,]   0   8   5  10 0.0000 0.5000   4.4444      1.3893     1.3893 -0.5000</span></span>
+<span><span class="co">#&gt;  [3,]  11  50  23  48 0.2200 0.4792  24.4898      7.6555     7.6555 -0.2585</span></span>
+<span><span class="co">#&gt;  [4,]   4 110  16 110 0.0364 0.1455  55.0000     17.1930    17.1930 -0.1096</span></span>
+<span><span class="co">#&gt;  [5,]   7  65   7  32 0.1077 0.2188  21.4433      6.7032     6.7032 -0.1129</span></span>
+<span><span class="co">#&gt;  [6,]   8  25   8  25 0.3200 0.3200  12.5000      3.9075     3.9075  0.0000</span></span>
+<span><span class="co">#&gt;  [7,]   5 126  17 126 0.0397 0.1349  63.0000     19.6938    19.6938 -0.0957</span></span>
+<span><span class="co">#&gt;  [8,]   0 104   4  92 0.0000 0.0435  48.8163     15.2600    15.2600 -0.0451</span></span>
+<span><span class="co">#&gt;  [9,]   7  80  16  81 0.0875 0.1975  40.2484     12.5817    12.5817 -0.1103</span></span>
+<span><span class="co">#&gt;       lower_j upper_j    V_j Stheta_j    Q_j</span></span>
+<span><span class="co">#&gt;  [1,] -0.3211 -0.0849 0.0037  -0.0804 1.7506</span></span>
+<span><span class="co">#&gt;  [2,] -0.7868 -0.1032 0.0411  -0.3758 3.4351</span></span>
+<span><span class="co">#&gt;  [3,] -0.4354 -0.0710 0.0091  -0.1350 1.9917</span></span>
+<span><span class="co">#&gt;  [4,] -0.1901 -0.0353 0.0015   0.0151 0.1517</span></span>
+<span><span class="co">#&gt;  [5,] -0.2901  0.0407 0.0070   0.0132 0.0246</span></span>
+<span><span class="co">#&gt;  [6,] -0.2598  0.2598 0.0176   0.1242 0.8753</span></span>
+<span><span class="co">#&gt;  [7,] -0.1694 -0.0270 0.0013   0.0290 0.6349</span></span>
+<span><span class="co">#&gt;  [8,] -0.1012 -0.0047 0.0012   0.0807 5.4844</span></span>
+<span><span class="co">#&gt;  [9,] -0.2211 -0.0017 0.0030   0.0142 0.0671</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="random-effects">Random effects<a class="anchor" aria-label="anchor" href="#random-effects"></a>
 </h3>
@@ -190,10 +191,11 @@ method).</p>
 <span>                   contrast <span class="op">=</span> <span class="st">"RD"</span>, </span>
 <span>                   stratified <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>                   random <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>                   prediction <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>                   prediction <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                   precis <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="va">strat_rd_rand</span><span class="op">$</span><span class="va">estimates</span></span>
-<span><span class="co">#&gt;       lower    est upper level  p1hat p2hat  p1mle p2mle</span></span>
-<span><span class="co">#&gt; [1,] -0.188 -0.124 -0.06  0.95 0.0858  0.21 0.0936 0.218</span></span></code></pre></div>
+<span><span class="co">#&gt;        lower     est upper level  p1hat p2hat  p1mle  p2mle</span></span>
+<span><span class="co">#&gt; [1,] -0.1884 -0.1242 -0.06  0.95 0.0858  0.21 0.0936 0.2178</span></span></code></pre></div>
 <p>Note that the TDAS method does not include a skewness correction, so
 when <code>random = TRUE</code>, the <code>skew</code> argument only
 affects the <code>stratdata</code> output element.</p>
@@ -202,8 +204,8 @@ affects the <code>stratdata</code> output element.</p>
 <code>prediction = TRUE</code>:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">strat_rd_rand</span><span class="op">$</span><span class="va">prediction</span></span>
-<span><span class="co">#&gt;       lower  upper</span></span>
-<span><span class="co">#&gt; [1,] -0.244 0.0158</span></span></code></pre></div>
+<span><span class="co">#&gt;        lower  upper</span></span>
+<span><span class="co">#&gt; [1,] -0.2436 0.0158</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2 unnumbered">

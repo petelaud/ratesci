@@ -151,17 +151,44 @@ pchisq(k_pearson * ((56+29-1)/(56+29)), df = 1, lower.tail = FALSE)
 ```
 -->
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">7</span>, n1 <span class="op">=</span> <span class="fl">34</span>, x2 <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">34</span>, skew <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">$</span><span class="va">pval</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">7</span>, </span>
+<span>        n1 <span class="op">=</span> <span class="fl">34</span>, </span>
+<span>        x2 <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>        n2 <span class="op">=</span> <span class="fl">34</span>, </span>
+<span>        skew <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>        <span class="op">)</span><span class="op">$</span><span class="va">pval</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span>
 <span><span class="co">#&gt;      chisq pval2sided </span></span>
 <span><span class="co">#&gt;      5.025      0.025</span></span>
-<span><span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">7</span>, n1 <span class="op">=</span> <span class="fl">34</span>, x2 <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">34</span>, skew <span class="op">=</span> <span class="cn">FALSE</span>, contrast <span class="op">=</span> <span class="st">"RR"</span><span class="op">)</span><span class="op">$</span><span class="va">pval</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">7</span>, </span>
+<span>        n1 <span class="op">=</span> <span class="fl">34</span>, </span>
+<span>        x2 <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>        n2 <span class="op">=</span> <span class="fl">34</span>, </span>
+<span>        skew <span class="op">=</span> <span class="cn">FALSE</span>, </span>
+<span>        contrast <span class="op">=</span> <span class="st">"RR"</span></span>
+<span>        <span class="op">)</span><span class="op">$</span><span class="va">pval</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span>
 <span><span class="co">#&gt;      chisq pval2sided </span></span>
 <span><span class="co">#&gt;      5.025      0.025</span></span>
-<span><span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">7</span>, n1 <span class="op">=</span> <span class="fl">34</span>, x2 <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">34</span>, skew <span class="op">=</span> <span class="cn">FALSE</span>, contrast <span class="op">=</span> <span class="st">"OR"</span><span class="op">)</span><span class="op">$</span><span class="va">pval</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">7</span>, </span>
+<span>        n1 <span class="op">=</span> <span class="fl">34</span>, </span>
+<span>        x2 <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>        n2 <span class="op">=</span> <span class="fl">34</span>, </span>
+<span>        skew <span class="op">=</span> <span class="cn">FALSE</span>, </span>
+<span>        contrast <span class="op">=</span> <span class="st">"OR"</span></span>
+<span>        <span class="op">)</span><span class="op">$</span><span class="va">pval</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span>
 <span><span class="co">#&gt;      chisq pval2sided </span></span>
 <span><span class="co">#&gt;      5.025      0.025</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="va">k_pearson</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/chisq.test.html" class="external-link">chisq.test</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">1</span>, <span class="fl">27</span>, <span class="fl">33</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>, correct <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">$</span><span class="va">statistic</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/Chisquare.html" class="external-link">pchisq</a></span><span class="op">(</span><span class="va">k_pearson</span> <span class="op">*</span> <span class="op">(</span><span class="op">(</span><span class="fl">34</span><span class="op">+</span><span class="fl">34</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="fl">34</span><span class="op">+</span><span class="fl">34</span><span class="op">)</span><span class="op">)</span>, df <span class="op">=</span> <span class="fl">1</span>, lower.tail <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Applying 'N-1' adjustment to output of the conventional chi-square test:</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span></span>
+<span>  <span class="va">k_pearson</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/chisq.test.html" class="external-link">chisq.test</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">1</span>, <span class="fl">27</span>, <span class="fl">33</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>, </span>
+<span>                          correct <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>                          <span class="op">)</span><span class="op">$</span><span class="va">statistic</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/Chisquare.html" class="external-link">pchisq</a></span><span class="op">(</span><span class="va">k_pearson</span> <span class="op">*</span> <span class="op">(</span><span class="op">(</span><span class="fl">34</span> <span class="op">+</span> <span class="fl">34</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="fl">34</span> <span class="op">+</span> <span class="fl">34</span><span class="op">)</span><span class="op">)</span>, </span>
+<span>       df <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>       lower.tail <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; X-squared </span></span>
 <span><span class="co">#&gt;     0.025</span></span></code></pre></div>
 <p>The direct equivalence with the ‘N-1’ chi-squared test also holds
@@ -169,7 +196,12 @@ when the skewness correction is included, if group sizes are equal (see
 below). If group sizes are unequal, then the SCAS two-sided test is an
 improved variant of the chi-squared test.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">7</span>, n1 <span class="op">=</span> <span class="fl">34</span>, x2 <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">34</span>, skew <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">pval</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">7</span>, </span>
+<span>        n1 <span class="op">=</span> <span class="fl">34</span>, </span>
+<span>        x2 <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>        n2 <span class="op">=</span> <span class="fl">34</span>, </span>
+<span>        skew <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>        <span class="op">)</span><span class="op">$</span><span class="va">pval</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span>
 <span><span class="co">#&gt;      chisq pval2sided </span></span>
 <span><span class="co">#&gt;      5.025      0.025</span></span></code></pre></div>
 <p>The plot below illustrates the type I error rates achieved by
@@ -232,7 +264,11 @@ established comparator treatment, with a non-inferiority margin of
 -12.5% <span class="citation">(<a href="#ref-torres2018">Torres et al.
 2018</a>)</span>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">reprove</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">245</span>, n1 <span class="op">=</span> <span class="fl">356</span>, x2 <span class="op">=</span> <span class="fl">270</span>, n2 <span class="op">=</span> <span class="fl">370</span>, theta0 <span class="op">=</span> <span class="op">-</span><span class="fl">0.125</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">reprove</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">245</span>, </span>
+<span>                   n1 <span class="op">=</span> <span class="fl">356</span>, </span>
+<span>                   x2 <span class="op">=</span> <span class="fl">270</span>, </span>
+<span>                   n2 <span class="op">=</span> <span class="fl">370</span>, </span>
+<span>                   theta0 <span class="op">=</span> <span class="op">-</span><span class="fl">0.125</span><span class="op">)</span></span>
 <span><span class="va">reprove</span><span class="op">$</span><span class="va">estimates</span></span>
 <span><span class="co">#&gt;       lower     est  upper level  x1  n1  x2  n2 p1hat p2hat p1mle p2mle</span></span>
 <span><span class="co">#&gt; [1,] -0.108 -0.0415 0.0246  0.95 245 356 270 370 0.688  0.73 0.688  0.73</span></span>
@@ -269,7 +305,10 @@ follows:</p>
 <span><span class="va">n1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">29</span>, <span class="fl">96</span>, <span class="fl">124</span>, <span class="fl">107</span><span class="op">)</span> </span>
 <span><span class="va">x2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">19</span>, <span class="fl">73</span>, <span class="fl">91</span>, <span class="fl">87</span><span class="op">)</span> </span>
 <span><span class="va">n2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">27</span>, <span class="fl">95</span>, <span class="fl">130</span>, <span class="fl">118</span><span class="op">)</span></span>
-<span><span class="va">data_array</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/aperm.html" class="external-link">aperm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/array.html" class="external-link">array</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">x1</span>, <span class="va">x2</span>, <span class="va">n1</span> <span class="op">-</span> <span class="va">x1</span>, <span class="va">n2</span> <span class="op">-</span> <span class="va">x2</span><span class="op">)</span>, dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">data_array</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/aperm.html" class="external-link">aperm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/array.html" class="external-link">array</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">x1</span>, <span class="va">x2</span>, <span class="va">n1</span> <span class="op">-</span> <span class="va">x1</span>, <span class="va">n2</span> <span class="op">-</span> <span class="va">x2</span><span class="op">)</span>, </span>
+<span>                          dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span>                          <span class="op">)</span>, </span>
+<span>                    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">reprove_strat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">21</span>, <span class="fl">76</span>, <span class="fl">73</span>, <span class="fl">75</span><span class="op">)</span>, </span>
 <span>                         n1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">29</span>, <span class="fl">96</span>, <span class="fl">124</span>, <span class="fl">107</span><span class="op">)</span>, </span>
@@ -318,18 +357,31 @@ significance level at any point, suggesting that the over-conservative
 “continuity corrected” version given by default in
 <code><a href="https://rdrr.io/r/stats/mcnemar.test.html" class="external-link">mcnemar.test()</a></code> is superfluous.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/scorepairci.html">scorepairci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, skew <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">pval</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/scorepairci.html">scorepairci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, </span>
+<span>            skew <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>            <span class="op">)</span><span class="op">$</span><span class="va">pval</span></span>
 <span><span class="co">#&gt;      chisq pval2sided theta0 scorenull pval_left pval_right</span></span>
 <span><span class="co">#&gt; [1,]  4.29     0.0384      0     -2.07    0.0192      0.981</span></span>
-<span><span class="fu"><a href="../reference/scorepairci.html">scorepairci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, skew <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">$</span><span class="va">pval</span></span>
+<span><span class="fu"><a href="../reference/scorepairci.html">scorepairci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, </span>
+<span>            skew <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>            <span class="op">)</span><span class="op">$</span><span class="va">pval</span></span>
 <span><span class="co">#&gt;      chisq pval2sided theta0 scorenull pval_left pval_right</span></span>
 <span><span class="co">#&gt; [1,]  4.29     0.0384      0     -2.07    0.0192      0.981</span></span>
-<span><span class="fu"><a href="../reference/scorepairci.html">scorepairci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, skew <span class="op">=</span> <span class="cn">FALSE</span>, contrast <span class="op">=</span> <span class="st">"RR"</span><span class="op">)</span><span class="op">$</span><span class="va">pval</span></span>
+<span><span class="fu"><a href="../reference/scorepairci.html">scorepairci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, </span>
+<span>            skew <span class="op">=</span> <span class="cn">FALSE</span>, </span>
+<span>            contrast <span class="op">=</span> <span class="st">"RR"</span></span>
+<span>            <span class="op">)</span><span class="op">$</span><span class="va">pval</span></span>
 <span><span class="co">#&gt;      chisq pval2sided theta0 scorenull pval_left pval_right</span></span>
 <span><span class="co">#&gt; [1,]  4.29     0.0384      1     -2.07    0.0192      0.981</span></span>
-<span><span class="va">mcnem</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/mcnemar.test.html" class="external-link">mcnemar.test</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>, correct <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">$</span><span class="va">statistic</span></span>
+<span></span>
+<span><span class="co"># Applying 'N-1' adjustment to output of the conventional McNemar test:</span></span>
+<span><span class="va">mcnem</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/mcnemar.test.html" class="external-link">mcnemar.test</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>, </span>
+<span>                      correct <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>                      <span class="op">)</span><span class="op">$</span><span class="va">statistic</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">mcnem</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/Chisquare.html" class="external-link">pchisq</a></span><span class="op">(</span><span class="va">mcnem</span> <span class="op">*</span> <span class="op">(</span><span class="fl">21</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">/</span><span class="fl">21</span>, df <span class="op">=</span> <span class="fl">1</span>, lower.tail <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/Chisquare.html" class="external-link">pchisq</a></span><span class="op">(</span><span class="va">mcnem</span> <span class="op">*</span> <span class="op">(</span><span class="fl">21</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">/</span> <span class="fl">21</span>, </span>
+<span>       df <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>       lower.tail <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.0384</span></span></code></pre></div>
 <p>The paired one-sided test is a skewness-corrected and ‘N-1’ adjusted
 version of Nam’s score test <span class="citation">(<a href="#ref-nam1997">Nam 1997</a>)</span>. Type I error rates for this
@@ -353,7 +405,11 @@ against the null hypothesis that
 against a user-specified value of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>θ</mi><mn>0</mn></msub><annotation encoding="application/x-tex">\theta_0</annotation></semantics></math>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">7</span>, n1 <span class="op">=</span> <span class="fl">34</span>, contrast <span class="op">=</span> <span class="st">"p"</span>, theta0 <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span><span class="op">$</span><span class="va">pval</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">7</span>, </span>
+<span>        n1 <span class="op">=</span> <span class="fl">34</span>, </span>
+<span>        contrast <span class="op">=</span> <span class="st">"p"</span>, </span>
+<span>        theta0 <span class="op">=</span> <span class="fl">0.1</span></span>
+<span>        <span class="op">)</span><span class="op">$</span><span class="va">pval</span></span>
 <span><span class="co">#&gt;      chisq pval2sided theta0 scorenull pval_left pval_right</span></span>
 <span><span class="co">#&gt; [1,]  11.8   0.000604    0.1      1.87     0.969     0.0309</span></span></code></pre></div>
 </div>

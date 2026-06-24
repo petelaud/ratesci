@@ -34,7 +34,8 @@ A.4):
 
 ``` r
 
-scaspci(x = 1, n = 29)
+scaspci(x = 1, 
+        n = 29)
 #> $estimates
 #>            lower        est     upper x  n
 #> [1,] 0.001991554 0.03977273 0.1548909 1 29
@@ -51,7 +52,11 @@ use:
 
 ``` r
 
-scoreci(x1 = 1, n1 = 29, contrast = "p", precis = 4)$estimates
+scoreci(x1 = 1, 
+        n1 = 29, 
+        contrast = "p", 
+        precis = 4
+        )$estimates
 #>      lower    est  upper level x1 n1  p1hat  p1mle
 #> [1,] 0.002 0.0398 0.1549  0.95  1 29 0.0345 0.0398
 ```
@@ -65,7 +70,10 @@ are not recommended:
 
 ``` r
 
-rateci(x = 1, n = 29, precis = 4)$estimates
+rateci(x = 1, 
+       n = 29, 
+       precis = 4
+       )$estimates
 #> , , 1
 #> 
 #>                 lower    est  upper x  n
@@ -85,7 +93,10 @@ $`Beta(0.5, 0.5)`$ prior for $`p`$ to a $`Beta(1.5, 9.5)`$ distribution:
 
 ``` r
 
-jeffreysci(x = 1, n = 29, ai = 1.5, bi = 9.5)
+jeffreysci(x = 1, 
+           n = 29, 
+           ai = 1.5, 
+           bi = 9.5)
 #> $estimates
 #>           lower        est     upper x  n
 #> [1,] 0.01080849 0.05530734 0.1544908 1 29
@@ -101,7 +112,11 @@ Jeffreys, and (if `cc` is TRUE or 0.5), the Clopper-Pearson method.
 
 ``` r
 
-rateci(x = 1, n = 29, cc = TRUE, precis = 4)$estimates
+rateci(x = 1, 
+       n = 29, 
+       cc = TRUE, 
+       precis = 4
+       )$estimates
 #> , , 1
 #> 
 #>                         lower    est  upper x  n
@@ -120,7 +135,11 @@ adjustment([Laud 2017](#ref-laud2017), Appendix S2 ($`\gamma = cc`$)).
 
 ``` r
 
-rateci(x = 1, n = 29, cc = 0.25, precis = 4)$estimates
+rateci(x = 1, 
+       n = 29, 
+       cc = 0.25, 
+       precis = 4
+       )$estimates
 #> , , 1
 #> 
 #>                       lower    est  upper x  n
@@ -283,11 +302,17 @@ currently only applies for binomial proportions.)
           rep(4, 7),
           rep(6, 5))
   # Wilson-based interval as per Saha et al.
-  clusterpci(x, n, skew = FALSE)$estimates
+  clusterpci(x = x, 
+             n = n, 
+             skew = FALSE
+             )$estimates
 #>       lower    est  upper totx totn xihat    icc
 #> [1,] 0.2285 0.2956 0.3728   60  203 1.349 0.1855
   # Skewness-corrected version
-  clusterpci(x, n, skew = TRUE)$estimates
+  clusterpci(x = x, 
+             n = n, 
+             skew = TRUE
+             )$estimates
 #>       lower    est  upper  x   n totx totn xihat    icc
 #> [1,] 0.2276 0.2958 0.3724 60 203   60  203 1.349 0.1855
 ```

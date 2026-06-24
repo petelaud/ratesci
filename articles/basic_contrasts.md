@@ -78,7 +78,11 @@ difference `5/56 - 0/29`:
 
 ``` r
 
-out <- scoreci(x1 = 5, n1 = 56, x2 = 0, n2 = 29, precis = 4)
+out <- scoreci(x1 = 5, 
+               n1 = 56, 
+               x2 = 0, 
+               n2 = 29, 
+               precis = 4)
 out$estimates
 #>        lower    est  upper level x1 n1 x2 n2  p1hat p2hat  p1mle p2mle
 #> [1,] -0.0186 0.0917 0.1867  0.95  5 56  0 29 0.0893     0 0.0917     0
@@ -114,7 +118,12 @@ wrapper function instead of
 
 ``` r
 
-scasci(x1 = 5, n1 = 56, x2 = 0, n2 = 29, precis = 4)$estimates
+scasci(x1 = 5, 
+       n1 = 56, 
+       x2 = 0, 
+       n2 = 29, 
+       precis = 4
+       )$estimates
 #>        lower    est  upper level x1 n1 x2 n2  p1hat p2hat  p1mle p2mle
 #> [1,] -0.0186 0.0917 0.1867  0.95  5 56  0 29 0.0893     0 0.0917     0
 ```
@@ -123,7 +132,13 @@ For analysis of relative risk, use:
 
 ``` r
 
-scasci(x1 = 5, n1 = 56, x2 = 0, n2 = 29, contrast = "RR", precis = 4)$estimates
+scasci(x1 = 5, 
+       n1 = 56, 
+       x2 = 0, 
+       n2 = 29, 
+       contrast = "RR", 
+       precis = 4
+       )$estimates
 #>       lower     est upper level x1 n1 x2 n2  p1hat p2hat  p1mle  p2mle
 #> [1,] 0.7696 16.3634   Inf  0.95  5 56  0 29 0.0893     0 0.0868 0.0053
 ```
@@ -132,7 +147,13 @@ And for odds ratio:
 
 ``` r
 
-scasci(x1 = 5, n1 = 56, x2 = 0, n2 = 29, contrast = "OR", precis = 4)$estimates
+scasci(x1 = 5, 
+       n1 = 56, 
+       x2 = 0, 
+       n2 = 29, 
+       contrast = "OR", 
+       precis = 4
+       )$estimates
 #>       lower    est upper level x1 n1 x2 n2  p1hat p2hat  p1mle  p2mle
 #> [1,] 0.7587 17.665   Inf  0.95  5 56  0 29 0.0893     0 0.0865 0.0053
 ```
@@ -145,7 +166,14 @@ each group, instead of the number of patients:
 
 ``` r
 
-scasci(x1 = 5, n1 = 56, x2 = 0, n2 = 29, contrast = "RR", distrib = "poi", precis = 4)$estimates
+scasci(x1 = 5, 
+       n1 = 56, 
+       x2 = 0, 
+       n2 = 29, 
+       contrast = "RR", 
+       distrib = "poi", 
+       precis = 4
+       )$estimates
 #>       lower     est upper level x1 n1 x2 n2  p1hat p2hat  p1mle  p2mle
 #> [1,] 0.7264 16.0536   Inf  0.95  5 56  0 29 0.0893     0 0.0865 0.0054
 ```
@@ -174,7 +202,11 @@ would be obtained using:
 
 ``` r
 
-moverci(x1 = 5, n1 = 56, x2 = 0, n2 = 29)$estimates
+moverci(x1 = 5, 
+        n1 = 56, 
+        x2 = 0, 
+        n2 = 29
+        )$estimates
 #>             lower        est     upper level x1 n1 x2 n2      p1hat       p2hat
 #> [1,] -0.009734968 0.08403347 0.1772258  0.95  5 56  0 29 0.09177968 0.007746206
 ```
@@ -183,7 +215,12 @@ For comparison, Newcombe’s version using Wilson intervals is:
 
 ``` r
 
-moverci(x1 = 5, n1 = 56, x2 = 0, n2 = 29, type = "wilson")$estimates
+moverci(x1 = 5, 
+        n1 = 56, 
+        x2 = 0, 
+        n2 = 29, 
+        type = "wilson"
+        )$estimates
 #>            lower        est   upper level x1 n1 x2 n2      p1hat p2hat
 #> [1,] -0.03813715 0.08928571 0.19256  0.95  5 56  0 29 0.08928571     0
 ```
@@ -198,7 +235,14 @@ $`p_1`$ and $`p_2`$ might be updated as follows:
 
 ``` r
 
-moverbci(x1 = 5, n1 = 56, x2 = 0, n2 = 29, a1 = 1.5, b1 = 9.5, a2 = 0.5, b2 = 10.5)
+moverbci(x1 = 5, 
+         n1 = 56, 
+         x2 = 0, 
+         n2 = 29, 
+         a1 = 1.5, 
+         b1 = 9.5, 
+         a2 = 0.5, 
+         b2 = 10.5)
 #> $estimates
 #>            lower        est     upper level x1 n1 x2 n2     p1hat       p2hat
 #> [1,] 0.009168536 0.08723163 0.1722089  0.95  5 56  0 29 0.0930101 0.005778473
@@ -230,7 +274,11 @@ methods:
 
 ``` r
 
-orci(x1 = 5, n1 = 56, x2 = 1, n2 = 29)$estimates
+orci(x1 = 5, 
+     n1 = 56, 
+     x2 = 1, 
+     n2 = 29
+     )$estimates
 #> , , 5/56 vs 1/29
 #> 
 #>                                 lower      est    upper
@@ -246,7 +294,11 @@ orci(x1 = 5, n1 = 56, x2 = 1, n2 = 29)$estimates
 
 ``` r
 
-1 / orci(x1 = 51, n1 = 56, x2 = 28, n2 = 29)$estimates
+1 / orci(x1 = 51, 
+         n1 = 56, 
+         x2 = 28, 
+         n2 = 29
+         )$estimates
 #> , , 51/56 vs 28/29
 #> 
 #>                                 lower      est     upper
@@ -258,6 +310,87 @@ orci(x1 = 5, n1 = 56, x2 = 1, n2 = 29)$estimates
 #> MOVER-J                      32.91856 2.745096 0.4219566
 #> Woolf logit                  24.67491 2.745096 0.3053949
 #> Gart adjusted logit          13.06677 2.745096 0.3150998
+```
+
+### Other methods
+
+Convenience wrapper functions
+[`rdci()`](https://petelaud.github.io/ratesci/reference/rdci.md),
+[`rrci()`](https://petelaud.github.io/ratesci/reference/rrci.md) and
+[`orci()`](https://petelaud.github.io/ratesci/reference/orci.md) produce
+side-by-side output for the various methods described above, plus some
+other legacy methods for reference.
+
+``` r
+
+rdci(x1 = 5, 
+     n1 = 56, 
+     x2 = 0, 
+     n2 = 29, 
+     precis = 4
+     )$estimates
+#> , , 5/56 vs 0/29
+#> 
+#>                      lower    est  upper
+#> SCAS               -0.0186 0.0893 0.1867
+#> Gart-Nam           -0.0172 0.0893 0.1859
+#> Miettinen-Nurminen -0.0326 0.0893 0.1933
+#> Mee                -0.0313 0.0893 0.1926
+#> MOVER-W            -0.0381 0.0893 0.1926
+#> MOVER-J            -0.0083 0.0893 0.1847
+#> Wald                0.0146 0.0893 0.1640
+#> Agresti-Caffo      -0.0289 0.0893 0.1712
+```
+
+If more conservative coverage is required, a continuity adjustment may
+be deployed with `cc` in any of the above functions, illustrated here
+for [`rdci()`](https://petelaud.github.io/ratesci/reference/rdci.md):
+
+``` r
+
+rdci(x1 = 5, 
+     n1 = 56, 
+     x2 = 0, 
+     n2 = 29, 
+     precis = 4,
+     cc = TRUE
+     )$estimates
+#> , , 5/56 vs 0/29
+#> 
+#>                         lower    est  upper
+#> SCAS_cc               -0.0482 0.0893 0.2087
+#> Gart-Nam_cc           -0.0468 0.0893 0.2079
+#> Miettinen-Nurminen_cc -0.0613 0.0893 0.2147
+#> Mee_cc                -0.0601 0.0893 0.2139
+#> MOVER-W_cc            -0.0667 0.0893 0.2037
+#> MOVER-J_cc            -0.0429 0.0893 0.1962
+#> Wald_cc               -0.0116 0.0893 0.1901
+#> Hauck-Anderson        -0.0033 0.0893 0.1819
+```
+
+Such an adjustment is widely acknowledged to be over-conservative, so
+intermediate adjustments such as cc = 0.25 give a more refined
+adjustment([Laud 2017](#ref-laud2017), Appendix S2 ($`\gamma = cc`$)).
+
+``` r
+
+rdci(x1 = 5, 
+     n1 = 56, 
+     x2 = 0, 
+     n2 = 29, 
+     precis = 4,
+     cc = 0.25
+     )$estimates
+#> , , 5/56 vs 0/29
+#> 
+#>                               lower    est  upper
+#> SCAS_cc(0.25)               -0.0338 0.0893 0.1978
+#> Gart-Nam_cc(0.25)           -0.0324 0.0893 0.1969
+#> Miettinen-Nurminen_cc(0.25) -0.0474 0.0893 0.2041
+#> Mee_cc(0.25)                -0.0461 0.0893 0.2033
+#> MOVER-W_cc(0.25)            -0.0527 0.0893 0.1981
+#> MOVER-J_cc(0.25)            -0.0264 0.0893 0.1904
+#> Wald_cc(0.25)                0.0015 0.0893 0.1771
 ```
 
 ## Technical details

@@ -107,7 +107,8 @@ with the input <code>n</code> representing the exposure time.)</p>
 proportion 1/29 is obtained with <code><a href="../reference/scaspci.html">scaspci()</a></code>, using
 closed-form calculation <span class="citation">(<a href="#ref-laud2017">Laud 2017</a>, Appendix A.4)</span>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/scaspci.html">scaspci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">29</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/scaspci.html">scaspci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>        n <span class="op">=</span> <span class="fl">29</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $estimates</span></span>
 <span><span class="co">#&gt;            lower        est     upper x  n</span></span>
 <span><span class="co">#&gt; [1,] 0.001991554 0.03977273 0.1548909 1 29</span></span>
@@ -119,7 +120,11 @@ closed-form calculation <span class="citation">(<a href="#ref-laud2017">Laud 201
 perform a corresponding <a href="https://petelaud.github.io/ratesci/articles/tests.html">hypothesis
 test</a>, you could use:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">1</span>, n1 <span class="op">=</span> <span class="fl">29</span>, contrast <span class="op">=</span> <span class="st">"p"</span>, precis <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/scoreci.html">scoreci</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>        n1 <span class="op">=</span> <span class="fl">29</span>, </span>
+<span>        contrast <span class="op">=</span> <span class="st">"p"</span>, </span>
+<span>        precis <span class="op">=</span> <span class="fl">4</span></span>
+<span>        <span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
 <span><span class="co">#&gt;      lower    est  upper level x1 n1  p1hat  p1mle</span></span>
 <span><span class="co">#&gt; [1,] 0.002 0.0398 0.1549  0.95  1 29 0.0345 0.0398</span></span></code></pre></div>
 <p><code><a href="../reference/rateci.html">rateci()</a></code> also provides a number of other confidence
@@ -128,7 +133,10 @@ intervals have similar coverage properties to SCAS <span class="citation">(<a hr
 the Wilson, Wald and Agresti-Coull intervals are provided for comparison
 but are not recommended:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/rateci.html">rateci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">29</span>, precis <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/rateci.html">rateci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>       n <span class="op">=</span> <span class="fl">29</span>, </span>
+<span>       precis <span class="op">=</span> <span class="fl">4</span></span>
+<span>       <span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
 <span><span class="co">#&gt; , , 1</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;                 lower    est  upper x  n</span></span>
@@ -150,7 +158,10 @@ to a
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mi>e</mi><mi>t</mi><mi>a</mi><mo stretchy="false" form="prefix">(</mo><mn>1.5</mn><mo>,</mo><mn>9.5</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">Beta(1.5, 9.5)</annotation></semantics></math>
 distribution:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/jeffreysci.html">jeffreysci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">29</span>, ai <span class="op">=</span> <span class="fl">1.5</span>, bi <span class="op">=</span> <span class="fl">9.5</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/jeffreysci.html">jeffreysci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>           n <span class="op">=</span> <span class="fl">29</span>, </span>
+<span>           ai <span class="op">=</span> <span class="fl">1.5</span>, </span>
+<span>           bi <span class="op">=</span> <span class="fl">9.5</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $estimates</span></span>
 <span><span class="co">#&gt;           lower        est     upper x  n</span></span>
 <span><span class="co">#&gt; [1,] 0.01080849 0.05530734 0.1544908 1 29</span></span>
@@ -163,7 +174,11 @@ may be deployed with <code>cc</code>, as follows, giving
 continuity-adjusted SCAS or Jeffreys, and (if <code>cc</code> is TRUE or
 0.5), the Clopper-Pearson method.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/rateci.html">rateci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">29</span>, cc <span class="op">=</span> <span class="cn">TRUE</span>, precis <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/rateci.html">rateci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>       n <span class="op">=</span> <span class="fl">29</span>, </span>
+<span>       cc <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>       precis <span class="op">=</span> <span class="fl">4</span></span>
+<span>       <span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
 <span><span class="co">#&gt; , , 1</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;                         lower    est  upper x  n</span></span>
@@ -180,7 +195,11 @@ refined adjustment<span class="citation">(<a href="#ref-laud2017">Laud
 2017</a>, Appendix S2
 (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mo>=</mo><mi>c</mi><mi>c</mi></mrow><annotation encoding="application/x-tex">\gamma = cc</annotation></semantics></math>))</span>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/rateci.html">rateci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">29</span>, cc <span class="op">=</span> <span class="fl">0.25</span>, precis <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/rateci.html">rateci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>       n <span class="op">=</span> <span class="fl">29</span>, </span>
+<span>       cc <span class="op">=</span> <span class="fl">0.25</span>, </span>
+<span>       precis <span class="op">=</span> <span class="fl">4</span></span>
+<span>       <span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
 <span><span class="co">#&gt; , , 1</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;                       lower    est  upper x  n</span></span>
@@ -318,11 +337,17 @@ binomial proportions.)</p>
 <span>          <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">7</span><span class="op">)</span>,</span>
 <span>          <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="co"># Wilson-based interval as per Saha et al.</span></span>
-<span>  <span class="fu"><a href="../reference/clusterpci.html">clusterpci</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">n</span>, skew <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
+<span>  <span class="fu"><a href="../reference/clusterpci.html">clusterpci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, </span>
+<span>             n <span class="op">=</span> <span class="va">n</span>, </span>
+<span>             skew <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>             <span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
 <span><span class="co">#&gt;       lower    est  upper totx totn xihat    icc</span></span>
 <span><span class="co">#&gt; [1,] 0.2285 0.2956 0.3728   60  203 1.349 0.1855</span></span>
 <span>  <span class="co"># Skewness-corrected version</span></span>
-<span>  <span class="fu"><a href="../reference/clusterpci.html">clusterpci</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">n</span>, skew <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
+<span>  <span class="fu"><a href="../reference/clusterpci.html">clusterpci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, </span>
+<span>             n <span class="op">=</span> <span class="va">n</span>, </span>
+<span>             skew <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>             <span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
 <span><span class="co">#&gt;       lower    est  upper  x   n totx totn xihat    icc</span></span>
 <span><span class="co">#&gt; [1,] 0.2276 0.2958 0.3724 60 203   60  203 1.349 0.1855</span></span></code></pre></div>
 </div>
@@ -353,9 +378,7 @@ following equation, where
 is the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>−</mo><mi>α</mi><mi>/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">1 - \alpha / 2</annotation></semantics></math>
 percentile of the standard normal distribution:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo stretchy="false" form="prefix">(</mo><mi>p</mi><mo stretchy="false" form="postfix">)</mo><mi>/</mi><msup><mi>V</mi><mrow><mn>1</mn><mi>/</mi><mn>2</mn></mrow></msup><mo>−</mo><mo stretchy="false" form="prefix">(</mo><msup><mi>z</mi><mn>2</mn></msup><mo>−</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><msub><mi>μ</mi><mn>3</mn></msub><mi>/</mi><mn>6</mn><msup><mi>V</mi><mrow><mn>3</mn><mi>/</mi><mn>2</mn></mrow></msup><mo>=</mo><mi>±</mi><mi>z</mi></mrow><annotation encoding="application/x-tex">
-S(p)/V^{1/2} - (z^2 - 1)\mu_3/6V^{3/2} = \pm z
-</annotation></semantics></math></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo stretchy="false" form="prefix">(</mo><mi>p</mi><mo stretchy="false" form="postfix">)</mo><mi>/</mi><msup><mi>V</mi><mrow><mn>1</mn><mi>/</mi><mn>2</mn></mrow></msup><mo>−</mo><mo stretchy="false" form="prefix">(</mo><msup><mi>z</mi><mn>2</mn></msup><mo>−</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><msub><mi>μ</mi><mn>3</mn></msub><mi>/</mi><mn>6</mn><msup><mi>V</mi><mrow><mn>3</mn><mi>/</mi><mn>2</mn></mrow></msup><mo>=</mo><mi>±</mi><mi>z</mi></mrow><annotation encoding="application/x-tex">S(p)/V^{1/2} - (z^2 - 1)\mu_3/6V^{3/2} = \pm z</annotation></semantics></math></p>
 <p>For unstratified datasets, this has a closed-form solution. The
 formula is extended in <span class="citation">(<a href="#ref-laud2017">Laud 2017</a>)</span> to incorporate stratification
 using inverse variance weights,

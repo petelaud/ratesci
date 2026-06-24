@@ -53,7 +53,8 @@ children before and after stem cell transplantation, as used in
 
 ``` r
 
-out <- scorepairci(x = c(1, 1, 7, 12), precis = 4)
+out <- scorepairci(x = c(1, 1, 7, 12), 
+                   precis = 4)
 out$estimates
 #>        lower     est   upper level  p1hat p2hat  p1mle  p2mle phi_hat phi_c
 #> [1,] -0.5281 -0.2859 -0.0184  0.95 0.0952 0.381 0.0952 0.3811  0.0795     0
@@ -81,7 +82,9 @@ For a confidence interval for paired RR, use:
 
 ``` r
 
-out <- scorepairci(x = c(1, 1, 7, 12), contrast = "RR", precis = 4)
+out <- scorepairci(x = c(1, 1, 7, 12), 
+                   contrast = "RR", 
+                   precis = 4)
 out$estimates
 #>       lower    est  upper level  p1hat p2hat  p1mle  p2mle phi_hat phi_c
 #> [1,] 0.0429 0.2627 0.9282  0.95 0.0952 0.381 0.0994 0.3785  0.0795     0
@@ -114,7 +117,11 @@ inferior, and there is no corresponding hypothesis test.
 
 ``` r
 
-moverpairci(x = c(1, 1, 7, 12), contrast = "RD", corc = TRUE, precis = 4)$estimates
+moverpairci(x = c(1, 1, 7, 12), 
+            contrast = "RD", 
+            corc = TRUE, 
+            precis = 4
+            )$estimates
 #>        lower     est   upper level  p1hat p2hat phi_hat
 #> [1,] -0.5105 -0.2857 -0.0324  0.95 0.0952 0.381       0
 ```
@@ -124,7 +131,12 @@ For cross-checking against published example in ([Fagerland et al.
 
 ``` r
 
-moverpairci(x = c(1, 1, 7, 12), contrast = "RD", corc = TRUE, type = "wilson", precis = 4)$estimates
+moverpairci(x = c(1, 1, 7, 12), 
+            contrast = "RD", 
+            corc = TRUE, 
+            type = "wilson", 
+            precis = 4
+            )$estimates
 #>        lower     est   upper level  p1hat p2hat phi_hat
 #> [1,] -0.5069 -0.2857 -0.0256  0.95 0.0952 0.381       0
 ```
@@ -140,7 +152,8 @@ recommended (Laud 2026, under review).
 
 ``` r
 
-out <- scorepairci(x = c(1, 1, 7, 12), contrast = "OR")
+out <- scorepairci(x = c(1, 1, 7, 12), 
+                   contrast = "OR")
 out$estimates
 #>         lower      est    upper
 #> [1,] 0.007702 0.161863 0.912316
@@ -160,6 +173,48 @@ orpairci(x = c(1, 1, 7, 12))$estimates
 #> Transformed Wilson   0.02293156 0.1428571 0.8899597
 #> Transformed Jeffreys 0.01403242 0.1428571 0.8305608
 #> Wald                 0.01757637 0.1428571 1.1611135
+```
+
+### Other methods
+
+Convenience wrapper functions
+[`rdpairci()`](https://petelaud.github.io/ratesci/reference/rdpairci.md),
+[`rrpairci()`](https://petelaud.github.io/ratesci/reference/rrpairci.md)
+and
+[`orpairci()`](https://petelaud.github.io/ratesci/reference/orpairci.md)
+produce side-by-side output for the various methods described above,
+plus some other legacy methods for reference.
+
+``` r
+
+rdpairci(x = c(1, 1, 7, 12),
+             precis = 4)$estimates
+#>                lower     est   upper
+#> SCAS         -0.5281 -0.2857 -0.0184
+#> SCASu        -0.5229 -0.2857 -0.0262
+#> Tango score  -0.5172 -0.2857 -0.0260
+#> MOVER-NW     -0.5069 -0.2857 -0.0256
+#> MOVER-NJ     -0.5105 -0.2857 -0.0324
+#> Wald         -0.5197 -0.2857 -0.0517
+#> Agresti-Min  -0.4932 -0.2857 -0.0285
+#> Bonett-Price -0.5084 -0.2857 -0.0134
+```
+
+As for the independent contrasts, continuity adjustments may also be
+applied to some methods for analysis of paired proportions:
+
+``` r
+
+rdpairci(x = c(1, 1, 7, 12),
+         cc = TRUE,
+         precis = 4)$estimates
+#>                  lower     est   upper
+#> SCAS_cc        -0.5732 -0.2857  0.0390
+#> SCASu_cc       -0.5683 -0.2857  0.0311
+#> Tango score_cc -0.5613 -0.2857  0.0307
+#> MOVER-NW_cc    -0.5308 -0.2857  0.0082
+#> MOVER-NJ_cc    -0.5348 -0.2857  0.0031
+#> Wald_cc        -0.5293 -0.2857 -0.0422
 ```
 
 ## References

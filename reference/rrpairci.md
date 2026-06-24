@@ -136,14 +136,15 @@ rrpairci(x = c(1, 1, 7, 12), precis = 3, cc = TRUE)
 #>   Failure       7      12
 #> 
 #> $estimates
-#>                 lower  est upper
-#> SCAS_cc         0.022 0.25 1.166
-#> SCASu_cc        0.022 0.25 1.131
-#> Tang score_cc   0.040 0.25 1.120
-#> MOVER-W_cc      0.044 0.25 0.986
-#> MOVER-NW_cc     0.042 0.25 1.032
-#> MOVER-NJ_cc     0.030 0.25 1.013
-#> Bonett-Price_cc 0.042 0.25 1.127
+#>                   lower  est upper
+#> SCAS_cc           0.022 0.25 1.166
+#> SCASu_cc          0.022 0.25 1.131
+#> Tang score_cc     0.040 0.25 1.120
+#> MOVER-W_cc        0.044 0.25 0.986
+#> MOVER-NW_cc       0.042 0.25 1.032
+#> MOVER-NJ_cc       0.030 0.25 1.013
+#> Bonett-Price_cc   0.042 0.25 1.127
+#> Bonett-Price-J_cc 0.031 0.25 1.106
 #> 
 #> $call
 #> level    cc 
@@ -158,14 +159,15 @@ rrpairci(x = c(1, 1, 7, 12), precis = 3, cc = 0.25)
 #>   Failure       7      12
 #> 
 #> $estimates
-#>                       lower  est upper
-#> SCAS_cc(0.25)         0.031 0.25 1.042
-#> SCASu_cc(0.25)        0.032 0.25 1.010
-#> Tang score_cc(0.25)   0.052 0.25 1.009
-#> MOVER-W_cc(0.25)      0.056 0.25 0.927
-#> MOVER-NW_cc(0.25)     0.054 0.25 0.967
-#> MOVER-NJ_cc(0.25)     0.040 0.25 0.942
-#> Bonett-Price_cc(0.25) 0.055 0.25 1.020
+#>                         lower  est upper
+#> SCAS_cc(0.25)           0.031 0.25 1.042
+#> SCASu_cc(0.25)          0.032 0.25 1.010
+#> Tang score_cc(0.25)     0.052 0.25 1.009
+#> MOVER-W_cc(0.25)        0.056 0.25 0.927
+#> MOVER-NW_cc(0.25)       0.054 0.25 0.967
+#> MOVER-NJ_cc(0.25)       0.040 0.25 0.942
+#> Bonett-Price_cc(0.25)   0.055 0.25 1.020
+#> Bonett-Price-J_cc(0.25) 0.042 0.25 0.992
 #> 
 #> $call
 #> level    cc 

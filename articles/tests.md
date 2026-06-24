@@ -44,17 +44,44 @@ over the conventional Karl Pearson test ([Campbell
 
 ``` r
 
-scoreci(x1 = 7, n1 = 34, x2 = 1, n = 34, skew = FALSE)$pval[, 1:2]
+scoreci(x1 = 7, 
+        n1 = 34, 
+        x2 = 1, 
+        n2 = 34, 
+        skew = FALSE
+        )$pval[, 1:2]
 #>      chisq pval2sided 
 #>      5.025      0.025
-scoreci(x1 = 7, n1 = 34, x2 = 1, n = 34, skew = FALSE, contrast = "RR")$pval[, 1:2]
+
+scoreci(x1 = 7, 
+        n1 = 34, 
+        x2 = 1, 
+        n2 = 34, 
+        skew = FALSE, 
+        contrast = "RR"
+        )$pval[, 1:2]
 #>      chisq pval2sided 
 #>      5.025      0.025
-scoreci(x1 = 7, n1 = 34, x2 = 1, n = 34, skew = FALSE, contrast = "OR")$pval[, 1:2]
+
+scoreci(x1 = 7, 
+        n1 = 34, 
+        x2 = 1, 
+        n2 = 34, 
+        skew = FALSE, 
+        contrast = "OR"
+        )$pval[, 1:2]
 #>      chisq pval2sided 
 #>      5.025      0.025
-suppressWarnings(k_pearson <- chisq.test(x = matrix(c(7, 1, 27, 33), nrow = 2), correct = FALSE)$statistic)
-pchisq(k_pearson * ((34+34-1)/(34+34)), df = 1, lower.tail = FALSE)
+
+# Applying 'N-1' adjustment to output of the conventional chi-square test:
+suppressWarnings(
+  k_pearson <- chisq.test(x = matrix(c(7, 1, 27, 33), nrow = 2), 
+                          correct = FALSE
+                          )$statistic
+  )
+pchisq(k_pearson * ((34 + 34 - 1)/(34 + 34)), 
+       df = 1, 
+       lower.tail = FALSE)
 #> X-squared 
 #>     0.025
 ```
@@ -66,7 +93,12 @@ improved variant of the chi-squared test.
 
 ``` r
 
-scoreci(x1 = 7, n1 = 34, x2 = 1, n = 34, skew = TRUE)$pval[, 1:2]
+scoreci(x1 = 7, 
+        n1 = 34, 
+        x2 = 1, 
+        n2 = 34, 
+        skew = TRUE
+        )$pval[, 1:2]
 #>      chisq pval2sided 
 #>      5.025      0.025
 ```
@@ -127,7 +159,11 @@ established comparator treatment, with a non-inferiority margin of
 
 ``` r
 
-reprove <- scoreci(x1 = 245, n1 = 356, x2 = 270, n2 = 370, theta0 = -0.125)
+reprove <- scoreci(x1 = 245, 
+                   n1 = 356, 
+                   x2 = 270, 
+                   n2 = 370, 
+                   theta0 = -0.125)
 reprove$estimates
 #>       lower     est  upper level  x1  n1  x2  n2 p1hat p2hat p1mle p2mle
 #> [1,] -0.108 -0.0415 0.0246  0.95 245 356 270 370 0.688  0.73 0.688  0.73
@@ -170,7 +206,10 @@ x1 = c(21, 76, 73, 75)
 n1 = c(29, 96, 124, 107) 
 x2 = c(19, 73, 91, 87) 
 n2 = c(27, 95, 130, 118)
-data_array <- aperm(array(c(x1, x2, n1 - x1, n2 - x2), dim = c(4, 2, 2)), c(2, 3, 1))
+data_array <- aperm(array(c(x1, x2, n1 - x1, n2 - x2), 
+                          dim = c(4, 2, 2)
+                          ), 
+                    c(2, 3, 1))
 
 reprove_strat <- scoreci(x1 = c(21, 76, 73, 75), 
                          n1 = c(29, 96, 124, 107), 
@@ -217,18 +256,31 @@ superfluous.
 
 ``` r
 
-scorepairci(x = c(1, 1, 7, 12), skew = TRUE)$pval
+scorepairci(x = c(1, 1, 7, 12), 
+            skew = TRUE
+            )$pval
 #>      chisq pval2sided theta0 scorenull pval_left pval_right
 #> [1,]  4.29     0.0384      0     -2.07    0.0192      0.981
-scorepairci(x = c(1, 1, 7, 12), skew = FALSE)$pval
+scorepairci(x = c(1, 1, 7, 12), 
+            skew = FALSE
+            )$pval
 #>      chisq pval2sided theta0 scorenull pval_left pval_right
 #> [1,]  4.29     0.0384      0     -2.07    0.0192      0.981
-scorepairci(x = c(1, 1, 7, 12), skew = FALSE, contrast = "RR")$pval
+scorepairci(x = c(1, 1, 7, 12), 
+            skew = FALSE, 
+            contrast = "RR"
+            )$pval
 #>      chisq pval2sided theta0 scorenull pval_left pval_right
 #> [1,]  4.29     0.0384      1     -2.07    0.0192      0.981
-mcnem <- mcnemar.test(x = matrix(c(1, 1, 7, 12), nrow = 2), correct = FALSE)$statistic
+
+# Applying 'N-1' adjustment to output of the conventional McNemar test:
+mcnem <- mcnemar.test(x = matrix(c(1, 1, 7, 12), nrow = 2), 
+                      correct = FALSE
+                      )$statistic
 names(mcnem) <- NULL
-pchisq(mcnem * (21-1)/21, df = 1, lower.tail = FALSE)
+pchisq(mcnem * (21 - 1) / 21, 
+       df = 1, 
+       lower.tail = FALSE)
 #> [1] 0.0384
 ```
 
@@ -249,7 +301,11 @@ user-specified value of $`\theta_0`$.
 
 ``` r
 
-scoreci(x1 = 7, n1 = 34, contrast = "p", theta0 = 0.1)$pval
+scoreci(x1 = 7, 
+        n1 = 34, 
+        contrast = "p", 
+        theta0 = 0.1
+        )$pval
 #>      chisq pval2sided theta0 scorenull pval_left pval_right
 #> [1,]  11.8   0.000604    0.1      1.87     0.969     0.0309
 ```
