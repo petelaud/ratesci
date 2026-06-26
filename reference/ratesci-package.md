@@ -147,5 +147,5 @@ Useful links:
 
 ## Author
 
-**Maintainer**: Pete Laud <p.j.laud@sheffield.ac.uk>
+**Maintainer**: Pete Laud <pete@sheffstat.co.uk>
 ([ORCID](https://orcid.org/0000-0002-3766-7090))

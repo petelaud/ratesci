@@ -73,7 +73,7 @@ the presence of clustered binary outcome data. Stat Meth Med Res 2020;
 
 ## Author
 
-Pete Laud, <p.j.laud@sheffield.ac.uk>
+Pete Laud, <pete@sheffstat.co.uk>
 
 ## Examples
 

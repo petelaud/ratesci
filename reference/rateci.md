@@ -135,7 +135,7 @@ Garwood F. Fiducial limits for the Poisson distribution. Biometrika
 
 ## Author
 
-Pete Laud, <p.j.laud@sheffield.ac.uk>
+Pete Laud, <pete@sheffstat.co.uk>
 
 ## Examples
 

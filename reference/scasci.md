@@ -227,4 +227,4 @@ of rates. Pharmaceutical Statistics 2018; 17:290-293.
 
 ## Author
 
-Pete Laud, <p.j.laud@sheffield.ac.uk>
+Pete Laud, <pete@sheffstat.co.uk>

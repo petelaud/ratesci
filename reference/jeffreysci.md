@@ -92,7 +92,7 @@ proportion. Statistical Science 2001; 16(2):101-133
 
 ## Author
 
-Pete Laud, <p.j.laud@sheffield.ac.uk>
+Pete Laud, <pete@sheffstat.co.uk>
 
 ## Examples
 

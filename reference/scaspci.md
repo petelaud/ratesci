@@ -95,4 +95,4 @@ Pharmaceutical Statistics 2017; 16:334-348. (Appendix A.4)
 
 ## Author
 
-Pete Laud, <p.j.laud@sheffield.ac.uk>
+Pete Laud, <pete@sheffstat.co.uk>

@@ -103,7 +103,7 @@ proportions: comparison of eleven methods. Statistics in Medicine 1998;
 
 ## Author
 
-Pete Laud, <p.j.laud@sheffield.ac.uk>
+Pete Laud, <pete@sheffstat.co.uk>
 
 ## Examples
 

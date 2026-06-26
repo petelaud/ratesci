@@ -139,7 +139,7 @@ Statistics 2014; 29(3-4):869-889.
 
 ## Author
 
-Pete Laud, <p.j.laud@sheffield.ac.uk>
+Pete Laud, <pete@sheffstat.co.uk>
 
 ## Examples
 
