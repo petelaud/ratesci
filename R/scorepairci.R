@@ -70,7 +70,7 @@
 #' # Transformed Wilson score method
 #' scorepairci(x = c(1, 1, 7, 12), contrast = "OR", skew = FALSE, bcf = FALSE)
 #'
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @author Pete Laud, \email{pete@@sheffstat.co.uk}
 #' @references
 #'   Tango T. Equivalence test and confidence interval for the difference
 #'   in proportions for the paired-sample design.
@@ -383,7 +383,7 @@ scorepairci <- function(x,
 #' given in Fagerland from Tango (1998/1999) & Tang (2003)
 #' This function is not vectorised
 #'
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @author Pete Laud, \email{pete@@sheffstat.co.uk}
 #' @references
 #'   Tango T. Equivalence test and confidence interval for the difference
 #'   in proportions for the paired-sample design.
@@ -512,7 +512,7 @@ scorepair <- function(theta,
 #' Code originates from Appendix B of Yang 2013,
 #' with updates to include continuity adjustment from Chang 2024.
 #'
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @author Pete Laud, \email{pete@@sheffstat.co.uk}
 #' @references
 #'   Yang Z, Sun X and Hardin JW. A non-iterative implementation of Tango's
 #'   score confidence interval for a paired difference of proportions.
@@ -688,7 +688,7 @@ tangoci <- function(x,
 #' with modified form of continuity adjustment (Laud 2025)
 #' for consistency with McNemar test, and unified code with/without cc.
 #'
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @author Pete Laud, \email{pete@@sheffstat.co.uk}
 #' @references
 #'   DelRocco N et al. New Confidence Intervals for Relative Risk of Two
 #'   Correlated Proportions.

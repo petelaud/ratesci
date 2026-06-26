@@ -115,7 +115,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Pete Laud \email{p.j.laud@sheffield.ac.uk} (\href{https://orcid.org/0000-0002-3766-7090}{ORCID})
+\strong{Maintainer}: Pete Laud \email{pete@sheffstat.co.uk} (\href{https://orcid.org/0000-0002-3766-7090}{ORCID})
 
 }
 \keyword{internal}

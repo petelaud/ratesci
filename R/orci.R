@@ -59,7 +59,7 @@
 #'   precis = 4, cc = 0.25
 #' )
 #'
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @author Pete Laud, \email{pete@@sheffstat.co.uk}
 #' @references
 #'   Laud PJ. Equal-tailed confidence intervals for comparison of
 #'   rates. Pharmaceutical Statistics 2017; 16:334-348.

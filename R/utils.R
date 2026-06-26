@@ -10,7 +10,7 @@
 #'
 #' @inheritParams scoreci
 #'
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @author Pete Laud, \email{pete@@sheffstat.co.uk}
 #'
 #' @noRd
 bisect <- function(ftn,
@@ -72,7 +72,7 @@ bisect <- function(ftn,
 
 #' Internal function - solve a quadratic
 #'
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @author Pete Laud, \email{pete@@sheffstat.co.uk}
 #'
 #' @noRd
 quadroot <- function(a, b, c_) {
@@ -90,7 +90,7 @@ quadroot <- function(a, b, c_) {
 #'
 #' @param xihat Number specifying estimated variance inflation factor for the
 #'   Saha Wilson Score interval for clustered binomial proportions
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @author Pete Laud, \email{pete@@sheffstat.co.uk}
 #' @references
 #' Altman DG, Machin D, Bryant TN et al (2000) Statistics with confidence,
 #' 2nd edn. BMJ Books, Bristol
@@ -274,7 +274,7 @@ haci <- function(x1,
 
 #' Rounding with trailing zeros
 #'
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @author Pete Laud, \email{pete@@sheffstat.co.uk}
 #'
 #' @noRd
 myround <- function(x,

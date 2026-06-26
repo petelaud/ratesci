@@ -79,5 +79,5 @@ Laud PJ. Improved confidence intervals and tests for paired binomial
 proportions. (2026, Under review)
 }
 \author{
-Pete Laud, \email{p.j.laud@sheffield.ac.uk}
+Pete Laud, \email{pete@sheffstat.co.uk}
 }

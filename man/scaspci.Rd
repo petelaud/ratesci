@@ -65,5 +65,5 @@ Laud PJ. Equal-tailed confidence intervals for comparison of
 rates. Pharmaceutical Statistics 2017; 16:334-348. (Appendix A.4)
 }
 \author{
-Pete Laud, \email{p.j.laud@sheffield.ac.uk}
+Pete Laud, \email{pete@sheffstat.co.uk}
 }

@@ -127,5 +127,5 @@ Garwood F. Fiducial limits for the Poisson distribution. Biometrika
 1936; 28(3-4):437, doi:10.1093/biomet/28.3-4.437.
 }
 \author{
-Pete Laud, \email{p.j.laud@sheffield.ac.uk}
+Pete Laud, \email{pete@sheffstat.co.uk}
 }

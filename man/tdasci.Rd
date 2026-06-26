@@ -169,5 +169,5 @@ Laud PJ. Corrigendum: Equal-tailed confidence intervals for comparison of
 rates. Pharmaceutical Statistics 2018; 17:290-293.
 }
 \author{
-Pete Laud, \email{p.j.laud@sheffield.ac.uk}
+Pete Laud, \email{pete@sheffstat.co.uk}
 }

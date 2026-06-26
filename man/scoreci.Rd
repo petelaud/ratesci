@@ -355,5 +355,5 @@ comparisons of binomial proportions. Statistics in Medicine 2020;
 39:3427-3457.
 }
 \author{
-Pete Laud, \email{p.j.laud@sheffield.ac.uk}
+Pete Laud, \email{pete@sheffstat.co.uk}
 }

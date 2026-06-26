@@ -71,5 +71,5 @@ Brown LD, Cai TT, DasGupta A. Interval estimation for a binomial
 proportion. Statistical Science 2001; 16(2):101-133
 }
 \author{
-Pete Laud, \email{p.j.laud@sheffield.ac.uk}
+Pete Laud, \email{pete@sheffstat.co.uk}
 }

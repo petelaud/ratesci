@@ -44,7 +44,7 @@
 #'   clusterpci(x, n, skew = TRUE)
 #'   # With continuity adjustment
 #'   clusterpci(x, n, skew = FALSE, cc = TRUE)
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @author Pete Laud, \email{pete@@sheffstat.co.uk}
 #' @references
 #'   Saha K, Miller D and Wang S. A comparison of some approximate confidence
 #'   intervals for a single proportion for clustered binary outcome data.

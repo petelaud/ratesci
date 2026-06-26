@@ -69,5 +69,5 @@ special case "MOVER-J" using non-informative priors with optional continuity
 adjustment.  This function is vectorised in x1, x2, n1, and n2.
 }
 \author{
-Pete Laud, \email{p.j.laud@sheffield.ac.uk}
+Pete Laud, \email{pete@sheffstat.co.uk}
 }

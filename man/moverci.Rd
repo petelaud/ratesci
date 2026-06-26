@@ -118,5 +118,5 @@ rates using the method of variance estimates recovery. Computational
 Statistics 2014; 29(3-4):869-889.
 }
 \author{
-Pete Laud, \email{p.j.laud@sheffield.ac.uk}
+Pete Laud, \email{pete@sheffstat.co.uk}
 }

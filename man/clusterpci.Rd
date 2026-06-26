@@ -71,5 +71,5 @@ in the presence of clustered binary outcome data.
 Stat Meth Med Res 2020; 29(1):111–121
 }
 \author{
-Pete Laud, \email{p.j.laud@sheffield.ac.uk}
+Pete Laud, \email{pete@sheffstat.co.uk}
 }

@@ -4,7 +4,7 @@ Title: Confidence Intervals and Tests for Comparisons of Binomial
     Proportions or Poisson Rates
 Version: 1.0.0.9000
 Authors@R: 
-    person("Pete", "Laud", , "p.j.laud@sheffield.ac.uk", role = c("aut", "cre"),
+    person("Pete", "Laud", , "pete@sheffstat.co.uk", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-3766-7090"))
 Description: Computes confidence intervals for binomial or Poisson rates
     and their differences or ratios. Including the rate (or risk)

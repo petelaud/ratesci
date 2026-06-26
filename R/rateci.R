@@ -31,7 +31,7 @@
 #'   \item{estimates}{a matrix containing estimated rate(s), the
 #'   SCAS confidence interval, and the input values x and n.}
 #'   \item{call}{details of the function call.} }
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @author Pete Laud, \email{pete@@sheffstat.co.uk}
 #' @references
 #'   Laud PJ. Equal-tailed confidence intervals for comparison of
 #'   rates. Pharmaceutical Statistics 2017; 16:334-348. (Appendix A.4)
@@ -205,7 +205,7 @@ scaspci <- function(x,
 #'   precis = 4, cc = 0.25
 #' )
 #'
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @author Pete Laud, \email{pete@@sheffstat.co.uk}
 #' @references
 #'   Laud PJ. Equal-tailed confidence intervals for comparison of
 #'   rates. Pharmaceutical Statistics 2017; 16:334-348. (Appendix A.4)
@@ -396,7 +396,7 @@ rateci <- function(x,
 #' to calculate exact 'exact' confidence interval for a single binomial
 #' or Poisson rate x/n
 #'
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @author Pete Laud, \email{pete@@sheffstat.co.uk}
 #'
 #' @noRd
 exactci <- function(x,
@@ -481,7 +481,7 @@ exactci <- function(x,
 #' to calculate exact Blaker 'exact' confidence interval for a single binomial
 #' or Poisson rate x/n
 #'
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @author Pete Laud, \email{pete@@sheffstat.co.uk}
 #' @importFrom stats qbinom qpois
 #'
 #' @noRd

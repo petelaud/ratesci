@@ -50,7 +50,7 @@
 #' # MOVER-NJ
 #' moverpairci(x = c(1, 1, 7, 12), contrast = "RR", corc = TRUE, type = "jeff")
 #'
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @author Pete Laud, \email{pete@@sheffstat.co.uk}
 #' @references
 #'   Newcombe RG. Improved confidence intervals for the difference between
 #'   binomial proportions based on paired data.
@@ -271,7 +271,7 @@ moverpairci <- function(x,
 #' adjustment, and Newcombe's correction to the Pearson correlation estimate,
 #' applied to both contrasts.
 #'
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @author Pete Laud, \email{pete@@sheffstat.co.uk}
 #' @references
 #'   Newcombe RG. Improved confidence intervals for the difference between
 #'   binomial proportions based on paired data.

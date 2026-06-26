@@ -241,7 +241,7 @@
 #'   distrib = "bin", stratified = TRUE, plot = TRUE, weighting = "IVS"
 #' )
 #'
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @author Pete Laud, \email{pete@@sheffstat.co.uk}
 #' @references
 #'   Laud PJ. Equal-tailed confidence intervals for comparison of
 #'   rates. Pharmaceutical Statistics 2017; 16:334-348.
@@ -1220,7 +1220,7 @@ scoreci <- function(x1,
 #'   the selected weighting method} \item{stratdata}{a matrix containing stratum
 #'   estimates and weights}}
 #'
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @author Pete Laud, \email{pete@@sheffstat.co.uk}
 #' @references
 #'   Laud PJ. Equal-tailed confidence intervals for comparison of
 #'   rates. Pharmaceutical Statistics 2017; 16:334-348.
@@ -1330,7 +1330,7 @@ scasci <- function(x1,
 #'   estimates and weights}
 #'   \item{call}{details of the function call}}
 #'
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @author Pete Laud, \email{pete@@sheffstat.co.uk}
 #' @references
 #'   Laud PJ. Equal-tailed confidence intervals for comparison of
 #'   rates. Pharmaceutical Statistics 2017; 16:334-348.
@@ -1413,7 +1413,7 @@ tdasci <- function(x1,
 #' Using the MLE solution (and notation) given in F&M, extended
 #' in Laud 2017. This function is vectorised in x1,x2
 #'
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @author Pete Laud, \email{pete@@sheffstat.co.uk}
 #' @references
 #'   Laud PJ. Equal-tailed confidence intervals for comparison of
 #'   rates. Pharmaceutical Statistics 2017; 16:334-348.

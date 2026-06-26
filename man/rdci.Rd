@@ -102,5 +102,5 @@ proportions: comparison of eleven methods. Statistics in Medicine 1998;
 17(8):873-890.
 }
 \author{
-Pete Laud, \email{p.j.laud@sheffield.ac.uk}
+Pete Laud, \email{pete@sheffstat.co.uk}
 }

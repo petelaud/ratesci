@@ -59,7 +59,7 @@
 #'
 #' # Binomial RD, Newcombe method:
 #' moverci(x1 = 5, n1 = 56, x2 = 0, n2 = 29, type = "wilson")
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @author Pete Laud, \email{pete@@sheffstat.co.uk}
 #' @references
 #'   Laud PJ. Equal-tailed confidence intervals for comparison of
 #'   rates. Pharmaceutical Statistics 2017; 16:334-348.
@@ -328,7 +328,7 @@ moverci <- function(x1,
 #'   approximate Bayesian confidence interval, and the input values x and n.}
 #'   \item{call}{details of the function call.} }
 #' @importFrom stats qbeta qgamma qnorm
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @author Pete Laud, \email{pete@@sheffstat.co.uk}
 #' @examples
 #' # Jeffreys method:
 #' jeffreysci(x = 5, n = 56)
@@ -418,7 +418,7 @@ jeffreysci <- function(x,
 #'   \item{estimates}{a matrix containing estimates of the rates in each group
 #'   and of the requested contrast, with its confidence interval}
 #'   \item{call}{details of the function call} }
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @author Pete Laud, \email{pete@@sheffstat.co.uk}
 #' @export
 moverbci <- function(x1,
                      n1,

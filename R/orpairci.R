@@ -47,7 +47,7 @@
 #' # with intermediate continuity adjustment
 #' orpairci(x = c(1, 1, 7, 12), precis = 3, cc = 0.25)
 #'
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @author Pete Laud, \email{pete@@sheffstat.co.uk}
 #' @references
 #'   Fagerland MW, Lydersen S, Laake P. Recommended tests and
 #'   confidence intervals for paired binomial proportions.

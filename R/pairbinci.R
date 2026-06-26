@@ -116,7 +116,7 @@
 #' # Transformed Wilson method
 #' pairbinci(x = c(1, 1, 7, 12), contrast = "OR", method = "wilson")
 #'
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @author Pete Laud, \email{pete@@sheffstat.co.uk}
 #' @references
 #'   Tango T. Equivalence test and confidence interval for the difference
 #'   in proportions for the paired-sample design.
@@ -531,7 +531,7 @@ pairbinci <- function(x,
 #' given in Fagerland from Tango (1998/1999) & Tang (2003)
 #' This function is not vectorised
 #'
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @author Pete Laud, \email{pete@@sheffstat.co.uk}
 #' @references
 #'   Tango T. Equivalence test and confidence interval for the difference
 #'   in proportions for the paired-sample design.
@@ -660,7 +660,7 @@ scorepair <- function(theta,
 #' Code originates from Appendix B of Yang 2013,
 #' with updates to include continuity adjustment from Chang 2024.
 #'
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @author Pete Laud, \email{pete@@sheffstat.co.uk}
 #' @references
 #'   Yang Z, Sun X and Hardin JW. A non-iterative implementation of Tango's
 #'   score confidence interval for a paired difference of proportions.
@@ -835,7 +835,7 @@ tangoci <- function(x,
 #' with modified form of continuity adjustment (Laud 2025)
 #' for consistency with McNemar test, and unified code with/without cc.
 #'
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @author Pete Laud, \email{pete@@sheffstat.co.uk}
 #' @references
 #'   DelRocco N et al. New Confidence Intervals for Relative Risk of Two
 #'   Correlated Proportions.
@@ -989,7 +989,7 @@ tangci <- function(x,
 #' adjustment, and Newcombe's correction to the Pearson correlation estimate,
 #' applied to both contrasts.
 #'
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @author Pete Laud, \email{pete@@sheffstat.co.uk}
 #' @references
 #'   Newcombe RG. Improved confidence intervals for the difference between
 #'   binomial proportions based on paired data.
@@ -1102,7 +1102,7 @@ xmoverpairci <- function(x,
 #'
 #' Code is adapted from Appendix A of Bonett & Price 2006
 #'
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @author Pete Laud, \email{pete@@sheffstat.co.uk}
 #' @references
 #'   Bonett DG, Price RM. Confidence intervals for a ratio of binomial
 #'   proportions based on paired data.
@@ -1168,7 +1168,7 @@ bpci <- function(x,
 #' R code to calculate Wald CIs for contrast = "RD" or "RR", reluctantly
 #' included for reference
 #'
-#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @author Pete Laud, \email{pete@@sheffstat.co.uk}
 #' @references
 #'   Fagerland MW, Lydersen S, Laake P. Recommended tests and
 #'   confidence intervals for paired binomial proportions.
