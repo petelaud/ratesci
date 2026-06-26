@@ -26,7 +26,7 @@ library(ratesci)
 The input data for paired proportions takes a different structure, compared with the data for independent proportions:
 
 |  |  |  |  |  |
-|---------------|---------------|---------------|---------------|---------------|
+|----|----|----|----|----|
 |  |  | Event B |  |  |
 |  |  | Success | Failure | Total |
 | Event A | Success | $a \ (p_{11})$ | $b \ (p_{12})$ | $x_1 = a + b \ (p_1)$ |

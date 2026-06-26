@@ -3,6 +3,11 @@ template:
   bootstrap: 5
   light-switch: true
 
+home:
+  links:
+    - text: Sponsor this package
+      href: https://github.com/sponsors/petelaud
+
 reference:
 - title: Core functions
 

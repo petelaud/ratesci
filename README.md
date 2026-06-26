@@ -13,6 +13,7 @@ v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/li
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/ratesci)](https://cranlogs.r-pkg.org/badges/grand-total/ratesci)
 [![Monthly
 Downloads](https://cranlogs.r-pkg.org/badges/ratesci)](https://cranlogs.r-pkg.org/badges/ratesci)
+[![](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/petelaud)
 
 <!-- badges: end -->
 
