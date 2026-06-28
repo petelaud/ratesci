@@ -1,5 +1,5 @@
-# ratesci (development version)
 
+# ratesci 1.1.0 (2026-06-28)
 
 ## New features
 * New functions `rdci()`, `rrci()` and `orci()` give a selection of
@@ -29,6 +29,12 @@
   rates).
 * `precis` for setting the precision of the exact and mid-p method.
 
+## Lifecycle changes
+### Newly deprecated
+* `pairbinci()` is soft-deprecated, and is replaced by `scorepairci()` for score
+  methods, `moverpairci()` for MOVER methods, and `rdpairci()`, `rrpairci` and 
+  `orpairci()` for other methods.
+
 ## Bug fixes
 ### In `rateci()` and `moverci()`:
 * Permit n=0 to produce output interval as [0, 1] for binomial, or [0, Inf] for
@@ -41,7 +47,6 @@
 
 ### In `moverci()`:
 * Present NaN MOVER-W upper limits for RR and OR as Inf. 
-
 
 # ratesci 1.0.0 (2025-06-20)
 
