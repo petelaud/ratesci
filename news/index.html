@@ -46,15 +46,15 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="ratesci-development-version">ratesci (development version)<a class="anchor" aria-label="anchor" href="#ratesci-development-version"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.1.0" id="ratesci-110-2026-06-28">ratesci 1.1.0 (2026-06-28)<a class="anchor" aria-label="anchor" href="#ratesci-110-2026-06-28"></a></h2>
 <div class="section level3">
-<h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
+<h3 id="new-features-1-1-0">New features<a class="anchor" aria-label="anchor" href="#new-features-1-1-0"></a></h3>
 <ul><li>New functions <code><a href="../reference/rdci.html">rdci()</a></code>, <code><a href="../reference/rrci.html">rrci()</a></code> and <code><a href="../reference/orci.html">orci()</a></code> give a selection of confidence intervals for each contrast for 2 independent binomial or Poisson rates.</li>
 <li>New functions <code><a href="../reference/rdpairci.html">rdpairci()</a></code>, <code><a href="../reference/rrpairci.html">rrpairci()</a></code> and <code><a href="../reference/orpairci.html">orpairci()</a></code> give a selection of confidence intervals for each contrast for 2 paired binomial proportions.</li>
 <li>New separate dedicated functions <code><a href="../reference/scorepairci.html">scorepairci()</a></code> and <code><a href="../reference/moverpairci.html">moverpairci()</a></code> for the score and MOVER methods, respectively, for paired contrasts, mirroring <code><a href="../reference/scoreci.html">scoreci()</a></code> and <code><a href="../reference/moverci.html">moverci()</a></code> for independent contrasts.</li>
 <li>Note the above new functions for paired contrasts replace <code><a href="../reference/pairbinci.html">pairbinci()</a></code>, which is deprecated.</li>
 </ul><div class="section level4">
-<h4 id="in-rateci-development-version">In <code>rateci()</code>:<a class="anchor" aria-label="anchor" href="#in-rateci-development-version"></a></h4>
+<h4 id="in-rateci-1-1-0">In <code>rateci()</code>:<a class="anchor" aria-label="anchor" href="#in-rateci-1-1-0"></a></h4>
 <ul><li>New default point estimate is the “common sense” crude estimate <code>x / n</code>, instead of an estimate that is consistent with a 0% CI. <code>std_est</code> allows the user to choose. (<a href="https://github.com/petelaud/ratesci/issues/32" class="external-link">#32</a>, thanks to Chelsea Dickens for raising the issue.)</li>
 <li>New output object containing several confidence interval methods in an array format, including the inferior Wald, Wilson and Agresti-Coull methods (for reference, not recommended), plus an alternative formulation of the Clopper-Pearson or mid-p interval based on Beta or Gamma distributions (for comparison with the version based on binomial/Poisson tail probabilities). These match Clopper-Pearson and Garwood precisely when <code>cc</code> is <code>TRUE</code>, and approximately match the corresponding mid-p intervals when <code>cc</code> is <code>FALSE</code>.</li>
 <li>New output object for the Blaker exact method (for both binomial and Poisson rates).</li>
@@ -63,17 +63,25 @@
 </ul></div>
 </div>
 <div class="section level3">
-<h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
+<h3 id="lifecycle-changes-1-1-0">Lifecycle changes<a class="anchor" aria-label="anchor" href="#lifecycle-changes-1-1-0"></a></h3>
 <div class="section level4">
-<h4 id="in-rateci-and-moverci-development-version">In <code>rateci()</code> and <code>moverci()</code>:<a class="anchor" aria-label="anchor" href="#in-rateci-and-moverci-development-version"></a></h4>
+<h4 id="newly-deprecated-1-1-0">Newly deprecated<a class="anchor" aria-label="anchor" href="#newly-deprecated-1-1-0"></a></h4>
+<ul><li>
+<code><a href="../reference/pairbinci.html">pairbinci()</a></code> is soft-deprecated, and is replaced by <code><a href="../reference/scorepairci.html">scorepairci()</a></code> for score methods, <code><a href="../reference/moverpairci.html">moverpairci()</a></code> for MOVER methods, and <code><a href="../reference/rdpairci.html">rdpairci()</a></code>, <code>rrpairci</code> and <code><a href="../reference/orpairci.html">orpairci()</a></code> for other methods.</li>
+</ul></div>
+</div>
+<div class="section level3">
+<h3 id="bug-fixes-1-1-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-1-0"></a></h3>
+<div class="section level4">
+<h4 id="in-rateci-and-moverci-1-1-0">In <code>rateci()</code> and <code>moverci()</code>:<a class="anchor" aria-label="anchor" href="#in-rateci-and-moverci-1-1-0"></a></h4>
 <ul><li>Permit n=0 to produce output interval as [0, 1] for binomial, or [0, Inf] for Poisson with point estimate displayed as NaN. (prevents error for Bonett-Price method in <code><a href="../reference/rdpairci.html">rdpairci()</a></code> with no discordant pairs).</li>
 </ul></div>
 <div class="section level4">
-<h4 id="in-exactci-development-version">In <code>exactci()</code>:<a class="anchor" aria-label="anchor" href="#in-exactci-development-version"></a></h4>
+<h4 id="in-exactci-1-1-0">In <code>exactci()</code>:<a class="anchor" aria-label="anchor" href="#in-exactci-1-1-0"></a></h4>
 <ul><li>Improve precision (avoid rounding errors) for iterative Clopper-Pearson method.</li>
 </ul></div>
 <div class="section level4">
-<h4 id="in-moverci-development-version">In <code>moverci()</code>:<a class="anchor" aria-label="anchor" href="#in-moverci-development-version"></a></h4>
+<h4 id="in-moverci-1-1-0">In <code>moverci()</code>:<a class="anchor" aria-label="anchor" href="#in-moverci-1-1-0"></a></h4>
 <ul><li>Present NaN MOVER-W upper limits for RR and OR as Inf.</li>
 </ul></div>
 </div>

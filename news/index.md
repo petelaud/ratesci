@@ -1,6 +1,6 @@
 # Changelog
 
-## ratesci (development version)
+## ratesci 1.1.0 (2026-06-28)
 
 ### New features
 
@@ -49,6 +49,21 @@
 - New output object for the Blaker exact method (for both binomial and
   Poisson rates).
 - `precis` for setting the precision of the exact and mid-p method.
+
+### Lifecycle changes
+
+#### Newly deprecated
+
+- [`pairbinci()`](https://petelaud.github.io/ratesci/reference/pairbinci.md)
+  is soft-deprecated, and is replaced by
+  [`scorepairci()`](https://petelaud.github.io/ratesci/reference/scorepairci.md)
+  for score methods,
+  [`moverpairci()`](https://petelaud.github.io/ratesci/reference/moverpairci.md)
+  for MOVER methods, and
+  [`rdpairci()`](https://petelaud.github.io/ratesci/reference/rdpairci.md),
+  `rrpairci` and
+  [`orpairci()`](https://petelaud.github.io/ratesci/reference/orpairci.md)
+  for other methods.
 
 ### Bug fixes
 
