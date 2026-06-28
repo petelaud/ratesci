@@ -96,26 +96,26 @@ orci(
 #> , , 5/56 vs 0/29
 #> 
 #>                               lower est    upper
-#> SCAS                         0.7587 Inf      Inf
-#> Gart                         0.7720 Inf      Inf
-#> Miettinen-Nurminen           0.6959 Inf      Inf
-#> Uncorrected Asymptotic Score 0.7046 Inf      Inf
-#> MOVER-W                      0.5982 Inf      Inf
-#> MOVER-J                      0.8639 Inf      Inf
+#> SCAS                         0.7696 Inf      Inf
+#> Gart                         0.7822 Inf      Inf
+#> Miettinen-Nurminen           0.7175 Inf      Inf
+#> Uncorrected Asymptotic Score 0.7257 Inf      Inf
+#> MOVER-W                      0.6292 Inf      Inf
+#> MOVER-J                      0.8753 Inf      Inf
 #> Woolf logit                  0.0000 Inf      Inf
-#> Gart adjusted logit          0.3364 Inf 118.0279
+#> Gart adjusted logit          0.3312 Inf 101.2048
 #> 
 #> , , 7/34 vs 1/34
 #> 
 #>                               lower    est    upper
-#> SCAS                         1.2714 8.5556 169.0681
-#> Gart                         1.2883 8.5556 171.0103
-#> Miettinen-Nurminen           1.2466 8.5556  56.4616
-#> Uncorrected Asymptotic Score 1.2613 8.5556  55.8483
-#> MOVER-W                      1.1799 8.5556  56.4428
-#> MOVER-J                      1.3273 8.5556  87.4833
-#> Woolf logit                  0.9905 8.5556  73.9003
-#> Gart adjusted logit          0.9828 8.5556  37.7486
+#> SCAS                         1.2383 8.5556 129.3294
+#> Gart                         1.2532 8.5556 130.8308
+#> Miettinen-Nurminen           1.2086 8.5556  43.0330
+#> Uncorrected Asymptotic Score 1.2209 8.5556  42.5757
+#> MOVER-W                      1.1537 8.5556  41.9763
+#> MOVER-J                      1.2771 8.5556  67.1689
+#> Woolf logit                  0.9096 8.5556  53.8695
+#> Gart adjusted logit          0.9233 8.5556  27.0778
 #> 
 #> 
 #> $call
@@ -132,22 +132,22 @@ orci(
 #> , , 5/56 vs 0/29
 #> 
 #>                                  lower est upper
-#> SCAS_cc                         0.4399 Inf   Inf
-#> Gart_cc                         0.4452 Inf   Inf
-#> Miettinen-Nurminen_cc           0.4440 Inf   Inf
-#> Uncorrected Asymptotic Score_cc 0.4486 Inf   Inf
-#> MOVER-W_cc                      0.4380 Inf   Inf
-#> MOVER-J_cc                      0.5336 Inf   Inf
+#> SCAS_cc                         0.4628 Inf   Inf
+#> Gart_cc                         0.4678 Inf   Inf
+#> Miettinen-Nurminen_cc           0.4765 Inf   Inf
+#> Uncorrected Asymptotic Score_cc 0.4810 Inf   Inf
+#> MOVER-W_cc                      0.4779 Inf   Inf
+#> MOVER-J_cc                      0.5654 Inf   Inf
 #> 
 #> , , 7/34 vs 1/34
 #> 
 #>                                  lower    est      upper
-#> SCAS_cc                         0.9280 8.5556 37072.9285
-#> Gart_cc                         0.9388 8.5556 58169.6654
-#> Miettinen-Nurminen_cc           0.9332 8.5556   199.1816
-#> Uncorrected Asymptotic Score_cc 0.9433 8.5556   196.7604
-#> MOVER-W_cc                      0.9633 8.5556   176.8584
-#> MOVER-J_cc                      1.0428 8.5556   360.6648
+#> SCAS_cc                         0.9360 8.5556 27593.3534
+#> Gart_cc                         0.9456 8.5556 43279.8893
+#> Miettinen-Nurminen_cc           0.9424 8.5556   149.5435
+#> Uncorrected Asymptotic Score_cc 0.9512 8.5556   147.7432
+#> MOVER-W_cc                      0.9712 8.5556   136.6421
+#> MOVER-J_cc                      1.0356 8.5556   282.5531
 #> 
 #> 
 #> $call
@@ -164,22 +164,22 @@ orci(
 #> , , 5/56 vs 0/29
 #> 
 #>                                        lower est upper
-#> SCAS_cc(0.25)                         0.5664 Inf   Inf
-#> Gart_cc(0.25)                         0.5743 Inf   Inf
-#> Miettinen-Nurminen_cc(0.25)           0.5498 Inf   Inf
-#> Uncorrected Asymptotic Score_cc(0.25) 0.5560 Inf   Inf
-#> MOVER-W_cc(0.25)                      0.5080 Inf   Inf
-#> MOVER-J_cc(0.25)                      0.6592 Inf   Inf
+#> SCAS_cc(0.25)                         0.5853 Inf   Inf
+#> Gart_cc(0.25)                         0.5928 Inf   Inf
+#> Miettinen-Nurminen_cc(0.25)           0.5788 Inf   Inf
+#> Uncorrected Asymptotic Score_cc(0.25) 0.5847 Inf   Inf
+#> MOVER-W_cc(0.25)                      0.5444 Inf   Inf
+#> MOVER-J_cc(0.25)                      0.6838 Inf   Inf
 #> 
 #> , , 7/34 vs 1/34
 #> 
 #>                                        lower    est    upper
-#> SCAS_cc(0.25)                         1.0820 8.5556 560.3375
-#> Gart_cc(0.25)                         1.0954 8.5556 579.6362
-#> Miettinen-Nurminen_cc(0.25)           1.0754 8.5556  94.9040
-#> Uncorrected Asymptotic Score_cc(0.25) 1.0875 8.5556  93.8207
-#> MOVER-W_cc(0.25)                      1.0638 8.5556  88.2634
-#> MOVER-J_cc(0.25)                      1.1715 8.5556 156.2726
+#> SCAS_cc(0.25)                         1.0724 8.5556 422.9320
+#> Gart_cc(0.25)                         1.0843 8.5556 437.4584
+#> Miettinen-Nurminen_cc(0.25)           1.0643 8.5556  71.7594
+#> Uncorrected Asymptotic Score_cc(0.25) 1.0746 8.5556  70.9530
+#> MOVER-W_cc(0.25)                      1.0563 8.5556  66.8112
+#> MOVER-J_cc(0.25)                      1.1453 8.5556 121.2444
 #> 
 #> 
 #> $call

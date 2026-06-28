@@ -92,7 +92,8 @@ A list containing the following components:
 
   the requested contrast, with its confidence interval and the specified
   confidence level, along with estimates of the marginal probabilities
-  and the correlation coefficient (uncorrected and corrected).
+  and the correlation coefficient (with/without correction according to
+  `corc` argument).
 
 - call:
 
@@ -157,7 +158,7 @@ moverpairci(x = c(1, 1, 7, 12), contrast = "RD", corc = TRUE, type = "jeff")
 #> contrast     type    level       cc 
 #>     "RD"   "jeff"   "0.95"  "FALSE" 
 #> 
-# MOVER-NJ
+# MOVER-NJ for RR
 moverpairci(x = c(1, 1, 7, 12), contrast = "RR", corc = TRUE, type = "jeff")
 #> $data
 #>          Test_2
