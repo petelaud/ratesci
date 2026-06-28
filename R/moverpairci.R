@@ -40,14 +40,14 @@
 #'   \item{data}{the input data in 2x2 matrix form.}
 #'   \item{estimates}{the requested contrast, with its confidence interval and
 #'   the specified confidence level, along with estimates of the marginal
-#'   probabilities and the correlation coefficient (uncorrected and
-#'   corrected).}
+#'   probabilities and the correlation coefficient (with/without correction
+#'   according to `corc` argument).}
 #'   \item{call}{details of the function call.}}
 #' @examples
 #' # Example data from Fagerland et al 2014
 #' # MOVER-NJ method
 #' moverpairci(x = c(1, 1, 7, 12), contrast = "RD", corc = TRUE, type = "jeff")
-#' # MOVER-NJ
+#' # MOVER-NJ for RR
 #' moverpairci(x = c(1, 1, 7, 12), contrast = "RR", corc = TRUE, type = "jeff")
 #'
 #' @author Pete Laud, \email{pete@@sheffstat.co.uk}
@@ -96,6 +96,7 @@ moverpairci <- function(x,
                         precis = 6,
                         warn = TRUE,
                         ...) {
+
   if (!is.numeric(c(x))) {
     print("Non-numeric inputs!")
     stop()
@@ -161,38 +162,20 @@ moverpairci <- function(x,
   psi_hat <- x[1] * x[4] / (x[2] * x[3])
   if (is.na(psi_hat)) psi_hat <- 0
 
-  if (FALSE) {
-    # MOVER methods for RD and RR
-    if (method == "MOVER") {
-      estimates <- moverpairci(
-        x = x, contrast = contrast, level = level,
-        method = type, cc = cc, corc = FALSE
-      )
-      #      outlist <- list(data = xi, estimates = estimates)
-    }
-    if (method == "MOVER_newc") {
-      estimates <- moverpairci(
-        x = x, contrast = contrast, level = level,
-        method = type, cc = cc, corc = TRUE
-      )
-      #      outlist <- list(data = xi, estimates = estimates)
-    }
-  }
-
   x1p <- x[1] + x[2]
   xp1 <- x[1] + x[3]
   z <- qnorm(1 - (1 - level) / 2)
   ## First calculate l1, u1, l2, u2 based on an interval for p1p and pp1
-  if (type == "SCASp") {
+  if (tolower(type) == "scasp") {
     j1 <- rateci(x = x1p, n = N, distrib = "bin", level = level, cc = cc)$scas
     j2 <- rateci(x = xp1, n = N, distrib = "bin", level = level, cc = cc)$scas
-  } else if (type == "wilson") {
+  } else if (tolower(type) == "wilson") {
     j1 <- wilsonci(x = x1p, n = N, distrib = "bin", level = level, cc = cc)
     j2 <- wilsonci(x = xp1, n = N, distrib = "bin", level = level, cc = cc)
-  } else if (type == "jeff") {
+  } else if (tolower(type) == "jeff") {
     j1 <- rateci(x = x1p, n = N, distrib = "bin", level = level, cc = cc)$jeff
     j2 <- rateci(x = xp1, n = N, distrib = "bin", level = level, cc = cc)$jeff
-  } else if (type == "midp") {
+  } else if (tolower(type) == "midp") {
     j1 <- rateci(x = x1p, n = N, distrib = "bin", level = level, cc = cc)$midp
     j2 <- rateci(x = xp1, n = N, distrib = "bin", level = level, cc = cc)$midp
   }
@@ -251,13 +234,10 @@ moverpairci <- function(x,
   )
   row.names(estimates) <- NULL
 
-  #  outlist <- list(data = xi, estimates = round(estimates, precis))
-
   call <- c(
     contrast = contrast, type = type,
     level = level, cc = cc
   )
-  #  outlist <- append(outlist, list(call = call))
   outlist <- list(data = xi, estimates = round(estimates, precis), call = call)
 
   return(outlist)
@@ -266,10 +246,16 @@ moverpairci <- function(x,
 
 #' MOVER interval for paired RR or RD (binomial only)
 #'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
 #' Method of Variance Estimates Recovery, applied to paired RD and RR.
 #' With various options for the marginal rates, and with optional continuity
 #' adjustment, and Newcombe's correction to the Pearson correlation estimate,
 #' applied to both contrasts.
+#'
+#' This version of the function is used in the pairbinci() function,
+#' which is now deprecated.
 #'
 #' @author Pete Laud, \email{pete@@sheffstat.co.uk}
 #' @references

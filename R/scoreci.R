@@ -337,10 +337,15 @@ scoreci <- function(x1,
     print("Distrib must be one of 'bin' or 'poi'")
     stop()
   }
+  distrib <- tolower(distrib)
+
   if (!(tolower(substr(contrast, 1, 2)) %in% c("rd", "rr", "or", "p"))) {
     print("Contrast must be one of 'RD', 'RR', 'OR' or 'p'")
     stop()
   }
+  if (contrast != "p") contrast <- toupper(contrast)
+  if (contrast == "P") contrast <- "p"
+
   if (contrast != "p" && (is.null(x2) || is.null(n2))) {
     print("argument x2 or n2 missing")
     stop()

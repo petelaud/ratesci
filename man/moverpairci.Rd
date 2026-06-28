@@ -59,8 +59,8 @@ A list containing the following components: \describe{
 \item{data}{the input data in 2x2 matrix form.}
 \item{estimates}{the requested contrast, with its confidence interval and
 the specified confidence level, along with estimates of the marginal
-probabilities and the correlation coefficient (uncorrected and
-corrected).}
+probabilities and the correlation coefficient (with/without correction
+according to \code{corc} argument).}
 \item{call}{details of the function call.}}
 }
 \description{
@@ -75,7 +75,7 @@ adjustment can be customised.
 # Example data from Fagerland et al 2014
 # MOVER-NJ method
 moverpairci(x = c(1, 1, 7, 12), contrast = "RD", corc = TRUE, type = "jeff")
-# MOVER-NJ
+# MOVER-NJ for RR
 moverpairci(x = c(1, 1, 7, 12), contrast = "RR", corc = TRUE, type = "jeff")
 
 }

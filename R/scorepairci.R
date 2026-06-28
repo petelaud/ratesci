@@ -131,6 +131,7 @@ scorepairci <- function(x,
                         precis = 6,
                         warn = TRUE,
                         ...) {
+
   if (!is.numeric(c(x))) {
     print("Non-numeric inputs!")
     stop()
@@ -152,13 +153,7 @@ scorepairci <- function(x,
     stop()
   }
   if (contrast %in% c("RD", "RR")) {
-    #    if (!(tolower(substr(method, 1, 4)) %in%
-    #      c("scor"))) {
-    #      print("Method must be one of 'Score_closed', 'Score' for contrast = 'RD' or 'RR'")
-    #      stop()
-    #    }
-    if (skew == TRUE &&
-      (closedform == TRUE)) {
+    if (skew == TRUE && closedform == TRUE) {
       closedform <- FALSE
       if (warn == TRUE) {
         print(paste("Closed-form calculation not available with skewness correction -
@@ -166,14 +161,6 @@ scorepairci <- function(x,
       }
     }
   }
-  #  if (contrast == "OR") {
-  #    if (!(tolower(substr(method, 1, 4)) %in%
-  #      c("scas", "wils"))) {
-  #      print("Method must be one of 'SCASp' or 'wilson' for
-  #              contrast = 'OR'")
-  #      stop()
-  #    }
-  #  }
 
   if (as.character(cc) == "TRUE") cc <- 0.5
   # Default correction aligned with cc'd McNemar test
@@ -199,7 +186,6 @@ scorepairci <- function(x,
 
   # correlation estimate for reporting
   phi_hat <- (x[1] * x[4] - x[2] * x[3]) / sqrt(x1 * (N - x1) * x2 * (N - x2))
-  # if (is.na(phi_hat) | is.infinite(phi_hat)) {
   if (is.na(phi_hat)) {
     phi_hat <- 0
   }
@@ -223,20 +209,9 @@ scorepairci <- function(x,
     # This gives a p-value matching that for other bias-corrected methods
     x12 <- x[2]
     x21 <- x[3]
-    #    if (method == "SCASp" || (method == "wilson")) {
     trans_th0 <- NULL
     if (is.null(theta0)) theta0 <- 1
     trans_th0 <- theta0 / (1 + theta0)
-    #      if (method == "SCASp") {
-    #        trans_ci <- scaspci(
-    #          x = x12, n = x12 + x21, distrib = "bin",
-    #          level = level, cc = cc, bcf = bcf, bign = N
-    #        )$estimates[, c(1:3), drop = FALSE]
-    #        myskew <- TRUE
-    #      } else if (method == "wilson") {
-    #        trans_ci <- wilsonci(x = x12, n = x12 + x21, cc = cc, level = level)
-    #        myskew <- FALSE
-    #      }
 
     # No need to add bign argument to scoreci(, contrast = "p")
     trans_ci <- scoreci(
@@ -264,15 +239,8 @@ scorepairci <- function(x,
       chisq = chisq_zero, pval2sided, theta0 = theta0,
       scorenull, pval_left, pval_right
     )
-    #    } else if (method == "wilson" || (method == "Score" & skew == FALSE)) {
-    # NOTE: need to add test output for this option using scoretheta function
-    #      trans_ci <- wilsonci(x = x12, n = x12 + x21, cc = cc, level = level)
-    #    }
     estimates <- (trans_ci / (1 - trans_ci))
-    #    outlist <- list(xi, estimates = estimates)
-    #    if (method == "SCASp") {
-    #      outlist <- append(outlist, list(pval = pval))
-    #    }
+
   } else if (contrast != "OR") {
     # Iterative Score methods by Tango (for RD) & Tang (for RR)
     # & proposed skewness-corrected versions:
@@ -330,7 +298,6 @@ scorepairci <- function(x,
       )
     }
 
-    #    if ((method == "Score") || (method == "Score_closed")) {
     # optionally add p-value for a test of null hypothesis: theta<=theta0
     # default value of theta0 depends on contrast
     if (contrast == "RD") {
@@ -359,13 +326,8 @@ scorepairci <- function(x,
       scorenull = scorenull$score, pval_left, pval_right
     )
 
-    #      outlist <- list(data = xi, estimates = estimates, pval = pval)
-    #    }
   }
-  outlist <- list(data = xi, estimates = round(estimates, precis))
-  #  if (!(method %in% c("wilson"))) {
-  outlist <- append(outlist, list(pval = pval))
-  #  }
+  outlist <- list(data = xi, estimates = round(estimates, precis), pval = pval)
   call <- c(
     contrast = contrast,
     level = level, bcf = bcf, skew = skew, cc = cc, closedform = closedform
