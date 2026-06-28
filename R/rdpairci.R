@@ -68,6 +68,27 @@ rdpairci <- function(x,
                      std_est = TRUE,
                      cc = FALSE,
                      precis = 8) {
+
+  contrast <- "RD"
+
+  # Input checks
+  if (!is.numeric(c(x))) {
+    print("Non-numeric inputs!")
+    stop()
+  }
+  if (!(is.vector(x) && length(x) == 4)) {
+    print("Input x must be a vector of length 4!")
+    stop()
+  }
+  if (any(x < 0)) {
+    print("Negative inputs!")
+    stop()
+  }
+  if (sum(x) == 0) {
+    print("Sample size is zero!")
+    stop()
+  }
+
   # Convert input data into 2x2 table to ease interpretation of output
   x1i <- rep(c("Success", "Success", "Failure", "Failure"), x)
   x2i <- rep(c("Success", "Failure", "Success", "Failure"), x)
@@ -76,7 +97,6 @@ rdpairci <- function(x,
     Test_2 = factor(x2i, levels = c("Success", "Failure"))
   )
 
-  contrast <- "RD"
   N <- sum(x)
   est <- (x[2] - x[3]) / N
   if (as.character(cc) == "TRUE") cc <- 0.5

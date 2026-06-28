@@ -78,6 +78,33 @@ rrci <- function(x1,
                  std_est = TRUE,
                  cc = FALSE,
                  precis = 6) {
+
+  contrast <- "RR"
+
+  # Input checks
+  if (!(tolower(substr(distrib, 1, 3)) %in% c("bin", "poi"))) {
+    print("Distrib must be one of 'bin' or 'poi'")
+    stop()
+  }
+  if (is.null(x2) || is.null(n2)) {
+    print("argument x2 or n2 missing")
+    stop()
+  }
+  if (!is.numeric(c(x1, n1, x2, n2))) {
+    print("Non-numeric inputs!")
+    stop()
+  }
+  if (any(c(x1, n1, x2, n2) < 0)) {
+    print("Negative inputs!")
+    stop()
+  }
+  if (distrib == "bin" && (any(x1 > n1 + 0.001) || any(x2 > n2 + 0.001))) {
+    print("x1 > n1 or x2 > n2 not possible for distrib = 'bin'")
+    stop()
+  }
+
+  if (as.character(cc) == "TRUE") cc <- 0.5
+
   if (length(x1) != length(x2)) {
     print("x1 and x2 must be the same length")
     stop()
@@ -85,13 +112,9 @@ rrci <- function(x1,
   nstrat <- length(x1)
   # in case x1,x2 are input as vectors but n1,n2 are not
   if (length(n1) < nstrat && nstrat > 1) n1 <- rep(n1, length.out = nstrat)
-  if (length(n2) < nstrat && nstrat > 1) {
-    n2 <- rep(n2, length.out = nstrat)
-  }
+  if (length(n2) < nstrat && nstrat > 1) n2 <- rep(n2, length.out = nstrat)
 
-  contrast <- "RR"
   est <- (x1 / n1) / (x2 / n2)
-  if (as.character(cc) == "TRUE") cc <- 0.5
 
   ci_wald <- waldci(
     x1 = x1,
