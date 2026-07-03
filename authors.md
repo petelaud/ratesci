@@ -11,13 +11,13 @@ Source:
 [`DESCRIPTION`](https://github.com/petelaud/ratesci/blob/master/DESCRIPTION)
 
 Laud P (2026). *ratesci: Confidence Intervals and Tests for Comparisons
-of Binomial Proportions or Poisson Rates*. R package version 1.0.0.9000,
+of Binomial Proportions or Poisson Rates*. R package version 1.1.0,
 <https://github.com/petelaud/ratesci>.
 
     @Manual{,
       title = {ratesci: Confidence Intervals and Tests for Comparisons of Binomial Proportions or Poisson Rates},
       author = {Pete Laud},
       year = {2026},
-      note = {R package version 1.0.0.9000},
+      note = {R package version 1.1.0},
       url = {https://github.com/petelaud/ratesci},
     }
