@@ -1,5 +1,7 @@
 # Changelog
 
+## ratesci (development version)
+
 ## ratesci 1.1.0 (2026-06-28)
 
 CRAN release: 2026-07-02
