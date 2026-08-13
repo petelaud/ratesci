@@ -1772,11 +1772,20 @@ scoretheta <- function(theta,
     A <- scterm
     B <- 1
     C_ <- -(score1 + scterm)
-    num <- (-B + sqrt(pmax(0, B^2 - 4 * A * C_)))
     dsct <- B^2 - 4 * A * C_
+    # PATCH (Vincent Jaquet July 2026): numerically stable root.
+    # The original (-B + sqrt(dsct)) / (2*A) suffers catastrophic
+    # cancellation whenever A (scterm) is at or near zero, which happens
+    # generically at theta = 0 - bisect()'s mandatory first probe point.
+    # Vieta's formula (2*C / (-B - sqrt(dsct))) avoids the cancellation
+    # and is algebraically identical when A is not near zero.
+    num <- ifelse(A == 0,
+                  -C_ / B,
+                  2 * C_ / (-B - sqrt(pmax(0, dsct)))
+    )
     score <- ifelse(
       (skew == FALSE | scterm == 0),
-      score1, num / (2 * A)
+      score1, num
     )
     if (skew == TRUE) {
       qtnorm <- qnorm(1 - (1 - level) / 2)
@@ -1835,10 +1844,17 @@ scoretheta <- function(theta,
     A <- scterm
     B <- 1
     C_ <- -(score1 + scterm)
-    num <- (-B + sqrt(pmax(0, B^2 - 4 * A * C_)))
     dsct <- B^2 - 4 * A * C_
-    score <- ifelse((skew == FALSE | scterm == 0),
-      score1, num / (2 * A)
+    # Use citardauq formula to avoid issue raised by Vincent Jaquet July 2026
+    # the issue does not seem to affect unstratified calculations (see test6),
+    # but implement the same approach here just in case
+    num <- ifelse(A == 0,
+                  -C_ / B,
+                  2 * C_ / (-B - sqrt(pmax(0, dsct)))
+    )
+    score <- ifelse(
+      (skew == FALSE | scterm == 0),
+      score1, num
     )
     if (skew == TRUE) {
       qtnorm <- qnorm(1 - (1 - level) / 2)

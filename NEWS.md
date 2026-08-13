@@ -1,5 +1,10 @@
 # ratesci (development version)
 
+## Bug fixes
+### In `scoreci()` and `scasci()`:
+* Improved computation of quadratic solution for the skewness-corrected score, 
+  avoiding spurious results observed in 0.13% of a simulation exercise 
+  (#38, thanks to Vincent Jaquet for reporting the issue and proposed solution.) 
 
 # ratesci 1.1.0 (2026-06-28)
 
