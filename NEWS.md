@@ -1,4 +1,4 @@
-# ratesci (development version)
+# ratesci 1.1.0.9000 (development version)
 
 ## Bug fixes
 ### In `scoreci()` and `scasci()`:
