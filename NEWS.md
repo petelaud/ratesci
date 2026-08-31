@@ -7,7 +7,7 @@
   (#38, thanks to Vincent Jaquet for reporting the issue and proposed solution.)
 
 ### In `orpairci()`, `rrpairci()` and `rdpairci()`:
-* Fixed special cases producing warnings due to negative variance estimate or
+* Fixed special cases to avoid warnings due to negative variance estimate or
   intervals output as NaN.
 
 

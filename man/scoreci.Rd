@@ -110,7 +110,7 @@ cells for binomial RD & RR) with IVS/INV weights.
 stratified methods, but are found to match the continuity-adjusted version
 of the Mantel-Haenszel test, when \code{cc = 0.5} for any of the binomial
 contrasts. Flexibility is included for a less conservative adjustment, such
-as \code{cc = 0.25} suggested in Laud 2017 (see Appendix S3.4), or \code{cc = 3/16 =   0.1875} in Mehrotra & Railkar (2000).
+as \code{cc = 0.25} suggested in Laud 2017 (see Appendix S3.4), or \code{cc = 3/16 = 0.1875} in Mehrotra & Railkar (2000).
 }}
 
 \item{theta0}{Number to be used in a one-sided significance test (e.g.

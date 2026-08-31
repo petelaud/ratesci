@@ -210,11 +210,30 @@ rdpairci <- function(x,
 #' R code to calculate Wald CIs for contrast = "RD" or "RR", reluctantly
 #' included for reference
 #'
+#' @param x A numeric vector object specified as c(a, b, c, d)
+#'   where: \cr
+#'   a is the number of pairs with the event (e.g. success) under both
+#'     conditions (e.g. treated/untreated, or case/control) \cr
+#'   b is the count of the number with the event on condition 1 only (= x12) \cr
+#'   c is the count of the number with the event on condition 2 only (= x21) \cr
+#'   d is the number of pairs with no event under both conditions \cr
+#'   (Note the order of a and d is only important for contrast="RR".)
+#' @param level Number specifying confidence level (between 0 and 1, default
+#'   0.95).
+#' @param contrast Character string indicating the contrast of interest: \cr
+#'   "RD" = rate difference (default); \cr
+#'   "RR" = rate ratio; \cr
+#'   "OR" = conditional odds ratio.
+#' @param cc Number or logical (default FALSE) specifying (amount of) continuity
+#'   adjustment. When a score-based method is used, cc = 0.5 corresponds to the
+#'   continuity-corrected McNemar test.
+#' @param laplace Logical indicating whether to apply the Laplace adjustment
+#'   for the OR contrast. Has no effect for other contrasts.
 #' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
 #' @references
-#'
-#'
-#' @inheritParams pairbinci
+#'   Fagerland MW, Lydersen S, Laake P. Recommended tests and
+#'   confidence intervals for paired binomial proportions.
+#'   Statistics in Medicine 2014; 33(16):2850-2875
 #'
 #' @noRd
 waldpairci <- function(x,

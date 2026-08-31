@@ -18,23 +18,27 @@ export(scaspci)
 export(scoreci)
 export(scorepairci)
 export(tdasci)
-importFrom(graphics,abline)
-importFrom(graphics,lines)
-importFrom(graphics,text)
-importFrom(stats,dbinom)
-importFrom(stats,dpois)
-importFrom(stats,pbinom)
-importFrom(stats,pchisq)
-importFrom(stats,pf)
-importFrom(stats,pnorm)
-importFrom(stats,ppois)
-importFrom(stats,pt)
-importFrom(stats,qbeta)
-importFrom(stats,qbinom)
-importFrom(stats,qf)
-importFrom(stats,qgamma)
-importFrom(stats,qnorm)
-importFrom(stats,qpois)
-importFrom(stats,qqnorm)
-importFrom(stats,qt)
-importFrom(stats,uniroot)
+importFrom(graphics,
+  abline,
+  lines,
+  text
+)
+importFrom(stats,
+  dbinom,
+  dpois,
+  pbinom,
+  pchisq,
+  pf,
+  pnorm,
+  ppois,
+  pt,
+  qbeta,
+  qbinom,
+  qf,
+  qgamma,
+  qnorm,
+  qpois,
+  qqnorm,
+  qt,
+  uniroot
+)
