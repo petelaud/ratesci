@@ -281,6 +281,6 @@ waldpairci <- function(x,
       upper = ifelse((xx01 == 0 | xx10 == 0), Inf, exp(logestimate + z0 * sqrt(v)))
     )
   }
-  list(estimates = estimates)
+  estimates
 }
 
