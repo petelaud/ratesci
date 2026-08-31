@@ -202,3 +202,66 @@ rdpairci <- function(x,
   outlist <- list(xi, estimates = outarr, call = call)
   return(outlist)
 }
+
+
+#' Wald approximate normal confidence intervals for a paired difference (RD)
+#' or ratio (RR) or conditional odds ratio (OR)
+#'
+#' R code to calculate Wald CIs for contrast = "RD" or "RR", reluctantly
+#' included for reference
+#'
+#' @author Pete Laud, \email{p.j.laud@@sheffield.ac.uk}
+#' @references
+#'
+#'
+#' @inheritParams pairbinci
+#'
+#' @noRd
+waldpairci <- function(x,
+                       level = 0.95,
+                       contrast = "RD",
+                       laplace = FALSE,
+                       cc = FALSE) {
+  x11 <- x[1]
+  x10 <- x[2]
+  x01 <- x[3]
+  z0 <- qnorm(1 - (1 - level) / 2)
+  x1 <- x11 + x10
+  x0 <- x11 + x01
+  if (as.character(cc) == "TRUE") cc <- 0.5
+
+  if (contrast == "RD") {
+    n <- sum(x)
+    p12 <- (x10) / (n)
+    p21 <- (x01) / (n)
+    estimate <- p12 - p21
+    v <- max(0, (p12 + p21 - (abs(p12 - p21) - 2 * cc/n)^2) / (n))
+    estimates <- cbind(
+      lower = pmax(-1, estimate - z0 * sqrt(v)),
+      est = estimate,
+      upper = pmin(1, estimate + z0 * sqrt(v))
+    )
+  } else if (contrast == "RR") {
+    logestimate <- log(x1 / x0)
+    v <- (x10 + x01) / (x1 * x0)
+    estimates <- cbind(
+      lower = ifelse(x0 == 0, 0, exp(logestimate - z0 * sqrt(v))),
+      est = exp(logestimate),
+      upper = ifelse(x1 == 0, Inf, exp(logestimate + z0 * sqrt(v)))
+    )
+    row.names(estimates) <- NULL
+  } else if (contrast == "OR") {
+    lapadd <- 1 * laplace
+    xx10 <- x10 + lapadd
+    xx01 <- x01 + lapadd
+    logestimate <- log(xx10 / xx01)
+    v <- 1 / xx10 + 1 / xx01
+    estimates <- cbind(
+      lower = ifelse((xx10 == 0 | xx01 == 0), 0, exp(logestimate - z0 * sqrt(v))),
+      est = exp(logestimate),
+      upper = ifelse((xx01 == 0 | xx10 == 0), Inf, exp(logestimate + z0 * sqrt(v)))
+    )
+  }
+  list(estimates = estimates)
+}
+

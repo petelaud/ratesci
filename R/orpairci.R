@@ -116,6 +116,7 @@ orpairci <- function(x,
   trans_ci <- jeffreysci(x = x12, n = x12 + x21, cc = cc, level = level)$estimates[, c(1:3), drop = FALSE]
   ci_jeff <- (trans_ci / (1 - trans_ci))
   ci_wald <- exp(log(est) + c(-1, 0, 1) * z * sqrt(1 / x12 + 1 / x21))
+  if (x12 == 0 | x21 == 0) ci_wald[c(1, 3)] <- c(0, Inf)
 
   mydimnames <- dimnames(ci_scasp)
 

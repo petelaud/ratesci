@@ -4,7 +4,12 @@
 ### In `scoreci()` and `scasci()`:
 * Improved computation of quadratic solution for the skewness-corrected score, 
   avoiding spurious results observed in 0.13% of a simulation exercise 
-  (#38, thanks to Vincent Jaquet for reporting the issue and proposed solution.) 
+  (#38, thanks to Vincent Jaquet for reporting the issue and proposed solution.)
+
+### In `orpairci()`, `rrpairci()` and `rdpairci()`:
+* Fixed special cases producing warnings due to negative variance estimate or
+  intervals output as NaN.
+
 
 # ratesci 1.1.0 (2026-06-28)
 
