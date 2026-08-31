@@ -51,6 +51,7 @@ adjustment (where available).
 \itemize{
 \item SCAS (skewness-corrected asymptotic score)
 \item SCASu (omitting the 'N-1' adjustment)
+\item AS(N-1) ('N-1' corrected asymptotic score)
 \item Tang Asymptotic Score method
 \item MOVER-W (based on Wilson method without Newcombe correlation adjustment)
 \item MOVER-NW (based on Wilson method with Newcombe correlation adjustment)

@@ -8,7 +8,9 @@
 #'
 #' - SCAS (skewness-corrected asymptotic score)
 #' - SCASu (omitting the 'N-1' adjustment)
+#' - AS(N-1) ('N-1' corrected asymptotic score)
 #' - Tango Asymptotic Score method
+#' - MOVER-W (based on Wilson method without Newcombe correlation adjustment)
 #' - MOVER-NW (aka Newcombe Hybrid Score or square-and-add)
 #' - MOVER-NJ (based on Jeffreys intervals)
 #' - Agresti-Min
@@ -140,11 +142,23 @@ rdpairci <- function(x,
     precis = precis
   )$estimates[, c(1:3), drop = FALSE]
 
+  ci_asbc <- scorepairci(
+    x = x,
+    contrast = contrast,
+    skew = FALSE,
+    bcf = TRUE,
+    closedform = TRUE,
+    level = level,
+    cc = cc,
+    precis = precis
+  )$estimates[, c(1:3), drop = FALSE]
+
   ci_tango <- scorepairci(
     x = x,
     contrast = contrast,
     skew = FALSE,
     bcf = FALSE,
+    closedform = TRUE,
     level = level,
     cc = cc,
     precis = precis
@@ -154,12 +168,21 @@ rdpairci <- function(x,
     x = x,
     contrast = contrast,
     level = level,
+    corc = FALSE,
+    type = "wilson",
+    cc = cc
+  )$estimates[, c(1:3), drop = FALSE]
+
+  ci_movernw <- moverpairci(
+    x = x,
+    contrast = contrast,
+    level = level,
     corc = TRUE,
     type = "wilson",
     cc = cc
   )$estimates[, c(1:3), drop = FALSE]
 
-  ci_moverj <- moverpairci(
+  ci_movernj <- moverpairci(
     x = x,
     contrast = contrast,
     level = level,
@@ -171,15 +194,15 @@ rdpairci <- function(x,
   mydimnames <- dimnames(ci_scas)
 
   methodnames <- c(
-    "SCAS", "SCASu", "Tango score", "MOVER-NW", "MOVER-NJ",
+    "SCAS", "SCASu", "AS(N-1)", "AS(Tango)", "MOVER-W", "MOVER-NW", "MOVER-NJ",
     "Wald", "Agresti-Min", "Bonett-Price"
   )
 
   mydimnames[[3]] <- methodnames
 
   outarr <- array(
-    c(ci_scas, ci_scasu, ci_tango, ci_moverw, ci_moverj, ci_wald, ci_agrmin, ci_bp),
-    dim <- c(dim(ci_scas), 8)
+    c(ci_scas, ci_scasu, ci_asbc, ci_tango, ci_moverw, ci_movernw, ci_movernj, ci_wald, ci_agrmin, ci_bp),
+    dim <- c(dim(ci_scas), 10)
   )[drop = FALSE]
   dimnames(outarr) <- mydimnames
 
@@ -189,7 +212,7 @@ rdpairci <- function(x,
     if (cc != 0.5) methodnames <- paste0(methodnames, "(", cc, ")")
     mydimnames[[3]] <- methodnames
     dimnames(outarr) <- mydimnames
-    outarr <- outarr[, , 1:6, drop = FALSE]
+    outarr <- outarr[, , 1:8, drop = FALSE]
   }
   # dimnames(outarr) <- mydimnames
   outarr <- aperm(round(outarr, precis), c(3, 2, 1))[, , 1]
