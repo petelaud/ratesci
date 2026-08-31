@@ -192,7 +192,9 @@ rdpairci(x = c(1, 1, 7, 12),
 #>                lower     est   upper
 #> SCAS         -0.5281 -0.2857 -0.0184
 #> SCASu        -0.5229 -0.2857 -0.0262
-#> Tango score  -0.5172 -0.2857 -0.0260
+#> AS(N-1)      -0.5226 -0.2857 -0.0183
+#> AS(Tango)    -0.5172 -0.2857 -0.0260
+#> MOVER-W      -0.5017 -0.2857 -0.0361
 #> MOVER-NW     -0.5069 -0.2857 -0.0256
 #> MOVER-NJ     -0.5105 -0.2857 -0.0324
 #> Wald         -0.5197 -0.2857 -0.0517
@@ -208,13 +210,15 @@ applied to some methods for analysis of paired proportions:
 rdpairci(x = c(1, 1, 7, 12),
          cc = TRUE,
          precis = 4)$estimates
-#>                  lower     est   upper
-#> SCAS_cc        -0.5732 -0.2857  0.0390
-#> SCASu_cc       -0.5683 -0.2857  0.0311
-#> Tango score_cc -0.5613 -0.2857  0.0307
-#> MOVER-NW_cc    -0.5308 -0.2857  0.0082
-#> MOVER-NJ_cc    -0.5348 -0.2857  0.0031
-#> Wald_cc        -0.5293 -0.2857 -0.0422
+#>                lower     est   upper
+#> SCAS_cc      -0.5732 -0.2857  0.0390
+#> SCASu_cc     -0.5683 -0.2857  0.0311
+#> AS(N-1)_cc   -0.5664 -0.2857  0.0385
+#> AS(Tango)_cc -0.5613 -0.2857  0.0307
+#> MOVER-W_cc   -0.5248 -0.2857 -0.0036
+#> MOVER-NW_cc  -0.5308 -0.2857  0.0082
+#> MOVER-NJ_cc  -0.5348 -0.2857  0.0031
+#> Wald_cc      -0.5293 -0.2857 -0.0422
 ```
 
 ## References

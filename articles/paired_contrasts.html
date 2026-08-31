@@ -295,7 +295,9 @@ methods for reference.</p>
 <span><span class="co">#&gt;                lower     est   upper</span></span>
 <span><span class="co">#&gt; SCAS         -0.5281 -0.2857 -0.0184</span></span>
 <span><span class="co">#&gt; SCASu        -0.5229 -0.2857 -0.0262</span></span>
-<span><span class="co">#&gt; Tango score  -0.5172 -0.2857 -0.0260</span></span>
+<span><span class="co">#&gt; AS(N-1)      -0.5226 -0.2857 -0.0183</span></span>
+<span><span class="co">#&gt; AS(Tango)    -0.5172 -0.2857 -0.0260</span></span>
+<span><span class="co">#&gt; MOVER-W      -0.5017 -0.2857 -0.0361</span></span>
 <span><span class="co">#&gt; MOVER-NW     -0.5069 -0.2857 -0.0256</span></span>
 <span><span class="co">#&gt; MOVER-NJ     -0.5105 -0.2857 -0.0324</span></span>
 <span><span class="co">#&gt; Wald         -0.5197 -0.2857 -0.0517</span></span>
@@ -307,13 +309,15 @@ applied to some methods for analysis of paired proportions:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/rdpairci.html">rdpairci</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span><span class="op">)</span>,</span>
 <span>         cc <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>         precis <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">$</span><span class="va">estimates</span></span>
-<span><span class="co">#&gt;                  lower     est   upper</span></span>
-<span><span class="co">#&gt; SCAS_cc        -0.5732 -0.2857  0.0390</span></span>
-<span><span class="co">#&gt; SCASu_cc       -0.5683 -0.2857  0.0311</span></span>
-<span><span class="co">#&gt; Tango score_cc -0.5613 -0.2857  0.0307</span></span>
-<span><span class="co">#&gt; MOVER-NW_cc    -0.5308 -0.2857  0.0082</span></span>
-<span><span class="co">#&gt; MOVER-NJ_cc    -0.5348 -0.2857  0.0031</span></span>
-<span><span class="co">#&gt; Wald_cc        -0.5293 -0.2857 -0.0422</span></span></code></pre></div>
+<span><span class="co">#&gt;                lower     est   upper</span></span>
+<span><span class="co">#&gt; SCAS_cc      -0.5732 -0.2857  0.0390</span></span>
+<span><span class="co">#&gt; SCASu_cc     -0.5683 -0.2857  0.0311</span></span>
+<span><span class="co">#&gt; AS(N-1)_cc   -0.5664 -0.2857  0.0385</span></span>
+<span><span class="co">#&gt; AS(Tango)_cc -0.5613 -0.2857  0.0307</span></span>
+<span><span class="co">#&gt; MOVER-W_cc   -0.5248 -0.2857 -0.0036</span></span>
+<span><span class="co">#&gt; MOVER-NW_cc  -0.5308 -0.2857  0.0082</span></span>
+<span><span class="co">#&gt; MOVER-NJ_cc  -0.5348 -0.2857  0.0031</span></span>
+<span><span class="co">#&gt; Wald_cc      -0.5293 -0.2857 -0.0422</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2 unnumbered">

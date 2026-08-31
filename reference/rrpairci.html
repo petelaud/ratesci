@@ -5,6 +5,7 @@ for the rate ratio (RR) contrast, with or without optional continuity
 adjustment (where available).
 SCAS (skewness-corrected asymptotic score)
 SCASu (omitting the 'N-1' adjustment)
+AS(N-1) ('N-1' corrected asymptotic score)
 Tang Asymptotic Score method
 MOVER-W (based on Wilson method without Newcombe correlation adjustment)
 MOVER-NW (based on Wilson method with Newcombe correlation adjustment)
@@ -20,6 +21,7 @@ for the rate ratio (RR) contrast, with or without optional continuity
 adjustment (where available).
 SCAS (skewness-corrected asymptotic score)
 SCASu (omitting the 'N-1' adjustment)
+AS(N-1) ('N-1' corrected asymptotic score)
 Tang Asymptotic Score method
 MOVER-W (based on Wilson method without Newcombe correlation adjustment)
 MOVER-NW (based on Wilson method with Newcombe correlation adjustment)
@@ -82,6 +84,7 @@ This convenience wrapper function produces a selection of the methods below
 for the rate ratio (RR) contrast, with or without optional continuity
 adjustment (where available).</p><ul><li><p>SCAS (skewness-corrected asymptotic score)</p></li>
 <li><p>SCASu (omitting the 'N-1' adjustment)</p></li>
+<li><p>AS(N-1) ('N-1' corrected asymptotic score)</p></li>
 <li><p>Tang Asymptotic Score method</p></li>
 <li><p>MOVER-W (based on Wilson method without Newcombe correlation adjustment)</p></li>
 <li><p>MOVER-NW (based on Wilson method with Newcombe correlation adjustment)</p></li>
@@ -180,7 +183,8 @@ proportions. (2026, Under review)</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                lower  est upper</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SCAS           0.043 0.25 0.928</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SCASu          0.043 0.25 0.898</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Tang score     0.065 0.25 0.907</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AS(N-1)        0.063 0.25 0.934</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AS(Tang)       0.065 0.25 0.907</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-W        0.069 0.25 0.869</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-NW       0.066 0.25 0.905</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-NJ       0.051 0.25 0.873</span>
@@ -204,7 +208,8 @@ proportions. (2026, Under review)</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   lower  est upper</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SCAS_cc           0.022 0.25 1.166</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SCASu_cc          0.022 0.25 1.131</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Tang score_cc     0.040 0.25 1.120</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AS(N-1)_cc        0.039 0.25 1.151</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AS(Tang)_cc       0.040 0.25 1.120</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-W_cc        0.044 0.25 0.986</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-NW_cc       0.042 0.25 1.032</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-NJ_cc       0.030 0.25 1.013</span>
@@ -227,7 +232,8 @@ proportions. (2026, Under review)</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                         lower  est upper</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SCAS_cc(0.25)           0.031 0.25 1.042</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SCASu_cc(0.25)          0.032 0.25 1.010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Tang score_cc(0.25)     0.052 0.25 1.009</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AS(N-1)_cc(0.25)        0.050 0.25 1.039</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AS(Tang)_cc(0.25)       0.052 0.25 1.009</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-W_cc(0.25)        0.056 0.25 0.927</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-NW_cc(0.25)       0.054 0.25 0.967</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-NJ_cc(0.25)       0.040 0.25 0.942</span>

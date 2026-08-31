@@ -9,7 +9,12 @@ optional continuity adjustment (where available).
 
 - SCASu (omitting the 'N-1' adjustment)
 
+- AS(N-1) ('N-1' corrected asymptotic score)
+
 - Tango Asymptotic Score method
+
+- MOVER-W (based on Wilson method without Newcombe correlation
+  adjustment)
 
 - MOVER-NW (aka Newcombe Hybrid Score or square-and-add)
 
@@ -112,7 +117,9 @@ rdpairci(x = c(1, 1, 7, 12), precis = 3)
 #>               lower    est  upper
 #> SCAS         -0.528 -0.286 -0.018
 #> SCASu        -0.523 -0.286 -0.026
-#> Tango score  -0.517 -0.286 -0.026
+#> AS(N-1)      -0.523 -0.286 -0.018
+#> AS(Tango)    -0.517 -0.286 -0.026
+#> MOVER-W      -0.502 -0.286 -0.036
 #> MOVER-NW     -0.507 -0.286 -0.026
 #> MOVER-NJ     -0.511 -0.286 -0.032
 #> Wald         -0.520 -0.286 -0.052
@@ -132,13 +139,15 @@ rdpairci(x = c(1, 1, 7, 12), precis = 3, cc = TRUE)
 #>   Failure       7      12
 #> 
 #> $estimates
-#>                 lower    est  upper
-#> SCAS_cc        -0.573 -0.286  0.039
-#> SCASu_cc       -0.568 -0.286  0.031
-#> Tango score_cc -0.561 -0.286  0.031
-#> MOVER-NW_cc    -0.531 -0.286  0.008
-#> MOVER-NJ_cc    -0.535 -0.286  0.003
-#> Wald_cc        -0.529 -0.286 -0.042
+#>               lower    est  upper
+#> SCAS_cc      -0.573 -0.286  0.039
+#> SCASu_cc     -0.568 -0.286  0.031
+#> AS(N-1)_cc   -0.566 -0.286  0.038
+#> AS(Tango)_cc -0.561 -0.286  0.031
+#> MOVER-W_cc   -0.525 -0.286 -0.004
+#> MOVER-NW_cc  -0.531 -0.286  0.008
+#> MOVER-NJ_cc  -0.535 -0.286  0.003
+#> Wald_cc      -0.529 -0.286 -0.042
 #> 
 #> $call
 #> level    cc 
@@ -153,13 +162,15 @@ rdpairci(x = c(1, 1, 7, 12), precis = 3, cc = 0.25)
 #>   Failure       7      12
 #> 
 #> $estimates
-#>                       lower    est  upper
-#> SCAS_cc(0.25)        -0.551 -0.286  0.010
-#> SCASu_cc(0.25)       -0.546 -0.286  0.003
-#> Tango score_cc(0.25) -0.539 -0.286  0.003
-#> MOVER-NW_cc(0.25)    -0.519 -0.286 -0.009
-#> MOVER-NJ_cc(0.25)    -0.523 -0.286 -0.014
-#> Wald_cc(0.25)        -0.525 -0.286 -0.047
+#>                     lower    est  upper
+#> SCAS_cc(0.25)      -0.551 -0.286  0.010
+#> SCASu_cc(0.25)     -0.546 -0.286  0.003
+#> AS(N-1)_cc(0.25)   -0.545 -0.286  0.010
+#> AS(Tango)_cc(0.25) -0.539 -0.286  0.002
+#> MOVER-W_cc(0.25)   -0.513 -0.286 -0.020
+#> MOVER-NW_cc(0.25)  -0.519 -0.286 -0.009
+#> MOVER-NJ_cc(0.25)  -0.523 -0.286 -0.014
+#> Wald_cc(0.25)      -0.525 -0.286 -0.047
 #> 
 #> $call
 #> level    cc 

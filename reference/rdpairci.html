@@ -5,7 +5,9 @@ for the rate difference (RD) contrast, with or without optional continuity
 adjustment (where available).
 SCAS (skewness-corrected asymptotic score)
 SCASu (omitting the 'N-1' adjustment)
+AS(N-1) ('N-1' corrected asymptotic score)
 Tango Asymptotic Score method
+MOVER-W (based on Wilson method without Newcombe correlation adjustment)
 MOVER-NW (aka Newcombe Hybrid Score or square-and-add)
 MOVER-NJ (based on Jeffreys intervals)
 Agresti-Min
@@ -19,7 +21,9 @@ for the rate difference (RD) contrast, with or without optional continuity
 adjustment (where available).
 SCAS (skewness-corrected asymptotic score)
 SCASu (omitting the 'N-1' adjustment)
+AS(N-1) ('N-1' corrected asymptotic score)
 Tango Asymptotic Score method
+MOVER-W (based on Wilson method without Newcombe correlation adjustment)
 MOVER-NW (aka Newcombe Hybrid Score or square-and-add)
 MOVER-NJ (based on Jeffreys intervals)
 Agresti-Min
@@ -80,7 +84,9 @@ This convenience wrapper function produces a selection of the methods below
 for the rate difference (RD) contrast, with or without optional continuity
 adjustment (where available).</p><ul><li><p>SCAS (skewness-corrected asymptotic score)</p></li>
 <li><p>SCASu (omitting the 'N-1' adjustment)</p></li>
+<li><p>AS(N-1) ('N-1' corrected asymptotic score)</p></li>
 <li><p>Tango Asymptotic Score method</p></li>
+<li><p>MOVER-W (based on Wilson method without Newcombe correlation adjustment)</p></li>
 <li><p>MOVER-NW (aka Newcombe Hybrid Score or square-and-add)</p></li>
 <li><p>MOVER-NJ (based on Jeffreys intervals)</p></li>
 <li><p>Agresti-Min</p></li>
@@ -177,7 +183,9 @@ proportions. (2026, Under review)</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               lower    est  upper</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SCAS         -0.528 -0.286 -0.018</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SCASu        -0.523 -0.286 -0.026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Tango score  -0.517 -0.286 -0.026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AS(N-1)      -0.523 -0.286 -0.018</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AS(Tango)    -0.517 -0.286 -0.026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-W      -0.502 -0.286 -0.036</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-NW     -0.507 -0.286 -0.026</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-NJ     -0.511 -0.286 -0.032</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Wald         -0.520 -0.286 -0.052</span>
@@ -197,13 +205,15 @@ proportions. (2026, Under review)</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Failure       7      12</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 lower    est  upper</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SCAS_cc        -0.573 -0.286  0.039</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SCASu_cc       -0.568 -0.286  0.031</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Tango score_cc -0.561 -0.286  0.031</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-NW_cc    -0.531 -0.286  0.008</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-NJ_cc    -0.535 -0.286  0.003</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Wald_cc        -0.529 -0.286 -0.042</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               lower    est  upper</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SCAS_cc      -0.573 -0.286  0.039</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SCASu_cc     -0.568 -0.286  0.031</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AS(N-1)_cc   -0.566 -0.286  0.038</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AS(Tango)_cc -0.561 -0.286  0.031</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-W_cc   -0.525 -0.286 -0.004</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-NW_cc  -0.531 -0.286  0.008</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-NJ_cc  -0.535 -0.286  0.003</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Wald_cc      -0.529 -0.286 -0.042</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $call</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> level    cc </span>
@@ -218,13 +228,15 @@ proportions. (2026, Under review)</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Failure       7      12</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       lower    est  upper</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SCAS_cc(0.25)        -0.551 -0.286  0.010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SCASu_cc(0.25)       -0.546 -0.286  0.003</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Tango score_cc(0.25) -0.539 -0.286  0.003</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-NW_cc(0.25)    -0.519 -0.286 -0.009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-NJ_cc(0.25)    -0.523 -0.286 -0.014</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Wald_cc(0.25)        -0.525 -0.286 -0.047</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     lower    est  upper</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SCAS_cc(0.25)      -0.551 -0.286  0.010</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SCASu_cc(0.25)     -0.546 -0.286  0.003</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AS(N-1)_cc(0.25)   -0.545 -0.286  0.010</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AS(Tango)_cc(0.25) -0.539 -0.286  0.002</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-W_cc(0.25)   -0.513 -0.286 -0.020</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-NW_cc(0.25)  -0.519 -0.286 -0.009</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MOVER-NJ_cc(0.25)  -0.523 -0.286 -0.014</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Wald_cc(0.25)      -0.525 -0.286 -0.047</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $call</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> level    cc </span>

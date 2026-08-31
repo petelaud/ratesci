@@ -9,6 +9,8 @@ continuity adjustment (where available).
 
 - SCASu (omitting the 'N-1' adjustment)
 
+- AS(N-1) ('N-1' corrected asymptotic score)
+
 - Tang Asymptotic Score method
 
 - MOVER-W (based on Wilson method without Newcombe correlation
@@ -115,7 +117,8 @@ rrpairci(x = c(1, 1, 7, 12), precis = 3)
 #>                lower  est upper
 #> SCAS           0.043 0.25 0.928
 #> SCASu          0.043 0.25 0.898
-#> Tang score     0.065 0.25 0.907
+#> AS(N-1)        0.063 0.25 0.934
+#> AS(Tang)       0.065 0.25 0.907
 #> MOVER-W        0.069 0.25 0.869
 #> MOVER-NW       0.066 0.25 0.905
 #> MOVER-NJ       0.051 0.25 0.873
@@ -139,7 +142,8 @@ rrpairci(x = c(1, 1, 7, 12), precis = 3, cc = TRUE)
 #>                   lower  est upper
 #> SCAS_cc           0.022 0.25 1.166
 #> SCASu_cc          0.022 0.25 1.131
-#> Tang score_cc     0.040 0.25 1.120
+#> AS(N-1)_cc        0.039 0.25 1.151
+#> AS(Tang)_cc       0.040 0.25 1.120
 #> MOVER-W_cc        0.044 0.25 0.986
 #> MOVER-NW_cc       0.042 0.25 1.032
 #> MOVER-NJ_cc       0.030 0.25 1.013
@@ -162,7 +166,8 @@ rrpairci(x = c(1, 1, 7, 12), precis = 3, cc = 0.25)
 #>                         lower  est upper
 #> SCAS_cc(0.25)           0.031 0.25 1.042
 #> SCASu_cc(0.25)          0.032 0.25 1.010
-#> Tang score_cc(0.25)     0.052 0.25 1.009
+#> AS(N-1)_cc(0.25)        0.050 0.25 1.039
+#> AS(Tang)_cc(0.25)       0.052 0.25 1.009
 #> MOVER-W_cc(0.25)        0.056 0.25 0.927
 #> MOVER-NW_cc(0.25)       0.054 0.25 0.967
 #> MOVER-NJ_cc(0.25)       0.040 0.25 0.942
