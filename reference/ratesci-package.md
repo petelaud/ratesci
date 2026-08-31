@@ -149,3 +149,8 @@ Useful links:
 
 **Maintainer**: Pete Laud <pete@sheffstat.co.uk>
 ([ORCID](https://orcid.org/0000-0002-3766-7090))
+
+Authors:
+
+- Pete Laud <pete@sheffstat.co.uk>
+  ([ORCID](https://orcid.org/0000-0002-3766-7090))
