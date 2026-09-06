@@ -221,11 +221,11 @@ moverpairci <- function(x,
   } else if (contrast == "RD") {
     estimate <- p1phat - pp1hat
     lower <- p1phat - pp1hat -
-      sqrt((p1phat - l1)^2 + (u2 - pp1hat)^2 -
-        2 * (p1phat - l1) * (u2 - pp1hat) * cor_hat)
+      sqrt(pmax(0, (p1phat - l1)^2 + (u2 - pp1hat)^2 -
+        2 * (p1phat - l1) * (u2 - pp1hat) * cor_hat))
     upper <- p1phat - pp1hat +
-      sqrt((u1 - p1phat)^2 + (pp1hat - l2)^2 -
-        2 * (u1 - p1phat) * (pp1hat - l2) * cor_hat)
+      sqrt(pmax(0, (u1 - p1phat)^2 + (pp1hat - l2)^2 -
+        2 * (u1 - p1phat) * (pp1hat - l2) * cor_hat))
   }
 
   estimates <- cbind(
