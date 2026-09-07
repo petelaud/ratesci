@@ -105,6 +105,7 @@ orpairci(x = c(1, 1, 7, 12), precis = 3)
 #> Transformed midp     0.006 0.143 0.924
 #> Transformed Wilson   0.023 0.143 0.890
 #> Transformed Jeffreys 0.014 0.143 0.831
+#> Transformed Blaker   0.006 0.143 1.000
 #> Wald                 0.018 0.143 1.161
 #> 
 #> $call
@@ -125,6 +126,7 @@ orpairci(x = c(1, 1, 7, 12), precis = 3, cc = TRUE)
 #> Transformed Clopper-Pearson 0.003 0.143 1.112
 #> Transformed Wilson_cc       0.007 0.143 1.142
 #> Transformed Jeffreys_cc     0.003 0.143 1.112
+#> Transformed Blaker          0.006 0.143 1.000
 #> 
 #> $call
 #> level    cc 
@@ -144,6 +146,7 @@ orpairci(x = c(1, 1, 7, 12), precis = 3, cc = 0.25)
 #> Transformed midp_cc(0.25)     0.004 0.143 1.029
 #> Transformed Wilson_cc(0.25)   0.014 0.143 1.009
 #> Transformed Jeffreys_cc(0.25) 0.008 0.143 0.966
+#> Transformed Blaker            0.006 0.143 1.000
 #> 
 #> $call
 #> level    cc 

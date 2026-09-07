@@ -172,6 +172,7 @@ orpairci(x = c(1, 1, 7, 12))$estimates
 #> Transformed midp     0.00629101 0.1428571 0.9241027
 #> Transformed Wilson   0.02293156 0.1428571 0.8899597
 #> Transformed Jeffreys 0.01403242 0.1428571 0.8305608
+#> Transformed Blaker   0.00643223 0.1428571 1.0000001
 #> Wald                 0.01757637 0.1428571 1.1611135
 ```
 
