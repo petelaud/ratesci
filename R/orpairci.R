@@ -10,6 +10,7 @@
 #' - Transformed Wilson Score method
 #' - Transformed mid-P
 #' - Transformed Jeffreys
+#' - Transformed Blaker
 #' - Approximate log-normal (Wald) method
 #'
 #' @param x A numeric vector object specified as c(a, b, c, d)
@@ -111,6 +112,8 @@ orpairci <- function(x,
   ci_scasp <- (trans_ci / (1 - trans_ci))
   trans_ci <- exactci(x = x12, n = x12 + x21, midp = 0.5 - cc, level = level)[, c(1:3)]
   ci_midp <- (trans_ci / (1 - trans_ci))
+  trans_ci <- blakerci(x = x12, n = x12 + x21, level = level)[, c(1:3)]
+  ci_blaker <- (trans_ci / (1 - trans_ci))
   trans_ci <- wilsonci(x = x12, n = x12 + x21, cc = cc, level = level)
   ci_wilson <- (trans_ci / (1 - trans_ci))
   trans_ci <- jeffreysci(x = x12, n = x12 + x21, cc = cc, level = level)$estimates[, c(1:3), drop = FALSE]
@@ -122,7 +125,8 @@ orpairci <- function(x,
 
   methodnames <- c(
     "Transformed SCASp", "Transformed midp", "Transformed Wilson", "Transformed Jeffreys",
-    "Wald"
+    "Transformed Blaker",
+        "Wald"
   )
 
   mydimnames[[3]] <- methodnames
@@ -133,22 +137,23 @@ orpairci <- function(x,
       ci_midp,
       ci_wilson,
       ci_jeff,
+      ci_blaker,
       ci_wald
     ),
-    dim <- c(dim(ci_scasp), 5)
+    dim <- c(dim(ci_scasp), 6)
   )[drop = FALSE]
   dimnames(outarr) <- mydimnames
 
   if (std_est) outarr[, 2, ] <- est
   if (cc != FALSE) {
-    methodnames <- paste0(methodnames, "_cc")
-    if (cc != 0.5) methodnames <- paste0(methodnames, "(", cc, ")")
+    methodnames[1:4] <- paste0(methodnames[1:4], "_cc")
+    if (cc != 0.5) methodnames[1:4] <- paste0(methodnames[1:4], "(", cc, ")")
     mydimnames[[3]] <- methodnames
     dimnames(outarr) <- mydimnames
     if (cc == 0.5) methodnames[2] <- "Transformed Clopper-Pearson"
     mydimnames[[3]] <- methodnames
     dimnames(outarr) <- mydimnames
-    outarr <- outarr[, , c(1:4), drop = FALSE]
+    outarr <- outarr[, , c(1:5), drop = FALSE]
   }
   outarr <- aperm(round(outarr, precis), c(3, 2, 1))[, , 1]
 
