@@ -340,6 +340,7 @@ rdci(x1 = 5,
 #> MOVER-J            -0.0083 0.0893 0.1847
 #> Wald                0.0146 0.0893 0.1640
 #> Agresti-Caffo      -0.0289 0.0893 0.1712
+#> Brown-Li Jeffreys  -0.0105 0.0893 0.1701
 ```
 
 If more conservative coverage is required, a continuity adjustment may

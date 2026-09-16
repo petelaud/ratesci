@@ -13,6 +13,8 @@ without optional continuity adjustment (where available).
 
 - Transformed Jeffreys
 
+- Transformed Blaker
+
 - Approximate log-normal (Wald) method
 
 ## Usage

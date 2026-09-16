@@ -17,6 +17,8 @@ adjustment.
 
 - Agresti-Caffo (binomial RD only)
 
+- Brown-Li 'Jeffreys' (binomial RD only)
+
 - Approximate normal (Wald) method (strongly advise this is not used for
   any purpose but included for reference)
 
@@ -101,6 +103,10 @@ Newcombe RG. Interval estimation for the difference between independent
 proportions: comparison of eleven methods. Statistics in Medicine 1998;
 17(8):873-890.
 
+Laud PJ, Dane A. Confidence intervals for the difference between
+independent binomial proportions: comparison using a graphical approach
+and moving averages. Pharmaceutical Statistics 2014; 13(5):294-308.
+
 ## Author
 
 Pete Laud, <pete@sheffstat.co.uk>
@@ -127,6 +133,7 @@ rdci(
 #> MOVER-J            -0.0083 0.0893 0.1847
 #> Wald                0.0146 0.0893 0.1640
 #> Agresti-Caffo      -0.0289 0.0893 0.1712
+#> Brown-Li Jeffreys  -0.0105 0.0893 0.1701
 #> 
 #> , , 7/34 vs 1/34
 #> 
@@ -139,6 +146,7 @@ rdci(
 #> MOVER-J            0.0278 0.1765 0.3310
 #> Wald               0.0292 0.1765 0.3238
 #> Agresti-Caffo      0.0116 0.1765 0.3217
+#> Brown-Li Jeffreys  0.0176 0.1765 0.3252
 #> 
 #> 
 #> $call
