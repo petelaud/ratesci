@@ -1,10 +1,15 @@
 # ratesci 1.1.0.9000 (development version)
 
+## New features
+### In `rdci()`:
+* The Brown-Li 'Jeffreys' method is added for binomial RD (noted to be a 
+  superior non-iterative method in Laud & Dane 2014).
+
 ## Bug fixes
 ### In `scoreci()` and `scasci()`:
 * Improved computation of quadratic solution for the skewness-corrected score, 
   avoiding spurious results observed in 0.13% of a simulation exercise 
-  (#38, thanks to Vincent Jaquet for reporting the issue and proposed solution.)
+  (#38, thanks to Vincent Jaquet for reporting the issue and proposed solution).
 
 ### In `orpairci()`, `rrpairci()` and `rdpairci()`:
 * Fixed special cases to avoid warnings due to negative variance estimate or

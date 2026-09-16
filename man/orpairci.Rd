@@ -51,6 +51,7 @@ adjustment (where available).
 \item Transformed Wilson Score method
 \item Transformed mid-P
 \item Transformed Jeffreys
+\item Transformed Blaker
 \item Approximate log-normal (Wald) method
 }
 }

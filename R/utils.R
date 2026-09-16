@@ -249,25 +249,50 @@ waldci <- function(x1,
 }
 
 
-#' Hauck=Anderson interval
+#' Hauck-Anderson interval
 #'
 #' @noRd
 haci <- function(x1,
-                   n1,
-                   x2,
-                   n2,
-                   level = 0.95) {
-
+                 n1,
+                 x2,
+                 n2,
+                 level = 0.95
+                 ) {
   p1hat <- x1 / n1
   p2hat <- x2 / n2
   z <- qnorm(1 - (1 - level) / 2)
 
-
-      haci <- array(p1hat - p2hat + rep(c(-1, 0 ,1), each = length(x1)) *
-                        (z * sqrt(p1hat * (1 - p1hat)/(n1 - 1) + p2hat * (1 - p2hat)/(n2 - 1)) +
-                           0.5 * (1/pmin(n1, n2))), c(length(x1), 3))
+  haci <- array(p1hat - p2hat + rep(c(-1, 0 ,1), each = length(x1)) *
+                  (z * sqrt(p1hat * (1 - p1hat)/(n1 - 1) + p2hat * (1 - p2hat)/(n2 - 1)) +
+                     0.5 * (1/pmin(n1, n2))),
+                dim = c(length(x1), 3))
 
   return(haci)
+}
+
+
+
+#' Brown-Li Jeffreys interval
+#'
+#' @noRd
+blci <- function(x1,
+                 n1,
+                 x2,
+                 n2,
+                 level = 0.95) {
+  p1hat <- (x1 + 0.5) / (n1 + 1)
+  p2hat <- (x2 + 0.5) / (n2 + 1)
+  z <- qnorm(1 - (1 - level) / 2)
+
+  blci <- array(
+    p1hat - p2hat +
+      rep(c(-1, 0, 1), each = length(x1)) *
+        (z * sqrt(
+          p1hat * (1 - p1hat) / n1 + p2hat * (1 - p2hat) / n2
+        )),
+    dim = c(length(x1), 3)
+  )
+  return(blci)
 }
 
 

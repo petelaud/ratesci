@@ -13,6 +13,7 @@
 #'            aka Newcombe Hybrid Score or 'square-and-add')
 #' - MOVER-J (based on Jeffreys intervals)
 #' - Agresti-Caffo (binomial RD only)
+#' - Brown-Li 'Jeffreys' (binomial RD only)
 #' - Approximate normal (Wald) method
 #'     (strongly advise this is not used for any purpose but included for reference)
 #'
@@ -73,6 +74,10 @@
 #'   Newcombe RG. Interval estimation for the difference between independent
 #'   proportions: comparison of eleven methods. Statistics in Medicine 1998;
 #'   17(8):873-890.
+#'
+#'   Laud PJ, Dane A. Confidence intervals for the difference between
+#'   independent binomial proportions: comparison using a graphical approach and
+#'   moving averages. Pharmaceutical Statistics 2014; 13(5):294-308.
 #'
 #' @export
 rdci <- function(x1,
@@ -156,6 +161,14 @@ rdci <- function(x1,
       level = level
     )
   }
+
+  ci_brownli <- blci(
+    x1 = x1,
+    n1 = n1,
+    x2 = x2,
+    n2 = n2,
+    level = level
+  )
 
   ci_scas <- scasci(
     x1 = x1,
@@ -245,7 +258,7 @@ rdci <- function(x1,
   methodnames <- c(
     "SCAS", "Gart-Nam", "Miettinen-Nurminen",
     "Mee", "MOVER-W", "MOVER-J",
-    "Wald", "Agresti-Caffo"
+    "Wald", "Agresti-Caffo", "Brown-Li Jeffreys"
   )
   if (distrib == "poi") methodnames[7] <- "Approximate Normal"
   if (cc == 0.5) methodnames[8] <- "Hauck-Anderson"
@@ -253,8 +266,8 @@ rdci <- function(x1,
   mydimnames[[3]] <- methodnames
 
   outarr <- array(
-    c(ci_scas, ci_gn, ci_mn, ci_mee, ci_moverw, ci_moverj, ci_wald, ci_adjwald),
-    dim <- c(dim(ci_scas), 8)
+    c(ci_scas, ci_gn, ci_mn, ci_mee, ci_moverw, ci_moverj, ci_wald, ci_adjwald, ci_brownli),
+    dim <- c(dim(ci_scas), 9)
   )[drop = FALSE]
   dimnames(outarr) <- mydimnames
 
@@ -267,7 +280,9 @@ rdci <- function(x1,
     }
     mydimnames[[3]] <- methodnames
     dimnames(outarr) <- mydimnames
-    if (cc != 0.5 || distrib == "poi") outarr <- outarr[, , 1:7, drop = FALSE]
+    if (cc != 0.5 || distrib == "poi") {
+      outarr <- outarr[, , 1:7, drop = FALSE]
+    } else if (cc == 0.5) outarr <- outarr[, , 1:8, drop = FALSE]
   }
   if (distrib == "poi") outarr <- outarr[, , -c(2, 4), drop = FALSE]
   # dimnames(outarr) <- mydimnames

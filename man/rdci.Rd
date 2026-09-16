@@ -67,6 +67,7 @@ rate difference (RD) contrast, with or without continuity adjustment.
 aka Newcombe Hybrid Score or 'square-and-add')
 \item MOVER-J (based on Jeffreys intervals)
 \item Agresti-Caffo (binomial RD only)
+\item Brown-Li 'Jeffreys' (binomial RD only)
 \item Approximate normal (Wald) method
 (strongly advise this is not used for any purpose but included for reference)
 }
@@ -100,6 +101,10 @@ rates. Pharmaceutical Statistics 2017; 16:334-348.
 Newcombe RG. Interval estimation for the difference between independent
 proportions: comparison of eleven methods. Statistics in Medicine 1998;
 17(8):873-890.
+
+Laud PJ, Dane A. Confidence intervals for the difference between
+independent binomial proportions: comparison using a graphical approach and
+moving averages. Pharmaceutical Statistics 2014; 13(5):294-308.
 }
 \author{
 Pete Laud, \email{pete@sheffstat.co.uk}
