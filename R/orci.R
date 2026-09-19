@@ -74,7 +74,7 @@ orci <- function(x1,
                  cc = FALSE,
                  precis = 6) {
 
-  contrast <- "RR"
+  contrast <- "OR"
   distrib <- "bin"
 
   # Input checks

@@ -241,8 +241,8 @@ waldci <- function(x1,
       print("Odds ratio not applicable to Poisson rates")
       stop()
     }
-    waldci[, 3][p1hat == 0] <- Inf
-    waldci[, 1][p2hat == 0] <- 0
+    waldci[, 3][p1hat == 0 | p2hat == 1] <- Inf
+    waldci[, 1][p2hat == 0 | p1hat == 1] <- 0
   }
 
   return(waldci)
