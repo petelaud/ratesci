@@ -24,6 +24,11 @@
 - Fixed special cases to avoid warnings due to negative variance
   estimate or intervals output as NaN.
 
+#### In `orci()`:
+
+- Fixed to give CIs for OR instead of RR, and fixed handling of special
+  cases.
+
 ## ratesci 1.1.0 (2026-06-28)
 
 CRAN release: 2026-07-02
