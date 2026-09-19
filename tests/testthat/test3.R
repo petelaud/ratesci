@@ -249,7 +249,7 @@ test_that("legacy & new methods match published examples", {
 
   # ODDS RATIO
 
-  # Fagerland Newcombe for OR
+  # Fagerland Newcombe 2012 Table IV for OR
   expect_equal(
     unname(round(moverci(
       x1 = c(24, 29, 7), n1 = c(73, 55, 18),
@@ -266,6 +266,24 @@ test_that("legacy & new methods match published examples", {
     )$estimates[, c(1, 3)], 3)),
     matrix(c(0.050, 0.245, 0, 0.417, 1.416, 76.428), byrow = T, nrow = 3)
   )
+
+  expect_equal(
+    unname(round(orci(
+      x1 = c(24, 29, 7), n1 = c(73, 55, 18),
+      x2 = c(53, 11, 1), n2 = c(65, 11, 18)
+    )$estimates[c("Woolf logit", "Gart adjusted logit", "MOVER-W",
+                  "MOVER-J", "Miettinen-Nurminen", "Gart", "SCAS"),
+                c(1, 3), ], 3)),
+    array(c(0.050, 0.053, 0.050, 0.049, 0.050, 0.050, 0.050,
+            0.245, 0.253, 0.242, 0.239, 0.245, 0.243, 0.244,
+             0, 0.003, 0, 0, 0, 0, 0,
+             Inf, 0.862, 0.427, 0.306, 0.417, 0.346, 0.354,
+             1.165, 1.133, 1.395, 1.530, 1.416, 1.480, 1.441,
+             100.439, 51.095, 75.890, 115.753, 76.428, 226.077, 221.440),
+          dim = c(7, 2, 3))
+  )
+
+
 
   # Gart 1985 Example 1
   # Gart
