@@ -16,7 +16,7 @@ confidence intervals (‘CIs’) and tests for:
 A number of different methods are offered, but in each case, the
 recommended default is based on asymptotic score methodology (from
 ([Wilson 1927](#ref-wilson1927)), ([Miettinen and Nurminen
-1985](#ref-miettinen1985)) and ([Tango 1998](#ref-tango1998a))), but
+1985](#ref-miettinen1985)) and ([Tango 1999](#ref-tango1999))), but
 including skewness corrections following the principles of ([Gart and
 Nam 1988](#ref-gart1988)). The resulting family of skewness-corrected
 asymptotic score (SCAS) methods ([Laud 2017](#ref-laud2017)), (and Laud
@@ -229,10 +229,11 @@ Newcombe, Robert G. 2012. *Confidence Intervals for Proportions and
 Related Measures of Effect Size*. CRC Press.
 <https://doi.org/10.1201/b12670>.
 
-Tango, Toshiro. 1998. “Equivalence Test and Confidence Interval for the
-Difference in Proportions for the Paired-Sample Design.” *Statistics in
-Medicine* 17 (8): 891–908.
-<https://doi.org/10.1002/(sici)1097-0258(19980430)17:8%3C891::aid-sim780%3E3.0.co;2-b>.
+Tango, T. 1999. “Improved Confidence Intervals for the Difference
+Between Binomial Proportions Based on Paired Data by Robert g.
+Newcombe,statistics in Medicine,17, 2635-2650 (1998).” *Statistics in
+Medicine* 18 (24): 3511–13.
+<https://doi.org/10.1002/(sici)1097-0258(19991230)18:24%3C3511::aid-sim303%3E3.0.co;2-a>.
 
 Wilson, Edwin B. 1927. “Probable Inference, the Law of Succession, and
 Statistical Inference.” *Journal of the American Statistical
