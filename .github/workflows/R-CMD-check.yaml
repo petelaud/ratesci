@@ -44,6 +44,7 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
           cache: false
+          pak-version: stable
 
       - uses: r-lib/actions/check-r-package@v2
         with:
