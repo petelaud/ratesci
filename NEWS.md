@@ -6,7 +6,7 @@
   superior non-iterative method in Laud & Dane 2014).
 
 ### In `orpairci()`:
-* Added second version of the transformed SCASp method.
+* Added second version of the transformed SCAS method.
 
 ## Bug fixes
 ### In `scoreci()` and `scasci()`:
