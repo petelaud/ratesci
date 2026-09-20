@@ -11,7 +11,7 @@
 
 #### In `orpairci()`:
 
-- Added second version of the transformed SCASp method.
+- Added second version of the transformed SCAS method.
 
 ### Bug fixes
 
