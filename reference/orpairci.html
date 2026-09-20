@@ -3,7 +3,8 @@
 This convenience wrapper function produces a selection of the methods below
 for the conditional odds ratio (OR) contrast, with or without optional continuity
 adjustment (where available).
-Transformed SCAS (skewness-corrected asymptotic score)
+Transformed SCAS (skewness-corrected asymptotic score,
+with or without 'N-1' adjustment)
 Transformed Wilson Score method
 Transformed mid-P
 Transformed Jeffreys
@@ -14,7 +15,8 @@ Approximate log-normal (Wald) method
 This convenience wrapper function produces a selection of the methods below
 for the conditional odds ratio (OR) contrast, with or without optional continuity
 adjustment (where available).
-Transformed SCAS (skewness-corrected asymptotic score)
+Transformed SCAS (skewness-corrected asymptotic score,
+with or without 'N-1' adjustment)
 Transformed Wilson Score method
 Transformed mid-P
 Transformed Jeffreys
@@ -72,7 +74,8 @@ Approximate log-normal (Wald) method
     <p>Confidence intervals for comparisons of two binomial rates from paired data.
 This convenience wrapper function produces a selection of the methods below
 for the conditional odds ratio (OR) contrast, with or without optional continuity
-adjustment (where available).</p><ul><li><p>Transformed SCAS (skewness-corrected asymptotic score)</p></li>
+adjustment (where available).</p><ul><li><p>Transformed SCAS (skewness-corrected asymptotic score,
+with or without 'N-1' adjustment)</p></li>
 <li><p>Transformed Wilson Score method</p></li>
 <li><p>Transformed mid-P</p></li>
 <li><p>Transformed Jeffreys</p></li>
@@ -163,13 +166,13 @@ proportions. (2026, Under review)</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Failure       7      12</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                      lower   est upper</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed SCASp    0.008 0.143 0.912</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed midp     0.006 0.143 0.924</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed Wilson   0.023 0.143 0.890</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed Jeffreys 0.014 0.143 0.831</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed Blaker   0.006 0.143 1.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Wald                 0.018 0.143 1.161</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        lower   est upper</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed SCASp(N-1) 0.008 0.143 0.912</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed SCASp      0.007 0.143 0.875</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed midp       0.006 0.143 0.924</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed Wilson     0.023 0.143 0.890</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed Jeffreys   0.014 0.143 0.831</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Wald                   0.018 0.143 1.161</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $call</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> level    cc </span>
@@ -185,7 +188,8 @@ proportions. (2026, Under review)</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                             lower   est upper</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed SCASp_cc        0.000 0.143 1.204</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed SCASp(N-1)_cc   0.000 0.143 1.204</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed SCASp_cc        0.000 0.143 1.162</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Transformed Clopper-Pearson 0.003 0.143 1.112</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Transformed Wilson_cc       0.007 0.143 1.142</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Transformed Jeffreys_cc     0.003 0.143 1.112</span>
@@ -204,12 +208,12 @@ proportions. (2026, Under review)</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Failure       7      12</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $estimates</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                               lower   est upper</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed SCASp_cc(0.25)    0.002 0.143 1.052</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed midp_cc(0.25)     0.004 0.143 1.029</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed Wilson_cc(0.25)   0.014 0.143 1.009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed Jeffreys_cc(0.25) 0.008 0.143 0.966</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed Blaker            0.006 0.143 1.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                 lower   est upper</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed SCASp(N-1)_cc(0.25) 0.002 0.143 1.052</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed SCASp_cc(0.25)      0.002 0.143 1.012</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed midp_cc(0.25)       0.004 0.143 1.029</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed Wilson_cc(0.25)     0.014 0.143 1.009</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Transformed Jeffreys_cc(0.25)   0.008 0.143 0.966</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $call</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> level    cc </span>

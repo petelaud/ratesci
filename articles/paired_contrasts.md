@@ -167,13 +167,13 @@ To select an alternative method, for example transformed mid-p:
 ``` r
 
 orpairci(x = c(1, 1, 7, 12))$estimates
-#>                           lower       est     upper
-#> Transformed SCASp    0.00770217 0.1428571 0.9123154
-#> Transformed midp     0.00629101 0.1428571 0.9241027
-#> Transformed Wilson   0.02293156 0.1428571 0.8899597
-#> Transformed Jeffreys 0.01403242 0.1428571 0.8305608
-#> Transformed Blaker   0.00643223 0.1428571 1.0000001
-#> Wald                 0.01757637 0.1428571 1.1611135
+#>                             lower       est     upper
+#> Transformed SCASp(N-1) 0.00770217 0.1428571 0.9123154
+#> Transformed SCASp      0.00743224 0.1428571 0.8753873
+#> Transformed midp       0.00629101 0.1428571 0.9241027
+#> Transformed Wilson     0.02293156 0.1428571 0.8899597
+#> Transformed Jeffreys   0.01403242 0.1428571 0.8305608
+#> Wald                   0.01757637 0.1428571 1.1611135
 ```
 
 ### Other methods

@@ -5,7 +5,8 @@ data. This convenience wrapper function produces a selection of the
 methods below for the conditional odds ratio (OR) contrast, with or
 without optional continuity adjustment (where available).
 
-- Transformed SCAS (skewness-corrected asymptotic score)
+- Transformed SCAS (skewness-corrected asymptotic score, with or without
+  'N-1' adjustment)
 
 - Transformed Wilson Score method
 
@@ -102,13 +103,13 @@ orpairci(x = c(1, 1, 7, 12), precis = 3)
 #>   Failure       7      12
 #> 
 #> $estimates
-#>                      lower   est upper
-#> Transformed SCASp    0.008 0.143 0.912
-#> Transformed midp     0.006 0.143 0.924
-#> Transformed Wilson   0.023 0.143 0.890
-#> Transformed Jeffreys 0.014 0.143 0.831
-#> Transformed Blaker   0.006 0.143 1.000
-#> Wald                 0.018 0.143 1.161
+#>                        lower   est upper
+#> Transformed SCASp(N-1) 0.008 0.143 0.912
+#> Transformed SCASp      0.007 0.143 0.875
+#> Transformed midp       0.006 0.143 0.924
+#> Transformed Wilson     0.023 0.143 0.890
+#> Transformed Jeffreys   0.014 0.143 0.831
+#> Wald                   0.018 0.143 1.161
 #> 
 #> $call
 #> level    cc 
@@ -124,7 +125,8 @@ orpairci(x = c(1, 1, 7, 12), precis = 3, cc = TRUE)
 #> 
 #> $estimates
 #>                             lower   est upper
-#> Transformed SCASp_cc        0.000 0.143 1.204
+#> Transformed SCASp(N-1)_cc   0.000 0.143 1.204
+#> Transformed SCASp_cc        0.000 0.143 1.162
 #> Transformed Clopper-Pearson 0.003 0.143 1.112
 #> Transformed Wilson_cc       0.007 0.143 1.142
 #> Transformed Jeffreys_cc     0.003 0.143 1.112
@@ -143,12 +145,12 @@ orpairci(x = c(1, 1, 7, 12), precis = 3, cc = 0.25)
 #>   Failure       7      12
 #> 
 #> $estimates
-#>                               lower   est upper
-#> Transformed SCASp_cc(0.25)    0.002 0.143 1.052
-#> Transformed midp_cc(0.25)     0.004 0.143 1.029
-#> Transformed Wilson_cc(0.25)   0.014 0.143 1.009
-#> Transformed Jeffreys_cc(0.25) 0.008 0.143 0.966
-#> Transformed Blaker            0.006 0.143 1.000
+#>                                 lower   est upper
+#> Transformed SCASp(N-1)_cc(0.25) 0.002 0.143 1.052
+#> Transformed SCASp_cc(0.25)      0.002 0.143 1.012
+#> Transformed midp_cc(0.25)       0.004 0.143 1.029
+#> Transformed Wilson_cc(0.25)     0.014 0.143 1.009
+#> Transformed Jeffreys_cc(0.25)   0.008 0.143 0.966
 #> 
 #> $call
 #> level    cc 
