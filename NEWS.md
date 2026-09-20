@@ -5,6 +5,9 @@
 * The Brown-Li 'Jeffreys' method is added for binomial RD (noted to be a 
   superior non-iterative method in Laud & Dane 2014).
 
+### In `orpairci()`:
+* Added second version of the transformed SCASp method.
+
 ## Bug fixes
 ### In `scoreci()` and `scasci()`:
 * Improved computation of quadratic solution for the skewness-corrected score, 

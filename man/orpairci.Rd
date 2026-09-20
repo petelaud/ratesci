@@ -47,7 +47,8 @@ This convenience wrapper function produces a selection of the methods below
 for the conditional odds ratio (OR) contrast, with or without optional continuity
 adjustment (where available).
 \itemize{
-\item Transformed SCAS (skewness-corrected asymptotic score)
+\item Transformed SCAS (skewness-corrected asymptotic score,
+with or without 'N-1' adjustment)
 \item Transformed Wilson Score method
 \item Transformed mid-P
 \item Transformed Jeffreys

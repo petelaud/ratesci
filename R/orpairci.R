@@ -6,7 +6,8 @@
 #' for the conditional odds ratio (OR) contrast, with or without optional continuity
 #' adjustment (where available).
 #'
-#' - Transformed SCAS (skewness-corrected asymptotic score)
+#' - Transformed SCAS (skewness-corrected asymptotic score,
+#'                     with or without 'N-1' adjustment)
 #' - Transformed Wilson Score method
 #' - Transformed mid-P
 #' - Transformed Jeffreys
@@ -109,6 +110,11 @@ orpairci <- function(x,
     x = x12, n = x12 + x21, distrib = "bin",
     level = level, cc = cc, bcf = TRUE, bign = N
   )$estimates[, c(1:3), drop = FALSE]
+  ci_scaspn1 <- (trans_ci / (1 - trans_ci))
+  trans_ci <- scaspci(
+    x = x12, n = x12 + x21, distrib = "bin",
+    level = level, cc = cc, bcf = FALSE
+  )$estimates[, c(1:3), drop = FALSE]
   ci_scasp <- (trans_ci / (1 - trans_ci))
   trans_ci <- exactci(x = x12, n = x12 + x21, midp = 0.5 - cc, level = level)[, c(1:3)]
   ci_midp <- (trans_ci / (1 - trans_ci))
@@ -124,8 +130,8 @@ orpairci <- function(x,
   mydimnames <- dimnames(ci_scasp)
 
   methodnames <- c(
-    "Transformed SCASp", "Transformed midp", "Transformed Wilson", "Transformed Jeffreys",
-    "Transformed Blaker",
+    "Transformed SCASp(N-1)", "Transformed SCASp", "Transformed midp",
+    "Transformed Wilson", "Transformed Jeffreys", "Transformed Blaker",
         "Wald"
   )
 
@@ -133,6 +139,7 @@ orpairci <- function(x,
 
   outarr <- array(
     c(
+      ci_scaspn1,
       ci_scasp,
       ci_midp,
       ci_wilson,
@@ -140,20 +147,22 @@ orpairci <- function(x,
       ci_blaker,
       ci_wald
     ),
-    dim <- c(dim(ci_scasp), 6)
+    dim <- c(dim(ci_scasp), 7)
   )[drop = FALSE]
   dimnames(outarr) <- mydimnames
 
   if (std_est) outarr[, 2, ] <- est
   if (cc != FALSE) {
-    methodnames[1:4] <- paste0(methodnames[1:4], "_cc")
-    if (cc != 0.5) methodnames[1:4] <- paste0(methodnames[1:4], "(", cc, ")")
+    methodnames[1:5] <- paste0(methodnames[1:5], "_cc")
+    if (cc != 0.5) methodnames[1:5] <- paste0(methodnames[1:5], "(", cc, ")")
+    if (cc == 0.5) methodnames[3] <- "Transformed Clopper-Pearson"
     mydimnames[[3]] <- methodnames
     dimnames(outarr) <- mydimnames
-    if (cc == 0.5) methodnames[2] <- "Transformed Clopper-Pearson"
-    mydimnames[[3]] <- methodnames
-    dimnames(outarr) <- mydimnames
-    outarr <- outarr[, , c(1:5), drop = FALSE]
+    outarr <- outarr[, , c(1:6), drop = FALSE]
+    if (cc != 0.5)  outarr <- outarr[, , c(1:5), drop = FALSE]
+  }
+  if (cc == FALSE) {
+    outarr <- outarr[, , c(1:5, 7), drop = FALSE]
   }
   outarr <- aperm(round(outarr, precis), c(3, 2, 1))[, , 1]
 
