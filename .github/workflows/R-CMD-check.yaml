@@ -19,7 +19,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: macos-14,   r: 'release'}
+          - {os: macos-latest,   r: 'release'}
           - {os: windows-latest, r: 'release'}
           - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
           - {os: ubuntu-latest,   r: 'release'}
@@ -39,19 +39,20 @@ jobs:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
 
+      - name: Configure package installation
+        if: runner.os == 'macOS'
+        shell: Rscript {0}
+        run: |
+          if (R.version$arch == "aarch64") {
+            options(pkgType = "source")
+          }
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck
           needs: check
           cache: false
           pak-version: stable
-          repos: |
-            CRAN: https://cloud.r-project.org
-          install-deps: |
-            if (Sys.info()[["sysname"]] == "Darwin" &&
-                R.version$arch == "aarch64") {
-              options(pkgType = "source")
-            }
 
       - uses: r-lib/actions/check-r-package@v2
         with:
