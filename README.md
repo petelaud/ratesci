@@ -33,7 +33,7 @@ confidence intervals (‘CIs’) and tests for:
 A number of different methods are offered, but in each case, the
 recommended default is based on asymptotic score methodology (from
 ([Wilson 1927](#ref-wilson1927)), ([Miettinen and Nurminen
-1985](#ref-miettinen1985)) and ([Tango 1998](#ref-tango1998a))), but
+1985](#ref-miettinen1985)) and ([Tango 1999](#ref-tango1999))), but
 including skewness corrections following the principles of ([Gart and
 Nam 1988](#ref-gart1988)). The resulting family of skewness-corrected
 asymptotic score (SCAS) methods ([Laud 2017](#ref-laud2017)), (and Laud
@@ -247,12 +247,13 @@ Related Measures of Effect Size*. CRC Press.
 
 </div>
 
-<div id="ref-tango1998a" class="csl-entry">
+<div id="ref-tango1999" class="csl-entry">
 
-Tango, Toshiro. 1998. “Equivalence Test and Confidence Interval for the
-Difference in Proportions for the Paired-Sample Design.” *Statistics in
-Medicine* 17 (8): 891–908.
-[https://doi.org/10.1002/(sici)1097-0258(19980430)17:8\<891::aid-sim780\>3.0.co;2-b](https://doi.org/10.1002/(sici)1097-0258(19980430)17:8<891::aid-sim780>3.0.co;2-b).
+Tango, T. 1999. “Improved Confidence Intervals for the Difference
+Between Binomial Proportions Based on Paired Data by Robert g.
+Newcombe,statistics in Medicine,17, 2635-2650 (1998).” *Statistics in
+Medicine* 18 (24): 3511–13.
+[https://doi.org/10.1002/(sici)1097-0258(19991230)18:24\<3511::aid-sim303\>3.0.co;2-a](https://doi.org/10.1002/(sici)1097-0258(19991230)18:24<3511::aid-sim303>3.0.co;2-a).
 
 </div>
 

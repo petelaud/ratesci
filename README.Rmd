@@ -22,37 +22,36 @@ options(digits = 4)
 
 [![R-CMD-check](https://github.com/petelaud/ratesci/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/petelaud/ratesci/actions/workflows/R-CMD-check.yaml) [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![CRAN_Version](https://www.r-pkg.org/badges/version/ratesci)](https://cran.r-project.org/package=ratesci) [![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/ratesci)](https://cranlogs.r-pkg.org/badges/grand-total/ratesci) [![Monthly Downloads](https://cranlogs.r-pkg.org/badges/ratesci)](https://cranlogs.r-pkg.org/badges/ratesci) [![](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/petelaud)
 
-
 <!-- badges: end -->
 
 ratesci is an [R](https://www.r-project.org) package to compute confidence intervals ('CIs') and tests for:
 
--   a single binomial proportion, or Poisson rate ('p')
--   a difference between independent binomial proportions or Poisson rates (risk difference or rate difference, 'RD')
--   a ratio of proportions or rates (relative risk or rate ratio, 'RR')
--   a binomial odds ratio ('OR')
--   stratified calculations for any of the above
--   a difference (RD) or ratio (RR) for paired binomial proportions
--   odds ratio for paired proportions using the conditional model
--   a binomial proportion from clustered data
+- a single binomial proportion, or Poisson rate ('p')
+- a difference between independent binomial proportions or Poisson rates (risk difference or rate difference, 'RD')
+- a ratio of proportions or rates (relative risk or rate ratio, 'RR')
+- a binomial odds ratio ('OR')
+- stratified calculations for any of the above
+- a difference (RD) or ratio (RR) for paired binomial proportions
+- odds ratio for paired proportions using the conditional model
+- a binomial proportion from clustered data
 
-A number of different methods are offered, but in each case, the recommended default is based on asymptotic score methodology (from [@wilson1927], [@miettinen1985] and [@tango1998a]), but including skewness corrections following the principles of [@gart1988]. The resulting family of skewness-corrected asymptotic score (SCAS) methods [@laud2017], (and Laud 2026, under review) ensures equal-tailed coverage (also referred to as central location), in other words for a nominal 95% confidence interval, the one-sided non-coverage probability is (on average) close to 2.5% on each side. The equal-tailed property is particularly important for non-inferiority testing (as it ensures correct type I error rates for one-sided tests), but should be considered generally desirable for two-sided confidence intervals. Unfortunately this aspect of performance is often overlooked in the literature, in favour of interval width.
+A number of different methods are offered, but in each case, the recommended default is based on asymptotic score methodology (from [@wilson1927], [@miettinen1985] and [@tango1999]), but including skewness corrections following the principles of [@gart1988]. The resulting family of skewness-corrected asymptotic score (SCAS) methods [@laud2017], (and Laud 2026, under review) ensures equal-tailed coverage (also referred to as central location), in other words for a nominal 95% confidence interval, the one-sided non-coverage probability is (on average) close to 2.5% on each side. The equal-tailed property is particularly important for non-inferiority testing (as it ensures correct type I error rates for one-sided tests), but should be considered generally desirable for two-sided confidence intervals. Unfortunately this aspect of performance is often overlooked in the literature, in favour of interval width.
 
 Most of the above list is covered by `scoreci()`, with the exception of clustered proportions (which are handled by `clusterpci()`) and paired contrasts (`scorepairci()`). Stratified calculations are also catered for (e.g. for analysis of a clinical trial with stratified randomisation, or for a meta-analysis, including random effects). Options are included for omitting the skewness correction to obtain legacy methods such as stratified or unstratified Miettinen-Nurminen and Wilson intervals, Tango intervals for paired data, or chi-squared, CMH, Farrington-Manning or McNemar tests.
 
 Simplified functions producing a selection of different confidence interval methods for each contrasts (with or without continuity adjustment) are provided by `rdci()`, `rrci()` and `orci()` for independent binomial or Poisson rates, and `rdpairci()`, `rrpairci()` and `orpairci()` for paired binomial proportions.
 
--   See the vignettes for further details and examples of the SCAS and other intervals, including plots illustrating the impact of the skewness correction, for the [single rate](https://petelaud.github.io/ratesci/articles/single_rate.html), [basic contrasts](https://petelaud.github.io/ratesci/articles/basic_contrasts.html), [stratified contrasts](https://petelaud.github.io/ratesci/articles/stratified.html), and [paired contrasts](https://petelaud.github.io/ratesci/articles/paired_contrasts.html).
+- See the vignettes for further details and examples of the SCAS and other intervals, including plots illustrating the impact of the skewness correction, for the [single rate](https://petelaud.github.io/ratesci/articles/single_rate.html), [basic contrasts](https://petelaud.github.io/ratesci/articles/basic_contrasts.html), [stratified contrasts](https://petelaud.github.io/ratesci/articles/stratified.html), and [paired contrasts](https://petelaud.github.io/ratesci/articles/paired_contrasts.html).
 
 In each case, the asymptotic score methods provide a matching 2-sided test for association, and also a 1-sided hypothesis test against any specified null parameter value for a non-inferiority test. Both tests are guaranteed to be coherent with the interval, so that a 100(1-$\alpha$)% interval excludes the null hypothesis value if and only if the hypothesis test is significant at the $\alpha$ 2-sided or $\alpha$/2 1-sided significance level. The tests for association are variants of (and in many cases directly equivalent to) a chi-squared test or CMH test, and the non-inferiority test is analogous to a Farrington-Manning test, all with improved control of type I error achieved by the bias and skewness corrections. For paired proportions, the test for association is a variant of the McNemar test, incorporating an 'N-1' adjustment which (empirically) avoids any violations of the nominal significance level.
 
--   See the [hypothesis tests](https://petelaud.github.io/ratesci/articles/tests.html) vignette for further details of the relationships between SCAS tests and conventional chi-squared and CMH tests.
+- See the [hypothesis tests](https://petelaud.github.io/ratesci/articles/tests.html) vignette for further details of the relationships between SCAS tests and conventional chi-squared and CMH tests.
 
 Another family of methods offered by the package, with reasonable performance for large (single-stratum) sample sizes (but without a matching hypothesis test), uses the Method of Variance Estimates Recovery (MOVER), also known as Square-and-Add [@newcombe2012, chapter 7]. These methods combine intervals calculated separately for each proportion. The recommended default gives the MOVER-J method, using Jeffreys equal-tailed intervals instead of the Wilson method preferred by Newcombe. This improves on traditional approximate methods with respect to one-sided and two-sided coverage, particularly for the RR contrast, but does not match the performance of the SCAS method. As the Jeffreys interval is based on a Bayesian conjugate prior, the MOVER approach allows the option to incorporate prior beliefs about the rates in each group - by default, the non-informative Jeffreys $Beta(0.5, 0.5)$ priors are used (or corresponding Gamma priors for Poisson rates). MOVER intervals are available in `moverci()` for all contrasts of independent binomial and Poisson rates, and in `moverpairci()` for paired binomial RD and RR.
 
 For those wishing to achieve strictly conservative coverage, continuity adjustments are provided as approximations to "exact" methods, with the option to adjust the strength of the adjustment (as the Yates correction is widely recognised to be an over-conservative adjustment). The performance of these adjustments has not been extensively evaluated, but they appear to be more successful for SCAS than for MOVER, in terms of achieving conservative coverage.
 
-An online calculator based on this package is available [here](https://petelaud.github.io/ratesci-app/). 
+An online calculator based on this package is available [here](https://petelaud.github.io/ratesci-app/).
 
 ## Installation
 
@@ -71,7 +70,7 @@ pak::pak("petelaud/ratesci")
 
 This builds the package from source based on the current version on [GitHub](https://github.com/petelaud/ratesci)
 
-A SAS macro implementation of `scoreci()` and `scorepairci()` is also available at https://github.com/petelaud/ratesci-sas
+A SAS macro implementation of `scoreci()` and `scorepairci()` is also available at <https://github.com/petelaud/ratesci-sas>
 
 ## Example
 
