@@ -45,6 +45,13 @@ jobs:
           needs: check
           cache: false
           pak-version: stable
+          repos: |
+            CRAN: https://cloud.r-project.org
+          install-deps: |
+            if (Sys.info()[["sysname"]] == "Darwin" &&
+                R.version$arch == "aarch64") {
+              options(pkgType = "source")
+            }
 
       - uses: r-lib/actions/check-r-package@v2
         with:
