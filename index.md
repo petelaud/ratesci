@@ -44,7 +44,7 @@ for paired data, or chi-squared, CMH, Farrington-Manning or McNemar
 tests.
 
 Simplified functions producing a selection of different confidence
-interval methods for each contrasts (with or without continuity
+interval methods for each contrast (with or without continuity
 adjustment) are provided by
 [`rdci()`](https://petelaud.github.io/ratesci/reference/rdci.md),
 [`rrci()`](https://petelaud.github.io/ratesci/reference/rrci.md) and
