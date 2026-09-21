@@ -57,7 +57,7 @@ Wilson intervals, Tango intervals for paired data, or chi-squared, CMH,
 Farrington-Manning or McNemar tests.
 
 Simplified functions producing a selection of different confidence
-interval methods for each contrasts (with or without continuity
+interval methods for each contrast (with or without continuity
 adjustment) are provided by `rdci()`, `rrci()` and `orci()` for
 independent binomial or Poisson rates, and `rdpairci()`, `rrpairci()`
 and `orpairci()` for paired binomial proportions.
