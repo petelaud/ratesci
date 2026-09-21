@@ -155,8 +155,8 @@ moverpairci(x = c(1, 1, 7, 12), contrast = "RD", corc = TRUE, type = "jeff")
 #> [1,] -0.510506 -0.285714 -0.032389  0.95 0.095238 0.380952       0
 #> 
 #> $call
-#> contrast     type    level       cc 
-#>     "RD"   "jeff"   "0.95"  "FALSE" 
+#> contrast     type     corc    level       cc 
+#>     "RD"   "jeff"   "TRUE"   "0.95"  "FALSE" 
 #> 
 # MOVER-NJ for RR
 moverpairci(x = c(1, 1, 7, 12), contrast = "RR", corc = TRUE, type = "jeff")
@@ -171,7 +171,7 @@ moverpairci(x = c(1, 1, 7, 12), contrast = "RR", corc = TRUE, type = "jeff")
 #> [1,] 0.051297 0.25 0.873051  0.95 0.095238 0.380952       0
 #> 
 #> $call
-#> contrast     type    level       cc 
-#>     "RR"   "jeff"   "0.95"  "FALSE" 
+#> contrast     type     corc    level       cc 
+#>     "RR"   "jeff"   "TRUE"   "0.95"  "FALSE" 
 #> 
 ```
