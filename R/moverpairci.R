@@ -235,7 +235,7 @@ moverpairci <- function(x,
   row.names(estimates) <- NULL
 
   call <- c(
-    contrast = contrast, type = type,
+    contrast = contrast, type = type, corc = corc,
     level = level, cc = cc
   )
   outlist <- list(data = xi, estimates = round(estimates, precis), call = call)
