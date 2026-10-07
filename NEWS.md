@@ -1,28 +1,30 @@
-# ratesci 1.1.0.9000 (development version)
+# ratesci 1.1.1
+
 
 ## New features
-### In `rdci()`:
-* The Brown-Li 'Jeffreys' method is added for binomial RD (noted to be a 
-  superior non-iterative method in Laud & Dane 2014).
 
-### In `orpairci()`:
-* Added second version of the transformed SCAS method, omitting the 'N-1'
-  adjustment. (The adjusted version previously labelled 'Transformed SCASp' in 
-  the output is now labelled 'Transformed SCAS(N-1)').
-* Added Transformed Blaker method, produced when `cc` is `TRUE`.
+* `rdci()` now includes the Brown-Li 'Jeffreys' method for binomial RD
+  (noted to be a superior non-iterative method in Laud & Dane 2014).
+
+* `orpairci()` now includes a second version of the transformed SCAS method, 
+  omitting the 'N-1' adjustment. (The adjusted version previously labelled 
+  'Transformed SCASp' in the output is now labelled 'Transformed SCAS(N-1)').
+  
+* `orpairci()` now includes the Transformed Blaker method, produced when 
+  `cc` is `TRUE`.
 
 ## Bug fixes
-### In `scoreci()` and `scasci()`:
-* Improved computation of quadratic solution for the skewness-corrected score, 
-  avoiding spurious results observed in 0.13% of a simulation exercise 
-  (#38, thanks to Vincent Jaquet for reporting the issue and proposed solution).
 
-### In `orpairci()`, `rrpairci()` and `rdpairci()`:
-* Fixed special cases to avoid warnings due to negative variance estimate or
-  intervals output as NaN.
+* `scoreci()` and `scasci()` have improved computation of quadratic solution for 
+  the skewness-corrected score, avoiding spurious results observed in 0.13% of 
+  a simulation exercise (#38, thanks to Vincent Jaquet for reporting the issue 
+  and proposed solution).
 
-### In `orci()`:
-* Fixed to give CIs for OR instead of RR, and fixed handling of special cases.
+* `orpairci()`, `rrpairci()` and `rdpairci()` have fixed special cases to avoid 
+  warnings due to negative variance estimate or intervals output as NaN.
+
+* `orci()` now fixed to give CIs for OR instead of RR, and fixed handling of 
+  special cases.
 
 
 # ratesci 1.1.0 (2026-06-28)
