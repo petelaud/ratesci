@@ -48,7 +48,7 @@ for the conditional odds ratio (OR) contrast, with or without optional continuit
 adjustment (where available).
 \itemize{
 \item Transformed SCAS (skewness-corrected asymptotic score,
-with or without 'N-1' adjustment)
+with and without 'N-1' adjustment)
 \item Transformed Wilson Score method
 \item Transformed mid-P
 \item Transformed Jeffreys

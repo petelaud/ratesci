@@ -7,7 +7,7 @@
 #' adjustment (where available).
 #'
 #' - Transformed SCAS (skewness-corrected asymptotic score,
-#'                     with or without 'N-1' adjustment)
+#'                     with and without 'N-1' adjustment)
 #' - Transformed Wilson Score method
 #' - Transformed mid-P
 #' - Transformed Jeffreys
@@ -130,7 +130,7 @@ orpairci <- function(x,
   mydimnames <- dimnames(ci_scasp)
 
   methodnames <- c(
-    "Transformed SCASp(N-1)", "Transformed SCASp", "Transformed midp",
+    "Transformed SCAS(N-1)", "Transformed SCAS", "Transformed midp",
     "Transformed Wilson", "Transformed Jeffreys", "Transformed Blaker",
         "Wald"
   )
