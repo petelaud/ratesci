@@ -1,40 +1,43 @@
 # Changelog
 
-## ratesci 1.1.0.9000 (development version)
+## ratesci 1.1.0.9000
 
 ### New features
 
-#### In `rdci()`:
-
-- The Brown-Li ‘Jeffreys’ method is added for binomial RD (noted to be a
+- [`rdci()`](https://petelaud.github.io/ratesci/reference/rdci.md) now
+  includes the Brown-Li ‘Jeffreys’ method for binomial RD (noted to be a
   superior non-iterative method in Laud & Dane 2014).
 
-#### In `orpairci()`:
-
-- Added second version of the transformed SCAS method, omitting the
-  ‘N-1’ adjustment. (The adjusted version previously labelled
+- [`orpairci()`](https://petelaud.github.io/ratesci/reference/orpairci.md)
+  now includes a second version of the transformed SCAS method, omitting
+  the ‘N-1’ adjustment. (The adjusted version previously labelled
   ‘Transformed SCASp’ in the output is now labelled ‘Transformed
   SCAS(N-1)’).
-- Added Transformed Blaker method, produced when `cc` is `TRUE`.
+
+- [`orpairci()`](https://petelaud.github.io/ratesci/reference/orpairci.md)
+  now includes the Transformed Blaker method, produced when `cc` is
+  `TRUE`.
 
 ### Bug fixes
 
-#### In `scoreci()` and `scasci()`:
+- [`scoreci()`](https://petelaud.github.io/ratesci/reference/scoreci.md)
+  and
+  [`scasci()`](https://petelaud.github.io/ratesci/reference/scasci.md)
+  have improved computation of quadratic solution for the
+  skewness-corrected score, avoiding spurious results observed in 0.13%
+  of a simulation exercise
+  ([\#38](https://github.com/petelaud/ratesci/issues/38), thanks to
+  Vincent Jaquet for reporting the issue and proposed solution).
 
-- Improved computation of quadratic solution for the skewness-corrected
-  score, avoiding spurious results observed in 0.13% of a simulation
-  exercise ([\#38](https://github.com/petelaud/ratesci/issues/38),
-  thanks to Vincent Jaquet for reporting the issue and proposed
-  solution).
-
-#### In `orpairci()`, `rrpairci()` and `rdpairci()`:
-
-- Fixed special cases to avoid warnings due to negative variance
+- [`orpairci()`](https://petelaud.github.io/ratesci/reference/orpairci.md),
+  [`rrpairci()`](https://petelaud.github.io/ratesci/reference/rrpairci.md)
+  and
+  [`rdpairci()`](https://petelaud.github.io/ratesci/reference/rdpairci.md)
+  have fixed special cases to avoid warnings due to negative variance
   estimate or intervals output as NaN.
 
-#### In `orci()`:
-
-- Fixed to give CIs for OR instead of RR, and fixed handling of special
+- [`orci()`](https://petelaud.github.io/ratesci/reference/orci.md) now
+  fixed to give CIs for OR instead of RR, and fixed handling of special
   cases.
 
 ## ratesci 1.1.0 (2026-06-28)

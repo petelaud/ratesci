@@ -46,34 +46,19 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.1.0.9000" id="ratesci-1109000-development-version">ratesci 1.1.0.9000 (development version)<a class="anchor" aria-label="anchor" href="#ratesci-1109000-development-version"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.1.0.9000" id="ratesci-1109000">ratesci 1.1.0.9000<a class="anchor" aria-label="anchor" href="#ratesci-1109000"></a></h2>
 <div class="section level3">
 <h3 id="new-features-1-1-0-9000">New features<a class="anchor" aria-label="anchor" href="#new-features-1-1-0-9000"></a></h3>
-<div class="section level4">
-<h4 id="in-rdci-1-1-0-9000">In <code>rdci()</code>:<a class="anchor" aria-label="anchor" href="#in-rdci-1-1-0-9000"></a></h4>
-<ul><li>The Brown-Li ‘Jeffreys’ method is added for binomial RD (noted to be a superior non-iterative method in Laud &amp; Dane 2014).</li>
+<ul><li><p><code><a href="../reference/rdci.html">rdci()</a></code> now includes the Brown-Li ‘Jeffreys’ method for binomial RD (noted to be a superior non-iterative method in Laud &amp; Dane 2014).</p></li>
+<li><p><code><a href="../reference/orpairci.html">orpairci()</a></code> now includes a second version of the transformed SCAS method, omitting the ‘N-1’ adjustment. (The adjusted version previously labelled ‘Transformed SCASp’ in the output is now labelled ‘Transformed SCAS(N-1)’).</p></li>
+<li><p><code><a href="../reference/orpairci.html">orpairci()</a></code> now includes the Transformed Blaker method, produced when <code>cc</code> is <code>TRUE</code>.</p></li>
 </ul></div>
-<div class="section level4">
-<h4 id="in-orpairci-1-1-0-9000">In <code>orpairci()</code>:<a class="anchor" aria-label="anchor" href="#in-orpairci-1-1-0-9000"></a></h4>
-<ul><li>Added second version of the transformed SCAS method, omitting the ‘N-1’ adjustment. (The adjusted version previously labelled ‘Transformed SCASp’ in the output is now labelled ‘Transformed SCAS(N-1)’).</li>
-<li>Added Transformed Blaker method, produced when <code>cc</code> is <code>TRUE</code>.</li>
-</ul></div>
-</div>
 <div class="section level3">
 <h3 id="bug-fixes-1-1-0-9000">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-1-0-9000"></a></h3>
-<div class="section level4">
-<h4 id="in-scoreci-and-scasci-1-1-0-9000">In <code>scoreci()</code> and <code>scasci()</code>:<a class="anchor" aria-label="anchor" href="#in-scoreci-and-scasci-1-1-0-9000"></a></h4>
-<ul><li>Improved computation of quadratic solution for the skewness-corrected score, avoiding spurious results observed in 0.13% of a simulation exercise (<a href="https://github.com/petelaud/ratesci/issues/38" class="external-link">#38</a>, thanks to Vincent Jaquet for reporting the issue and proposed solution).</li>
+<ul><li><p><code><a href="../reference/scoreci.html">scoreci()</a></code> and <code><a href="../reference/scasci.html">scasci()</a></code> have improved computation of quadratic solution for the skewness-corrected score, avoiding spurious results observed in 0.13% of a simulation exercise (<a href="https://github.com/petelaud/ratesci/issues/38" class="external-link">#38</a>, thanks to Vincent Jaquet for reporting the issue and proposed solution).</p></li>
+<li><p><code><a href="../reference/orpairci.html">orpairci()</a></code>, <code><a href="../reference/rrpairci.html">rrpairci()</a></code> and <code><a href="../reference/rdpairci.html">rdpairci()</a></code> have fixed special cases to avoid warnings due to negative variance estimate or intervals output as NaN.</p></li>
+<li><p><code><a href="../reference/orci.html">orci()</a></code> now fixed to give CIs for OR instead of RR, and fixed handling of special cases.</p></li>
 </ul></div>
-<div class="section level4">
-<h4 id="in-orpairci-rrpairci-and-rdpairci-1-1-0-9000">In <code>orpairci()</code>, <code>rrpairci()</code> and <code>rdpairci()</code>:<a class="anchor" aria-label="anchor" href="#in-orpairci-rrpairci-and-rdpairci-1-1-0-9000"></a></h4>
-<ul><li>Fixed special cases to avoid warnings due to negative variance estimate or intervals output as NaN.</li>
-</ul></div>
-<div class="section level4">
-<h4 id="in-orci-1-1-0-9000">In <code>orci()</code>:<a class="anchor" aria-label="anchor" href="#in-orci-1-1-0-9000"></a></h4>
-<ul><li>Fixed to give CIs for OR instead of RR, and fixed handling of special cases.</li>
-</ul></div>
-</div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.1.0" id="ratesci-110-2026-06-28">ratesci 1.1.0 (2026-06-28)<a class="anchor" aria-label="anchor" href="#ratesci-110-2026-06-28"></a></h2><p class="text-muted">CRAN release: 2026-07-02</p>
