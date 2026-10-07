@@ -13,7 +13,7 @@
 #'   \item{event.control}{Number of deaths in control group}
 #'   \item{n.control}{Number of patients in control group}
 #'  }
-#' @source <https://pubmed.ncbi.nlm.nih.gov/15474134>
+#' @source <https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(04)17188-2/abstract>
 "crash"
 
 #' Meta-analysis of the effect of cisapride for treatment of non-ulcer dyspepsia
