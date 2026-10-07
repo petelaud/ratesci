@@ -11,7 +11,11 @@
 
 #### In `orpairci()`:
 
-- Added second version of the transformed SCAS method.
+- Added second version of the transformed SCAS method, omitting the
+  ‘N-1’ adjustment. (The adjusted version previously labelled
+  ‘Transformed SCASp’ in the output is now labelled ‘Transformed
+  SCAS(N-1)’).
+- Added Transformed Blaker method, produced when `cc` is `TRUE`.
 
 ### Bug fixes
 
