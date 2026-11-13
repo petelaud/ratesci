@@ -4,6 +4,8 @@
 
 ## ratesci 1.1.1
 
+CRAN release: 2026-10-07
+
 ### New features
 
 - [`rdci()`](https://petelaud.github.io/ratesci/reference/rdci.md) now

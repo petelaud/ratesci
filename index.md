@@ -117,7 +117,7 @@ they appear to be more successful for SCAS than for MOVER, in terms of
 achieving conservative coverage.
 
 An online calculator based on this package is available
-[here](https://petelaud.github.io/ratesci-app/).
+[here](https://01a1d588-88f2-2987-53ec-10f4efbaff6b.share.connect.posit.cloud/).
 
 ## Installation
 
